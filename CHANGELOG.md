@@ -12,6 +12,7 @@ All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be document
 - **Context-Aware Initiative Check**: The Initiative button in Checks / Abilities is now only displayed when there is an active combat encounter and the token does not have an initiative value yet. Once rolled, the button is automatically hidden.
 - **Combat Lifecycle Real-Time Hooks**: Registered listeners for `createCombat`, `deleteCombat`, `createCombatant`, `updateCombatant`, and `deleteCombatant` to seamlessly refresh the HUD when combat starts, ends, or combatant initiative rolls occur.
 - **Settings Order Overhaul**: Restructured all module settings registrations so that `Disable HUD` is placed at the very top of the settings list, followed by the Configuration Panel menu button, Scene Controls integration, the complete HUD Scaling & Sizing suite, Display & Navigation options, and World GM Permissions.
+- **Automated GitHub Release Workflow**: Added `.github/workflows/release.yml` to automatically package `module.zip`, update download URLs in `module.json`, and attach release assets to published GitHub releases (omitting Foundry package repository publishing).
 - **Localization**: Added `"AllItems": "All"` and `"AllAbilities": "All"` under `NIKS_ACTION_HUD.UI` in `lang/en.json`.
 
 ---
