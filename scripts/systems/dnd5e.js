@@ -324,10 +324,9 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 
 		for (const e of source) {
 			if (e.active === false) continue;
-			const hasStatus =
-				e.statuses instanceof Set
-					? e.statuses.size > 0
-					: Array.isArray(e.statuses) && e.statuses.length > 0;
+			// [V14 Compatible Only]: In Foundry V14, ActiveEffect#statuses is strictly a Set<string>.
+			// Array support from V13 and earlier has been dropped.
+			const hasStatus = e.statuses instanceof Set && e.statuses.size > 0;
 			if (!e.isTemporary && !hasStatus) continue;
 
 			const src = e.img || e.icon;

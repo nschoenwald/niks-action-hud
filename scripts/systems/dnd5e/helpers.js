@@ -77,16 +77,14 @@ export function _getSpells(actor) {
 
 		if (spells[lvl]) {
 			// 주문 구성 요소(V,S,M) 파싱 로직 강화
+			// [V14 Compatible Only]: In DnD5e v6+ / Foundry V14, system.properties is strictly a Set<string>.
+			// Legacy Array support from older versions has been dropped.
 			const compList = [];
 			const props = i.system.properties;
 			if (props instanceof Set) {
 				if (props.has("vocal")) compList.push("V");
 				if (props.has("somatic")) compList.push("S");
 				if (props.has("material")) compList.push("M");
-			} else if (Array.isArray(props)) {
-				if (props.includes("vocal")) compList.push("V");
-				if (props.includes("somatic")) compList.push("S");
-				if (props.includes("material")) compList.push("M");
 			}
 
 			const compStr = compList.join(", ");
@@ -407,9 +405,8 @@ export function _formatRange(item) {
 }
 
 export function _buildDnd5eAmmoHtml(weapon) {
-	const usesAmmo = weapon.system.properties instanceof Set
-		? weapon.system.properties.has("amm")
-		: Array.isArray(weapon.system.properties) && weapon.system.properties.includes("amm");
+	// [V14 Compatible Only]: In DnD5e v6+ (Foundry V14), weapon.system.properties is strictly a Set<string>
+	const usesAmmo = weapon.system.properties instanceof Set && weapon.system.properties.has("amm");
 	if (!usesAmmo) return "";
 
 	const weaponId = weapon.id;

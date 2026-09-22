@@ -408,9 +408,8 @@ export class BaseSystemAdapter {
 		await actor.update({ [targetPath]: newValue });
 	}
 
-	// Foundry V14 의 ActiveEffect#isTemporary 는 더 이상 statuses 만으로 true 가 아니다.
-	// (V13 까지는 statuses 가 있으면 무지속이어도 temporary 취급 → actor.temporaryEffects 에 포함)
-	// 따라서 temporaryEffects 대신 "지속시간 또는 statuses 가 있는 활성 효과"를 직접 모아 V13 동작을 복원한다.
+	// [V14 Compatible Only]: In Foundry V14, ActiveEffect#isTemporary requires duration and no longer
+	// returns true solely because statuses is populated. ActiveEffect#statuses is strictly a Set<string>.
 	getConditions(actor) {
 		const source = actor.appliedEffects ?? actor.effects ?? [];
 		const seen = new Set();
@@ -418,10 +417,8 @@ export class BaseSystemAdapter {
 
 		for (const e of source) {
 			if (e.active === false) continue;
-			const hasStatus =
-				e.statuses instanceof Set
-					? e.statuses.size > 0
-					: Array.isArray(e.statuses) && e.statuses.length > 0;
+			// [V14 Compatible Only]: ActiveEffect#statuses is strictly a Set<string> (Array support dropped)
+			const hasStatus = e.statuses instanceof Set && e.statuses.size > 0;
 			if (!e.isTemporary && !hasStatus) continue;
 
 			const src = e.img || e.icon;
@@ -455,21 +452,20 @@ export class BaseSystemAdapter {
 	}
 
 	/**
-	 * [HUD] 상태 이상 제거 (우클릭)
-	 * ActiveEffect 삭제 또는 시스템 데이터(Boolean) 토글을 시도합니다.
+	 * [HUD] 상태 이상을 제거합니다 (우클릭)
+	 * @param {Actor} actor
+	 * @param {String} conditionId
 	 */
 	async removeCondition(actor, conditionId) {
-		// 1. ActiveEffect 방식 시도 (표준)
+		// 1. 표준 ActiveEffect 목록에서 탐색
 		let effect = actor.effects.get(conditionId);
-
 		if (!effect) {
 			effect = actor.effects.find((e) => {
+				// [V14 Compatible Only]: ActiveEffect#statuses is strictly a Set<string>
 				if (e.statuses instanceof Set) return e.statuses.has(conditionId);
-				if (Array.isArray(e.statuses)) return e.statuses.includes(conditionId);
 				return e.flags?.core?.statusId === conditionId;
 			});
 		}
-
 		if (!effect) {
 			effect = actor.effects.find(
 				(e) => e.label === conditionId || e.name === conditionId,

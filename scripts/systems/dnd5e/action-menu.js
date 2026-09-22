@@ -90,6 +90,7 @@ function createOrderedItemsObject(itemsObj, firstKey = "all") {
 	});
 }
 
+// [V14 Compatible Only]: Check initiative status using V14 Combat#getCombatantsByToken
 function shouldShowInitiative(actor) {
 	const combat = game.combat;
 	if (!combat || combat.isActive === false) return false;
@@ -97,13 +98,10 @@ function shouldShowInitiative(actor) {
 	let combatant = null;
 
 	// 1. If synthetic actor with token document
+	// [V14 Compatible Only]: In Foundry V14, Combat#getCombatantsByToken returns an Array of matching combatants.
+	// The legacy Combat#getCombatantByToken method has been deprecated since V14.
 	if (actor.isToken && actor.token) {
-		if (typeof combat.getCombatantsByToken === "function") {
-			combatant = combat.getCombatantsByToken(actor.token)?.[0] ?? null;
-		}
-		if (!combatant) {
-			combatant = combat.combatants.find((c) => c.tokenId === actor.token.id) ?? null;
-		}
+		combatant = combat.getCombatantsByToken(actor.token)?.[0] ?? null;
 	}
 
 	// 2. If token is controlled on canvas or active on scene
@@ -116,12 +114,8 @@ function shouldShowInitiative(actor) {
 			null;
 		const tokenDoc = token?.document || null;
 		if (tokenDoc) {
-			if (typeof combat.getCombatantsByToken === "function") {
-				combatant = combat.getCombatantsByToken(tokenDoc)?.[0] ?? null;
-			}
-			if (!combatant) {
-				combatant = combat.combatants.find((c) => c.tokenId === tokenDoc.id) ?? null;
-			}
+			// [V14 Compatible Only]: Combat#getCombatantsByToken replaces deprecated Combat#getCombatantByToken
+			combatant = combat.getCombatantsByToken(tokenDoc)?.[0] ?? null;
 		}
 	}
 
@@ -303,22 +297,18 @@ export function _getSpellData(actor) {
 		// Components in v6 are in system.properties Set
 		const compList = [];
 		const props = i.system.properties;
+		// [V14 Compatible Only]: In DnD5e v6+ / Foundry V14, system.properties is strictly a Set<string>.
+		// Legacy Array support has been removed.
 		if (props instanceof Set) {
 			if (props.has("vocal")) compList.push("V");
 			if (props.has("somatic")) compList.push("S");
 			if (props.has("material")) compList.push("M");
-		} else if (Array.isArray(props)) {
-			if (props.includes("vocal")) compList.push("V");
-			if (props.includes("somatic")) compList.push("S");
-			if (props.includes("material")) compList.push("M");
 		}
 
 		const compStr = compList.join(", ");
 
 		let tags = "";
-		const hasProp = (k) =>
-			(props instanceof Set && props.has(k)) ||
-			(Array.isArray(props) && props.includes(k));
+		const hasProp = (k) => props instanceof Set && props.has(k);
 
 		if (hasProp("concentration")) {
 			tags += `<span class="ib-tag conc" title="Concentration">C</span>`;

@@ -2,6 +2,19 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.0.1] - 2026-09-22
+
+### Foundry V14 Exclusivity & V13 Deprecation Cleanup
+- **Dropped Legacy Foundry V13 Support**: Raised minimum required Foundry version to **14** in `module.json` (`"compatibility": { "minimum": "14", "verified": "14" }`).
+- **V14-Only Compatibility Annotations**: Added explicit `// [V14 Compatible Only]: ...` code comments throughout all changed areas documenting V14-specific structures and deprecations:
+  - **Scene Controls Hook (`getSceneControlButtons`)**: Removed legacy V13 `controls` Array searching and `tools.push()` fallbacks. Strictly handles `controls` as a `Record<string, SceneControl>` and `tools` as a `Record<string, SceneControlTool>` (`scripts/settings.js`).
+  - **Live Controls Access (`ui.controls`)**: Removed V13 Array traversal; strictly handles `ui.controls.controls` as `Map<string, SceneControl>` and `SceneControl.tools` as `Record<string, SceneControlTool>` (`scripts/settings.js`).
+  - **Combatant Queries (`Combat#getCombatantsByToken`)**: Removed legacy fallbacks and deprecated `Combat#getCombatantByToken`, standardizing on V14 `Combat#getCombatantsByToken` (`scripts/systems/dnd5e/action-menu.js`).
+  - **ActiveEffect Statuses & Temp Checks**: Removed legacy Array fallbacks for `ActiveEffect#statuses` across `BaseSystemAdapter` and `DnD5eAdapter`. Standardized on strict `Set<string>` handling and V14 duration requirements for `isTemporary` (`scripts/systems/base.js`, `scripts/systems/dnd5e.js`).
+  - **Item & Spell Properties (`Set<string>`)**: Removed legacy Array fallbacks for spell components and weapon ammunition properties, adhering strictly to DnD5e v6+ / Foundry V14 `Set<string>` architecture (`scripts/systems/dnd5e/action-menu.js`, `scripts/systems/dnd5e/helpers.js`).
+
+---
+
 ## [14.0.0] - 2026-09-22
 
 ### Default "All" Tab for Items & Abilities
