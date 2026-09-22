@@ -1,0 +1,3899 @@
+/* =========================================
+   Iron & Blood HUD - BASE STYLES
+   (Structural Layout & Functionality)
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap");
+
+/* =========================================
+   1. HUD LAYER CONTAINER
+   ========================================= */
+#ib-hud-layer {
+	position: fixed;
+	z-index: 60;
+	pointer-events: none;
+	perspective: 1500px;
+
+	/* Font Variables (set by JS, fallback to theme default) */
+	--hud-font-header: inherit;
+	--hud-font-body: inherit;
+
+	/* Global Positioning & Scaling (JS Variables) */
+	transform: translateX(var(--hud-tx, 0%)) scale(var(--global-scale, 1));
+	transform-origin: var(--hud-origin, bottom left);
+}
+
+/* [Behind UI Mode] - Render HUD behind FVTT core UI */
+#ib-hud-layer.behind-ui {
+	z-index: 20;
+}
+
+/* [MODE: STACK] - 세로 쌓기 레이아웃 */
+#ib-hud-layer.layout-stack {
+	bottom: var(--hud-bottom, 5%);
+	left: var(--hud-left, 0%);
+	top: var(--hud-top, auto);
+	right: var(--hud-right, auto);
+	display: flex;
+	flex-direction: column;
+	gap: var(--hud-gap, 10px);
+	align-items: flex-start;
+	width: auto;
+	height: auto;
+	padding: 0;
+	margin: 0;
+}
+
+/* Stack 모드 강제성: 카드는 JS 좌표 무시하고 흐름 따름 */
+#ib-hud-layer.layout-stack .ib-card {
+	position: relative !important;
+	top: auto !important;
+	left: auto !important;
+	margin-bottom: var(--hud-neg-margin, 0px);
+}
+
+/* [MODE: FREE] - 전체 화면 좌표계 */
+#ib-hud-layer.layout-free {
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	bottom: auto;
+	right: auto;
+	transform-origin: top left;
+}
+
+.ib-card.sah-card-hidden {
+	display: none !important;
+}
+
+/* =========================================
+   2. CARD BASE (Common Structure)
+   =========================================*/
+.ib-card {
+	pointer-events: auto;
+	position: relative;
+	transform-origin: left bottom;
+	zoom: var(--card-scale, 1);
+	transition:
+		transform 0.2s ease,
+		filter 0.2s ease;
+}
+
+#ib-hud-layer.edit-mode.layout-free .ib-card.layout-selected {
+	outline: 2px solid #4ecdc4;
+	outline-offset: 3px;
+	box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.25);
+}
+
+/* [Free Positioning Override] */
+.ib-card.is-free {
+	position: fixed !important;
+	margin: 0 !important;
+	top: var(--free-y, auto);
+	left: var(--free-x, auto);
+	z-index: var(--z-index, 100) !important;
+}
+
+/* [Background Layer] - 위치만 잡고 스타일은 테마 위임 */
+.ib-bg-layer {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+/* [Portrait] */
+.ib-portrait-wrapper {
+	position: relative;
+	z-index: 2;
+	overflow: hidden;
+}
+
+.ib-portrait {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: 50;
+	transform: scale(var(--portrait-scale, 1)) translate(var(--portrait-x, 0px), var(--portrait-y, 0px));
+	transform-origin: bottom center;
+	transition: filter 0.3s ease;
+	cursor: pointer;
+}
+
+.ib-portrait-layers {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.ib-portrait-layer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	pointer-events: none;
+	transform-origin: center center;
+}
+
+/* [Background Layer] - 위치만 잡고 스타일은 테마 위임 */
+.ib-bg-layer {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+.ib-bg-layers {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.ib-bg-layer-img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	pointer-events: none;
+	transform-origin: center center;
+}
+
+.application.dialog:has(.sah-edit-macro-content) {
+	display: flex;
+	flex-direction: column;
+}
+
+.application.dialog:has(.sah-edit-macro-content) > .window-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+}
+
+.dialog-form:has(.sah-edit-macro-content),
+.dialog-form:has(.sah-edit-macro-content) .dialog-content,
+.dialog-form:has(.sah-edit-macro-content) .form-footer {
+	width: 100%;
+}
+
+.dialog-form:has(.sah-edit-macro-content) {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+}
+
+.dialog-form:has(.sah-edit-macro-content) .dialog-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.dialog-form:has(.sah-edit-macro-content) .ib-dialog-content,
+.dialog-form:has(.sah-edit-macro-content) .sah-edit-macro-content {
+	flex: 1;
+	min-height: 0;
+}
+
+.dialog-form:has(.sah-edit-macro-content) .form-footer,
+.dialog-form:has(.sah-edit-macro-content) .dialog-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	position: static;
+	margin-top: auto;
+}
+
+.dialog-form:has(.sah-edit-macro-content) prose-mirror {
+	flex: 1;
+	min-height: 0;
+	height: -webkit-fill-available;
+	display: flex;
+	flex-direction: column;
+}
+
+.dialog-form:has(.sah-edit-macro-content) .prosemirror,
+.dialog-form:has(.sah-edit-macro-content) .ProseMirror {
+	height: -webkit-fill-available;
+	min-height: 0;
+}
+
+.dialog-form:has(.sah-edit-macro-content) prose-mirror .editor-menu {
+	flex: 0 0 auto;
+}
+
+.dialog-form:has(.sah-edit-macro-content) prose-mirror .editor-container {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+}
+
+.dialog-form:has(.sah-edit-macro-content) prose-mirror .editor-content {
+	min-height: 0;
+	height: 100%;
+}
+
+/* 오버레이 이미지 (피 얼룩, 해골 등) — 포트레잇 transform 추적 */
+.ib-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 51;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+	transform: scale(var(--portrait-scale, 1)) translate(var(--portrait-x, 0px), var(--portrait-y, 0px)) translate(var(--effect-x, 0px), var(--effect-y, 0px));
+	transform-origin: bottom center;
+}
+
+/* 틴트 레이어 (단색 필터) — 포트레잇 transform 추적 + 실루엣 마스킹 */
+.ib-tint {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 52;
+	pointer-events: none;
+	mix-blend-mode: multiply;
+	transition: opacity 0.3s ease;
+	transform: scale(var(--portrait-scale, 1)) translate(var(--portrait-x, 0px), var(--portrait-y, 0px)) translate(var(--effect-x, 0px), var(--effect-y, 0px));
+	transform-origin: bottom center;
+	mask-size: cover;
+	mask-position: center;
+	mask-repeat: no-repeat;
+	-webkit-mask-size: cover;
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+}
+
+/* [Ghost Container for Stats] */
+.ib-stats-box {
+	min-width: 0;
+}
+
+/* [Name Text] */
+.ib-name {
+	position: relative;
+	z-index: var(--name-z, 5);
+	pointer-events: none;
+	display: block;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+}
+
+.ib-name-text {
+	display: block;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex: 1;
+	font-family: var(--hud-font-header, inherit);
+	color: var(--name-color, inherit);
+}
+
+/* [Bar Position & Scale] */
+#ib-hud-layer .ib-bar-row {
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px)) scale(var(--bar-scale, 1));
+	transform-origin: center center;
+}
+
+/* [Labels and Values - Body Font] */
+.ib-bar-row .ib-label,
+.ib-pip-row .ib-label-text,
+.ib-number-row .ib-number-label,
+.ib-number-row .ib-number-value,
+.ib-badge-row .ib-badge-value {
+	font-family: var(--hud-font-body, inherit);
+}
+
+/* [Badge Value - Font Size Variable] */
+.ib-badge-row .ib-badge-value {
+	font-size: calc(1em * var(--value-font-size, 1));
+}
+
+/* [Rollable Stat Indicator] */
+.ib-rollable {
+	cursor: pointer;
+}
+
+.ib-rollable .ib-number-value,
+.ib-rollable .ib-badge-value,
+.ib-rollable .ib-label,
+.ib-rollable .ib-number-label,
+.ib-rollable .ib-label-text {
+	text-decoration: underline;
+	text-decoration-style: dotted;
+	text-underline-offset: 2px;
+	text-decoration-thickness: 1px;
+	text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+.ib-rollable:hover .ib-number-value,
+.ib-rollable:hover .ib-badge-value,
+.ib-rollable:hover .ib-label,
+.ib-rollable:hover .ib-number-label,
+.ib-rollable:hover .ib-label-text {
+	text-decoration-color: rgba(255, 255, 255, 0.8);
+}
+
+/* =========================================
+   11. SEPARATE DOTS WRAPPER
+   ========================================= */
+.ib-dots-wrapper {
+	position: absolute;
+	top: 0;
+	left: calc(100% + 25px);
+	width: 100%;
+	transform: translate(var(--dots-x, 0px), var(--dots-y, 0px));
+	pointer-events: none;
+	z-index: var(--dots-z, 20);
+}
+
+/* Re-enable pointer events for the dots themselves so they can be clicked/updated */
+.ib-dots-wrapper .ib-pip-row {
+	pointer-events: auto;
+}
+
+.ib-pip-val {
+	font-weight: bold;
+	color: var(--attr-color, #fff);
+}
+
+.ib-bars-wrapper {
+	position: relative;
+	z-index: var(--bars-z, 5);
+	width: 100%;
+}
+
+.ib-bar-row {
+	position: relative;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px));
+}
+
+.ib-bar-container {
+	flex: 1;
+	height: 100%;
+	position: relative;
+	overflow: visible;
+}
+
+.ib-bar-fill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: var(--percent, 100%);
+	z-index: 2;
+	transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Temp HP Bar Overlay */
+.ib-bar-temp {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	background-color: #5dade2;
+	/* Sky Blue */
+	width: var(--percent-temp, 0%);
+	z-index: 3;
+	opacity: 0.8;
+	transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+	box-shadow: 0 0 5px #5dade2;
+}
+
+.ib-bar-buffer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: var(--percent-prev, 100%);
+	background-color: #fff;
+	opacity: 0.5;
+	z-index: 1;
+	transition: width 0.8s ease-out 0.2s;
+}
+
+/* Linked segments and threshold markers share one non-layout overlay. */
+.ib-bar-guides {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+	z-index: 12;
+}
+
+/* Keep labels and values readable above the guide layer without covering icons. */
+#ib-hud-layer .ib-bar-row > .ib-label {
+	z-index: 13;
+}
+
+#ib-hud-layer .ib-bar-row > .ib-val {
+	z-index: 20;
+}
+
+.ib-bar-segment-line,
+.ib-bar-threshold-marker {
+	position: absolute;
+	left: var(--guide-position, 50%);
+	transform: translateX(-50%);
+	box-sizing: border-box;
+}
+
+.ib-bar-segment-line {
+	top: var(--bar-segment-inset, 2px);
+	bottom: var(--bar-segment-inset, 2px);
+	width: 1px;
+	background: var(--bar-segment-color, rgba(255, 255, 255, 0.32));
+	box-shadow: var(--bar-segment-shadow, 1px 0 0 rgba(0, 0, 0, 0.48));
+	opacity: var(--bar-segment-opacity, 0.72);
+}
+
+.ib-bar-threshold-marker {
+	top: 0;
+	bottom: 0;
+	width: min(12px, var(--bar-marker-hit-width, 12px));
+	background: none;
+	box-shadow: none;
+	pointer-events: auto;
+	cursor: help;
+}
+
+/* Thresholds are short illuminated grooves cut into the bar edge, keeping them
+   visually distinct from full-height segment boundaries. The marker element
+   stays wider only as a hover target. */
+.ib-bar-threshold-marker::before {
+	content: "";
+	position: absolute;
+	top: var(--bar-marker-offset, 0);
+	left: 50%;
+	width: min(100%, var(--bar-marker-width, 2px));
+	height: var(--bar-marker-depth, 6px);
+	max-height: calc(100% - var(--bar-marker-offset, 0px));
+	box-sizing: border-box;
+	background: var(
+		--bar-marker-groove-color,
+		color-mix(
+			in srgb,
+			var(--bar-marker-color, var(--marker-color, #fff)) 18%,
+			#08090c 82%
+		)
+	);
+	box-shadow:
+		inset 1px 0 0 color-mix(
+			in srgb,
+			var(--bar-marker-color, var(--marker-color, #fff)) 18%,
+			transparent
+		),
+		var(--bar-marker-shadow, 1px 0 0 rgba(0, 0, 0, 0.38));
+	transform: translateX(-50%);
+}
+
+.ib-bar-threshold-marker::after {
+	content: "";
+	position: absolute;
+	top: calc(var(--bar-marker-offset, 0px) + 1px);
+	left: 50%;
+	width: min(100%, 1px);
+	height: calc(var(--bar-marker-depth, 6px) - 1px);
+	box-sizing: border-box;
+	background: var(
+		--bar-marker-color,
+		color-mix(in srgb, var(--marker-color, #fff) 78%, #fff 22%)
+	);
+	box-shadow:
+		0 0 2px var(--bar-marker-color, var(--marker-color, #fff)),
+		0 0 4px color-mix(
+			in srgb,
+			var(--bar-marker-color, var(--marker-color, #fff)) 44%,
+			transparent
+		);
+	opacity: var(--bar-marker-opacity, 0.88);
+	transform: translateX(-50%);
+}
+
+/* Dense bars keep the carved profile while reducing the glow radius. */
+.ib-bar-threshold-marker.is-dense::before {
+	width: min(100%, 1px);
+	height: 4px;
+}
+
+.ib-bar-threshold-marker.is-dense::after {
+	height: 3px;
+	box-shadow: 0 0 2px color-mix(
+		in srgb,
+		var(--bar-marker-color, var(--marker-color, #fff)) 58%,
+		transparent
+	);
+	opacity: 0.82;
+}
+
+.ib-linked-value {
+	font-size: 0.78em;
+	opacity: 0.86;
+	white-space: nowrap;
+}
+
+.ib-segmented-bar > .ib-val {
+	white-space: nowrap;
+}
+
+.ib-linked-value::before {
+	content: "\00b7";
+	margin: 0 0.3em;
+	opacity: 0.7;
+}
+
+.ib-val {
+	position: absolute;
+	z-index: 10;
+}
+
+.ib-bar-row .ib-label {
+	z-index: 5;
+	transform: translate(var(--label-x, 0px), var(--label-y, 0px));
+	rotate: var(--label-rot, 0deg);
+	writing-mode: var(--label-writing, horizontal-tb);
+	text-orientation: upright;
+	color: var(--label-color, inherit);
+	font-size: calc(1em * var(--label-font-size, 1));
+}
+
+.ib-bar-row > .ib-val {
+	transform: translate(var(--val-x, 0px), var(--val-y, 0px));
+	rotate: var(--val-rot, 0deg);
+	writing-mode: var(--val-writing, horizontal-tb);
+	text-orientation: upright;
+	color: var(--value-color, inherit);
+	font-size: calc(1em * var(--value-font-size, 1));
+}
+
+.ib-broken {
+	text-decoration: line-through;
+	text-decoration-thickness: 2px;
+	opacity: 0.6;
+}
+
+.ib-pip-row .ib-label-text {
+	color: var(--label-color, inherit);
+	font-size: calc(1em * var(--label-font-size, 1));
+}
+
+.ib-number-row .ib-number-label {
+	transform: translate(var(--num-label-x, 0px), var(--num-label-y, 0px));
+	color: var(--label-color, inherit);
+	font-size: calc(1em * var(--label-font-size, 1));
+}
+
+.ib-number-row .ib-number-value {
+	transform: translate(var(--num-val-x, 0px), var(--num-val-y, 0px));
+	color: var(--value-color, inherit);
+	font-size: calc(1em * var(--value-font-size, 1));
+}
+
+/* [Conditions] */
+.ib-conditions {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	z-index: var(--conditions-z, 20);
+	pointer-events: none;
+	gap: 2px;
+	transform: translate(var(--conditions-x, 0px), var(--conditions-y, 0px));
+}
+
+#ib-hud-layer .ib-conditions[data-conditions-layout="vertical"] {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+	width: max-content;
+}
+
+#ib-hud-layer .ib-conditions[data-conditions-layout="hidden"] {
+	display: none !important;
+}
+
+/* 아이콘 래퍼 (아이콘+숫자) */
+.ib-cond-item {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: auto;
+}
+
+/* 기존 아이콘 스타일 */
+.ib-cond-icon {
+	width: 22px;
+	height: 22px;
+	object-fit: contain;
+}
+
+.ib-cond-manage {
+	width: 20px;
+	height: 20px;
+	min-width: 0;
+	min-height: 0;
+	margin: 1px 0 0;
+	padding: 0;
+	border: 1px solid rgba(255, 255, 255, 0.45);
+	border-radius: 50%;
+	background: rgba(12, 16, 22, 0.82);
+	color: #fff;
+	font-size: 10px;
+	line-height: 18px;
+	text-align: center;
+	cursor: pointer;
+	pointer-events: auto;
+	opacity: 0.4;
+	transition: opacity 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.ib-card:hover .ib-cond-manage,
+.ib-cond-manage:hover,
+.ib-cond-manage:focus-visible {
+	opacity: 1;
+	border-color: rgba(255, 255, 255, 0.9);
+	background: rgba(44, 94, 120, 0.95);
+}
+
+/* 숫자 뱃지 스타일 */
+.ib-cond-val {
+	position: absolute;
+	bottom: -2px;
+	right: -2px;
+	background: rgba(0, 0, 0, 0.85);
+	color: #fff;
+	font-family: "Oswald", sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	padding: 0 3px;
+	border-radius: 3px;
+	border: 1px solid #555;
+	line-height: 1;
+	pointer-events: none;
+	z-index: 10;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.sah-status-picker {
+	position: fixed;
+	z-index: 1000002;
+	width: min(360px, calc(100vw - 24px));
+	max-height: min(560px, calc(100vh - 24px));
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 10px;
+	border: 1px solid rgba(150, 205, 230, 0.7);
+	border-radius: 8px;
+	background: rgba(16, 21, 28, 0.97);
+	color: #edf8ff;
+	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+	backdrop-filter: blur(8px);
+}
+
+.sah-status-picker-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.sah-status-picker-header strong {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sah-status-picker-close {
+	width: 24px;
+	height: 24px;
+	min-width: 24px;
+	min-height: 24px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.sah-status-picker-hint {
+	margin: 0;
+	color: rgba(225, 239, 247, 0.7);
+	font-size: 11px;
+	line-height: 1.35;
+}
+
+.sah-status-picker-search {
+	width: 100%;
+	margin: 0;
+}
+
+.sah-status-picker-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 6px;
+	overflow-y: auto;
+	padding: 2px;
+}
+
+.sah-status-picker-item {
+	position: relative;
+	min-width: 0;
+	min-height: 68px;
+	margin: 0;
+	padding: 6px 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	border-radius: 6px;
+	background: rgba(255, 255, 255, 0.045);
+	color: inherit;
+	cursor: pointer;
+}
+
+.sah-status-picker-item:hover,
+.sah-status-picker-item:focus-visible {
+	border-color: rgba(150, 205, 230, 0.85);
+	background: rgba(90, 170, 205, 0.16);
+}
+
+.sah-status-picker-item.active {
+	border-color: #68d391;
+	background: rgba(72, 187, 120, 0.18);
+	box-shadow: inset 0 0 0 1px rgba(104, 211, 145, 0.25);
+}
+
+.sah-status-picker-item img {
+	width: 30px;
+	height: 30px;
+	object-fit: contain;
+}
+
+.sah-status-picker-item > span {
+	width: 100%;
+	overflow: hidden;
+	color: inherit;
+	font-size: 10px;
+	line-height: 1.15;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sah-status-picker-value {
+	position: absolute;
+	top: 3px;
+	right: 4px;
+	min-width: 16px;
+	padding: 1px 4px;
+	border-radius: 8px;
+	background: rgba(0, 0, 0, 0.82);
+	color: #fff;
+	font-size: 10px;
+	line-height: 14px;
+	text-align: center;
+}
+
+/* =========================================
+   4. UTILITIES & ANIMATIONS
+   ========================================= */
+
+/* [Hit Feedback] */
+#ib-hud-layer .ib-card.hit-shake {
+	animation: hit-glitch 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes hit-glitch {
+	0% {
+		transform: var(--hit-shake-base, ) translate(0);
+	}
+
+	20% {
+		transform: var(--hit-shake-base, ) translate(-5px, 5px);
+		filter: hue-rotate(90deg);
+	}
+
+	40% {
+		transform: var(--hit-shake-base, ) translate(5px, -5px);
+		filter: invert(1);
+	}
+
+	60% {
+		transform: var(--hit-shake-base, ) translate(-5px, 0);
+		filter: none;
+	}
+
+	80% {
+		transform: var(--hit-shake-base, ) translate(5px, 0);
+	}
+
+	100% {
+		transform: var(--hit-shake-base, ) translate(0);
+	}
+}
+
+@keyframes bar-shine {
+	0% {
+		background-position: 100% 0;
+	}
+
+	100% {
+		background-position: -100% 0;
+	}
+}
+
+/* [Action Menu Global Layout] */
+#ib-action-root {
+	position: fixed;
+	z-index: 100;
+
+	zoom: var(--am-scale, 1);
+
+	pointer-events: none;
+
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: flex-end !important;
+	width: 240px !important;
+
+	height: auto;
+	gap: 0;
+}
+
+#ib-action-root.am-hidden {
+	display: none !important;
+}
+
+#ib-action-menu {
+	position: relative;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: flex-end !important;
+
+	width: 100% !important;
+
+	gap: 12px;
+	pointer-events: auto;
+	z-index: 2;
+}
+
+#ib-sub-menu-container {
+	position: absolute;
+	right: 100% !important;
+
+	/* [기본 상태: 아래로 열림] */
+	margin-right: 10px;
+
+	top: 0;
+	width: 350px;
+	display: none;
+	flex-direction: column;
+	pointer-events: auto;
+	z-index: 1;
+	bottom: auto;
+	transition: none;
+}
+
+/* [추가 상태: 위로 열림] */
+#ib-sub-menu-container.align-up {
+	top: auto;
+	bottom: 0;
+	margin-right: 15px;
+}
+
+/* [추가 상태: 오른쪽으로 열림] */
+#ib-sub-menu-container.align-right {
+	right: auto !important;
+	left: 100% !important;
+	margin-right: 0;
+	margin-left: 10px;
+}
+
+#ib-sub-menu-container.align-right.align-up {
+	margin-right: 0;
+	margin-left: 15px;
+}
+
+#ib-sub-menu-container.active {
+	display: flex;
+}
+
+.ib-scroll-area {
+	overflow-y: auto;
+	overflow-x: hidden;
+	flex: 1;
+}
+
+#ib-action-root.edit-mode {
+	pointer-events: auto;
+	border: 2px dashed #4ecdc4;
+	background: rgba(0, 0, 0, 0.2);
+	cursor: grab;
+}
+
+#ib-action-root.edit-mode::after {
+	content: "DRAG ME";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-family: "Teko", sans-serif;
+	font-weight: 900;
+	font-size: 2.5em;
+	color: #4ecdc4;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+	white-space: nowrap;
+	z-index: 100002;
+	pointer-events: none;
+}
+
+#ib-action-root.edit-mode * {
+	pointer-events: none !important;
+}
+
+/* [Floating Input] */
+#ib-floating-input {
+	position: fixed;
+	z-index: 10000;
+	background: rgba(10, 10, 10, 0.95);
+	border: 2px solid #e61c34;
+	color: #fff;
+	font-family: "Teko", sans-serif;
+	font-size: 1.8em;
+	font-weight: bold;
+	text-align: center;
+	width: 120px;
+	padding: 5px;
+	border-radius: 4px;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 0 15px rgba(230, 28, 52, 0.5);
+	outline: none;
+}
+
+/* =========================================
+   5. EDIT MODE (STRUCTURAL OVERRIDES)
+   ========================================= */
+
+#ib-hud-layer.edit-mode {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 100000 !important;
+	background: transparent;
+	pointer-events: none;
+}
+
+#ib-hud-layer.edit-mode .ib-card {
+	pointer-events: auto !important;
+	z-index: 100001 !important;
+	box-shadow: none !important;
+	border: 2px dashed #4ecdc4 !important;
+	cursor: grab;
+	transition: none !important;
+	animation: none !important;
+}
+
+#ib-hud-layer.edit-mode .ib-card.ui-draggable-dragging {
+	cursor: grabbing;
+	border-style: solid !important;
+	border-color: #fff !important;
+	/* 드래그 중에도 형태 유지 */
+}
+
+/* "DRAG ME" Text */
+#ib-hud-layer.edit-mode .ib-card::after {
+	content: "DRAG ME";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-family: "Teko", sans-serif;
+	font-weight: 900;
+	font-size: 2.5em;
+	color: #4ecdc4;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+	white-space: nowrap;
+	z-index: 100002;
+	pointer-events: none;
+}
+
+/* Disable inner contents during edit */
+#ib-hud-layer.edit-mode .ib-card>*:not(::after) {
+	opacity: 0.3;
+	pointer-events: none;
+	filter: grayscale(100%);
+}
+
+/* Edit Widget */
+#ib-layout-control {
+	position: fixed;
+	top: 50px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(10, 10, 10, 0.95);
+	border: 2px solid #e61c34;
+	border-radius: 50px;
+	padding: 10px 25px;
+	z-index: 100010;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+	pointer-events: auto;
+	color: #fff;
+	font-family: "Teko", sans-serif;
+}
+
+#ib-layout-control button {
+	background: #333;
+	border: 1px solid #555;
+	color: #fff;
+	padding: 5px 20px;
+	border-radius: 20px;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 1.2em;
+	transition: background 0.2s;
+}
+
+#ib-layout-control button:hover {
+	background: #555;
+}
+
+#ib-layout-control button#ib-save-layout {
+	background: #e61c34;
+	border-color: #e61c34;
+}
+
+#ib-layout-control button#ib-save-layout:hover {
+	background: #ff2d49;
+}
+
+/* =========================================
+   6. COMMON FONTS & ICONS
+   ========================================= */
+.material-symbols-outlined {
+	font-family: "Material Symbols Outlined", sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+}
+
+.ib-font-hero {
+	font-family: "Bebas Neue", "Oswald", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.ib-info-main {
+	color: #fff;
+}
+
+.ib-info-sub {
+	color: #888;
+}
+
+/* =========================================
+   ACTION MENU IDENTITY HEADER (FIXED)
+   ========================================= */
+
+.ib-identity-header {
+	position: absolute;
+	bottom: 100%;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	margin-bottom: 15px;
+	text-align: right;
+	pointer-events: none;
+	width: max-content;
+	max-width: 300px;
+}
+
+/* [Text] */
+.ib-identity-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.ib-identity-name {
+	font-family: "Teko", sans-serif;
+	font-size: 2.2em;
+	line-height: 0.9;
+	color: #fff;
+	text-shadow: 2px 2px 0 #000;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.ib-am-end-turn-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	margin-left: 8px;
+	vertical-align: middle;
+	background: rgba(230, 28, 52, 0.8);
+	border-radius: 4px;
+	color: #fff;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background 0.15s;
+}
+
+.ib-am-end-turn-btn:hover {
+	background: rgba(230, 28, 52, 1);
+}
+
+.ib-identity-sub {
+	font-family: "Oswald", sans-serif;
+	font-size: 0.9em;
+	color: #e61c34;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+
+/* [Image Box] */
+.ib-identity-img-box {
+	width: 60px;
+	height: 60px;
+	border: 2px solid #fff;
+	background: #000;
+	overflow: hidden;
+	flex-shrink: 0;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+}
+
+.ib-identity-img-box img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transform: none;
+}
+
+/* =========================================
+   8. BOTTOM-UP STACKING FIX
+   ========================================= */
+
+/* 
+   헤더와 즐겨찾기를 감싸는 래퍼
+*/
+.ib-top-stack {
+	position: absolute;
+	bottom: 100%;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 0;
+	width: max-content;
+	pointer-events: none;
+	z-index: 10;
+}
+
+/* 내부 자식들은 클릭 가능해야 함 */
+.ib-top-stack>* {
+	pointer-events: auto;
+}
+
+/* =========================================
+   [LAYOUT] Sidebar Structure (No Colors)
+   ========================================= */
+
+.ib-sub-menu.layout-sidebar {
+	display: flex !important;
+	flex-direction: row !important;
+	padding: 0 !important;
+	overflow: hidden;
+}
+
+.ib-sidebar-panel {
+	width: 90px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+	gap: 2px;
+}
+
+.ib-side-tab {
+	padding: 8px 5px;
+	text-align: center;
+	cursor: pointer;
+	font-size: 0.9em;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	word-break: break-word;
+	line-height: 1.1;
+}
+
+.ib-main-panel {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	position: relative;
+}
+
+/* =========================================
+   RICH TOOLTIP (팝업 상세설명)
+   ========================================= */
+#ib-rich-tooltip {
+	position: fixed;
+	visibility: hidden;
+	z-index: 10000;
+	top: -10000px;
+	left: -10000px;
+	width: 350px;
+	max-height: min(500px, calc(100vh - 30px));
+	max-width: min(350px, calc(100vw - 30px));
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: var(--tooltip-bg, rgba(15, 15, 20, 0.95));
+	border: 1px solid var(--tooltip-border, #444);
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+	border-radius: 4px;
+	padding: 15px;
+	color: var(--tooltip-text, #ccc);
+	font-size: 0.9em;
+	line-height: 1.4;
+	pointer-events: none;
+	opacity: 0;
+	transition:
+		opacity 0.12s ease-out,
+		visibility 0.12s;
+}
+
+#ib-rich-tooltip.active {
+	visibility: visible;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* 툴팁 내부 헤더 (아이템 이름) */
+.ib-tooltip-header {
+	/* 헤더 하단 줄도 테마 포인트 컬러(accent)를 따라가도록 변경 */
+	border-bottom: 2px solid var(--g-accent, #4ecdc4);
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ib-tooltip-title {
+	font-family: "Teko", sans-serif;
+	font-size: 1.4em;
+	color: var(--tooltip-header, #fff);
+	font-weight: bold;
+}
+
+.ib-tooltip-meta {
+	font-size: 0.8em;
+	color: #888;
+	margin-left: auto;
+}
+
+/* 시스템별 본문 스타일 보정 (Foundry 기본 스타일 상속) */
+#ib-rich-tooltip .editor-content p {
+	margin-bottom: 0.5em;
+}
+
+#ib-rich-tooltip .editor-content strong {
+	color: #fff;
+}
+
+/* =========================================
+   SEARCH BAR
+   ========================================= */
+.ib-search-container {
+	padding: 5px 10px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+	/* 크기 고정 */
+}
+
+.ib-search-container i {
+	color: #888;
+	font-size: 0.9em;
+}
+
+.ib-search-input {
+	flex: 1;
+	min-width: 0;
+	background: transparent;
+	border: none;
+	color: #fff;
+	font-family: "Oswald", sans-serif;
+	font-size: 1em;
+	outline: none;
+}
+
+.ib-favorite-view-controls {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	flex-shrink: 0;
+}
+
+.ib-favorite-view-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 25px;
+	height: 24px;
+	padding: 0;
+	color: #888;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 3px;
+	cursor: pointer;
+	transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.ib-search-container .ib-favorite-view-btn i {
+	color: inherit !important;
+	font-size: 0.78em;
+}
+
+.ib-favorite-view-btn:hover,
+.ib-favorite-view-btn:focus-visible {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.1);
+	border-color: rgba(255, 255, 255, 0.35);
+	outline: none;
+}
+
+.ib-favorite-view-btn.active {
+	color: #f1c40f;
+	background: rgba(241, 196, 15, 0.12);
+	border-color: rgba(241, 196, 15, 0.6);
+}
+
+#ib-action-root .ib-quick-slot[draggable="true"] {
+	position: relative;
+	cursor: grab;
+	user-select: none;
+}
+
+#ib-action-root .ib-quick-slot.is-dragging {
+	opacity: 0.42;
+	cursor: grabbing;
+}
+
+#ib-action-root .ib-quick-slot.drop-before::before,
+#ib-action-root .ib-quick-slot.drop-after::after {
+	content: "";
+	position: absolute;
+	top: 3px;
+	bottom: 3px;
+	width: 3px;
+	background: #f1c40f;
+	border-radius: 3px;
+	box-shadow: 0 0 7px rgba(241, 196, 15, 0.9);
+	z-index: 100;
+	pointer-events: none;
+}
+
+#ib-action-root .ib-quick-slot.drop-before::before {
+	left: 1px;
+}
+
+#ib-action-root .ib-quick-slot.drop-after::after {
+	right: 1px;
+}
+
+#ib-linked-resource-editor {
+	--ib-linked-editor-accent: #e61c34;
+	position: fixed;
+	z-index: 100001;
+	width: 228px;
+	box-sizing: border-box;
+	padding: 8px;
+	background: rgba(10, 12, 16, 0.97);
+	border: 1px solid color-mix(in srgb, var(--ib-linked-editor-accent) 78%, #fff 22%);
+	border-radius: 5px;
+	box-shadow:
+		0 8px 24px rgba(0, 0, 0, 0.5),
+		0 0 12px color-mix(in srgb, var(--ib-linked-editor-accent) 30%, transparent);
+	font-family: var(--hud-font-body, "Teko", sans-serif);
+}
+
+.ib-linked-resource-field {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 82px;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+.ib-linked-resource-field + .ib-linked-resource-field {
+	margin-top: 6px;
+}
+
+.ib-linked-resource-field-label {
+	min-width: 0;
+	overflow: hidden;
+	color: rgba(255, 255, 255, 0.78);
+	font-size: 13px;
+	line-height: 1.1;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ib-linked-resource-field-input {
+	width: 82px;
+	height: 28px;
+	box-sizing: border-box;
+	padding: 2px 6px;
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 3px;
+	outline: none;
+	color: #fff;
+	font: 700 18px/1 "Teko", sans-serif;
+	text-align: center;
+}
+
+.ib-linked-resource-field-input:focus {
+	border-color: var(--ib-linked-editor-accent);
+	box-shadow: 0 0 7px color-mix(in srgb, var(--ib-linked-editor-accent) 45%, transparent);
+}
+
+.ib-linked-resource-editor-hint {
+	margin-top: 5px;
+	color: rgba(255, 255, 255, 0.42);
+	font-size: 10px;
+	line-height: 1;
+	text-align: right;
+}
+
+.ib-search-input::placeholder {
+	color: #666;
+	font-style: italic;
+}
+
+/* =========================================
+   SPELL SLOT & DC BADGES
+   ========================================= */
+
+.ib-slot-text {
+	font-size: 0.85em;
+	color: #aaa;
+	font-weight: normal;
+}
+
+.ib-slot-text.empty {
+	color: #f55;
+}
+
+/* =========================================
+   TAB CONTAINER (Horizontal Scroll Fix)
+   ========================================= */
+
+.ib-magic-tabs {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.ib-magic-tabs::-webkit-scrollbar {
+	height: 4px;
+}
+
+.ib-magic-tabs::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.ib-magic-tabs::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 2px;
+}
+
+.ib-magic-tabs::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.ib-dc-badge {
+	display: inline-block;
+	font-size: 0.75em;
+	color: #4ecdc4;
+	background: rgba(78, 205, 196, 0.15);
+	padding: 1px 4px;
+	border-radius: 3px;
+	margin-left: 4px;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+/* =========================================
+   END TURN BUTTON
+   ========================================= */
+
+/* 기본 상태: 숨김 */
+.ib-end-turn-btn {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	z-index: 100;
+
+	width: 32px;
+	height: 32px;
+
+	background: rgba(0, 0, 0, 0.6);
+	border: 2px solid #fff;
+	border-radius: 50%;
+	color: #fff;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	font-size: 14px;
+	cursor: pointer;
+
+	opacity: 0;
+	/* 투명 */
+	pointer-events: none;
+	/* 클릭 불가 */
+	transform: scale(0.8);
+	translate: var(--end-turn-x, 0px) var(--end-turn-y, 0px);
+	transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 호버 효과 */
+.ib-end-turn-btn:hover {
+	background: #e61c34;
+	/* Accent Color */
+	transform: scale(1.1) !important;
+	box-shadow: 0 0 10px #e61c34;
+}
+
+/* 카드가 'is-turn' 클래스를 가질 때만 보임 */
+.ib-card.is-turn .ib-end-turn-btn {
+	opacity: 1;
+	pointer-events: auto;
+	transform: scale(1);
+
+	/* 시선을 끄는 펄스 애니메이션 */
+	animation: ib-pulse-white 2s infinite;
+}
+
+/* 펄스 애니메이션 정의 */
+@keyframes ib-pulse-white {
+	0% {
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+	}
+
+	70% {
+		box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+	}
+}
+
+/* [Drag & Drop Feedback] */
+#ib-action-root.drag-hover {
+	border: 2px dashed #4ecdc4 !important;
+	background: rgba(78, 205, 196, 0.15) !important;
+	box-shadow: 0 0 20px rgba(78, 205, 196, 0.4) !important;
+	transform: scale(1.05) !important;
+	transition: all 0.2s ease;
+}
+
+/* "DROP MACRO" 텍스트 오버레이 */
+#ib-action-root.drag-hover::after {
+	content: attr(data-drag-text);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	font-family: "Teko", sans-serif;
+	font-size: 2.5em;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 0 0 10px #4ecdc4;
+
+	pointer-events: none;
+	z-index: 1000;
+	white-space: nowrap;
+}
+
+/* 드래그 중에는 내부 요소 흐리게 */
+#ib-action-root.drag-hover>* {
+	opacity: 0.3;
+	filter: blur(2px);
+}
+
+/* 카테고리 버튼 내 이미지 스타일 */
+.ib-cat-btn-img {
+	width: 24px;
+	/* 크기 명시 */
+	height: 24px;
+	object-fit: contain;
+	/* 비율 유지 */
+	display: block;
+	/* 인라인 요소라 높이 안 먹는 문제 방지 */
+	filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+/* 기존 아이콘 스타일과 위치를 맞추기 위해 */
+.ib-btn-content {
+	/* 이미지가 텍스트 옆에 예쁘게 붙도록 */
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	width: 100%;
+}
+
+/* =========================================
+   AM IMAGE LAYERS & ELEMENT IMAGES
+   ========================================= */
+
+.ib-am-layers {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.ib-am-layers img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	pointer-events: none;
+}
+
+.ib-am-btn-frame,
+.ib-am-element-img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	pointer-events: none;
+	z-index: 0;
+}
+
+.theme-image .ib-sub-menu {
+	position: relative;
+}
+
+.theme-image .ib-menu-header {
+	position: relative;
+}
+
+.theme-image .ib-sidebar-panel {
+	position: relative;
+}
+
+.theme-image .ib-magic-tabs {
+	position: relative;
+}
+
+.theme-image .ib-quick-slot-container {
+	position: relative;
+}
+
+.theme-image .ib-identity-header {
+	position: relative;
+}
+
+.theme-image .ib-list-item {
+	position: relative;
+}
+
+/* =========================================
+   CUSTOM IMAGE BUTTON (Background Fill Mode)
+   Retains Theme Borders & Shape
+   ========================================= */
+
+/* 
+   테마(.theme-iron, .theme-glass)와 순서 상관없이
+   'is-custom-btn' 클래스가 있으면 배경색만 투명하게 만들고 이미지를 보여줌
+*/
+
+:is(#ib-action-menu, .ib-menu-live-buttons) .ib-action-btn.is-custom-btn,
+:is(#ib-action-menu, .ib-menu-live-buttons) .ib-action-btn.is-custom-btn:first-of-type {
+	/* 1. 배경색/그라데이션 제거 (이미지가 보이도록) */
+	background: transparent !important;
+	background-image: none !important;
+
+	/* 3. 이미지가 테두리 밖으로 삐져나가지 않게 자름 */
+	overflow: hidden !important;
+
+	/* 4. 텍스트 가독성 확보 (이미지 위라서) */
+	color: #fff !important;
+	text-shadow:
+		0 0 5px #000,
+		0 0 10px #000,
+		2px 2px 0 #000 !important;
+}
+
+/* 호버 시: 배경색이 덮어씌워지는 것 방지 */
+:is(#ib-action-menu, .ib-menu-live-buttons) .ib-action-btn.is-custom-btn:hover,
+:is(#ib-action-menu, .ib-menu-live-buttons) .ib-action-btn.is-custom-btn:first-of-type:hover {
+	background: transparent !important;
+	background-image: none !important;
+
+	/* 이미지만 살짝 밝아짐 */
+	filter: brightness(1.2);
+
+	/* 테마 고유의 호버 이동(transform)은 유지됨 */
+}
+
+/* -----------------------------------------
+   이미지 위치 및 정렬
+   ----------------------------------------- */
+
+/* 이미지 태그 */
+:is(#ib-action-menu, .ib-menu-live-buttons) .ib-action-btn.is-custom-btn .ib-custom-bg {
+	display: block !important;
+	position: absolute !important;
+
+	top: 50% !important;
+	left: 50% !important;
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover !important;
+	/* 꽉 채우기 */
+
+	z-index: 0 !important;
+	pointer-events: none;
+	opacity: 1 !important;
+
+	/* ★ 핵심: JS에서 받은 변수 + 테마별 역보정 변수(--bg-unskew) 적용 */
+	/* 순서: 중앙정렬 -> 사용자이동 -> 확대 -> 비틀기보정 */
+	transform: translate(-50%, -50%) translate(var(--img-x, 0px), var(--img-y, 0px)) scale(var(--img-scale, 1)) skewX(var(--bg-unskew, 0deg)) !important;
+
+	transition: transform 0.1s ease;
+}
+
+.theme-iron .ib-custom-bg,
+.theme-glass .ib-custom-bg {
+	--bg-unskew: 10deg;
+	/* 이미지가 꽉 차 보이도록 기본 스케일을 약간 키워주는 팁 (빈틈 방지) */
+	width: 110% !important;
+	height: 110% !important;
+}
+
+/* 내용물(글자/아이콘)을 이미지 위로 올림 */
+:is(#ib-action-menu, .ib-menu-live-buttons) .ib-action-btn.is-custom-btn .ib-btn-content {
+	position: relative !important;
+	z-index: 10 !important;
+	width: 100%;
+	height: 100%;
+
+	/* 패딩은 테마 기본값 따름 */
+}
+
+/* -----------------------------------------
+   [Animations] 상태이상 효과 (오버레이 & 틴트 공용)
+   ----------------------------------------- */
+
+/* 1. Pulse (서서히 깜빡임 - 은신, 기절 등) */
+@keyframes ib-anim-pulse {
+	0% {
+		opacity: var(--overlay-opacity);
+	}
+
+	50% {
+		opacity: calc(var(--overlay-opacity) * 0.5);
+	}
+
+	100% {
+		opacity: var(--overlay-opacity);
+	}
+}
+
+/* 수정: .ib-overlay 접두사 제거 -> .anim-pulse */
+.anim-pulse {
+	animation: ib-anim-pulse 2s infinite ease-in-out;
+}
+
+/* 2. Heartbeat (두근거림 - 위기, 공포) */
+@keyframes ib-anim-heartbeat {
+	0% {
+		transform: scale(1);
+	}
+
+	14% {
+		transform: scale(1.05);
+	}
+
+	28% {
+		transform: scale(1);
+	}
+
+	42% {
+		transform: scale(1.05);
+	}
+
+	70% {
+		transform: scale(1);
+	}
+}
+
+.anim-heartbeat {
+	animation: ib-anim-heartbeat 1.5s infinite ease-in-out;
+}
+
+/* 3. Flash (빠르게 번쩍임 - 치명상, 감전) */
+@keyframes ib-anim-flash {
+
+	0%,
+	50%,
+	100% {
+		opacity: var(--overlay-opacity);
+	}
+
+	25%,
+	75% {
+		opacity: 0;
+	}
+}
+
+.anim-flash {
+	animation: ib-anim-flash 0.5s infinite;
+}
+
+/* 4. Shake (흔들림 - 혼란, 지진) */
+@keyframes ib-anim-shake {
+	0% {
+		transform: translate(1px, 1px) rotate(0deg);
+	}
+
+	10% {
+		transform: translate(-1px, -2px) rotate(-1deg);
+	}
+
+	20% {
+		transform: translate(-3px, 0px) rotate(1deg);
+	}
+
+	30% {
+		transform: translate(3px, 2px) rotate(0deg);
+	}
+
+	40% {
+		transform: translate(1px, -1px) rotate(1deg);
+	}
+
+	50% {
+		transform: translate(-1px, 2px) rotate(-1deg);
+	}
+
+	60% {
+		transform: translate(-3px, 1px) rotate(0deg);
+	}
+
+	70% {
+		transform: translate(3px, 1px) rotate(-1deg);
+	}
+
+	80% {
+		transform: translate(-1px, -1px) rotate(1deg);
+	}
+
+	90% {
+		transform: translate(1px, 2px) rotate(0deg);
+	}
+
+	100% {
+		transform: translate(1px, -2px) rotate(-1deg);
+	}
+}
+
+.anim-shake {
+	animation: ib-anim-shake 0.8s infinite;
+}
+
+/* 5. Glitch (지지직거림 - 마법적 간섭, 저주) */
+@keyframes ib-anim-glitch {
+	0% {
+		clip-path: inset(40% 0 61% 0);
+		transform: translate(-2px, 2px);
+	}
+
+	20% {
+		clip-path: inset(92% 0 1% 0);
+		transform: translate(2px, -2px);
+	}
+
+	40% {
+		clip-path: inset(43% 0 1% 0);
+		transform: translate(2px, 2px);
+	}
+
+	60% {
+		clip-path: inset(25% 0 58% 0);
+		transform: translate(-2px, -2px);
+	}
+
+	80% {
+		clip-path: inset(54% 0 7% 0);
+		transform: translate(2px, 2px);
+	}
+
+	100% {
+		clip-path: inset(58% 0 43% 0);
+		transform: translate(-2px, -2px);
+	}
+}
+
+.anim-glitch {
+	animation: ib-anim-glitch 0.3s infinite linear alternate-reverse;
+	opacity: 0.8;
+}
+
+/* 6. Spin (회전 - 현기증) */
+@keyframes ib-anim-spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.anim-spin {
+	animation: ib-anim-spin 8s infinite linear;
+}
+
+/* -----------------------------------------
+   [Tint Special] 틴트 전용 대체 애니메이션
+   (위치/크기 대신 투명도를 조절하여 빈틈이 생기지 않게 함)
+   ----------------------------------------- */
+
+/* 1. Tint Shake (위치 진동 -> 투명도 깜빡임/Strobe 효과) */
+@keyframes ib-anim-tint-shake {
+	0% {
+		opacity: var(--overlay-opacity);
+	}
+
+	10% {
+		opacity: calc(var(--overlay-opacity) * 0.7);
+	}
+
+	20% {
+		opacity: var(--overlay-opacity);
+	}
+
+	30% {
+		opacity: calc(var(--overlay-opacity) * 0.6);
+	}
+
+	40% {
+		opacity: var(--overlay-opacity);
+	}
+
+	50% {
+		opacity: calc(var(--overlay-opacity) * 0.8);
+	}
+
+	60% {
+		opacity: var(--overlay-opacity);
+	}
+
+	70% {
+		opacity: calc(var(--overlay-opacity) * 0.5);
+	}
+
+	80% {
+		opacity: var(--overlay-opacity);
+	}
+
+	90% {
+		opacity: calc(var(--overlay-opacity) * 0.7);
+	}
+
+	100% {
+		opacity: var(--overlay-opacity);
+	}
+}
+
+.anim-tint-shake {
+	animation: ib-anim-tint-shake 0.8s infinite;
+}
+
+/* 2. Tint Heartbeat (크기 확대 -> 투명도 박동) */
+/* 쿵-쿵-... 쿵-쿵-... 리듬 구현 */
+@keyframes ib-anim-tint-heartbeat {
+	0% {
+		opacity: var(--overlay-opacity);
+	}
+
+	14% {
+		opacity: calc(var(--overlay-opacity) * 1.5);
+	}
+
+	/* 쿵 (밝아짐) */
+	28% {
+		opacity: var(--overlay-opacity);
+	}
+
+	42% {
+		opacity: calc(var(--overlay-opacity) * 1.5);
+	}
+
+	/* 쿵 (밝아짐) */
+	70% {
+		opacity: var(--overlay-opacity);
+	}
+
+	/* 휴식 */
+	100% {
+		opacity: var(--overlay-opacity);
+	}
+}
+
+.anim-tint-heartbeat {
+	animation: ib-anim-tint-heartbeat 1.5s infinite ease-in-out;
+}
+
+/* 3. Pulse로 대체*/
+.anim-tint-pulse {
+	animation: ib-anim-pulse 2s infinite ease-in-out;
+}
+
+/* 3. Tint Glitch */
+@keyframes ib-anim-tint-glitch {
+	0% {
+		opacity: var(--overlay-opacity);
+	}
+
+	20% {
+		opacity: var(--overlay-opacity);
+	}
+
+	21% {
+		opacity: 0.1;
+	}
+
+	23% {
+		opacity: var(--overlay-opacity);
+	}
+
+	40% {
+		opacity: var(--overlay-opacity);
+	}
+
+	41% {
+		opacity: calc(var(--overlay-opacity) * 1.5);
+	}
+
+	43% {
+		opacity: var(--overlay-opacity);
+	}
+
+	60% {
+		opacity: calc(var(--overlay-opacity) * 0.5);
+	}
+
+	/* 흐려짐 */
+	65% {
+		opacity: var(--overlay-opacity);
+	}
+
+	100% {
+		opacity: var(--overlay-opacity);
+	}
+}
+
+.anim-tint-glitch {
+	/* 아주 빠르게 반복 */
+	animation: ib-anim-tint-glitch 0.5s infinite linear alternate-reverse;
+}
+
+/* =========================================
+   ADVANCED NATIVE FX (No External Modules)
+   ========================================= */
+
+/* 1. Electric (전기/감전) - 테두리가 번쩍이고 이미지가 지지직거림 */
+@keyframes ib-fx-electric {
+
+	0%,
+	100% {
+		box-shadow:
+			0 0 5px #4ecdc4,
+			inset 0 0 5px #4ecdc4;
+		filter: brightness(1.2);
+	}
+
+	10% {
+		box-shadow:
+			0 0 20px #fff,
+			inset 0 0 10px #fff;
+		filter: brightness(2) hue-rotate(180deg);
+		transform: translateX(2px);
+	}
+
+	20% {
+		box-shadow:
+			0 0 5px #4ecdc4,
+			inset 0 0 5px #4ecdc4;
+		filter: brightness(1.2);
+		transform: translateX(-2px);
+	}
+
+	30% {
+		opacity: 0.8;
+	}
+
+	32% {
+		opacity: 1;
+	}
+}
+
+.fx-electric {
+	animation: ib-fx-electric 1.5s infinite;
+	border: 2px solid #fff !important;
+}
+
+/* 2. Holy (신성/축복) - 금빛 후광이 부드럽게 퍼짐 */
+@keyframes ib-fx-holy {
+	0% {
+		box-shadow:
+			0 0 10px #ffd700,
+			0 0 20px #ffd700 inset;
+		filter: brightness(1);
+	}
+
+	50% {
+		box-shadow:
+			0 0 30px #ffffaa,
+			0 0 40px #ffd700 inset;
+		filter: brightness(1.3) sepia(0.5);
+	}
+
+	100% {
+		box-shadow:
+			0 0 10px #ffd700,
+			0 0 20px #ffd700 inset;
+		filter: brightness(1);
+	}
+}
+
+.fx-holy {
+	animation: ib-fx-holy 3s infinite ease-in-out;
+	border-color: #ffd700 !important;
+}
+
+/* 3. Void (암흑/공포) - 색을 빨아들이고 검은 연기처럼 일렁임 */
+@keyframes ib-fx-void {
+	0% {
+		box-shadow: 0 0 10px #000;
+		filter: grayscale(1) contrast(1.2);
+		transform: scale(1);
+	}
+
+	50% {
+		box-shadow:
+			0 0 30px #000 inset,
+			0 0 50px #400040;
+		filter: grayscale(1) contrast(1.5) blur(1px);
+		transform: scale(0.98);
+	}
+
+	100% {
+		box-shadow: 0 0 10px #000;
+		filter: grayscale(1) contrast(1.2);
+		transform: scale(1);
+	}
+}
+
+.fx-void {
+	animation: ib-fx-void 4s infinite ease-in-out;
+	background: #000 !important;
+}
+
+/* 4. Burn (화염) - 붉은 빛이 빠르게 깜빡이고 위로 솟구치는 느낌 */
+@keyframes ib-fx-burn {
+	0% {
+		box-shadow: 0 0 10px #ff4500;
+		filter: sepia(1) saturate(5) hue-rotate(-20deg);
+		transform: translateY(0px);
+	}
+
+	25% {
+		box-shadow: 0 -10px 20px #ff8c00;
+	}
+
+	50% {
+		box-shadow: 0 0 15px #ff0000;
+		filter: sepia(1) saturate(8) hue-rotate(-10deg);
+		transform: translateY(-1px);
+	}
+
+	75% {
+		box-shadow: 0 -15px 25px #ff4500;
+	}
+
+	100% {
+		box-shadow: 0 0 10px #ff4500;
+		filter: sepia(1) saturate(5) hue-rotate(-20deg);
+		transform: translateY(0px);
+	}
+}
+
+.fx-burn {
+	animation: ib-fx-burn 0.8s infinite linear;
+}
+
+/* 5. Ice (빙결) - 푸른빛 고정, 살짝 떨림 */
+@keyframes ib-fx-ice {
+	0% {
+		box-shadow: 0 0 10px #00ffff inset;
+		filter: brightness(1.2) hue-rotate(180deg);
+		transform: translate(0, 0);
+	}
+
+	98% {
+		transform: translate(0, 0);
+	}
+
+	99% {
+		transform: translate(1px, 1px);
+	}
+
+	/* 가끔 틱 하고 얼음 갈라지는 느낌 */
+	100% {
+		transform: translate(0, 0);
+	}
+}
+
+.fx-ice {
+	animation: ib-fx-ice 3s infinite;
+	border-color: #aaffff !important;
+}
+
+/* 6. Mirror (분신/환영) - 잔상 효과 */
+@keyframes ib-fx-mirror {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	25% {
+		opacity: 0.8;
+		transform: translateX(-3px);
+	}
+
+	50% {
+		opacity: 0.6;
+		transform: translateX(3px);
+		filter: opacity(0.5);
+	}
+
+	75% {
+		opacity: 0.8;
+		transform: translateX(-2px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.fx-mirror {
+	animation: ib-fx-mirror 0.2s infinite;
+	mix-blend-mode: screen;
+}
+
+/* =========================================
+   9. RESOURCE PIPS (Dots Style)
+   ========================================= */
+
+.ib-pip-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(3px * (0.5 + 0.5 * var(--dot-scale, 1)));
+	margin-top: calc(3px * (0.5 + 0.5 * var(--dot-scale, 1)));
+	width: fit-content;
+	max-width: 100%;
+	align-items: center;
+	padding-left: 2px;
+}
+
+.ib-pip {
+	width: calc(8px * var(--dot-scale, 1));
+	height: calc(8px * var(--dot-scale, 1));
+	background-color: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 50%;
+	box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.8);
+	transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	flex-shrink: 0;
+}
+
+.ib-pip.filled {
+	background-color: var(--attr-color, #fff);
+	box-shadow:
+		0 0 5px var(--attr-color, #fff),
+		inset 0 0 2px rgba(255, 255, 255, 0.5);
+	border-color: rgba(255, 255, 255, 0.8);
+	transform: scale(1.1);
+}
+
+.ib-pip.empty {
+	opacity: 0.3;
+	border-color: rgba(255, 255, 255, 0.1);
+	transform: scale(0.9);
+}
+
+/* Label integration for pips */
+.ib-pip-row {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 6px;
+	width: fit-content;
+	max-width: 100%;
+	cursor: pointer;
+	position: relative;
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px));
+}
+
+.ib-pip-header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: calc(4px * var(--dot-scale, 1));
+	font-size: calc(0.8em * var(--dot-scale, 1));
+	color: var(--attr-color, #eee);
+	font-family: "Oswald", sans-serif;
+	line-height: 1.1;
+	margin-bottom: 1px;
+	text-shadow: 1px 1px 0 #000;
+	position: relative;
+}
+
+.ib-pip-header .ib-attr-icon {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 15;
+	width: calc(14px * var(--dot-scale, 1));
+	height: calc(14px * var(--dot-scale, 1));
+	font-size: calc(12px * var(--dot-scale, 1)) !important;
+}
+
+.ib-pip-header:has(.ib-attr-icon) .ib-label-text {
+	padding-left: calc(18px * var(--dot-scale, 1));
+}
+
+.ib-pip-val {
+	font-weight: bold;
+	color: var(--attr-color, #fff);
+	font-size: calc(1.1em * var(--dot-scale, 1));
+	font-family: "Teko", sans-serif;
+}
+
+/* =========================================
+   NUMBER/TEXT STYLE WRAPPER
+   ========================================= */
+.ib-numbers-wrapper {
+	position: absolute;
+	top: 0;
+	left: calc(100% + 25px);
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	pointer-events: none;
+	z-index: var(--numbers-z, 20);
+	align-items: flex-start;
+}
+
+.ib-number-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 3px 8px;
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 4px;
+	border-left: 3px solid var(--attr-color, #4ecdc4);
+	pointer-events: auto;
+	cursor: pointer;
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px));
+	white-space: nowrap;
+}
+
+.ib-number-row:hover {
+	background: rgba(0, 0, 0, 0.8);
+}
+
+.ib-number-label {
+	font-family: "Oswald", sans-serif;
+	font-size: calc(0.85em * var(--number-scale, 1));
+	color: #aaa;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.ib-number-value {
+	font-family: "Teko", sans-serif;
+	font-size: calc(1.3em * var(--number-scale, 1));
+	font-weight: bold;
+	color: var(--attr-color, #fff);
+	text-shadow: 1px 1px 2px #000;
+}
+
+/* =========================================
+   ATTRIBUTE ICON STYLES
+   ========================================= */
+
+/* Base icon styles for all attribute displays */
+.ib-attr-icon {
+	width: 14px;
+	height: 14px;
+	flex-shrink: 0;
+	filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.7));
+}
+
+/* FontAwesome icon specific styles */
+.ib-attr-icon:not(.ib-attr-icon-img) {
+	color: var(--attr-color, #fff);
+	font-size: 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Custom image icon styles */
+.ib-attr-icon-img {
+	object-fit: contain;
+	border-radius: 2px;
+	vertical-align: middle;
+}
+
+/* Icon in bar row - absolute positioning */
+.ib-bar-row .ib-attr-icon {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 15;
+}
+
+.ib-bar-row:has(.ib-attr-icon) .ib-label {
+	padding-left: 18px;
+}
+
+/* Icon in number row - absolute positioning to prevent layout shift */
+.ib-number-row {
+	position: relative;
+}
+
+.ib-number-row .ib-attr-icon {
+	position: absolute;
+	left: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 15;
+	width: calc(14px * var(--number-scale, 1));
+	height: calc(14px * var(--number-scale, 1));
+	font-size: calc(12px * var(--number-scale, 1));
+}
+
+.ib-number-row:has(.ib-attr-icon) .ib-number-label {
+	padding-left: calc(18px * var(--number-scale, 1));
+}
+
+
+
+/* Collapsible Menu */
+.is-collapsed .ib-action-btn {
+	display: none !important;
+}
+
+/* =========================================
+   PF2E INVENTORY CONTEXT MENU
+   ========================================= */
+.sah-context-menu {
+	min-width: 210px;
+	max-width: 270px;
+	padding: 6px;
+	border-radius: 8px;
+	border: 1px solid var(--sah-ctx-border, #4ecdc4);
+	background: var(--sah-ctx-bg, linear-gradient(180deg, rgba(22, 24, 28, 0.97), rgba(10, 12, 16, 0.96)));
+	box-shadow: 0 12px 22px rgba(0, 0, 0, 0.55);
+	backdrop-filter: blur(2px);
+}
+
+.sah-context-menu .sah-context-header {
+	font-family: "Teko", sans-serif;
+	font-size: 1.1rem;
+	line-height: 1;
+	color: var(--sah-ctx-header, #f4f6f8);
+	padding: 4px 6px 8px 6px;
+	border-bottom: 1px solid var(--sah-ctx-divider, rgba(255, 255, 255, 0.12));
+	margin-bottom: 4px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sah-context-menu .sah-context-item {
+	width: 100%;
+	text-align: left;
+	margin: 0;
+	padding: 6px 8px;
+	border: none;
+	border-radius: 4px;
+	background: transparent;
+	color: var(--sah-ctx-text, #d7dde4);
+	cursor: pointer;
+	font-family: "Oswald", sans-serif;
+	font-size: 0.9rem;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	transition: background 120ms ease, color 120ms ease;
+}
+
+.sah-context-menu .sah-context-item .sah-context-icon {
+	width: 16px;
+	height: 16px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 16px;
+}
+
+.sah-context-menu .sah-context-item .sah-context-label {
+	line-height: 1.1;
+}
+
+.sah-context-menu .sah-context-item.active {
+	background: var(--sah-ctx-hover-bg, rgba(78, 205, 196, 0.17));
+	color: var(--sah-ctx-hover-text, #f8fcff);
+	font-weight: 700;
+}
+
+.sah-context-menu .sah-context-item:hover,
+.sah-context-menu .sah-context-item:focus {
+	background: var(--sah-ctx-hover-bg, rgba(78, 205, 196, 0.17));
+	color: var(--sah-ctx-hover-text, #f8fcff);
+	outline: none;
+}
+
+.ib-compact-resources {
+	display: none;
+	position: absolute;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+	z-index: 90;
+	flex-direction: column;
+	gap: 2px;
+	pointer-events: none;
+}
+
+.ib-compact-resources:empty {
+	display: none !important;
+}
+
+.ib-compact-resource {
+	position: relative;
+	width: 100%;
+	height: 12px;
+	min-height: 12px;
+	overflow: hidden;
+	box-sizing: border-box;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.72);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.ib-compact-resource-fill {
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: var(--compact-percent, 100%);
+	background: var(--compact-color, #ffffff);
+	opacity: 0.82;
+	transition: width 0.25s ease;
+}
+
+.ib-compact-resource-text {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 3px;
+	height: 100%;
+	padding: 0 3px;
+	font-family: var(--hud-font-body, inherit);
+	font-size: 8px;
+	font-weight: 700;
+	line-height: 1;
+	color: #ffffff;
+	text-shadow: 0 1px 2px #000000, 0 0 2px #000000;
+}
+
+.ib-compact-resource-label {
+	min-width: 0;
+	max-width: 55%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.ib-compact-resource-value {
+	flex-shrink: 0;
+	white-space: nowrap;
+}
+
+.ib-compact-resource--icon .ib-compact-resource-text {
+	justify-content: flex-start;
+	gap: 4px;
+	padding: 0 4px;
+}
+
+.ib-compact-resource-icon {
+	flex-shrink: 0;
+	width: 9px;
+	height: 9px;
+	font-size: 9px;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #ffffff;
+	filter: drop-shadow(0 1px 1px #000000);
+}
+
+.ib-compact-resource-icon-img {
+	object-fit: contain;
+	border-radius: 2px;
+}
+
+.ib-compact-resource--icon .ib-compact-resource-value {
+	margin-left: auto;
+}
+
+/* =========================================
+   COLLAPSE MODE (Compact Cards)
+   ========================================= */
+
+/* ---- COMPACT MODE (COLLAPSE CARDS) ---- */
+
+#ib-hud-layer.collapse-mode {
+    --collapse-size: 70px;
+    --collapse-border-color: rgba(255, 255, 255, 0.25);
+    --collapse-border-hover: rgba(255, 255, 255, 0.6);
+    --collapse-border-radius: 8px;
+    --collapse-bg: #000;
+}
+
+/* ---- COLLAPSED STATE (not hovered) ---- */
+
+#ib-hud-layer.layout-stack .ib-card.is-collapsed:not(.card-hovered) {
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	min-height: 0 !important;
+	overflow: visible !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	margin-bottom: var(--hud-neg-margin, 0px) !important;
+	transform: none !important;
+	transition: none;
+}
+
+#ib-hud-layer.layout-free .ib-card.is-collapsed:not(.card-hovered) {
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	min-height: 0 !important;
+	overflow: visible !important;
+	padding: 0 !important;
+	transform: none !important;
+	transition: none;
+}
+
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper {
+	position: relative !important;
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	border-radius: var(--collapse-border-radius);
+	border: 2px solid var(--collapse-border-color);
+	overflow: hidden !important;
+	transform: none !important;
+	margin: 0 !important;
+	flex-shrink: 0;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	z-index: 2;
+	background: var(--collapse-bg);
+}
+
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-portrait {
+	transform: scale(var(--collapse-portrait-scale, 1)) translate(var(--collapse-portrait-x, 0px), var(--collapse-portrait-y, 0px)) !important;
+	transform-origin: center center !important;
+	object-fit: cover;
+}
+
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-compact-resources {
+	display: flex;
+}
+
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-bg-layer,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-bg-layers,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-stats-box,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-badges-wrapper,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-dots-wrapper,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-numbers-wrapper {
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+}
+
+/* Children explicitly set pointer-events:auto which overrides parent's none.
+   Force none on individual rows so invisible elements outside the collapsed
+   card boundary don't trigger mouseenter → unwanted expand. */
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-number-row,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-badge-row,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-pip-row {
+	pointer-events: none;
+}
+
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered)::before,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered)::after {
+	display: none !important;
+}
+
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-overlay,
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-tint {
+	border-radius: var(--collapse-border-radius);
+}
+
+#ib-hud-layer .ib-card.is-collapsed:not(.card-hovered) .ib-end-turn-btn {
+	transform: none !important;
+}
+
+#ib-hud-layer .ib-card.is-collapsed.is-turn:not(:hover) .ib-portrait-wrapper {
+	border-color: #ffd700;
+	box-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- HOVER: theme restores naturally, only z-index override needed ---- */
+
+#ib-hud-layer .ib-card.is-collapsed:hover {
+	z-index: 200 !important;
+}
+
+/* ---- COLLAPSED STATE INDICATORS ---- */
+
+#ib-hud-layer .ib-card.is-collapsed.is-dead:not(:hover) .ib-portrait-wrapper {
+	border-color: rgba(80, 0, 0, 0.6);
+	filter: grayscale(0.7) brightness(0.6);
+}
+
+#ib-hud-layer .ib-card.is-collapsed.is-bloodied:not(:hover) .ib-portrait-wrapper {
+	border-color: rgba(180, 30, 30, 0.5);
+}
+
+/* ---- REDUCE MOTION ---- */
+
+#ib-hud-layer.reduce-motion .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper {
+	transition: none !important;
+}
+
+.sah-context-menu.theme-iron {
+	--sah-ctx-bg: linear-gradient(180deg, rgba(8, 8, 8, 0.98), rgba(16, 16, 16, 0.97));
+	--sah-ctx-border: #f5f5f5;
+	--sah-ctx-header: #f5f5f5;
+	--sah-ctx-divider: rgba(245, 245, 245, 0.22);
+	--sah-ctx-text: #d9d9d9;
+	--sah-ctx-hover-bg: rgba(216, 30, 40, 0.2);
+	--sah-ctx-hover-text: #ffffff;
+}
+
+.sah-context-menu.theme-glass {
+	--sah-ctx-bg: linear-gradient(180deg, rgba(15, 20, 25, 0.95), rgba(10, 14, 18, 0.94));
+	--sah-ctx-border: #4ecdc4;
+	--sah-ctx-header: #f0f7f8;
+	--sah-ctx-divider: rgba(78, 205, 196, 0.35);
+	--sah-ctx-text: #d6e2e7;
+	--sah-ctx-hover-bg: rgba(78, 205, 196, 0.16);
+	--sah-ctx-hover-text: #ffffff;
+}
+
+.sah-context-menu.theme-medieval {
+	--sah-ctx-bg: linear-gradient(180deg, rgba(43, 31, 20, 0.97), rgba(29, 20, 12, 0.96));
+	--sah-ctx-border: #d7b679;
+	--sah-ctx-header: #f6e4be;
+	--sah-ctx-divider: rgba(215, 182, 121, 0.35);
+	--sah-ctx-text: #edd9b3;
+	--sah-ctx-hover-bg: rgba(215, 182, 121, 0.2);
+	--sah-ctx-hover-text: #fff7e5;
+}
+
+.sah-context-menu.theme-fantasy {
+	--sah-ctx-bg: linear-gradient(180deg, rgba(28, 22, 44, 0.97), rgba(19, 14, 33, 0.96));
+	--sah-ctx-border: #7ad8ff;
+	--sah-ctx-header: #ebf7ff;
+	--sah-ctx-divider: rgba(122, 216, 255, 0.35);
+	--sah-ctx-text: #d7e8ff;
+	--sah-ctx-hover-bg: rgba(122, 216, 255, 0.2);
+	--sah-ctx-hover-text: #ffffff;
+}
+
+.sah-context-menu.theme-cyberpunk {
+	--sah-ctx-bg: linear-gradient(180deg, rgba(9, 14, 23, 0.97), rgba(5, 9, 16, 0.96));
+	--sah-ctx-border: #00f5d4;
+	--sah-ctx-header: #e9fffb;
+	--sah-ctx-divider: rgba(0, 245, 212, 0.35);
+	--sah-ctx-text: #c7fff4;
+	--sah-ctx-hover-bg: rgba(0, 245, 212, 0.2);
+	--sah-ctx-hover-text: #ffffff;
+}
+
+/* =========================================
+   PORTRAIT QUICK PICKER (4-COLUMN GRID)
+   ========================================= */
+.sah-portrait-picker {
+	--sah-picker-bg: rgba(12, 14, 18, 0.96);
+	--sah-picker-border: #4ecdc4;
+	--sah-picker-hover: rgba(78, 205, 196, 0.2);
+	--sah-picker-active: rgba(78, 205, 196, 0.34);
+	--sah-picker-item-border: rgba(255, 255, 255, 0.22);
+	--sah-picker-item-bg: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	z-index: 10050;
+	width: min(520px, calc(100vw - 20px));
+	max-height: min(460px, calc(100vh - 20px));
+	padding: 8px;
+	border-radius: 10px;
+	border: 1px solid var(--sah-picker-border);
+	background: var(--sah-picker-bg);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+}
+
+.sah-portrait-picker-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(96px, 1fr));
+	gap: 8px;
+	max-height: calc(min(460px, calc(100vh - 20px)) - 18px);
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 6px 4px 4px 4px;
+}
+
+.sah-portrait-picker-item {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: auto !important;
+	aspect-ratio: 1;
+	margin: 0;
+	padding: 0;
+	border: 1px solid var(--sah-picker-item-border);
+	border-radius: 7px;
+	background: var(--sah-picker-item-bg);
+	overflow: hidden;
+	cursor: pointer;
+	transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+.sah-portrait-picker-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	transform-origin: center;
+	transform: none;
+	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+@media (max-width: 900px) {
+	.sah-portrait-picker-grid {
+		grid-template-columns: repeat(3, minmax(90px, 1fr));
+	}
+}
+
+@media (max-width: 620px) {
+	.sah-portrait-picker-grid {
+		grid-template-columns: repeat(2, minmax(96px, 1fr));
+	}
+}
+
+.sah-portrait-picker-item:hover {
+	border-color: var(--sah-picker-border);
+	box-shadow: 0 0 0 2px var(--sah-picker-hover);
+	transform: scale(1.03);
+}
+
+.sah-portrait-picker-item.active {
+	border-color: var(--sah-picker-border);
+	box-shadow: 0 0 0 2px var(--sah-picker-active);
+}
+
+.sah-portrait-picker-item:focus {
+	outline: 2px solid var(--sah-picker-border);
+	outline-offset: 1px;
+}
+
+.sah-portrait-picker.theme-iron {
+	--sah-picker-bg: linear-gradient(180deg, rgba(10, 10, 10, 0.98), rgba(18, 18, 18, 0.97));
+	--sah-picker-border: #f1f1f1;
+	--sah-picker-hover: rgba(216, 30, 40, 0.22);
+	--sah-picker-active: rgba(216, 30, 40, 0.35);
+}
+
+.sah-portrait-picker.theme-glass {
+	--sah-picker-bg: linear-gradient(180deg, rgba(15, 20, 25, 0.92), rgba(10, 14, 18, 0.9));
+	--sah-picker-border: #4ecdc4;
+	--sah-picker-hover: rgba(78, 205, 196, 0.18);
+	--sah-picker-active: rgba(78, 205, 196, 0.3);
+}
+
+.sah-portrait-picker.theme-medieval {
+	--sah-picker-bg: linear-gradient(180deg, rgba(43, 31, 20, 0.98), rgba(29, 20, 12, 0.97));
+	--sah-picker-border: #d7b679;
+	--sah-picker-hover: rgba(215, 182, 121, 0.2);
+	--sah-picker-active: rgba(215, 182, 121, 0.34);
+}
+
+.sah-portrait-picker.theme-fantasy {
+	--sah-picker-bg: radial-gradient(circle at 50% -20%, rgba(200, 178, 122, 0.15), transparent 55%), linear-gradient(180deg, rgba(20, 16, 12, 0.98), rgba(12, 9, 6, 0.97));
+	--sah-picker-border: #c8b27a;
+	--sah-picker-hover: rgba(200, 178, 122, 0.22);
+	--sah-picker-active: rgba(200, 178, 122, 0.34);
+	--sah-picker-item-border: rgba(200, 178, 122, 0.4);
+	--sah-picker-item-bg: linear-gradient(180deg, rgba(24, 18, 11, 0.9), rgba(14, 10, 6, 0.86));
+	box-shadow: inset 0 0 0 1px rgba(107, 90, 62, 0.65), 0 14px 28px rgba(0, 0, 0, 0.58), 0 0 24px rgba(200, 178, 122, 0.16);
+}
+
+.sah-portrait-picker.theme-fantasy .sah-portrait-picker-grid {
+	gap: 10px;
+	padding: 8px 6px 6px;
+}
+
+.sah-portrait-picker.theme-fantasy .sah-portrait-picker-item {
+	clip-path: polygon(0 10%, 10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%);
+	border-radius: 0;
+	box-shadow: inset 0 0 0 1px rgba(107, 90, 62, 0.6), inset 0 12px 18px rgba(0, 0, 0, 0.28);
+}
+
+.sah-portrait-picker.theme-fantasy .sah-portrait-picker-item img {
+	filter: sepia(0.24) contrast(1.12) saturate(0.95) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.sah-portrait-picker.theme-fantasy .sah-portrait-picker-item:hover {
+	box-shadow: 0 0 0 2px rgba(200, 178, 122, 0.22), inset 0 0 0 1px rgba(200, 178, 122, 0.6), inset 0 10px 18px rgba(0, 0, 0, 0.35);
+}
+
+.sah-portrait-picker.theme-fantasy .sah-portrait-picker-item.active {
+	box-shadow: 0 0 0 2px rgba(200, 178, 122, 0.34), inset 0 0 0 1px rgba(231, 218, 184, 0.85), 0 0 16px rgba(200, 178, 122, 0.26);
+}
+
+.sah-portrait-picker.theme-cyberpunk {
+	--sah-picker-bg: linear-gradient(180deg, rgba(9, 14, 23, 0.98), rgba(5, 9, 16, 0.97));
+	--sah-picker-border: #00f5d4;
+	--sah-picker-hover: rgba(0, 245, 212, 0.2);
+	--sah-picker-active: rgba(0, 245, 212, 0.34);
+}
+
+/* =========================================
+   BADGE STYLE (Icon with Overlaid Value)
+   ========================================= */
+.ib-badges-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	gap: calc(4px * var(--badge-scale, 1));
+	pointer-events: none;
+	z-index: var(--badges-z, 150);
+	padding: 5px;
+}
+
+.ib-badge-row {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(40px * var(--badge-scale, 1));
+	height: calc(40px * var(--badge-scale, 1));
+	cursor: pointer;
+	pointer-events: auto;
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px));
+	transition: transform 0.2s ease;
+}
+
+.ib-badge-row:hover {
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px)) scale(1.1);
+}
+
+.ib-badge-bg {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+.ib-badge-bg-icon {
+	font-size: calc(36px * var(--badge-scale, 1));
+	color: var(--icon-color, #ffffff);
+	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.ib-badge-bg-img {
+	width: calc(36px * var(--badge-scale, 1));
+	height: calc(36px * var(--badge-scale, 1));
+	object-fit: contain;
+	filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.ib-badge-value {
+	position: relative;
+	z-index: 2;
+	font-family: "Bebas Neue", "Oswald", sans-serif;
+	font-size: calc(16px * var(--badge-scale, 1));
+	font-weight: bold;
+	color: var(--text-color, #000000);
+	line-height: 1;
+	text-shadow:
+		-1px -1px 0 var(--text-stroke-color, transparent),
+		1px -1px 0 var(--text-stroke-color, transparent),
+		-1px 1px 0 var(--text-stroke-color, transparent),
+		1px 1px 0 var(--text-stroke-color, transparent);
+}
+
+/* =========================================
+   ACCESSIBILITY: REDUCE MOTION
+   Disables animations for epilepsy safety
+   ========================================= */
+
+#ib-hud-layer.reduce-motion *,
+#ib-hud-layer.reduce-motion *::before,
+#ib-hud-layer.reduce-motion *::after,
+#ib-action-root.reduce-motion *,
+#ib-action-root.reduce-motion *::before,
+#ib-action-root.reduce-motion *::after {
+	animation: none !important;
+	transition: none !important;
+}
+
+#ib-hud-layer.reduce-motion .ib-card.hit-shake {
+	animation: none !important;
+}
+
+.sah-note-icon {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	z-index: 50;
+	opacity: 0;
+	transition: opacity 0.2s;
+	cursor: pointer;
+	font-size: 12px;
+	color: rgba(200, 200, 200, 0.7);
+	pointer-events: auto;
+}
+
+.sah-note-icon:hover {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.ib-card:hover .sah-note-icon {
+	opacity: 1;
+}
+
+.sah-hp-popup {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translateX(-50%);
+	font-weight: 900;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+	z-index: 100;
+	animation: sah-hp-float 1.2s ease-out forwards;
+	white-space: nowrap;
+	letter-spacing: 0.5px;
+}
+
+@keyframes sah-hp-float {
+	0% {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+	70% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-50%) translateY(-40px);
+	}
+}
+
+#ib-hud-layer.reduce-motion .ib-bar-fill,
+#ib-hud-layer.reduce-motion .ib-bar-temp,
+#ib-hud-layer.reduce-motion .ib-bar-buffer {
+	transition: width 0.1s linear !important;
+}
+
+#ib-action-root.long-press-dragging > * {
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#ib-hud-layer:not(.force-motion) *,
+	#ib-hud-layer:not(.force-motion) *::before,
+	#ib-hud-layer:not(.force-motion) *::after,
+	#ib-action-root:not(.force-motion) *,
+	#ib-action-root:not(.force-motion) *::before,
+	#ib-action-root:not(.force-motion) *::after {
+		animation: none !important;
+		transition: none !important;
+	}
+
+	#ib-hud-layer:not(.force-motion) .ib-bar-fill,
+	#ib-hud-layer:not(.force-motion) .ib-bar-temp,
+	#ib-hud-layer:not(.force-motion) .ib-bar-buffer {
+		transition: width 0.1s linear !important;
+	}
+}
+
+/* =========================================
+   PORTRAIT GALLERY POPUP
+   ========================================= */
+
+.sah-portrait-gallery-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.85);
+	backdrop-filter: blur(4px);
+	z-index: 2000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	animation: sah-fade-in 0.3s forwards;
+}
+
+@keyframes sah-fade-in {
+	to { opacity: 1; }
+}
+
+.sah-portrait-gallery {
+	/* Default Theme Variables (Fallback/Iron-like) */
+	--pg-bg: rgba(15, 15, 20, 0.95);
+	--pg-border: #444;
+	--pg-accent: #4ecdc4;
+	--pg-header-bg: rgba(0, 0, 0, 0.3);
+	--pg-text: #eee;
+	--pg-text-muted: #888;
+	--pg-card-bg: rgba(255, 255, 255, 0.05);
+	--pg-card-hover: rgba(255, 255, 255, 0.1);
+	--pg-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+	--pg-font-header: "Teko", sans-serif;
+	--pg-font-body: "Oswald", sans-serif;
+	--pg-radius: 4px;
+
+	position: relative;
+	width: 90vw;
+	max-width: 1000px;
+	height: 85vh;
+	background: var(--pg-bg);
+	border: 1px solid var(--pg-border);
+	box-shadow: var(--pg-shadow);
+	border-radius: var(--pg-radius);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	transform: scale(0.95);
+	opacity: 0;
+	animation: sah-scale-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s forwards;
+}
+
+@keyframes sah-scale-in {
+	to { transform: scale(1); opacity: 1; }
+}
+
+/* --- Layout Sections --- */
+
+.sah-portrait-gallery-header {
+	padding: 15px 20px;
+	background: var(--pg-header-bg);
+	border-bottom: 1px solid var(--pg-border);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-shrink: 0;
+}
+
+.sah-portrait-gallery-header h2 {
+	margin: 0;
+	font-family: var(--pg-font-header);
+	font-size: 2em;
+	font-weight: 600;
+	color: var(--pg-text);
+	text-transform: uppercase;
+	line-height: 1;
+	letter-spacing: 1px;
+	text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+.sah-portrait-controls {
+	padding: 12px 20px;
+	background: rgba(0, 0, 0, 0.2);
+	border-bottom: 1px solid var(--pg-border);
+	display: flex;
+	gap: 15px;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.sah-portrait-gallery-grid {
+	flex: 1;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+	grid-auto-rows: max-content;
+	gap: 15px;
+	padding: 20px;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--pg-accent) transparent;
+}
+
+.sah-portrait-gallery-grid::-webkit-scrollbar {
+	width: 6px;
+}
+.sah-portrait-gallery-grid::-webkit-scrollbar-track {
+	background: transparent;
+}
+.sah-portrait-gallery-grid::-webkit-scrollbar-thumb {
+	background: var(--pg-accent);
+	border-radius: 3px;
+}
+
+.sah-portrait-gallery-footer {
+	padding: 15px 20px;
+	background: var(--pg-header-bg);
+	border-top: 1px solid var(--pg-border);
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+/* --- Card Component --- */
+
+.sah-portrait-card {
+	position: relative;
+	aspect-ratio: 1; /* Square cards */
+	background: var(--pg-card-bg);
+	border: 2px solid transparent;
+	border-radius: var(--pg-radius);
+	cursor: pointer;
+	overflow: hidden;
+	transition: all 0.2s ease;
+}
+
+.sah-portrait-card:hover {
+	background: var(--pg-card-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.sah-portrait-card:focus-visible {
+	outline: 2px solid var(--pg-accent);
+	outline-offset: 2px;
+}
+
+.sah-portrait-card.active {
+	border-color: var(--pg-accent);
+	box-shadow: 0 0 15px var(--pg-accent), inset 0 0 10px var(--pg-accent);
+	z-index: 1;
+}
+
+.sah-portrait-card img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s ease;
+}
+
+.sah-portrait-card:hover img {
+	transform: scale(1.1);
+}
+
+.sah-portrait-card .sah-card-label {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 5px 8px;
+	background: rgba(0,0,0,0.8);
+	color: var(--pg-text);
+	font-family: var(--pg-font-body);
+	font-size: 0.85em;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transform: translateY(100%);
+	transition: transform 0.2s ease;
+}
+
+.sah-portrait-card:hover .sah-card-label,
+.sah-portrait-card.active .sah-card-label {
+	transform: translateY(0);
+}
+
+/* --- Inputs & Buttons --- */
+
+.sah-portrait-actions button,
+.sah-portrait-controls button,
+.sah-portrait-gallery-footer button,
+.sah-portrait-gallery-header button {
+	background: transparent;
+	border: 1px solid var(--pg-border);
+	color: var(--pg-text);
+	padding: 6px 16px;
+	font-family: var(--pg-font-body);
+	font-size: 0.9em;
+	text-transform: uppercase;
+	cursor: pointer;
+	border-radius: var(--pg-radius);
+	transition: all 0.2s;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.sah-portrait-actions button:hover,
+.sah-portrait-controls button:hover {
+	background: var(--pg-accent);
+	color: #000;
+	border-color: var(--pg-accent);
+	font-weight: bold;
+}
+
+.sah-portrait-controls input[type="text"] {
+	background: rgba(0,0,0,0.3);
+	border: 1px solid var(--pg-border);
+	color: var(--pg-text);
+	padding: 6px 10px;
+	font-family: var(--pg-font-body);
+	border-radius: var(--pg-radius);
+	outline: none;
+}
+
+.sah-portrait-controls input[type="text"]:focus {
+	border-color: var(--pg-accent);
+}
+
+/* --- Theme Overrides --- */
+
+/* Theme: Iron (Default-ish but darker/red) */
+.sah-portrait-gallery.theme-iron {
+	--pg-bg: linear-gradient(180deg, #0f0f12 0%, #1a1a20 100%);
+	--pg-border: #555;
+	--pg-accent: #e61c34;
+	--pg-radius: 2px;
+}
+
+/* Theme: Glass (Teal, translucent, clean) */
+.sah-portrait-gallery.theme-glass {
+	--pg-bg: rgba(10, 20, 30, 0.85);
+	--pg-border: rgba(78, 205, 196, 0.5);
+	--pg-accent: #4ecdc4;
+	--pg-card-bg: rgba(78, 205, 196, 0.05);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(78, 205, 196, 0.3);
+	box-shadow: 0 0 40px rgba(78, 205, 196, 0.1);
+}
+
+/* Theme: Fantasy (Purple, mystical) */
+.sah-portrait-gallery.theme-fantasy {
+	--pg-bg: linear-gradient(135deg, #1a1025 0%, #2d1b4e 100%);
+	--pg-border: #9d4edd;
+	--pg-accent: #e0aaff;
+	--pg-card-bg: rgba(157, 78, 221, 0.1);
+	box-shadow: 0 0 30px rgba(157, 78, 221, 0.3);
+}
+
+/* Theme: Cyberpunk (Neon, high contrast) */
+.sah-portrait-gallery.theme-cyberpunk {
+	--pg-bg: #050505;
+	--pg-border: #00f5d4;
+	--pg-accent: #00f5d4;
+	--pg-header-bg: rgba(0, 245, 212, 0.1);
+	clip-path: polygon(
+		0 0, 100% 0, 
+		100% calc(100% - 20px), calc(100% - 20px) 100%, 
+		0 100%
+	);
+}
+.sah-portrait-gallery.theme-cyberpunk .sah-portrait-card.active {
+	box-shadow: 0 0 10px #00f5d4, 0 0 20px #00f5d4;
+	border: 1px solid #fff;
+}
+
+/* Theme: Medieval (Parchment, warm) */
+.sah-portrait-gallery.theme-medieval {
+	--pg-bg: linear-gradient(to bottom, #2b1f14, #1d140c);
+	--pg-border: #d7b679;
+	--pg-accent: #d7b679;
+	--pg-text: #edd9b3;
+	--pg-text-muted: #a69070;
+	--pg-font-header: "Bebas Neue", serif;
+	--pg-radius: 8px;
+}
+
+.sah-portrait-gallery.theme-medieval .sah-portrait-card {
+	border: 1px solid rgba(215, 182, 121, 0.2);
+}
+.sah-portrait-gallery.theme-medieval .sah-portrait-card.active {
+	border: 2px solid #d7b679;
+	box-shadow: 0 0 15px rgba(215, 182, 121, 0.4);
+}
+
+.ib-list-header {
+	font-family: "Teko", sans-serif;
+}
+
+/* =========================================
+   ACTION MENU CUSTOM FONT OVERRIDE
+   ========================================= */
+#ib-action-root.am-custom-font .ib-identity-name,
+#ib-action-root.am-custom-font .ib-identity-sub,
+#ib-action-root.am-custom-font .ib-font-hero,
+#ib-action-root.am-custom-font .ib-btn-content,
+#ib-action-root.am-custom-font .ib-tab-btn,
+#ib-action-root.am-custom-font .ib-tab-btn span,
+#ib-action-root.am-custom-font .ib-side-tab,
+#ib-action-root.am-custom-font .ib-side-tab span,
+#ib-action-root.am-custom-font .ib-menu-header,
+#ib-action-root.am-custom-font .ib-menu-header span,
+#ib-action-root.am-custom-font .ib-search-input,
+#ib-action-root.am-custom-font .ib-item-content,
+#ib-action-root.am-custom-font .ib-list-header,
+#ib-action-root.am-custom-font .ib-collapse-btn,
+#ib-action-root.am-custom-font .ib-quick-slot-container {
+	font-family: var(--am-font-family), sans-serif !important;
+}
+
+#ib-rich-tooltip.am-custom-font .ib-tooltip-title {
+	font-family: var(--am-font-family), sans-serif !important;
+}
+
+/* =========================================
+   BAR IMAGE LAYERS (Base Styles)
+   3-layer structure: background -> fill (clipped) -> frame
+   ========================================= */
+
+.ib-bar-container.ib-bar-has-images {
+	position: relative;
+	overflow: visible;
+	background: transparent;
+	container-type: inline-size;
+}
+
+/* Hide default fill/buffer/temp when using images */
+.ib-bar-container.ib-bar-has-images > .ib-bar-fill,
+.ib-bar-container.ib-bar-has-images > .ib-bar-buffer,
+.ib-bar-container.ib-bar-has-images > .ib-bar-temp {
+	display: none;
+}
+
+/* Layer 1: Background (empty bar) */
+.ib-bar-img-bg {
+	position: absolute;
+	inset: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	z-index: 1;
+	pointer-events: none;
+	transform-origin: center;
+}
+
+/* Layer 2: Fill (clipped by percentage) */
+.ib-bar-img-fill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: var(--percent, 100%);
+	overflow: hidden;
+	z-index: 2;
+	transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+	pointer-events: none;
+}
+
+/* Inner element maintains full width for proper clipping */
+.ib-bar-img-fill-inner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 100cqi;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	transform-origin: center;
+}
+
+/* Layer 3: Frame (overlay) */
+.ib-bar-img-frame {
+	position: absolute;
+	inset: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	z-index: 10;
+	pointer-events: none;
+	transform-origin: center;
+}
+
+/* Ensure value text stays on top */
+.ib-bar-container.ib-bar-has-images ~ .ib-val {
+	z-index: 20;
+}
+
+/* =========================================
+   NUMBER BACKGROUND IMAGE TRANSFORM
+   ========================================= */
+
+.ib-number-row.ib-number-has-bg {
+	position: relative;
+	z-index: 0;
+	background-image: none !important;
+	width: var(--number-bg-w, auto);
+	height: var(--number-bg-h, auto);
+	overflow: hidden;
+	flex-shrink: 0;
+	justify-content: center;
+	text-align: center;
+}
+
+.ib-number-row.ib-number-has-bg::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: var(--number-bg-img);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	transform: var(--number-bg-transform, none);
+	opacity: var(--number-bg-opacity, 1);
+	transform-origin: center;
+	z-index: -1;
+	pointer-events: none;
+}
+
+/* Ensure number content stays above background */
+.ib-number-row.ib-number-has-bg > * {
+	z-index: 1;
+}
+
+/* =========================================
+   VOICE ACTIVITY INDICATOR
+   ========================================= */
+
+/* Universal fallback for custom themes — green breathing glow via filter
+   (works with clip-path, transforms, any shape).
+   VoiceIndicator.applyColor() injects a dynamic <style> to override
+   these defaults with the user's chosen color from settings.
+   Built-in themes override with their own colors in theme files. */
+.ib-card.ib-speaking .ib-bg-layer {
+	filter:
+		drop-shadow(0 0 1px rgba(76, 175, 80, 0.9))
+		drop-shadow(0 0 1px rgba(76, 175, 80, 0.9))
+		drop-shadow(0 0 4px rgba(76, 175, 80, 0.6))
+		drop-shadow(0 0 12px rgba(76, 175, 80, 0.3));
+	animation: ib-voice-default 2s ease-in-out infinite;
+}
+
+.ib-card.ib-speaking .ib-name {
+	text-shadow:
+		0 0 2px rgba(76, 175, 80, 0.9),
+		0 0 2px rgba(76, 175, 80, 0.9),
+		0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+.ib-card.ib-speaking .ib-portrait-wrapper {
+	filter:
+		drop-shadow(0 0 1px rgba(76, 175, 80, 0.9))
+		drop-shadow(0 0 1px rgba(76, 175, 80, 0.9))
+		drop-shadow(0 0 4px rgba(76, 175, 80, 0.6))
+		drop-shadow(0 0 12px rgba(76, 175, 80, 0.3));
+	animation: ib-voice-default-portrait 2s ease-in-out infinite;
+}
+
+@keyframes ib-voice-default {
+	0%, 100% {
+		filter:
+			drop-shadow(0 0 1px rgba(76, 175, 80, 0.7))
+			drop-shadow(0 0 1px rgba(76, 175, 80, 0.7))
+			drop-shadow(0 0 3px rgba(76, 175, 80, 0.4))
+			drop-shadow(0 0 8px rgba(76, 175, 80, 0.15));
+	}
+	50% {
+		filter:
+			drop-shadow(0 0 1px rgba(76, 175, 80, 1))
+			drop-shadow(0 0 2px rgba(76, 175, 80, 1))
+			drop-shadow(0 0 6px rgba(76, 175, 80, 0.7))
+			drop-shadow(0 0 16px rgba(76, 175, 80, 0.35));
+	}
+}
+
+@keyframes ib-voice-default-portrait {
+	0%, 100% {
+		filter:
+			drop-shadow(0 0 1px rgba(76, 175, 80, 0.7))
+			drop-shadow(0 0 1px rgba(76, 175, 80, 0.7))
+			drop-shadow(0 0 3px rgba(76, 175, 80, 0.4))
+			drop-shadow(0 0 8px rgba(76, 175, 80, 0.15));
+	}
+	50% {
+		filter:
+			drop-shadow(0 0 1px rgba(76, 175, 80, 1))
+			drop-shadow(0 0 2px rgba(76, 175, 80, 1))
+			drop-shadow(0 0 6px rgba(76, 175, 80, 0.7))
+			drop-shadow(0 0 16px rgba(76, 175, 80, 0.35));
+	}
+}
+/* ========================================================
+   Nik's Stylish Action HUD Patch - CSS Stylesheet
+   ======================================================== */
+
+/* Wiggle animation for iOS-style dragging feedback */
+@keyframes niks-hud-wiggle {
+  0% {
+    transform: rotate(-0.6deg);
+  }
+  50% {
+    transform: rotate(0.6deg);
+  }
+  100% {
+    transform: rotate(-0.6deg);
+  }
+}
+
+/* Transition setup for a simple wiggle start/settle transition */
+#ib-action-menu {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transform-origin: center center;
+}
+
+/* Dragging state style overrides */
+#ib-action-root.long-press-dragging #ib-action-menu {
+  animation: niks-hud-wiggle 0.24s ease-in-out infinite;
+}
+
+/* Ensure sub-menu container behaves cleanly when dragging */
+#ib-action-root.long-press-dragging #ib-sub-menu-container {
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Hide the "Selected actor" subtitle below the character name.
+   We explicitly target non-placeholder menus so that the "Drag to reposition" 
+   text remains visible when the HUD is in placement/edit mode. */
+#ib-action-root.niks-hide-selected-text:not(.is-placeholder) .ib-identity-header .ib-identity-sub {
+  display: none !important;
+}
+
+/* Allow favorites container to wrap into multiple rows (second, third, etc. lines)
+   instead of clipping/overflowing horizontally or showing vertical scrollbars.
+   We set a max-width of 240px to match the standard width of the main action menu
+   elements below it, since the parent container uses max-content. */
+#ib-action-root.niks-wrap-favorites .ib-quick-slot-container {
+  flex-wrap: wrap !important;
+  max-width: 240px !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  row-gap: 5px !important; /* Consistent vertical spacing between wrapped lines */
+}
+
+/* Floating scale toast indicator */
+#niks-scale-indicator {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(18, 22, 28, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 16px;
+  padding: 3px 12px;
+  color: #f0f4f8;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10000;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+  user-select: none;
+}
+
+#niks-scale-indicator.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Corner resize handle */
+#niks-resize-handle {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  cursor: nwse-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.55);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  z-index: 100;
+  pointer-events: auto;
+  user-select: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+}
+
+/* Position handle on bottom-left if HUD is right-anchored */
+#ib-action-root[data-anchor-x="right"] #niks-resize-handle {
+  right: auto;
+  left: -4px;
+  cursor: nesw-resize;
+}
+
+#ib-action-root[data-anchor-x="left"] #niks-resize-handle {
+  left: auto;
+  right: -4px;
+  cursor: nwse-resize;
+}
+
+#ib-action-root:hover #niks-resize-handle,
+#niks-resize-handle:hover,
+#niks-resize-handle.is-resizing,
+#ib-action-root.is-placeholder #niks-resize-handle {
+  opacity: 0.75;
+}
+
+#niks-resize-handle:hover,
+#niks-resize-handle.is-resizing {
+  opacity: 1;
+  color: #4ecdc4;
+  transform: scale(1.25);
+}
+
+#ib-action-root.is-resizing {
+  user-select: none;
+}
+
+/* ========================================================
+   Hide Action HUD Toolbar Token Controls
+   ======================================================== */
+body.niks-hide-token-controls [data-tool="stylish-action-toggle"],
+body.niks-hide-token-controls [data-tool="stylish-action-broadcast"],
+body.niks-hide-token-controls [data-tool="stylish-action-config"],
+body.niks-hide-token-controls [data-tool="niks-action-toggle"],
+body.niks-hide-token-controls [data-tool="niks-action-broadcast"],
+body.niks-hide-token-controls [data-tool="niks-action-config"],
+body.niks-hide-token-controls [data-action="stylish-action-toggle"],
+body.niks-hide-token-controls [data-action="stylish-action-broadcast"],
+body.niks-hide-token-controls [data-action="stylish-action-config"],
+body.niks-hide-token-controls [data-action="niks-action-toggle"],
+body.niks-hide-token-controls [data-action="niks-action-broadcast"],
+body.niks-hide-token-controls [data-action="niks-action-config"],
+body.niks-hide-token-controls .control-tool[data-tool="stylish-action-toggle"],
+body.niks-hide-token-controls .control-tool[data-tool="stylish-action-broadcast"],
+body.niks-hide-token-controls .control-tool[data-tool="stylish-action-config"],
+body.niks-hide-token-controls .control-tool[data-tool="niks-action-toggle"],
+body.niks-hide-token-controls .control-tool[data-tool="niks-action-broadcast"],
+body.niks-hide-token-controls .control-tool[data-tool="niks-action-config"],
+body.niks-hide-token-controls li[data-tool="stylish-action-toggle"],
+body.niks-hide-token-controls li[data-tool="stylish-action-broadcast"],
+body.niks-hide-token-controls li[data-tool="stylish-action-config"],
+body.niks-hide-token-controls li[data-tool="niks-action-toggle"],
+body.niks-hide-token-controls li[data-tool="niks-action-broadcast"],
+body.niks-hide-token-controls li[data-tool="niks-action-config"],
+body.niks-hide-token-controls button[data-tool="stylish-action-toggle"],
+body.niks-hide-token-controls button[data-tool="stylish-action-broadcast"],
+body.niks-hide-token-controls button[data-tool="stylish-action-config"],
+body.niks-hide-token-controls button[data-tool="niks-action-toggle"],
+body.niks-hide-token-controls button[data-tool="niks-action-broadcast"],
+body.niks-hide-token-controls button[data-tool="niks-action-config"] {
+  display: none !important;
+}

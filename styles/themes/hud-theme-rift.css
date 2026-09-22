@@ -1,0 +1,756 @@
+/* =========================================
+   Stylish Action HUD - THEME: RIFT
+   Style: Ornate combat frame.
+          Circular ornate portrait,
+          glossy chevron-cut HP(red)/MP(blue) bars,
+          engraved serif name & italic stat labels.
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,500;1,500;1,600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap");
+
+.theme-rift {
+	/* [COLORS] */
+	--rf-hp: #c2392f;
+	--rf-hp-hi: #e0584b;
+	--rf-hp-deep: #791d18;
+	--rf-mp: #2f72b4;
+	--rf-mp-hi: #4f9bd8;
+	--rf-mp-deep: #173f6e;
+	--rf-green: #5ea03a;
+
+	--rf-frame: #161b20;
+	--rf-frame-2: #232b32;
+	--rf-gold: #b89a5e;
+	--rf-gold-dim: #6e5e38;
+	--rf-cream: #ece3cf;
+	--rf-dim: #9aa0a2;
+	--rf-edge: #0a0d10;
+	--rf-shadow: rgba(0, 0, 0, 0.6);
+
+	--rf-font-display: "Cinzel", serif;
+	--rf-font-label: "EB Garamond", serif;
+	--rf-font-num: "Barlow Semi Condensed", sans-serif;
+
+	/* [GEOMETRY] */
+	--rf-tip: 22px;          /* chevron cut depth on bar ends */
+	--portrait-d: 92px;
+
+	--card-width: 486px;
+	--card-height: auto;
+	--portrait-width: var(--portrait-d);
+	--portrait-height: var(--portrait-d);
+
+	--hud-font-header: var(--rf-font-display);
+	--hud-font-body: var(--rf-font-label);
+}
+
+/* =========================================
+   1. CARD — portrait + flag bars, no box
+   ========================================= */
+.theme-rift .ib-card {
+	width: var(--card-width) !important;
+	min-height: 104px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0;
+	padding: 8px 4px;
+	background: transparent;
+	overflow: visible !important;
+	margin-bottom: 12px;
+}
+.theme-rift .ib-bg-layer { background: none; border: none; box-shadow: none; }
+
+/* =========================================
+   2. PORTRAIT — circular ornate medallion
+   ========================================= */
+.theme-rift .ib-portrait-wrapper {
+	width: var(--portrait-width);
+	height: var(--portrait-height);
+	border-radius: 50%;
+	flex-shrink: 0;
+	z-index: 4;
+	overflow: visible;   /* base hides overflow; ring deco & end-turn btn live outside */
+	background: radial-gradient(circle at 50% 38%, var(--rf-frame-2), var(--rf-frame) 70%);
+	box-shadow:
+		0 0 0 2px var(--rf-edge),
+		0 0 0 4px #2b333a,
+		0 0 0 6px var(--rf-edge),
+		0 0 0 8px rgba(184, 154, 94, 0.5),
+		0 0 0 9px var(--rf-edge),
+		0 5px 16px var(--rf-shadow),
+		0 0 22px -4px rgba(79, 155, 216, 0.5),
+		inset 0 0 16px rgba(0, 0, 0, 0.75);
+	margin-right: -16px;     /* bars tuck under the medallion */
+}
+.theme-rift .ib-portrait {
+	border-radius: 50%;
+	color: var(--rf-cream);
+	overflow: hidden;
+}
+/* clip the square helper layers to the circle (wrapper overflow is visible) */
+.theme-rift .ib-portrait-bg,
+.theme-rift .ib-overlay,
+.theme-rift .ib-tint {
+	border-radius: 50%;
+	overflow: hidden;
+}
+.theme-rift .ib-portrait .ib-mono {
+	font-family: var(--rf-font-display);
+	font-weight: 700;
+	opacity: 0.92;
+}
+/* small emblem (bottom-left of ring) */
+.theme-rift .ib-portrait-wrapper::after {
+	content: "\2694";
+	position: absolute;
+	bottom: 2px; left: -8px;
+	width: 24px; height: 24px;
+	display: flex; align-items: center; justify-content: center;
+	border-radius: 50%;
+	background: radial-gradient(circle at 50% 35%, #2b333a, #12161a);
+	box-shadow: 0 0 0 1px var(--rf-edge), 0 0 0 2px rgba(184, 154, 94, 0.45);
+	color: var(--rf-gold);
+	font-family: "Segoe UI Symbol", sans-serif; font-size: 11px;
+	z-index: 6;
+}
+
+/* =========================================
+   3. STATS COLUMN
+   ========================================= */
+.theme-rift .ib-stats-box {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-left: 22px;
+	position: relative;
+	z-index: 2;   /* stacking context below the portrait (z4) so bars tuck under it */
+}
+
+/* NAME — engraved serif caps (mainly for target frame) */
+.theme-rift .ib-name {
+	font-family: var(--rf-font-display);
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.09em;
+	font-size: calc(1.02em * var(--name-scale, 1));
+	color: var(--rf-cream);
+	text-shadow: 0 1px 2px #000, 0 0 10px rgba(184, 154, 94, 0.25);
+	margin-bottom: 7px;
+	padding-left: 20px;
+	transform: translate(var(--name-x, 0), var(--name-y, 0)) rotate(var(--name-rotation, 0deg));
+}
+.theme-rift .ib-name-text { overflow: visible; }
+
+/* =========================================
+   4. CONDITIONS
+   ========================================= */
+.theme-rift .ib-conditions {
+	top: -14px; right: 6px; gap: 6px;
+	transform: translate(var(--conditions-x, 0), var(--conditions-y, 0));
+}
+.theme-rift .ib-cond-icon {
+	width: 22px; height: 22px; border-radius: 50%;
+	background: radial-gradient(circle at 50% 35%, var(--rf-frame-2), var(--rf-frame));
+	color: var(--rf-gold);
+	box-shadow: 0 0 0 1px var(--rf-edge), 0 0 0 2px rgba(184, 154, 94, 0.4);
+}
+.theme-rift .ib-cond-val {
+	background: var(--rf-hp); color: #fff;
+	font-family: var(--rf-font-num); font-weight: 700; font-size: 9px;
+	padding: 0 3px; border: none; border-radius: 3px;
+}
+
+/* =========================================
+   5. BARS — glossy chevron-cut flags
+   ========================================= */
+.theme-rift .ib-bars-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	width: 100%;
+	margin-left: -40px;
+	transform: translate(var(--bars-x, 0), var(--bars-y, 0));
+}
+.theme-rift .ib-bar-buffer { display: none; }
+/* keep value/label text clear of the portrait it now tucks under */
+.theme-rift .ib-card:not(.is-target) .ib-val { left: calc(46px + var(--rf-row-outdent, 0px)); }
+.theme-rift .ib-card:not(.is-target) .ib-label { left: calc(92px + var(--rf-row-outdent, 0px)); }
+.theme-rift .ib-card:not(.is-target) .ib-bar-row.ib-segmented-bar .ib-label { left: calc(156px + var(--rf-row-outdent, 0px)); }
+.theme-rift .ib-bar-row {
+	height: 23px;
+	position: relative;
+	width: calc(100% + var(--rf-row-outdent, 0px) - var(--rf-row-shorten, 0px));
+	margin-left: calc(-1 * var(--rf-row-outdent, 0px));
+	overflow: visible;
+	filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.5));
+}
+.theme-rift .ib-card:not(.is-target) .ib-bar-row:nth-child(2) {
+	--rf-row-shorten: 30px;
+}
+.theme-rift .ib-card:not(.is-target) .ib-bar-row:nth-child(3) {
+	--rf-row-shorten: 54px;
+}
+.theme-rift .ib-card:not(.is-target) .ib-bar-row:nth-child(4) {
+	--rf-row-shorten: 78px;
+}
+.theme-rift .ib-card:not(.is-target) .ib-bar-row:nth-child(5) {
+	--rf-row-shorten: 102px;
+}
+.theme-rift .ib-card:not(.is-target) .ib-bar-row:nth-child(n+6) {
+	--rf-row-shorten: 126px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(4)) {
+	gap: 1px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(4)) .ib-bar-row {
+	height: 19px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(4)) .ib-val {
+	font-size: calc(0.82em * var(--value-font-size, 1));
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(4)) .ib-label {
+	font-size: calc(0.86em * var(--label-font-size, 1));
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(4)) .ib-bar-row:nth-child(4) {
+	--rf-row-outdent: 28px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(5)) .ib-bar-row {
+	height: 16px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(5)) .ib-val {
+	font-size: calc(0.76em * var(--value-font-size, 1));
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(5)) .ib-label {
+	font-size: calc(0.8em * var(--label-font-size, 1));
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(5)) .ib-bar-row:nth-child(4) {
+	--rf-row-outdent: 24px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(5)) .ib-bar-row:nth-child(5) {
+	--rf-row-outdent: 48px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(6)) .ib-bar-row {
+	height: 14px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(6)) .ib-val {
+	font-size: calc(0.7em * var(--value-font-size, 1));
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(6)) .ib-label {
+	font-size: calc(0.74em * var(--label-font-size, 1));
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(6)) .ib-bar-row:nth-child(4) {
+	--rf-row-outdent: 20px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(6)) .ib-bar-row:nth-child(5) {
+	--rf-row-outdent: 38px;
+}
+.theme-rift .ib-bars-wrapper:has(.ib-bar-row:nth-child(6)) .ib-bar-row:nth-child(n+6) {
+	--rf-row-outdent: 56px;
+}
+/* the dark bezel behind the fill */
+.theme-rift .ib-bar-container {
+	position: absolute;
+	inset: 0;
+	height: 100%;
+	background: linear-gradient(180deg, #262d34, #0a0e12);
+	border: none;
+	overflow: hidden;
+	clip-path: polygon(0 0, 100% 0, calc(100% - var(--rf-tip)) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px rgba(184, 154, 94, 0.25),
+		inset 0 2px 1px rgba(255, 255, 255, 0.09),
+		inset 0 -3px 5px rgba(0, 0, 0, 0.6);
+	--bar-segment-inset: 2px;
+	--bar-segment-color: rgba(184, 154, 94, 0.58);
+	--bar-segment-shadow: 1px 0 0 rgba(0, 0, 0, 0.7);
+	--bar-segment-opacity: 0.8;
+}
+
+.theme-rift .ib-bar-threshold-marker {
+	--bar-marker-width: 2px;
+	--bar-marker-offset: 0px;
+	--bar-marker-depth: 6px;
+	--bar-marker-color: color-mix(in srgb, var(--marker-color, #fff) 62%, var(--rf-gold) 38%);
+	--bar-marker-shadow: 1px 0 0 rgba(0, 0, 0, 0.7);
+	--bar-marker-opacity: 0.88;
+}
+.theme-rift .ib-bar-fill {
+	position: absolute; inset: 0 auto 0 0;
+	width: var(--percent, 100%);
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 42%, rgba(0, 0, 0, 0.18) 100%),
+		var(--attr-color, var(--rf-hp)) !important;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.theme-rift .ib-bar-fill::before {
+	content: ""; position: absolute; inset: 0;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 46%, rgba(0, 0, 0, 0.22) 100%);
+	pointer-events: none;
+}
+.theme-rift .ib-bar-fill::after {
+	content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 2px;
+	background: rgba(255, 255, 255, 0.55);
+}
+/* per-bar color comes from data (--attr-color set inline per row) */
+/* --bar-scale must grow rightward from the portrait tuck point (beats hud-base center origin) */
+#ib-hud-layer.theme-rift .ib-bar-row { transform-origin: left center; }
+#ib-hud-layer.theme-rift .is-target .ib-bar-row { transform-origin: right center; }
+
+/* text overlaid on the bar — value (white) + italic serif label */
+.theme-rift .ib-val {
+	position: absolute;
+	left: 10px; top: 50%;
+	transform: translateY(-50%);
+	right: auto;
+	font-family: var(--rf-font-num); font-weight: 700;
+	font-size: calc(0.92em * var(--value-font-size, 1));
+	color: #fff;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+	z-index: 5;
+}
+.theme-rift .ib-label {
+	position: absolute;
+	left: 56px; top: 50%;
+	transform: translateY(-50%);
+	min-width: 0;
+	font-family: var(--rf-font-label); font-style: italic; font-weight: 500;
+	font-size: calc(0.96em * var(--label-font-size, 1));
+	letter-spacing: 0.02em;
+	color: rgba(255, 255, 255, 0.92);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+	text-align: left;
+	z-index: 5;
+}
+
+/* =========================================
+   6. NUMBER CHIPS — engraved stone tags
+   ========================================= */
+.theme-rift .ib-numbers-wrapper {
+	gap: 5px;
+}
+.theme-rift .ib-number-row {
+	padding: 2px 10px;
+	background: linear-gradient(180deg, var(--rf-frame-2), var(--rf-frame));
+	border: 1px solid rgba(184, 154, 94, 0.35);
+	border-left: 2px solid var(--attr-color, var(--rf-gold));
+	border-radius: 0;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 6px var(--rf-shadow);
+}
+.theme-rift .ib-number-row:hover { background: linear-gradient(180deg, #2b343c, var(--rf-frame-2)); }
+.theme-rift .ib-number-label {
+	font-family: var(--rf-font-label); font-style: italic; font-weight: 500;
+	font-size: calc(0.82em * var(--label-font-size, 1));
+	letter-spacing: 0.03em;
+	text-transform: none;
+	color: var(--rf-dim);
+}
+.theme-rift .ib-number-value {
+	font-family: var(--rf-font-num); font-weight: 700;
+	font-size: calc(1.05em * var(--value-font-size, 1));
+	color: var(--rf-cream);
+	text-shadow: 0 1px 2px #000;
+}
+
+/* =========================================
+   6b. CHARGE PIPS — slanted segmented strip
+   separate right-side dots block (like base)
+   ========================================= */
+.theme-rift .ib-dots-wrapper {
+	position: absolute;
+	top: 0;
+	left: calc(100% + 25px);
+	width: 100%;
+	pointer-events: none;
+	z-index: var(--dots-z, 20);
+	transform: translate(var(--dots-x, 0px), var(--dots-y, 0px));
+}
+.theme-rift .ib-pip-row {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+	margin-bottom: 6px;
+}
+.theme-rift .ib-pip-header {
+	display: flex;
+	margin-bottom: 1px;
+	font-family: var(--rf-font-label);
+	font-style: italic;
+	font-weight: 500;
+	font-size: calc(0.82em * var(--dot-scale, 1));
+	line-height: 1;
+	color: rgba(236, 227, 207, 0.9);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+}
+.theme-rift .ib-pip-header .ib-label-text { padding-left: 0; }
+.theme-rift .ib-pip-container {
+	gap: 4px;
+	margin-top: 0;
+	padding-left: 2px;
+}
+.theme-rift .ib-pip {
+	width: calc(16px * var(--dot-scale, 1));
+	height: calc(9px * var(--dot-scale, 1));
+	border: none; border-radius: 0;
+	transform: skewX(-26deg);
+}
+.theme-rift .ib-pip.filled {
+	background: linear-gradient(180deg, #9fdcf5, #4790c0);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 6px rgba(96, 184, 230, 0.5);
+	transform: skewX(-26deg);
+}
+.theme-rift .ib-pip.empty {
+	opacity: 1;
+	background: linear-gradient(180deg, #313a42, #1a2026);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+	transform: skewX(-26deg);
+}
+/* =========================================
+   7. TURN INDICATOR — gold awakening
+   ========================================= */
+.theme-rift .ib-card.is-turn .ib-portrait-wrapper {
+	box-shadow:
+		0 0 0 2px var(--rf-edge),
+		0 0 0 4px #2b333a,
+		0 0 0 6px var(--rf-edge),
+		0 0 0 8px var(--rf-gold),
+		0 0 0 9px var(--rf-edge),
+		0 5px 16px var(--rf-shadow),
+		0 0 26px -2px rgba(184, 154, 94, 0.8),
+		inset 0 0 16px rgba(0, 0, 0, 0.7);
+}
+.theme-rift .ib-card.is-turn .ib-bar-container { box-shadow: inset 0 0 0 1px rgba(184, 154, 94, 0.5), inset 0 -2px 4px rgba(0,0,0,.5); }
+
+.theme-rift .ib-end-turn-btn {
+	top: -8px; right: -4px; width: 26px; height: 26px;
+	border-radius: 50%;
+	background: radial-gradient(circle at 50% 35%, #2b333a, #12161a);
+	color: var(--rf-gold);
+	border: none;
+	box-shadow: 0 0 0 1px var(--rf-edge), 0 0 0 2px var(--rf-gold), 0 2px 6px var(--rf-shadow);
+	font-size: 12px; opacity: 0; transition: all 0.2s ease; z-index: 8;
+}
+.theme-rift .ib-card.is-turn .ib-end-turn-btn { opacity: 1; }
+.theme-rift .ib-end-turn-btn:hover { color: #fff; transform: scale(1.12) !important; }
+
+/* =========================================
+   8. TARGET FRAME — mirrored (portrait right)
+   ========================================= */
+.theme-rift .ib-card.is-target { flex-direction: row-reverse; }
+.theme-rift .ib-card.is-target .ib-portrait-wrapper {
+	margin-right: 0; margin-left: -16px;
+	box-shadow:
+		0 0 0 2px var(--rf-edge),
+		0 0 0 4px #2b333a,
+		0 0 0 6px var(--rf-edge),
+		0 0 0 8px rgba(184, 154, 94, 0.5),
+		0 0 0 9px var(--rf-edge),
+		0 5px 16px var(--rf-shadow),
+		0 0 24px -3px rgba(194, 57, 47, 0.6),
+		inset 0 0 16px rgba(0, 0, 0, 0.75);
+}
+.theme-rift .ib-card.is-target .ib-portrait-wrapper::after {
+	content: "\2620"; left: auto; right: -8px; color: var(--rf-hp-hi);
+}
+.theme-rift .ib-card.is-target .ib-stats-box { padding-left: 0; padding-right: 22px; align-items: flex-end; }
+.theme-rift .ib-card.is-target .ib-name { text-align: right; padding-left: 0; padding-right: 20px; }
+/* mirror the bars: chevron cut on the LEFT, text on the right */
+.theme-rift .ib-card.is-target .ib-bar-container { clip-path: polygon(var(--rf-tip) 0, 100% 0, 100% 100%, 0 100%); }
+.theme-rift .ib-card.is-target .ib-bars-wrapper { margin-left: 0; margin-right: -40px; }
+.theme-rift .ib-card.is-target .ib-val { left: auto; right: 46px; }
+.theme-rift .ib-card.is-target .ib-label { left: auto; right: 92px; }
+.theme-rift .ib-card.is-target .ib-bar-fill { inset: 0 0 0 auto; }
+.theme-rift .ib-card.is-target .ib-bar-fill::after { right: auto; left: 0; }
+.theme-rift .ib-card.is-target .ib-bar-guides { transform: scaleX(-1); }
+.theme-rift .ib-card.is-target .ib-bar-threshold-marker::before {
+	top: auto;
+	bottom: var(--bar-marker-offset, 0px);
+}
+.theme-rift .ib-card.is-target .ib-bar-threshold-marker::after {
+	top: auto;
+	bottom: calc(var(--bar-marker-offset, 0px) + 1px);
+}
+.theme-rift .ib-card.is-target .ib-bar-temp { left: auto !important; right: var(--temp-left, 0%); }
+.theme-rift .ib-card.is-target .ib-bar-row:nth-child(2)::after { clip-path: polygon(var(--rf-tip) 0, 100% 0, 100% 100%, 0 100%); }
+.theme-rift .ib-card.is-target .ib-val { left: auto; right: 10px; }
+.theme-rift .ib-card.is-target .ib-label { left: auto; right: 56px; text-align: right; }
+.theme-rift .ib-card.is-target .ib-bar-row.ib-segmented-bar .ib-label { right: 120px; }
+
+/* =========================================
+   9. ACTION BUTTONS — engraved stone tablets
+   ========================================= */
+#ib-sub-menu-container.theme-rift { margin-right: 92px; }
+
+/* spacing comes from button margin-bottom, not the base 12px gap */
+#ib-action-menu.theme-rift { gap: 0; }
+
+.theme-rift .ib-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--rf-cream);
+}
+
+.theme-rift .ib-collapse-btn:hover { color: var(--rf-gold); }
+
+.theme-rift .ib-action-btn {
+	width: 232px; height: 46px;
+	margin-bottom: 9px; padding: 0 22px;
+	background: linear-gradient(180deg, var(--rf-frame-2), var(--rf-frame));
+	border: none;
+	color: var(--rf-cream);
+	font-family: var(--rf-font-display);
+	font-weight: 600; font-size: 1.18em;
+	text-transform: uppercase; letter-spacing: 0.08em;
+	clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+	box-shadow: inset 0 0 0 1px rgba(184, 154, 94, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 10px var(--rf-shadow);
+	transition: all 0.16s ease;
+}
+.theme-rift .ib-action-btn .ib-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+.theme-rift .ib-action-btn .glyph,
+.theme-rift .ib-action-btn i { color: var(--rf-gold); font-size: 0.8em; }
+.theme-rift .ib-action-btn:hover {
+	color: #fff;
+	box-shadow: inset 0 0 0 1px var(--rf-gold), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 6px 14px var(--rf-shadow), 0 0 18px -4px rgba(184, 154, 94, 0.6);
+	transform: translateX(3px);
+}
+.theme-rift .ib-action-btn.btn-attack {
+	height: 54px; font-size: 1.32em;
+	background: linear-gradient(180deg, var(--rf-hp-hi), var(--rf-hp-deep));
+	color: #fff;
+}
+.theme-rift .ib-action-btn.btn-attack .glyph,
+.theme-rift .ib-action-btn.btn-attack i { color: #fff; }
+.theme-rift .ib-action-btn.btn-attack:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.4), 0 6px 16px var(--rf-shadow), 0 0 22px -4px var(--rf-hp-hi); }
+
+/* =========================================
+   10. SUB MENU — carved codex
+   ========================================= */
+.theme-rift .ib-sub-menu {
+	width: 406px;
+	background: linear-gradient(180deg, #1b2228, #12171b);
+	border: none;
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+	box-shadow: inset 0 0 0 1px rgba(184, 154, 94, 0.3), 0 12px 30px rgba(0, 0, 0, 0.55);
+}
+.theme-rift .ib-sidebar-panel {
+	width: 76px; padding: 12px 0 12px 8px; gap: 5px;
+	background: rgba(0, 0, 0, 0.28);
+	border: none;
+}
+.theme-rift .ib-side-tab {
+	padding: 9px 4px;
+	color: var(--rf-dim);
+	font-family: var(--rf-font-label); font-style: italic; font-weight: 500; font-size: 0.78em;
+	letter-spacing: 0.03em;
+	border-left: 2px solid transparent;
+	transition: all 0.15s ease;
+}
+.theme-rift .ib-side-tab .glyph,
+.theme-rift .ib-side-tab i { display: block; margin-bottom: 3px; font-size: 1.3em; color: var(--rf-gold-dim); }
+.theme-rift .ib-side-tab:hover { color: var(--rf-cream); }
+.theme-rift .ib-side-tab.active { background: rgba(184, 154, 94, 0.1); color: var(--rf-cream); border-left-color: var(--rf-gold); }
+.theme-rift .ib-side-tab.active .glyph,
+.theme-rift .ib-side-tab.active i { color: var(--rf-gold); }
+
+.theme-rift .ib-main-panel { max-height: 450px; }
+.theme-rift .ib-menu-header {
+	display: flex; align-items: center; justify-content: space-between; gap: 10px;
+	min-width: 0;
+	padding: 12px 20px 10px;
+	background: transparent;
+	border-bottom: 1px solid rgba(184, 154, 94, 0.3);
+	font-family: var(--rf-font-display); font-weight: 600; font-size: 1.2em;
+	text-transform: uppercase; letter-spacing: 0.06em;
+	color: var(--rf-cream);
+}
+.theme-rift .ib-menu-header .ib-font-hero {
+	font-family: var(--rf-font-display); font-weight: 600; font-size: 1em; color: var(--rf-cream);
+	overflow: visible;
+}
+.theme-rift .ib-dc-badge {
+	font-family: var(--rf-font-num); font-weight: 700; font-size: 0.5em;
+	letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0; margin-left: 10px;
+	padding: 3px 9px; border-radius: 3px;
+	background: var(--rf-hp); color: #fff; border: none;
+}
+
+.theme-rift .ib-magic-tabs {
+	gap: 6px; padding: 10px 16px;
+	background: rgba(0, 0, 0, 0.2);
+	border-bottom: 1px solid rgba(184, 154, 94, 0.18);
+}
+.theme-rift .ib-tab-btn {
+	display: flex; align-items: center; gap: 5px;
+	padding: 4px 12px;
+	background: var(--rf-frame-2);
+	border: 1px solid rgba(184, 154, 94, 0.3);
+	color: var(--rf-dim);
+	font-family: var(--rf-font-num); font-weight: 600; font-size: 0.82em;
+	letter-spacing: 0.04em;
+	clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.15s ease;
+}
+.theme-rift .ib-tab-btn:hover { color: var(--rf-cream); border-color: var(--rf-gold); }
+.theme-rift .ib-tab-btn.active { background: var(--rf-hp-deep); color: #fff; border-color: var(--rf-hp); }
+.theme-rift .ib-tab-btn .ib-slot-text { font-size: 0.84em; opacity: 0.7; }
+.theme-rift .ib-tab-btn .ib-slot-text.empty { color: #ff7b72; opacity: 1; }
+
+.theme-rift .ib-scroll-area,
+.theme-rift .ib-list-area { padding: 6px 8px; }
+.theme-rift .ib-list-area { max-height: 300px; overflow-y: auto; }
+.theme-rift .ib-list-item {
+	padding: 8px 12px;
+	border-left: 2px solid transparent;
+	transition: all 0.14s ease;
+}
+.theme-rift .ib-list-item:hover { background: rgba(184, 154, 94, 0.08); border-left-color: var(--rf-gold); transform: translateX(3px); }
+.theme-rift .ib-list-img {
+	width: 30px; height: 30px; border-radius: 50%;
+	display: flex; align-items: center; justify-content: center;
+	background: radial-gradient(circle at 50% 35%, var(--rf-frame-2), var(--rf-frame));
+	color: var(--rf-gold); flex-shrink: 0;
+	box-shadow: 0 0 0 1px var(--rf-edge), 0 0 0 2px rgba(184, 154, 94, 0.35);
+}
+.theme-rift .ib-font-hero {
+	font-family: var(--rf-font-label); font-weight: 600; font-size: 1.05em;
+	color: var(--rf-cream);
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.theme-rift .ib-act-icon {
+	display: inline-flex; align-items: center; justify-content: center;
+	min-width: 22px; height: 21px; padding: 0 7px;
+	background: var(--rf-frame-2); color: var(--rf-gold);
+	border: 1px solid rgba(184, 154, 94, 0.4);
+	font-family: var(--rf-font-num); font-weight: 700; font-size: 0.82em;
+	clip-path: polygon(0 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+}
+.theme-rift .ib-act-icon.reaction { color: var(--rf-mp-hi); border-color: rgba(79, 155, 216, 0.4); }
+
+.theme-rift .ib-scroll-area,
+.theme-rift .ib-list-area {
+	scrollbar-width: thin;
+	scrollbar-color: var(--rf-gold-dim) transparent;
+}
+.theme-rift .ib-scroll-area::-webkit-scrollbar,
+.theme-rift .ib-list-area::-webkit-scrollbar { width: 7px; }
+.theme-rift .ib-scroll-area::-webkit-scrollbar-thumb,
+.theme-rift .ib-list-area::-webkit-scrollbar-thumb { background: var(--rf-gold-dim); border-radius: 4px; }
+.theme-rift .ib-scroll-area::-webkit-scrollbar-track,
+.theme-rift .ib-list-area::-webkit-scrollbar-track { background: transparent; }
+
+/* =========================================
+   10b. QUICK SLOTS / FAVORITES — gold-ringed relic slots
+   ========================================= */
+.theme-rift .ib-quick-slot-container {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 12px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+}
+.theme-rift .ib-quick-slot {
+	width: 40px;
+	height: 40px;
+	background: radial-gradient(circle at 50% 35%, var(--rf-frame-2), var(--rf-frame));
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	box-shadow:
+		0 0 0 1px var(--rf-edge),
+		0 0 0 2px rgba(184, 154, 94, 0.4),
+		0 2px 6px var(--rf-shadow);
+	transition: all 0.16s ease;
+}
+.theme-rift .ib-quick-slot img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.theme-rift .ib-quick-slot:hover {
+	transform: translateY(-2px);
+	box-shadow:
+		0 0 0 1px var(--rf-edge),
+		0 0 0 2px var(--rf-gold),
+		0 4px 12px var(--rf-shadow),
+		0 0 16px -4px rgba(184, 154, 94, 0.6);
+}
+.theme-rift .ib-quick-slot-container {
+	scrollbar-width: thin;
+	scrollbar-color: var(--rf-gold-dim) transparent;
+}
+.theme-rift .ib-quick-slot-container::-webkit-scrollbar { width: 7px; }
+.theme-rift .ib-quick-slot-container::-webkit-scrollbar-thumb { background: var(--rf-gold-dim); border-radius: 4px; }
+.theme-rift .ib-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-rift .ib-fav-btn {
+	color: var(--rf-dim);
+	transition: all 0.16s ease;
+}
+.theme-rift .ib-fav-btn:hover { color: var(--rf-cream); }
+.theme-rift .ib-fav-btn.active { color: var(--rf-gold); }
+
+/* =========================================
+   10c. COMPACT / COLLAPSE — ornate medallion crest
+   ========================================= */
+#ib-hud-layer.theme-rift.collapse-mode {
+	--collapse-border-color: var(--rf-gold);
+	--collapse-border-hover: var(--rf-gold);
+	--collapse-border-radius: 50%;
+	--collapse-bg: radial-gradient(circle at 50% 38%, var(--rf-frame-2), var(--rf-frame) 72%);
+}
+
+#ib-hud-layer.theme-rift .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper {
+	position: relative;
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	border-radius: var(--collapse-border-radius);
+	border: 2px solid var(--collapse-border-color);
+	background: var(--collapse-bg);
+	clip-path: var(--collapse-clip-path, none);
+	overflow: hidden !important;
+	margin: 0 !important;
+	box-shadow:
+		0 0 0 2px var(--rf-edge),
+		0 0 0 4px rgba(184, 154, 94, 0.45),
+		0 0 0 5px var(--rf-edge),
+		0 4px 14px var(--rf-shadow),
+		inset 0 0 14px rgba(0, 0, 0, 0.75);
+	z-index: 2;
+}
+
+/* hide the off-frame emblem ornament when collapsed (it lives outside the wrapper) */
+#ib-hud-layer.theme-rift .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper::after {
+	display: none;
+}
+
+#ib-hud-layer.theme-rift .ib-card.is-collapsed:not(.card-hovered) .ib-portrait {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: var(--collapse-border-radius);
+}
+
+/* =========================================
+   11. SEARCH / TOOLTIP HOOKS
+   ========================================= */
+.theme-rift .ib-search-container { background: rgba(0, 0, 0, 0.25); border-bottom: 1px solid rgba(184, 154, 94, 0.2); }
+.theme-rift .ib-search-input { color: var(--rf-cream); font-family: var(--rf-font-label); }
+.theme-rift .ib-search-input::placeholder { color: var(--rf-dim); }
+
+.theme-rift {
+	--tooltip-bg: rgba(18, 23, 27, 0.98);
+	--tooltip-border: rgba(184, 154, 94, 0.5);
+	--tooltip-text: #cfd3d0;
+	--tooltip-header: var(--rf-cream);
+	--g-accent: var(--rf-gold);
+}

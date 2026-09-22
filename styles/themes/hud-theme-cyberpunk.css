@@ -1,0 +1,968 @@
+/* =========================================
+   Stylish Action HUD - THEME: CYBERPUNK (NEON CITY)
+   Style: High Contrast, Glitch, Neon, Industrial
+   ========================================= */
+
+.theme-cyberpunk {
+	/* [COLORS] */
+	--cp-bg: #0b0b0b;
+	--cp-yellow: #fce300;
+	--cp-cyan: #00f0ff;
+	--cp-red: #ff003c;
+	--cp-purple: #bc13fe;
+	--cp-text: #ffffff;
+	--cp-dim: #555555;
+
+	/* [GEOMETRY] */
+	--cp-skew: -15deg;
+	--cp-unskew: 15deg;
+
+	/* [CARD DIMENSIONS] */
+	--card-width: 440px;
+	--card-height: auto;
+
+	/* [VARS] */
+	--cp-border-width: 2px;
+}
+
+/* =========================================
+   1. CARD CONTAINER (The Canvas - Reforged)
+   ========================================= */
+
+.theme-cyberpunk .ib-card {
+	position: relative;
+	width: var(--card-width, 440px) !important;
+	height: var(--card-height, auto);
+	min-height: 140px;
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	overflow: visible !important;
+
+	margin-bottom: 20px;
+
+	/* Removed SkewX, kept transition */
+	transform: translate(0, 0);
+	transition: transform 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.theme-cyberpunk .ib-card:hover {
+	/* Slide out slightly on hover, no skew */
+	transform: translate(-5px, -5px);
+	z-index: 50;
+}
+
+/* Background Layer (Tech Slate) */
+.theme-cyberpunk .ib-bg-layer {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+
+	/* Dark Tech Slate */
+	background: rgba(10, 10, 10, 0.95);
+
+	/* Tech Borders: Yellow right bar, thin top/bottom */
+	border: none;
+	border-right: 6px solid var(--cp-yellow);
+	box-shadow:
+		inset 0 1px 0 rgba(252, 227, 0, 0.3),
+		inset 0 -1px 0 rgba(252, 227, 0, 0.1),
+		5px 5px 0 rgba(0, 0, 0, 0.8);
+
+	/* Clean cut shape */
+	clip-path: none;
+}
+
+/* Background Grid Pattern */
+.theme-cyberpunk .ib-bg-layer::before {
+	content: "";
+	position: absolute;
+	inset: 5px;
+	/* Subtle hex or grid pattern */
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+	background-size: 20px 20px;
+	opacity: 1;
+	z-index: -1;
+	pointer-events: none;
+}
+
+/* Decoration Lines (Tech Detail) */
+.theme-cyberpunk .ib-bg-layer::after {
+	content: "SYSTEM_READY";
+	position: absolute;
+	bottom: 5px;
+	right: 15px;
+	font-family: "Oswald", sans-serif;
+	font-size: 0.6em;
+	color: var(--cp-dim);
+	letter-spacing: 2px;
+
+	/* Remove old gradient strip */
+	width: auto;
+	height: auto;
+	background: none;
+	opacity: 1;
+
+	/* Removed counter-skew */
+	transform: none;
+}
+
+/* =========================================
+   2. PORTRAIT (Tech Frame)
+   ========================================= */
+
+.theme-cyberpunk .ib-portrait-wrapper {
+	position: relative;
+	z-index: 2;
+	width: var(--portrait-width, 110px);
+	height: var(--portrait-height, auto);
+	margin: 10px;
+
+	/* Removed counter-skew */
+	transform: none;
+
+	/* Sharp rectangular frame */
+	clip-path: none;
+
+	background: #000;
+	border: 2px solid var(--cp-yellow);
+	/* Yellow border */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.theme-cyberpunk .ib-portrait {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	/* High contrast, slightly desaturated */
+	filter: contrast(1.1) brightness(1.1) grayscale(0.2);
+	transition: all 0.3s;
+}
+
+/* Glitch Effect on Hover */
+.theme-cyberpunk .ib-card:hover .ib-portrait {
+	filter: contrast(1.2) brightness(1.2) grayscale(0);
+}
+
+/* Portrait Overlay (Scanner -> ID) */
+.theme-cyberpunk .ib-portrait-wrapper::after {
+	content: "ID_VERIFIED";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-family: "Teko", sans-serif;
+	font-size: 0.8em;
+	color: #000;
+	background: var(--cp-yellow);
+	letter-spacing: 1px;
+	font-weight: bold;
+	padding: 2px 0;
+}
+
+/* =========================================
+   3. STATS AREA
+   ========================================= */
+
+.theme-cyberpunk .ib-stats-box {
+	flex: 1;
+	/* z-index removed — let .ib-name control its own stacking via --name-z */
+	padding: 10px 25px 10px 0;
+	display: flex;
+	flex-direction: column;
+
+	/* Removed counter-skew */
+	transform: none;
+}
+
+.theme-cyberpunk .ib-conditions {
+	z-index: var(--conditions-z, 20);
+}
+
+/* Name */
+.theme-cyberpunk .ib-name {
+	font-family: "Teko", sans-serif;
+	font-size: calc(2.8em * var(--name-scale, 1));
+	font-weight: 700;
+	text-transform: uppercase;
+	color: var(--cp-yellow);
+	line-height: 1.1;
+	margin-bottom: 5px;
+	padding-top: 1px;
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+
+	/* No glitch text overlay by default, clean look */
+	text-shadow: 2px 2px 0 #000;
+
+	transform: translate(var(--name-x, 0px), var(--name-y, 0px)) rotate(var(--name-rotation, 0deg));
+}
+
+/* Remove old glitch pseudo-element */
+.theme-cyberpunk .ib-name::before {
+	display: none;
+}
+
+/* =========================================
+   [NEW] CONDITIONS (Status Icons)
+   ========================================= */
+
+.theme-cyberpunk .ib-conditions {
+	top: -15px;
+	right: -10px;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 4px;
+	width: 250px;
+	z-index: var(--conditions-z, 20);
+	transform: translate(var(--conditions-x, 0px), var(--conditions-y, 0px));
+}
+
+.theme-cyberpunk .ib-cond-item {
+	transition: transform 0.2s;
+}
+
+.theme-cyberpunk .ib-cond-item:hover {
+	transform: scale(1.2);
+	z-index: 30;
+}
+
+.theme-cyberpunk .ib-cond-icon {
+	width: 28px;
+	height: 28px;
+	background: #000;
+	border: 1px solid var(--cp-yellow);
+	/* Yellow border */
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	border-radius: 0px;
+	padding: 2px;
+
+	/* Removed counter-skew */
+	transform: none;
+}
+
+.theme-cyberpunk .ib-cond-val {
+	background: var(--cp-red);
+	color: #fff;
+	border: 1px solid #000;
+	font-size: 10px;
+	bottom: -3px;
+	right: -3px;
+	box-shadow: 1px 1px 0 #000;
+	font-family: "Oswald", sans-serif;
+
+	/* Removed counter-skew */
+	transform: none;
+}
+
+/* =========================================
+   4. BARS (Tech Strips)
+   ========================================= */
+
+.theme-cyberpunk .ib-bars-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-top: 5px;
+	transform: translate(var(--bars-x, 0px), var(--bars-y, 0px));
+}
+
+.theme-cyberpunk .ib-dots-wrapper {
+	transform: translate(var(--dots-x, 0px), var(--dots-y, 0px));
+}
+
+.theme-cyberpunk .ib-numbers-wrapper {
+	transform: translate(var(--numbers-x, 0px), var(--numbers-y, 0px));
+}
+
+.theme-cyberpunk .ib-badges-wrapper {
+	transform: translate(var(--badges-x, 0px), var(--badges-y, 0px));
+}
+
+.theme-cyberpunk .ib-bar-row {
+	height: 18px;
+	/* Slimmer */
+	display: flex;
+	align-items: center;
+	background: rgba(0, 0, 0, 0.5);
+	border: none;
+	padding: 0;
+}
+
+/* Bar Label (Tag) */
+.theme-cyberpunk .ib-label {
+	width: auto;
+	min-width: 30px;
+	font-family: "Teko", sans-serif;
+	font-weight: normal;
+	color: var(--cp-yellow);
+	background: transparent;
+	text-align: right;
+	line-height: 1;
+	font-size: calc(1.2em * var(--label-font-size, 1));
+	padding-right: 5px;
+	border-right: 1px solid var(--cp-dim);
+}
+
+/* Bar Container */
+.theme-cyberpunk .ib-bar-container {
+	flex: 1;
+	height: 100%;
+	background: #111;
+	position: relative;
+	border: 1px solid #333;
+	--bar-segment-inset: 1px;
+	--bar-segment-color: rgba(0, 240, 255, 0.5);
+	--bar-segment-shadow: -1px 0 0 rgba(0, 0, 0, 0.85), 1px 0 0 rgba(252, 227, 0, 0.2);
+	--bar-segment-opacity: 0.88;
+}
+
+.theme-cyberpunk .ib-bar-threshold-marker {
+	--bar-marker-width: 2px;
+	--bar-marker-offset: 0px;
+	--bar-marker-depth: 6px;
+	--bar-marker-color: color-mix(in srgb, var(--marker-color, #fff) 72%, var(--cp-cyan) 28%);
+	--bar-marker-shadow: 1px 0 0 rgba(0, 0, 0, 0.72);
+	--bar-marker-opacity: 0.9;
+}
+
+/* Bar Fill */
+.theme-cyberpunk .ib-bar-fill {
+	height: 100%;
+	background: var(--attr-color);
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+
+	/* Tech stripe pattern */
+	background-image: repeating-linear-gradient(90deg,
+			transparent,
+			transparent 2px,
+			rgba(0, 0, 0, 0.2) 2px,
+			rgba(0, 0, 0, 0.2) 4px);
+}
+
+/* Value */
+.theme-cyberpunk .ib-val {
+	position: absolute;
+	right: 5px;
+	top: -1px;
+	font-family: "Teko", sans-serif;
+	font-size: calc(1.1em * var(--value-font-size, 1));
+	color: #fff;
+	text-shadow: 1px 1px 0 #000;
+	z-index: 5;
+	line-height: 1.2;
+}
+
+/* =========================================
+   5. ACTION MENU (CYBERDECK REFORGED v2)
+   ========================================= */
+
+/* Main Container Positioning */
+#ib-sub-menu-container.theme-cyberpunk {
+	margin-right: 40px;
+	/* Increased gap to prevent intrusion */
+	z-index: 5;
+	/* Ensure it stays behind main buttons if they animate */
+}
+
+/* --- MAIN BUTTONS (Slanted Speed Design) --- */
+.theme-cyberpunk .ib-action-btn {
+	width: 250px;
+	height: 50px;
+	background: #000;
+	/* Pure black for contrast */
+	border: none;
+	border-right: 6px solid var(--cp-yellow);
+	/* Tech bar accent */
+	margin-bottom: 8px;
+
+	/* Aggressive Skew for Speed Look */
+	transform: skewX(-15deg);
+
+	display: flex;
+	align-items: center;
+	padding: 0 25px;
+
+	/* Typography */
+	font-family: "Teko", sans-serif;
+	font-size: 2.2em;
+	color: var(--cp-yellow);
+	text-transform: uppercase;
+	line-height: 1;
+
+	cursor: pointer;
+	transition: all 0.1s cubic-bezier(0.1, 0.9, 0.2, 1);
+	position: relative;
+	overflow: hidden;
+
+	/* Tech Border Lines (Top/Bottom thin lines) */
+	box-shadow:
+		inset 0 1px 0 rgba(252, 227, 0, 0.3),
+		inset 0 -1px 0 rgba(252, 227, 0, 0.1),
+		5px 5px 0 rgba(0, 0, 0, 0.5);
+	/* Drop shadow */
+}
+
+/* Un-skew content so text is readable */
+.theme-cyberpunk .ib-btn-content {
+	transform: skewX(15deg);
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Button Hover: Snappy Shift & Invert */
+.theme-cyberpunk .ib-action-btn:hover {
+	background: var(--cp-yellow);
+	color: #000;
+	transform: skewX(-15deg) translateX(-10px);
+	/* Move left aggressively */
+	box-shadow:
+		inset 0 0 0 2px #000,
+		/* Internal black border */
+		-5px 0 15px rgba(252, 227, 0, 0.6);
+	/* Glow trail */
+}
+
+/* Attack Button Variant */
+.theme-cyberpunk .ib-action-btn.btn-attack {
+	height: 65px;
+	border-right-color: var(--cp-red);
+	color: var(--cp-red);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 0, 60, 0.3),
+		inset 0 -1px 0 rgba(255, 0, 60, 0.1),
+		5px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.theme-cyberpunk .ib-action-btn.btn-attack:hover {
+	background: var(--cp-red);
+	color: #000;
+	transform: skewX(-15deg) translateX(-15px);
+	/* Move more */
+	box-shadow:
+		inset 0 0 0 2px #000,
+		-10px 0 20px rgba(255, 0, 60, 0.6);
+}
+
+/* --- SUB MENU (Refined & Compact) --- */
+.theme-cyberpunk .ib-sub-menu {
+	background: rgba(8, 8, 8, 0.98);
+	/* Darker, almost opaque */
+	border: 1px solid var(--cp-dim);
+	border-top: 3px solid var(--cp-yellow);
+	/* Top accent only */
+
+	width: 340px;
+	/* Reduced width (was 500px) */
+
+	/* Subtle industrial grid */
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+	background-size: 20px 20px;
+
+	/* Hard shadow, no soft glow */
+	box-shadow: -5px 5px 0 rgba(0, 0, 0, 0.8);
+
+	display: flex;
+	flex-direction: column;
+}
+
+/* Sidebar Panel (Tabs) - Compact */
+.theme-cyberpunk .ib-sidebar-panel {
+	width: 90px;
+	background: #000;
+	border-right: 1px solid var(--cp-dim);
+	padding-top: 5px;
+	gap: 2px;
+}
+
+/* Sidebar Tab */
+.theme-cyberpunk .ib-side-tab {
+	font-family: "Teko", sans-serif;
+	font-size: 1.2em;
+	color: #666;
+	text-align: center;
+	padding: 5px 0;
+	cursor: pointer;
+	background: transparent;
+	transition: all 0.1s;
+}
+
+.theme-cyberpunk .ib-side-tab:hover {
+	color: #fff;
+	background: #222;
+}
+
+.theme-cyberpunk .ib-side-tab.active {
+	color: #000;
+	background: var(--cp-yellow);
+	font-weight: bold;
+	box-shadow: inset -3px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content Panel */
+.theme-cyberpunk .ib-main-panel {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 0;
+	max-height: 450px;
+	overflow-y: auto;
+}
+
+/* Header inside Main Panel */
+.theme-cyberpunk .ib-menu-header {
+	background: #111;
+	color: var(--cp-yellow);
+	border-bottom: 1px solid var(--cp-yellow);
+	font-family: "Teko", sans-serif;
+	font-size: 1.5em;
+	padding: 5px 10px;
+	margin-bottom: 0;
+	text-transform: uppercase;
+	font-weight: normal;
+	letter-spacing: 1px;
+	clip-path: none;
+	/* Remove clip path for cleaner look */
+}
+
+/* Ensure the selector covers both nested and direct cases */
+.theme-cyberpunk .ib-main-panel .ib-menu-header,
+.theme-cyberpunk .ib-sub-menu>.ib-menu-header {
+	/* Apply same styles */
+	background: #111;
+	color: var(--cp-yellow);
+	border-bottom: 1px solid var(--cp-yellow);
+	font-family: "Teko", sans-serif;
+	font-size: 1.5em;
+	padding: 5px 10px;
+	margin-bottom: 0;
+	text-transform: uppercase;
+	font-weight: normal;
+	letter-spacing: 1px;
+	clip-path: none;
+}
+
+/* --- LIST ITEMS --- */
+.theme-cyberpunk .ib-list-item {
+	padding: 6px 10px;
+	border-bottom: 1px solid #222;
+	transition: all 0.1s;
+	cursor: pointer;
+}
+
+.theme-cyberpunk .ib-list-item:hover {
+	background: rgba(252, 227, 0, 0.1);
+	/* Yellow tint */
+	padding-left: 15px;
+	border-left: 3px solid var(--cp-yellow);
+}
+
+.theme-cyberpunk .ib-item-content .ib-font-hero {
+	font-family: "Oswald", sans-serif;
+	font-size: 1em;
+	color: #ccc;
+	letter-spacing: 0.5px;
+}
+
+.theme-cyberpunk .ib-list-item:hover .ib-font-hero {
+	color: #fff;
+	text-shadow: none;
+}
+
+/* [FIX] Item Content Layout */
+.theme-cyberpunk .ib-item-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* [FIX] DND5e Cost/Action Wrapper Alignment */
+.theme-cyberpunk .ib-cost-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	white-space: nowrap;
+}
+
+/* Icons/Tags in List (Yellow/Dark style) */
+.theme-cyberpunk .ib-act-icon {
+	border: 1px solid var(--cp-yellow);
+	color: var(--cp-yellow);
+	background: rgba(0, 0, 0, 0.8);
+	font-family: "Teko", sans-serif;
+	font-size: 0.8em;
+	padding: 0 4px;
+	box-shadow: none;
+}
+
+/* Special override for Reaction (Red) */
+.theme-cyberpunk .ib-act-icon.reaction {
+	border-color: var(--cp-red);
+	color: var(--cp-red);
+}
+
+/* Quick Slots */
+.theme-cyberpunk .ib-quick-slot-container {
+	padding: 8px;
+	display: flex;
+	gap: 4px;
+	background: #000;
+	border-bottom: 1px solid #333;
+}
+
+.theme-cyberpunk .ib-quick-slot {
+	width: 36px;
+	height: 36px;
+	border: 1px solid #444;
+	background: #111;
+	cursor: pointer;
+}
+
+.theme-cyberpunk .ib-quick-slot:hover {
+	border-color: var(--cp-yellow);
+	box-shadow: 0 0 5px var(--cp-yellow);
+}
+
+/* =========================================
+   6. TURN INDICATOR
+   ========================================= */
+
+.theme-cyberpunk .ib-card.is-turn {
+	transform: scale(1.05);
+	z-index: 100;
+}
+
+.theme-cyberpunk .ib-card.is-turn .ib-bg-layer {
+	border-color: var(--cp-cyan);
+	box-shadow: 0 0 30px var(--cp-cyan);
+	animation: neon-pulse 1.5s infinite alternate;
+}
+
+.theme-cyberpunk .ib-card.is-turn .ib-name {
+	color: var(--cp-cyan);
+	text-shadow: 0 0 10px var(--cp-cyan);
+}
+
+@keyframes neon-pulse {
+	from {
+		box-shadow: 0 0 10px var(--cp-cyan);
+	}
+
+	to {
+		box-shadow:
+			0 0 30px var(--cp-cyan),
+			0 0 50px var(--cp-cyan);
+	}
+}
+
+/* =========================================
+   7. UTILS
+   ========================================= */
+
+.theme-cyberpunk .ib-act-icon {
+	border: 1px solid var(--cp-cyan);
+	color: var(--cp-cyan);
+	font-family: "Teko", sans-serif;
+	padding: 0 4px;
+	font-size: 0.8em;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================
+   8. NUMBER STYLE (Cyberpunk Theme)
+   ========================================= */
+
+.theme-cyberpunk .ib-number-row {
+	background: #000;
+	border: 1px solid var(--cp-dim);
+	border-left: 4px solid var(--attr-color, var(--cp-yellow));
+	border-radius: 0;
+	box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+
+	/* No Skew */
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px));
+}
+
+.theme-cyberpunk .ib-number-row:hover {
+	background: var(--cp-yellow);
+	border-color: #000;
+	/* Pop effect */
+	transform: translate(calc(var(--row-x, 0px) - 2px), calc(var(--row-y, 0px) - 2px));
+	box-shadow: 6px 6px 0 var(--cp-red);
+}
+
+.theme-cyberpunk .ib-number-label {
+	font-family: var(--hud-font-body, "Teko"), sans-serif;
+	color: var(--label-color, var(--cp-dim));
+	font-size: calc(1em * var(--number-scale, 1) * var(--label-font-size, 1));
+	font-weight: bold;
+}
+
+.theme-cyberpunk .ib-number-row:hover .ib-number-label {
+	color: #000;
+}
+
+.theme-cyberpunk .ib-number-value {
+	font-family: var(--hud-font-body, "Teko"), sans-serif;
+	font-size: calc(1.4em * var(--number-scale, 1) * var(--value-font-size, 1));
+	color: var(--value-color, #fff);
+	text-shadow: 2px 2px 0 #000;
+	transform: translate(var(--num-val-x, 0px), var(--num-val-y, 0px));
+}
+
+.theme-cyberpunk .ib-number-row:hover .ib-number-value {
+	color: #000;
+	text-shadow: none;
+}
+
+/* =========================================
+   9. DC BADGE (Cyberpunk Style)
+   ========================================= */
+
+.theme-cyberpunk .ib-dc-badge {
+	background: rgba(0, 0, 0, 0.8);
+	color: var(--cp-cyan);
+	border: 1px solid var(--cp-cyan);
+	font-family: var(--hud-font-body, "Teko"), sans-serif;
+	box-shadow: 0 0 5px var(--cp-cyan);
+}
+
+.theme-cyberpunk .ib-tab-btn.active .ib-dc-badge {
+	background: rgba(0, 0, 0, 0.5);
+	color: #000;
+	border-color: #000;
+	box-shadow: none;
+}
+
+.theme-cyberpunk .ib-collapse-btn {
+	color: var(--cp-yellow);
+	background: #000;
+	border: 1px solid var(--cp-yellow);
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.theme-cyberpunk .ib-collapse-btn:hover {
+	background: var(--cp-yellow);
+	color: #000;
+	box-shadow: 0 0 8px var(--cp-yellow);
+}
+
+/* =========================================
+   10. TABS (Top Horizontal Tabs)
+   ========================================= */
+
+.theme-cyberpunk .ib-magic-tabs {
+	display: flex;
+	gap: 4px;
+	padding: 8px 10px;
+	background: #000;
+	border-bottom: 1px solid var(--cp-dim);
+}
+
+.theme-cyberpunk .ib-tab-btn {
+	background: #111;
+	color: var(--cp-dim);
+	border: 1px solid #333;
+	padding: 4px 10px;
+	cursor: pointer;
+	font-family: var(--hud-font-body, "Teko"), sans-serif;
+	font-size: 1.1em;
+	transition: all 0.1s;
+}
+
+.theme-cyberpunk .ib-tab-btn:hover {
+	color: #fff;
+	border-color: var(--cp-yellow);
+	background: #222;
+}
+
+.theme-cyberpunk .ib-tab-btn.active {
+	background: var(--cp-yellow);
+	color: #000;
+	border-color: var(--cp-yellow);
+	font-weight: bold;
+}
+
+.theme-cyberpunk .ib-tab-btn .ib-slot-text {
+	font-size: 0.8em;
+	color: #888;
+	margin-left: 4px;
+}
+
+.theme-cyberpunk .ib-tab-btn .ib-slot-text.empty {
+	color: var(--cp-red);
+}
+
+.theme-cyberpunk .ib-tab-btn.active .ib-slot-text {
+	color: #000;
+	opacity: 0.7;
+}
+
+.theme-cyberpunk .ib-tab-btn.active .ib-slot-text.empty {
+	color: #600;
+}
+
+/* =========================================
+   CONTEXT MENU (Data Popup)
+   ========================================= */
+.sah-context-menu.theme-cyberpunk {
+	background: rgba(0, 0, 0, 0.95);
+	border: 1px solid var(--cp-dim);
+	border-left: 3px solid var(--cp-yellow);
+	box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.8);
+	
+	min-width: 220px;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	
+	/* Grid Pattern */
+	background-image: 
+		linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+	background-size: 20px 20px;
+}
+
+.sah-context-menu.theme-cyberpunk .sah-context-header {
+	background: var(--cp-yellow);
+	color: #000;
+	font-family: "Teko", sans-serif;
+	font-size: 1.4em;
+	font-weight: bold;
+	padding: 5px 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.sah-context-menu.theme-cyberpunk .sah-context-item {
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #222;
+	color: #ccc;
+	font-family: "Oswald", sans-serif;
+	font-size: 1em;
+	padding: 8px 15px;
+	text-align: left;
+	cursor: pointer;
+	transition: all 0.1s;
+	text-transform: uppercase;
+}
+
+.sah-context-menu.theme-cyberpunk .sah-context-item:hover {
+	background: var(--cp-cyan);
+	color: #000;
+	font-weight: bold;
+	padding-left: 20px;
+	box-shadow: inset 5px 0 0 #fff;
+}
+
+#ib-hud-layer.theme-cyberpunk.collapse-mode {
+	--collapse-border-color: var(--cp-yellow);
+	--collapse-border-hover: rgba(252, 227, 0, 0.7);
+	--collapse-border-radius: 0px;
+	--collapse-bg: #000;
+}
+
+#ib-hud-layer.theme-cyberpunk .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper {
+	position: relative;
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	border-radius: var(--collapse-border-radius);
+	background: var(--collapse-bg);
+	border: 2px solid var(--collapse-border-color);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+	overflow: hidden !important;
+	margin: 0 !important;
+	transform: none;
+	clip-path: var(--collapse-clip-path, polygon(0 0, 85% 0, 100% 15%, 100% 100%, 0 100%));
+	z-index: 2;
+}
+
+#ib-hud-layer.theme-cyberpunk .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper::after {
+	content: "ID_OK";
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background: var(--cp-yellow);
+	color: #000;
+	font-family: "Teko", sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 0 4px;
+	line-height: 1.2;
+	clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%);
+	z-index: 10;
+}
+
+#ib-hud-layer.theme-cyberpunk .ib-card.is-collapsed:not(.card-hovered) .ib-portrait {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: contrast(1.2) grayscale(0.2) brightness(1.1);
+	transform: scale(1.1);
+}
+
+/* =========================================
+   VOICE ACTIVITY INDICATOR
+   ========================================= */
+
+.theme-cyberpunk .ib-card.ib-speaking .ib-name {
+	text-shadow:
+		0 0 2px rgba(0, 240, 255, 0.9),
+		0 0 2px rgba(0, 240, 255, 0.9),
+		0 0 8px rgba(0, 240, 255, 0.5);
+}
+
+.theme-cyberpunk .ib-card.ib-speaking .ib-portrait-wrapper {
+	border-color: var(--cp-cyan);
+	filter:
+		drop-shadow(0 0 1px rgba(0, 240, 255, 0.9))
+		drop-shadow(0 0 1px rgba(0, 240, 255, 0.9))
+		drop-shadow(0 0 4px rgba(0, 240, 255, 0.6))
+		drop-shadow(0 0 12px rgba(0, 240, 255, 0.3));
+	animation: ib-voice-cyberpunk 1.5s ease-in-out infinite;
+}
+
+.theme-cyberpunk .ib-card.ib-speaking .ib-bg-layer {
+	border: 2px solid var(--cp-cyan);
+	border-right: 8px solid var(--cp-cyan);
+	filter:
+		drop-shadow(0 0 1px rgba(0, 240, 255, 0.9))
+		drop-shadow(0 0 1px rgba(0, 240, 255, 0.9))
+		drop-shadow(0 0 4px rgba(0, 240, 255, 0.6))
+		drop-shadow(0 0 12px rgba(0, 240, 255, 0.3));
+	animation: ib-voice-cyberpunk 1.5s ease-in-out infinite;
+}
+
+@keyframes ib-voice-cyberpunk {
+	0%, 100% {
+		filter:
+			drop-shadow(0 0 1px rgba(0, 240, 255, 0.7))
+			drop-shadow(0 0 1px rgba(0, 240, 255, 0.7))
+			drop-shadow(0 0 3px rgba(0, 240, 255, 0.4))
+			drop-shadow(0 0 8px rgba(0, 240, 255, 0.15));
+	}
+	50% {
+		filter:
+			drop-shadow(0 0 1px rgba(0, 240, 255, 1))
+			drop-shadow(0 0 2px rgba(0, 240, 255, 1))
+			drop-shadow(0 0 6px rgba(0, 240, 255, 0.7))
+			drop-shadow(0 0 16px rgba(0, 240, 255, 0.35));
+	}
+}

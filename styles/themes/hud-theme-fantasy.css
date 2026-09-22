@@ -1,0 +1,1346 @@
+/* =========================================
+   Iron & Blood HUD - THEME: DARK FANTASY (PREMIUM)
+   Style: Elden Lord, Ancient Relic, Heavy Metal
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap");
+
+.theme-fantasy {
+	/* [PALETTE: Deep & Royal] */
+	--f-bg-metal: #1a1a1d; /* ?�철??*/
+	--f-bg-detail: #252a33; /* ?�간 ?�른???�는 ?�두???�색 */
+
+	/* ?�티??골드 (채도�???��??고급?�럽�? */
+	--f-gold-dim: #6b5a3e;
+	--f-gold-bright: #c8b27a;
+	--f-gold-glow: rgba(200, 178, 122, 0.4);
+
+	--f-blood: #8a1c1c; /* 굳�? ????*/
+	--f-mana: #2b4f81; /* ?�해???�른??*/
+
+	/* [FONTS] */
+	--f-font-header: "Cinzel", serif;
+	--f-font-text: "Cormorant Garamond", serif;
+
+	/* [SHAPES] */
+	--card-width: 440px;
+	--card-height: auto;
+	--f-card-width: var(--card-width);
+}
+
+/* =========================================
+   1. CARD CONTAINER (Foggy Stone Style)
+   ========================================= */
+
+.theme-fantasy .ib-card {
+	position: relative;
+	width: var(--card-width) !important;
+	height: var(--card-height);
+
+	/* ?�이 ?�정 (?�까 ?�정??�??��?) */
+	min-height: 160px;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	/* ??[?�정] 배경/?�두�??�리???�거 -> ib-bg-layer�??�동 */
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	clip-path: none;
+
+	padding: 15px;
+	margin-bottom: 20px;
+	gap: 20px;
+
+	transform: none !important;
+	transition: all 0.3s ease;
+
+	/* ?�스처�? 글?��? 방해?��? ?�도�?z-index ?�리 */
+	z-index: 1;
+
+	/* ??중요: ?��? ?�소 ?�출 ?�용 */
+	overflow: visible !important;
+}
+
+/* ??[?�규] 배경 ?�이??(Visual Body) */
+.theme-fantasy .ib-bg-layer {
+	display: block !important;
+	position: absolute;
+	inset: 0;
+	z-index: 0; /* 콘텐�?z:1 ?�상) ?�로, ?��?�?배경?� 보이�?*/
+
+	/* 1. 기본 배경?? ?�주 ?�두??밤색/검??*/
+	background: #0f0f12;
+
+	/* ?�중 ?�두�?(금속 ?�레???�낌) */
+	border: 1px solid var(--f-gold-dim);
+	box-shadow:
+		inset 0 0 0 1px #000,
+		inset 0 0 50px rgba(0, 0, 0, 0.8), /* ?��?�??�둡�??�러�?*/
+		0 10px 30px rgba(0, 0, 0, 0.8);
+
+	/* 모서�?컷팅 */
+	clip-path: polygon(
+		15px 0,
+		100% 0,
+		100% calc(100% - 15px),
+		calc(100% - 15px) 100%,
+		0 100%,
+		0 15px
+	);
+
+	transition: all 0.3s ease;
+}
+
+/* ??배경 ?�스�??�용 (Fog / Grunge Texture) -> ib-bg-layer�??�동 */
+.theme-fantasy .ib-bg-layer::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+
+	/* ?�▼??[?��?지 경로 ?�인] card-bg.jpg �??�?�했?�고 가???�▼??*/
+	background-image: url("../../assets/card-bg.jpg");
+
+	background-size: cover; /* 카드�?�?채�? */
+	background-position: center; /* ?�스�?중앙??밝�? 부분이 가?�데 ?�도�?*/
+
+	/* 블렌??모드: 검?� 배경 ?�에 ?�개처럼 ?�성 */
+	/* overlay: 밝�? 부분�? ??밝게, ?�두??부분�? ?�명?�게 */
+	mix-blend-mode: overlay;
+
+	opacity: 1; /* ?�무 ?��??��? ?�게 ?�명??조절 (0.2 ~ 0.5 추천) */
+
+	pointer-events: none;
+	z-index: 0; /* 배경???�로 */
+
+	/* ?�스�??�감???�짝 차갑�??�르�? 보정?�여 ?�비로운 ?�낌 */
+	filter: grayscale(100%) brightness(1.2) contrast(1.2);
+}
+
+/* Hover: 마우???�렸?????�개가 조금 ???�명?�짐 */
+.theme-fantasy .ib-card:hover .ib-bg-layer {
+	border-color: var(--f-gold-bright);
+	box-shadow:
+		inset 0 0 0 1px #000,
+		0 10px 40px rgba(0, 0, 0, 1),
+		0 0 20px rgba(200, 178, 122, 0.2);
+	transform: translateY(-2px) !important;
+}
+
+.theme-fantasy .ib-card:hover::before {
+	opacity: 0.5; /* ?�스처�? ?�윽 밝아�?*/
+	transition: opacity 0.5s ease;
+}
+
+.theme-fantasy .ib-portrait-bg {
+	display: none !important;
+}
+
+/* =========================================
+   2. PORTRAIT (The Gothic Window)
+   ========================================= */
+
+.theme-fantasy .ib-portrait-wrapper {
+	position: relative;
+	width: var(--portrait-width, 100px);
+	height: var(--portrait-height, 100px);
+	flex-shrink: 0;
+
+	/* ?�태: 마름�?Diamond) 꼴로 변경하???�니?�함 부??*/
+	transform: rotate(45deg);
+	border: 2px solid var(--f-gold-dim);
+	box-shadow:
+		0 0 0 4px #000, /* 검?�??간격 */
+		0 0 0 5px var(--f-gold-dim); /* ?�중 ?�두�?*/
+
+	background: #000;
+	overflow: hidden;
+	margin: 10px 10px 10px 20px; /* 마름�??�전 공간 ?�보 */
+	z-index: 2;
+}
+
+.theme-fantasy .ib-portrait {
+	/* [기존 코드 ?�정] */
+	/* width: 100%; height: 100%;  <-- ??부분이 ?��?지�?강제�??�사각형?�로 만들�??�었?�니?? */
+	/* object-fit: cover;          <-- ??부분이 ?�치???�리 부분을 ?�더�??�계?�서 ?�려버립?�다. */
+
+	/* [???�결 코드] */
+	width: 100%; /* 가로폭?� ?�자??맞춤 */
+	height: auto; /* ???�심: ?�로???��?지 ?�래 비율?��?길게 ?�어지�???(?�리까�? ?�더링됨) */
+	min-height: 100%; /* ?��?지가 ?�무 ?�작??경우�??�비한 ?�전?�치 */
+	display: block; /* ?�이?�웃 깨짐 방�? */
+
+	/* ?�치 기�??? ?�쪽(?�굴)??먼�? 보이�???*/
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* [기존 코드 ?��?] ?�전 �??�용???�정 ?�용 */
+	/* scale??1.5 ?�도�??�워주면 빈틈?�이 ??�?차게 보입?�다 */
+	transform: rotate(-45deg) scale(calc(1.5 * var(--portrait-scale, 1)))
+		translate(var(--portrait-x, 0px), var(--portrait-y, 0px));
+
+	/* ?�전 중심�? ?��?지??중앙??기�??�로 ?�전 */
+	transform-origin: center center;
+
+	filter: sepia(0.3) contrast(1.1);
+	transition: transform 0.2s;
+}
+
+.theme-fantasy .ib-portrait-wrapper::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+	pointer-events: none;
+	z-index: 3;
+	border: 1px solid rgba(255, 255, 255, 0.1); /* 미세???�이?�이??*/
+}
+
+/* =========================================
+   3. STATS & INFO
+   ========================================= */
+
+.theme-fantasy .ib-stats-box {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: relative;
+	/* z-index removed — let .ib-name control its own stacking via --name-z */
+	padding-left: 15px; /* 마름모와 간격 */
+}
+
+.theme-fantasy .ib-conditions {
+	z-index: var(--conditions-z, 5);
+}
+
+/* Name: 조각????�� ?�낌 */
+.theme-fantasy .ib-name {
+	font-family: var(--f-font-header);
+	font-size: calc(2em * var(--name-scale, 1));
+	font-weight: 700;
+	color: #e0d8c3; /* ?��? 종이??글??*/
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+
+	text-shadow:
+		0 2px 0 #000,
+		0 0 10px rgba(0, 0, 0, 0.8);
+
+	margin-bottom: 15px;
+	/* ?�단 ?�식??(Ornamental Line) */
+	background: linear-gradient(
+		90deg,
+		transparent,
+		var(--f-gold-dim),
+		transparent
+	);
+	background-size: 100% 1px;
+	background-repeat: no-repeat;
+	background-position: bottom; padding-bottom: 5px; transform: translate(var(--name-x, 0px), var(--name-y, 0px)) rotate(var(--name-rotation, 0deg)); }
+
+/* =========================================
+   4. BARS (Antique Fresco Style - TEXTURE IMAGE)
+   ========================================= */
+
+.theme-fantasy .ib-bars-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-right: 5px; margin-top: 5px; transform: translate(var(--bars-x, 0px), var(--bars-y, 0px)); }
+
+.theme-fantasy .ib-dots-wrapper {
+	transform: translate(var(--dots-x, 0px), var(--dots-y, 0px));
+}
+
+.theme-fantasy .ib-numbers-wrapper {
+	transform: translate(var(--numbers-x, 0px), var(--numbers-y, 0px));
+}
+
+.theme-fantasy .ib-badges-wrapper {
+	transform: translate(var(--badges-x, 0px), var(--badges-y, 0px));
+}
+
+.theme-fantasy .ib-bar-row {
+	height: 16px;
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+/* Label */
+.theme-fantasy .ib-label {
+	font-family: var(--f-font-header);
+	font-size: calc(0.75em * var(--label-font-size, 1));
+	font-weight: 700;
+	color: #a89f91;
+	width: 32px;
+	text-align: left;
+	text-shadow: 1px 1px 0 #000;
+	opacity: 0.9;
+}
+
+/* Bar Track */
+.theme-fantasy .ib-bar-container {
+	flex: 1;
+	height: 100%;
+
+	background: #1a1510;
+
+	border: 1px solid #5c5040;
+
+	box-shadow: inset 0 0 10px #000;
+
+	position: relative;
+	border-radius: 1px;
+	--bar-segment-color: rgba(18, 10, 5, 0.82);
+	--bar-segment-shadow: 1px 0 0 rgba(200, 178, 122, 0.38);
+	--bar-segment-opacity: 0.9;
+}
+
+.theme-fantasy .ib-bar-threshold-marker {
+	--bar-marker-width: 2px;
+	--bar-marker-offset: 0px;
+	--bar-marker-depth: 6px;
+	--bar-marker-color: color-mix(in srgb, var(--marker-color, #fff) 62%, var(--f-gold-bright) 38%);
+	--bar-marker-shadow: 1px 0 0 rgba(18, 10, 5, 0.72);
+	--bar-marker-opacity: 0.88;
+}
+
+/* Bar Fill: ?�상 + ?�스�??�성 */
+.theme-fantasy .ib-bar-fill {
+	/* 1. 기본 ?�상 (HP:Red / AC:Blue) */
+	background-color: var(--attr-color);
+
+	/* 2. 깊이감을 ?�한 그라?�이??(?�아???�둡�? */
+	background-image: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.1) 0%,
+		transparent 30%,
+		transparent 70%,
+		rgba(0, 0, 0, 0.4) 100%
+	);
+
+	height: 100%;
+
+	/* 가?�자�?그림??*/
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+
+	transition: width 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+	z-index: 1;
+	position: relative;
+
+	/* ?�른�???마감??(?�명?�게) */
+	border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ???�심: ?�용?��? ?�공???�스�??��?지 ?�버?�이 */
+/* ?��?지가 �?Bar)???�상�??�여??'칠해�??�낌'???�니??*/
+.theme-fantasy .ib-bar-fill::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+
+	/* ?�▼??[경로 ?�정 ?�요] ?�?�하???��?지 경로�??�기???�으?�요 ?�▼??*/
+	/* ?? modules/niks-action-hud/bar-texture.jpg */
+	/* ?? worlds/my-world/assets/bar-texture.jpg */
+	background-image: url("../../assets/bar-texture.jpg");
+
+	background-size: cover; /* ?��?지가 바�? �?채우?�록 */
+	background-repeat: no-repeat;
+	background-position: center;
+
+	/* 블렌??모드: ?�스처의 거친 ?�낌???�상??'?�워' ?�습?�다. */
+	/* multiply: ?�둡�?진하�?(추천) */
+	/* hard-light: ?�비�? 강하�?*/
+	/* overlay: 밝고 ?�명?�게 */
+	mix-blend-mode: multiply;
+
+	opacity: 0.7; /* ?�스�?강도 (0.5 ~ 0.8 추천) */
+
+	/* ?�감 보정: ?�스처�? ???�아 보이�?*/
+	filter: sepia(0.4) contrast(1.2);
+
+	pointer-events: none;
+	z-index: 2;
+}
+
+/* Value Text */
+.theme-fantasy .ib-val {
+	position: absolute;
+	right: 5px;
+	top: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+
+	font-family: var(--f-font-text);
+	font-size: calc(0.95em * var(--value-font-size, 1));
+	font-weight: 700;
+
+	color: #f0e6d2;
+	text-shadow:
+		0 0 3px #000,
+		1px 1px 0 #000;
+	z-index: 10;
+	pointer-events: none;
+}
+
+/* Temp HP: 반투명한 ?�피지 �?*/
+.theme-fantasy .ib-bar-temp {
+	background: rgba(255, 255, 220, 0.2);
+	border-right: 1px solid rgba(255, 255, 255, 0.4);
+	z-index: 3;
+	mix-blend-mode: screen;
+}
+
+/* Conditions */
+.theme-fantasy .ib-conditions {
+	position: absolute;
+	top: -4px;
+	right: 0;
+	display: flex;
+	gap: 2px;
+}
+.theme-fantasy .ib-cond-icon {
+	border: 1px solid #5c5040;
+	background: #000;
+	width: 16px;
+	height: 16px;
+	filter: sepia(0.6);
+}
+
+/* =========================================
+   5. TURN INDICATOR (Soul Fire)
+   ========================================= */
+
+.theme-fantasy .ib-card.is-turn {
+	z-index: 100 !important;
+	/* 3. 부???�과 */
+	transform: translateY(-5px) scale(1.02) !important;
+	transition: all 0.3s ease;
+}
+
+.theme-fantasy .ib-card.is-turn .ib-bg-layer {
+	/* 1. ?�두�?발광 */
+	border-color: var(--f-gold-bright);
+
+	/* 2. ?�혼??불꽃 (?�른/보라�??�라) */
+	box-shadow:
+		0 0 0 1px var(--f-gold-bright),
+		0 0 40px rgba(100, 149, 237, 0.3), /* Cornflower Blue Glow */
+		inset 0 0 30px rgba(100, 149, 237, 0.1);
+}
+
+/* 초상?�도 빛남 */
+.theme-fantasy .ib-card.is-turn .ib-portrait-wrapper {
+	border-color: var(--f-gold-bright);
+	box-shadow:
+		0 0 0 4px #000,
+		0 0 0 5px var(--f-gold-bright),
+		0 0 20px rgba(100, 149, 237, 0.6);
+}
+
+.theme-fantasy .ib-card.is-turn .ib-name {
+	color: #fff;
+	text-shadow: 0 0 10px rgba(200, 178, 122, 0.8);
+}
+
+/* 배경???�개 ?�과 (Mist Animation) -> ib-bg-layer ?��?�?*/
+.theme-fantasy .ib-card.is-turn .ib-bg-layer::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+	opacity: 0.2;
+	mix-blend-mode: overlay;
+	animation: fantasy-mist 10s linear infinite;
+	pointer-events: none;
+}
+
+/* 초상?�도 빛남 */
+.theme-fantasy .ib-card.is-turn .ib-portrait-wrapper {
+	border-color: var(--f-gold-bright);
+	box-shadow:
+		0 0 0 4px #000,
+		0 0 0 5px var(--f-gold-bright),
+		0 0 20px rgba(100, 149, 237, 0.6);
+}
+
+.theme-fantasy .ib-card.is-turn .ib-name {
+	color: #fff;
+	text-shadow: 0 0 10px rgba(200, 178, 122, 0.8);
+}
+
+/* 배경???�개 ?�과 (Mist Animation) */
+.theme-fantasy .ib-card.is-turn::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+	opacity: 0.2;
+	mix-blend-mode: overlay;
+	animation: fantasy-mist 10s linear infinite;
+	pointer-events: none;
+}
+
+@keyframes fantasy-mist {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 100px 50px;
+	}
+}
+/* =========================================
+   6. ACTION MENU (The Forbidden Grimoire)
+   ========================================= */
+
+/* --- [A] HEADER (Identity) --- */
+
+.theme-fantasy .ib-identity-header {
+	/* 기존 margin-bottom ?��? (?�택 ?��??�서 간격 ??��) */
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 20px;
+
+	/* ?�체 배경 ??�� (롤백) */
+	background: none;
+	padding: 0;
+	border: none;
+	backdrop-filter: none;
+}
+
+.theme-fantasy .ib-identity-text {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end; /* ?�른�??�렬 */
+}
+
+.theme-fantasy .ib-identity-name {
+	font-family: var(--f-font-header);
+	font-size: 2.5em;
+	color: var(--f-gold-bright);
+	text-shadow:
+		2px 2px 0 #000,
+		0 0 10px rgba(0, 0, 0, 0.5);
+	line-height: 0.9;
+	margin-bottom: 5px;
+}
+
+/* ???�정: 글???�에�?배경 추�? */
+.theme-fantasy .ib-identity-sub {
+	font-family: var(--f-font-text);
+	color: #ccc; /* 가?�성???�해 조금 ??밝게 */
+	font-style: italic;
+	font-size: 0.9em;
+
+	/* 글????배경 박스 */
+	background: rgba(0, 0, 0, 0.85); /* 진한 반투�?검??*/
+	padding: 2px 8px; /* ?�백 */
+	border-radius: 4px; /* ?�근 모서�?*/
+	border: 1px solid #333; /* ?��? ?�두리로 구분�?*/
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Portrait Box (기존 ?��????��?) */
+.theme-fantasy .ib-identity-img-box {
+	width: 70px;
+	height: 70px;
+	transform: rotate(45deg);
+	border: 2px solid var(--f-gold-dim);
+	box-shadow:
+		0 0 0 3px #000,
+		0 0 15px rgba(0, 0, 0, 0.8);
+	overflow: hidden;
+	margin: 10px;
+	background: #000;
+}
+
+.theme-fantasy .ib-identity-img-box img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transform: rotate(-45deg) scale(1.45); /* ??��??*/
+}
+
+/* --- [B] MAIN BUTTONS (Stone Slabs) --- */
+
+.theme-fantasy .ib-action-btn {
+	width: 250px;
+	height: 55px;
+	margin-bottom: 0px;
+	position: relative;
+	overflow: hidden;
+
+	/* 배경: ?�주 ?�두?????�낌 */
+	background: #151515;
+
+	/* ?�두�? ?�아??금속 ?�식 */
+	border: 1px solid #333;
+	border-left: 4px solid var(--f-gold-dim); /* ?�쪽??금색 ?�인??*/
+
+	color: #ccc;
+	font-family: var(--f-font-header);
+	font-size: 1.4em;
+	cursor: pointer;
+
+	/* 모양: ?�측 ?�단/?�단 컷팅 */
+	clip-path: polygon(0 0, 95% 0, 100% 15%, 100% 100%, 0 100%);
+
+	transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* 버튼 ?�스�??�용 (Card 배경 ?�활?? */
+.theme-fantasy .ib-action-btn::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	/* ?�?�했??card-bg.jpg ?�용 */
+	background-image: url("../../assets/card-bg.jpg");
+	background-size: cover;
+	opacity: 0.2;
+	mix-blend-mode: overlay;
+	z-index: 0;
+}
+
+.theme-fantasy .ib-btn-content {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 20px;
+	width: 100%;
+	height: 100%;
+}
+
+/* Hover Effect */
+.theme-fantasy .ib-action-btn:hover {
+	width: 260px; /* ?�짝 길어�?*/
+	background: #252525;
+	color: var(--f-gold-bright);
+	border-left-color: #fff; /* ?�인??컬러 변�?*/
+	box-shadow: 0 0 20px rgba(107, 90, 62, 0.4);
+	text-shadow: 0 0 5px var(--f-gold-dim);
+}
+
+/* --- [C] SUB-MENU (The Grimoire Page) --- */
+
+.theme-fantasy .ib-sub-menu {
+	width: 360px;
+	/* ?�마법서 ?��? ?�낌 */
+	background: #111;
+
+	border: 1px solid var(--f-gold-dim);
+	/* ?�중 ?�두�?(Outline) */
+	outline: 4px solid rgba(0, 0, 0, 0.6);
+	outline-offset: -6px;
+
+	border-radius: 2px;
+	box-shadow:
+		0 20px 50px rgba(0, 0, 0, 1),
+		0 0 0 1px #000; /* ?�곽???�리 */
+
+	padding: 0; /* ?��? ?�딩 ?�거?�고 ?�더/바디 분리 */
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
+}
+
+/* ?�브메뉴 배경 ?�스�?*/
+.theme-fantasy .ib-sub-menu::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: url("../../assets/card-bg.jpg");
+	background-size: cover;
+	opacity: 0.15;
+	mix-blend-mode: screen; /* 글?��? ??보이�?밝�? ?�스처로 */
+	pointer-events: none;
+	z-index: 0;
+}
+
+/* ?�브메뉴 ?�더 */
+.theme-fantasy .ib-menu-header {
+	position: relative;
+	z-index: 1;
+	font-family: var(--f-font-header);
+	font-size: 1.6em;
+	color: var(--f-gold-bright);
+	background: rgba(0, 0, 0, 0.8);
+	padding: 15px;
+	text-align: center;
+	border-bottom: 1px solid var(--f-gold-dim);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* --- [D] SPELLBOOK TABS (Missing Buttons Fix) --- */
+
+.theme-fantasy .ib-magic-tabs {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	gap: 4px;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.5);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+	/* 가�??�크�?가?�하�?*/
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+/* ??버튼 ?�자?? 룬석(Runestone) 조각 */
+.theme-fantasy .ib-tab-btn {
+	background: #222;
+	border: 1px solid #444;
+	color: #888;
+
+	font-family: var(--f-font-header);
+	font-size: 1.1em;
+	font-weight: bold;
+
+	padding: 5px 15px;
+	cursor: pointer;
+	transition: all 0.2s;
+
+	clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0% 100%);
+	min-width: 40px;
+	text-align: center;
+	flex-shrink: 0;
+}
+
+.theme-fantasy .ib-tab-btn:hover {
+	background: #333;
+	color: #ccc;
+	border-color: #666;
+}
+
+.theme-fantasy .ib-tab-btn.active {
+	background: var(--f-gold-dim);
+	color: #000; /* ?�성?�되�?글?�는 검?�??*/
+	border-color: var(--f-gold-bright);
+	box-shadow: 0 0 10px var(--f-gold-dim);
+	z-index: 2;
+}
+
+/* --- [E] LIST ITEMS --- */
+
+.theme-fantasy .ib-scroll-area {
+	position: relative;
+	z-index: 1;
+	max-height: 400px;
+	padding: 5px 0;
+}
+
+.theme-fantasy .ib-list-item {
+	padding: 8px 15px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	cursor: pointer;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+}
+
+.theme-fantasy .ib-item-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+/* Hover: 금색 빛이 ?�어??*/
+.theme-fantasy .ib-list-item:hover {
+	background: linear-gradient(90deg, rgba(107, 90, 62, 0.3), transparent);
+	padding-left: 20px; /* ?�짝 밀�?*/
+}
+
+.theme-fantasy .ib-item-content .ib-font-hero {
+	font-family: var(--f-font-text);
+	font-size: 1.2em;
+	font-weight: 600;
+	color: #ccc;
+	text-shadow: 1px 1px 0 #000;
+}
+
+/* ?�버 ???�스???�상 */
+.theme-fantasy .ib-list-item:hover .ib-item-content .ib-font-hero {
+	color: #fff;
+	text-shadow: 0 0 5px var(--f-gold-dim);
+}
+
+/* ?�크롤바 커스?� */
+.theme-fantasy .ib-magic-tabs::-webkit-scrollbar,
+.theme-fantasy .ib-scroll-area::-webkit-scrollbar {
+	height: 4px;
+	width: 4px;
+}
+.theme-fantasy .ib-magic-tabs::-webkit-scrollbar-thumb,
+.theme-fantasy .ib-scroll-area::-webkit-scrollbar-thumb {
+	background: var(--f-gold-dim);
+	border-radius: 2px;
+}
+
+/* 메인 메뉴(버튼)?� ?�브 메뉴(�? ?�이??간격 조정 */
+#ib-sub-menu-container.theme-fantasy {
+	/* 기본�?10px)보다 ???�게 벌림 */
+	margin-right: 27px !important;
+	z-index: 10;
+}
+
+/* 메뉴가 ?�쪽?�로 ?�릴 ??.align-up)???�일??간격 ?��? */
+#ib-sub-menu-container.theme-fantasy.align-up {
+	margin-right: 27px !important;
+	z-index: 10;
+}
+
+/* =========================================
+   9. QUICK SLOTS (Favorites)
+   ========================================= */
+
+/* ???�롯 컨테?�너: ?�더?� 버튼 ?�이 */
+.theme-fantasy .ib-quick-slot-container {
+	display: flex;
+	justify-content: flex-end; /* ?�른�??�렬 */
+	gap: 5px;
+	margin-bottom: 15px;
+	margin-right: 5px;
+	flex-wrap: wrap;
+	max-width: 250px; /* 버튼 ?�비?� 맞춤 */
+
+	/* ??[추�?] ?�이 ?�한 �??�크�?*/
+	max-height: 80px; /* ??2�??�도�?보이�??�한 (?�이�?36px + 간격) */
+	overflow-y: auto; /* ?�치�??�크�?*/
+	overflow-x: hidden;
+
+	/* ?�크롤바 공간 ?�보�??�해 ?�딩 추�? */
+	padding-right: 5px;
+	padding-top: 3px;
+}
+
+/* 개별 ???�롯 (?��? ?�각??버튼) */
+.theme-fantasy .ib-quick-slot {
+	width: 36px;
+	height: 36px;
+	background: #111;
+	border: 1px solid var(--f-gold-dim);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+	cursor: pointer;
+	overflow: hidden;
+	position: relative;
+	transition: all 0.2s;
+
+	/* 모서�??�짝 깎음 */
+	clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+}
+
+.theme-fantasy .ib-quick-slot img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: sepia(0.3); /* ???�운 */
+	transition: all 0.2s;
+}
+
+/* Hover: 밝게 빛남 */
+.theme-fantasy .ib-quick-slot:hover {
+	border-color: var(--f-gold-bright);
+	box-shadow: 0 0 10px var(--f-gold-dim);
+	transform: translateY(-2px);
+}
+.theme-fantasy .ib-quick-slot:hover img {
+	filter: none;
+}
+
+/* --- [LIST] Favorite Star Button --- */
+
+.theme-fantasy .ib-fav-btn {
+	color: #444;
+	cursor: pointer;
+	padding: 5px;
+	border-radius: 50%;
+	transition: color 0.2s;
+}
+.theme-fantasy .ib-fav-btn:hover {
+	color: var(--f-gold-dim);
+	background: rgba(255, 255, 255, 0.05);
+}
+.theme-fantasy .ib-fav-btn.active {
+	color: var(--f-gold-bright);
+	text-shadow: 0 0 5px var(--f-gold-bright);
+}
+
+/* ???�롯 ?�크롤바 커스?� (?��?지 ?��??? */
+.theme-fantasy .ib-quick-slot-container::-webkit-scrollbar {
+	width: 4px;
+}
+.theme-fantasy .ib-quick-slot-container::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.3);
+}
+.theme-fantasy .ib-quick-slot-container::-webkit-scrollbar-thumb {
+	background: var(--f-gold-dim);
+	border-radius: 2px;
+}
+
+/* =========================================
+   SIDEBAR: FANTASY THEME (Grimoire)
+   ========================================= */
+
+.theme-fantasy .ib-sidebar-panel {
+	background: #111;
+	border-right: 2px solid var(--f-gold-dim);
+	box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.8); /* �??�본부 그림???�과 */
+}
+
+.theme-fantasy .ib-side-tab {
+	font-family: var(--f-font-header);
+	color: #666;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	padding: 12px 5px;
+}
+
+.theme-fantasy .ib-side-tab:hover {
+	color: var(--f-gold-bright);
+	text-shadow: 0 0 5px var(--f-gold-dim);
+}
+
+/* [RED/BLUE 공통] ?�성 ?�태??금색 */
+.theme-fantasy .ib-side-tab.active {
+	background: linear-gradient(90deg, rgba(107, 90, 62, 0.4), transparent);
+	color: #fff;
+	border-left: 3px solid var(--f-gold-bright);
+	border-bottom-color: var(--f-gold-dim);
+}
+
+/* ?�상 분기 (?��?지???�상보다???�이�????�으�?구분?�거???�일�??��?) */
+/* 만약 구분?�고 ?�다�??�래 ?�용 */
+.theme-fantasy.theme-red .ib-side-tab.active {
+	border-left-color: #8a1c1c; /* ?�빛 */
+}
+.theme-fantasy.theme-blue .ib-side-tab.active {
+	border-left-color: var(--f-mana); /* 마나??*/
+}
+
+/* --- FANTASY THEME ACTION ICONS --- */
+
+.theme-fantasy .ib-cost-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-fantasy .ib-cost-text {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 0.9em;
+	font-style: italic;
+	color: #a89f91; /* ?��? 종이??*/
+}
+
+/* 공통 ?�이�?베이??*/
+.theme-fantasy .ib-act-icon,
+.theme-fantasy .ib-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 18px;
+	min-width: 18px;
+	padding: 0 4px;
+
+	/* ?�형보다??마름모나 ?�티?�한 ?�각??*/
+	border: 1px solid #6b5a3e; /* ?�두??금색 */
+	border-radius: 50%; /* 코인 ?�태 */
+
+	font-family: "Cinzel", serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #c8b27a; /* 밝�? 금색 ?�스??*/
+
+	background: #1a1510; /* ?�주 ?�두??갈색 */
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+/* ?�션 ?�?�별 ?�상 (채도 ??�� 고급?�럽�? */
+/* Action: 기본 금색 ?��? */
+.theme-fantasy .ib-act-icon.action {
+	border-color: #c8b27a;
+	background: linear-gradient(135deg, #2b2b2b, #111);
+}
+
+/* Bonus: 구리/?�색 */
+.theme-fantasy .ib-act-icon.bonus {
+	border-color: #d35400;
+	color: #e67e22;
+	background: linear-gradient(135deg, #3d1c0b, #1a0f00);
+}
+
+/* Reaction: ?�색/�?��??(채도 ??��) */
+.theme-fantasy .ib-act-icon.reaction {
+	border-color: #16a085;
+	color: #1abc9c;
+	background: linear-gradient(135deg, #0b2b25, #001a15);
+}
+
+/* ?�그: ?�각?�으�?차별??*/
+.theme-fantasy .ib-tag {
+	border-radius: 2px; /* ?�각??*/
+	border: 1px solid #444;
+}
+
+.theme-fantasy .ib-tag.conc {
+	border-color: #2980b9;
+	color: #3498db;
+}
+
+.theme-fantasy .ib-tag.ritual {
+	border-color: #8e44ad;
+	color: #9b59b6;
+}
+
+/* =========================================
+   RICH TOOLTIP (The Forbidden Knowledge)
+   Style: Dark Stone & Gold
+   ========================================= */
+
+#ib-rich-tooltip.theme-fantasy {
+	/* [1] 배경: 메인 카드?� ?�일 (?�두????질감) */
+	/* hud-base.css??background ?�성???�어�?값입?�다. */
+	/* ?��?지 경로?� 기본 배경??#0f0f12)???�께 지?�합?�다. */
+	--tooltip-bg: url("../assets/card-bg.jpg") center / cover no-repeat, #0f0f12;
+
+	/* [2] ?�두�?�??�스???�상 (?�크 모드) */
+	--tooltip-border: var(--f-gold-dim); /* ?�두�? ?�티??골드 */
+	--tooltip-text: #e0d8c3; /* 본문: 밝�? ?�이보리 (가?�성 ?�보) */
+	--tooltip-header: var(--f-gold-bright); /* ?�목: 밝�? 금색 */
+
+	/* [3] ?�스�??�성 ?�과 */
+	/* 카드(.ib-card)??::before?� ?�사???�과�??�니?? */
+	background-blend-mode: overlay;
+
+	/* [4] 깊이�?추�? */
+	box-shadow:
+		inset 0 0 50px rgba(0, 0, 0, 0.9), /* ?��?�?깊게 ?�러�?*/
+		0 0 0 1px #000, /* 검?�???�곽??*/
+		0 10px 40px rgba(0, 0, 0, 1); /* 진한 그림??*/
+
+	/* ?�트 ?�일 */
+	font-family: var(--f-font-text);
+}
+
+/* [추�?] ?�팁 ?�더 ?�단 구분?�도 금색?�로 변�?*/
+#ib-rich-tooltip.theme-fantasy .ib-tooltip-header {
+	border-bottom-color: var(--f-gold-dim);
+	box-shadow: 0 1px 0 #000; /* 구분???�체�?*/
+}
+
+/* [추�?] 중요 강조 ?�스??strong) ?�상 지??*/
+#ib-rich-tooltip.theme-fantasy strong {
+	color: var(--f-gold-bright);
+}
+
+/* [FIX] ?�태?�상 ?�버?�이 ??��??(마름�??� ?�?? */
+/* ?�??45???�아가 ?�으므�? ?�버?�이??초상?�처??-45???�려???�바�?보임 */
+.theme-fantasy .ib-portrait-wrapper .ib-overlay,
+.theme-fantasy .ib-portrait-wrapper img:not(.ib-portrait) {
+	/* ?�시 모�? ?�른 ?��?지???�함 */
+
+	/* 1. ??��??(-45?? + ?��? (1.5�? */
+	/* 마름�?모서리까지 �?차게 ?�려�?초상?��? ?�같??1.5�??�워???�니??*/
+	transform: rotate(-45deg) scale(1.5) !important;
+
+	/* 2. ?�전 중심�?고정 */
+	transform-origin: center center;
+
+	/* 3. ?�치 �??�기 강제 고정 */
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+
+	/* 4. 초상?�보???�에 ?�도�?*/
+	z-index: 10;
+}
+
+/* =========================================
+   10. RESOURCE PIPS (Fantasy Style: Gems)
+   ========================================= */
+
+.theme-fantasy .ib-pip-container {
+	gap: calc(4px * (0.5 + 0.5 * var(--dot-scale, 1)));
+	padding-left: 2px;
+}
+
+.theme-fantasy .ib-pip {
+	width: calc(10px * var(--dot-scale, 1));
+	height: calc(10px * var(--dot-scale, 1));
+	border-radius: 1px;
+	transform: rotate(45deg); /* Diamond shape */
+	border: 1px solid #444;
+	background: #111;
+	box-shadow: inset 0 0 3px #000;
+	margin: calc(2px * (0.5 + 0.5 * var(--dot-scale, 1))); /* Extra spacing for rotation */
+}
+
+.theme-fantasy .ib-pip.filled {
+	background: var(--attr-color, var(--f-gold-bright));
+	border-color: #fff;
+	box-shadow: 0 0 5px var(--attr-color, var(--f-gold-bright));
+	/* Fill with gradient for gem look */
+	background-image: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.8) 0%,
+		transparent 50%
+	);
+}
+
+.theme-fantasy .ib-pip.empty {
+	background: #0f0f12;
+	border-color: #333;
+	opacity: 0.6;
+}
+
+.theme-fantasy .ib-pip-header {
+	font-family: var(--f-font-header);
+	color: var(--attr-color, #e0d8c3);
+	text-shadow: 1px 1px 0 #000;
+}
+
+.theme-fantasy .ib-pip-val {
+	color: var(--f-gold-bright);
+	font-family: var(--hud-font-body, var(--f-font-text));
+	font-style: italic;
+}
+
+/* =========================================
+   11. NUMBER STYLE (Fantasy Theme)
+   ========================================= */
+
+.theme-fantasy .ib-number-row {
+	background: #0f0f12;
+	border: 1px solid var(--f-gold-dim);
+	border-left: 3px solid var(--attr-color, var(--f-gold-bright));
+	border-radius: 1px;
+	box-shadow: 
+		inset 0 0 10px #000, 
+		0 5px 15px rgba(0, 0, 0, 0.8);
+
+	/* No Skew */
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px));
+}
+
+.theme-fantasy .ib-number-row:hover {
+	border-color: var(--f-gold-bright);
+	box-shadow: 0 0 15px var(--f-gold-glow);
+}
+
+.theme-fantasy .ib-number-label {
+	font-family: var(--hud-font-body, var(--f-font-header));
+	color: var(--label-color, #a89f91);
+	font-size: calc(0.8em * var(--number-scale, 1) * var(--label-font-size, 1));
+	letter-spacing: 0.5px;
+}
+
+.theme-fantasy .ib-number-row:hover .ib-number-label {
+	color: var(--f-gold-bright);
+}
+
+.theme-fantasy .ib-number-value {
+	font-family: var(--hud-font-body, var(--f-font-text));
+	font-size: calc(1.3em * var(--number-scale, 1) * var(--value-font-size, 1));
+	font-weight: 700;
+	color: var(--value-color, var(--f-gold-bright));
+	text-shadow: 1px 1px 2px #000;
+}
+
+/* =========================================
+   12. DC BADGE (Fantasy Style)
+   ========================================= */
+
+.theme-fantasy .ib-dc-badge {
+	background: rgba(107, 90, 62, 0.3);
+	color: var(--f-gold-bright);
+	border: 1px solid var(--f-gold-dim);
+	font-family: var(--hud-font-body, var(--f-font-header));
+	box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.theme-fantasy .ib-tab-btn.active .ib-dc-badge {
+	background: rgba(0, 0, 0, 0.4);
+	color: #000;
+	border-color: #000;
+}
+.theme-fantasy .ib-collapse-btn { color: var(--f-gold-bright); width: 24px; height: 24px; border: 1px solid transparent; border-radius: 50%; transition: all 0.2s; } .theme-fantasy .ib-collapse-btn:hover { color: #fff; border-color: var(--f-gold-dim); background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 10px var(--f-gold-glow); }
+
+#ib-hud-layer.theme-fantasy.collapse-mode {
+	--collapse-size: 60px;
+	--collapse-border-color: var(--f-gold-dim);
+	--collapse-border-hover: rgba(200, 178, 122, 0.7);
+	--collapse-border-radius: 2px;
+	--collapse-bg: #1a1a1d;
+}
+
+#ib-hud-layer.theme-fantasy .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper {
+	position: relative;
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	border-radius: var(--collapse-border-radius);
+	background: var(--collapse-bg);
+	border: 2px solid var(--collapse-border-color);
+	transform: rotate(45deg) !important;
+	margin: 15px !important;
+	box-shadow: 
+		0 0 0 3px #000,
+		0 0 10px rgba(0, 0, 0, 0.9),
+		inset 0 0 15px #000;
+	overflow: hidden !important;
+	z-index: 2;
+}
+
+#ib-hud-layer.theme-fantasy .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	z-index: 10;
+}
+
+#ib-hud-layer.theme-fantasy .ib-card.is-collapsed:not(.card-hovered) .ib-portrait {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transform: translate(var(--collapse-portrait-x, 0px), var(--collapse-portrait-y, 0px)) rotate(-45deg) scale(calc(1.6 * var(--collapse-portrait-scale, 1))) !important;
+	filter: sepia(0.4) contrast(1.2) brightness(0.9);
+}
+
+.theme-fantasy .ib-end-turn-btn {
+	transform: rotate(-45deg) scale(0.8);
+}
+
+.theme-fantasy .ib-card.is-turn .ib-end-turn-btn {
+	transform: rotate(-45deg) scale(1);
+}
+
+/* =========================================
+   CONTEXT MENU (The Sealed Scroll)
+   ========================================= */
+.sah-context-menu.theme-fantasy {
+	/* Background: Dark Leather/Parchment Mix */
+	background: #151515;
+	border: 1px solid var(--f-gold-dim);
+	border-radius: 2px;
+	box-shadow: 
+		0 5px 15px rgba(0, 0, 0, 0.8),
+		0 0 0 1px #000;
+	
+	/* Layout */
+	min-width: 200px;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	z-index: 10050;
+	
+	/* Texture Overlay */
+	background-image: url("../../assets/card-bg.jpg");
+	background-size: cover;
+	background-blend-mode: overlay;
+}
+
+.sah-context-menu.theme-fantasy .sah-context-header {
+	font-family: var(--f-font-header);
+	color: var(--f-gold-bright);
+	border-bottom: 1px solid var(--f-gold-dim);
+	padding: 5px 8px;
+	margin-bottom: 5px;
+	font-size: 1.1em;
+	text-shadow: 1px 1px 0 #000;
+}
+
+.sah-context-menu.theme-fantasy .sah-context-item {
+	background: transparent;
+	border: 1px solid transparent;
+	color: #ccc;
+	font-family: var(--f-font-text);
+	font-size: 1.1em;
+	text-align: left;
+	padding: 6px 10px;
+	cursor: pointer;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+}
+
+.sah-context-menu.theme-fantasy .sah-context-item:hover {
+	background: linear-gradient(90deg, rgba(107, 90, 62, 0.3), transparent);
+	border: 1px solid var(--f-gold-dim);
+	color: #fff;
+	padding-left: 15px; /* Slide effect */
+	text-shadow: 0 0 5px var(--f-gold-dim);
+}
+
+/* =========================================
+   VOICE ACTIVITY INDICATOR
+   ========================================= */
+
+.theme-fantasy .ib-card.ib-speaking .ib-name {
+	text-shadow:
+		0 0 2px rgba(200, 178, 122, 0.9),
+		0 0 2px rgba(200, 178, 122, 0.9),
+		0 0 8px rgba(200, 178, 122, 0.5);
+}
+
+.theme-fantasy .ib-card.ib-speaking .ib-portrait-wrapper {
+	border-color: var(--f-gold-bright);
+	box-shadow:
+		0 0 0 4px #000,
+		0 0 0 5px var(--f-gold-bright),
+		0 0 2px rgba(200, 178, 122, 0.9),
+		0 0 8px rgba(200, 178, 122, 0.5);
+	filter:
+		drop-shadow(0 0 1px rgba(200, 178, 122, 0.9))
+		drop-shadow(0 0 1px rgba(200, 178, 122, 0.9))
+		drop-shadow(0 0 4px rgba(200, 178, 122, 0.6))
+		drop-shadow(0 0 12px rgba(200, 178, 122, 0.3));
+	animation: ib-voice-fantasy 2.5s ease-in-out infinite;
+}
+
+.theme-fantasy .ib-card.ib-speaking .ib-bg-layer {
+	border: 2px solid var(--f-gold-bright);
+	filter:
+		drop-shadow(0 0 1px rgba(200, 178, 122, 0.9))
+		drop-shadow(0 0 1px rgba(200, 178, 122, 0.9))
+		drop-shadow(0 0 4px rgba(200, 178, 122, 0.6))
+		drop-shadow(0 0 12px rgba(200, 178, 122, 0.3));
+	animation: ib-voice-fantasy 2.5s ease-in-out infinite;
+}
+
+@keyframes ib-voice-fantasy {
+	0%, 100% {
+		filter:
+			drop-shadow(0 0 1px rgba(200, 178, 122, 0.7))
+			drop-shadow(0 0 1px rgba(200, 178, 122, 0.7))
+			drop-shadow(0 0 3px rgba(200, 178, 122, 0.4))
+			drop-shadow(0 0 8px rgba(200, 178, 122, 0.15));
+	}
+	50% {
+		filter:
+			drop-shadow(0 0 1px rgba(200, 178, 122, 1))
+			drop-shadow(0 0 2px rgba(200, 178, 122, 1))
+			drop-shadow(0 0 6px rgba(200, 178, 122, 0.7))
+			drop-shadow(0 0 16px rgba(200, 178, 122, 0.35));
+	}
+}
+
+

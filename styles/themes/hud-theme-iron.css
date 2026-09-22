@@ -1,0 +1,1571 @@
+/* =========================================
+   Iron & Blood HUD - THEME: IRON (REMASTERED v2)
+   Style: "Rebel UI" - Persona 5 Inspired (Aggressive, Comic, Sharp)
+   Features: Dynamic Dots Alignment, Pagination Support
+   ========================================= */
+
+.theme-iron {
+	/* [COLORS] */
+	--p-red: #d81e28;
+	--p-black: #080808;
+	--p-white: #f5f5f5;
+	--p-blue: #00dbff;
+	/* Tech/Resource Color */
+	--p-purple: #9b59b6;
+	/* Magic Color */
+	--p-gray: #b0b0b0;
+
+	/* [GEOMETRY & LAYOUT] */
+	--skew-deg: -10deg;
+
+	/* ★ 핵심: 검은 배경 박스(Main Shard)의 위치와 크기 변수화 */
+	/* 이 값들을 바꾸면 도트(Dots) 위치도 자동으로 따라옵니다. */
+	--shard-left: 60px;
+	/* 검은 박스 시작점 (left) */
+	--shard-width: 340px;
+	/* 검은 박스 너비 */
+	--dots-gap: 12px;
+	/* 검은 박스와 도트 사이 간격 */
+
+	/* 카드 전체 영역 (여유 있게 잡음) */
+	--card-width: 450px;
+	--card-height: auto;
+
+	/* 그림자 프리셋 */
+	--shadow-hard: 3px 3px 0px rgba(0, 0, 0, 0.8);
+	--shadow-glow-red: 0 0 10px var(--p-red);
+}
+
+/* =========================================
+   1. CARD CONTAINER (The Canvas)
+   ========================================= */
+
+.theme-iron .ib-card {
+	width: var(--card-width) !important;
+	height: var(--card-height);
+	min-height: 100px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	margin-left: 20px;
+	margin-bottom: 0;
+
+	display: block;
+	position: relative;
+
+	/* 전체를 기울임 */
+	transform: skewX(var(--skew-deg));
+	transform-origin: bottom left;
+
+	/* 등장 애니메이션 */
+	animation: hud-slide-snap 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes hud-slide-snap {
+	0% {
+		transform: translateX(-50px) skewX(-30deg);
+		opacity: 0;
+	}
+
+	70% {
+		transform: translateX(10px) skewX(var(--skew-deg));
+	}
+
+	100% {
+		transform: translateX(0) skewX(var(--skew-deg));
+		opacity: 1;
+	}
+}
+
+/* 1. 카드 전체 움직임 */
+.theme-iron .ib-card {
+	/* 기존 transition에 transform 추가 (부드러운 움직임) */
+	transition:
+		transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+		filter 0.2s;
+}
+
+.theme-iron .ib-card.hit-shake {
+	--hit-shake-base: skewX(var(--skew-deg));
+}
+
+.theme-iron .ib-card:hover {
+	/* ★ 중요: 기존 기울기(skew)를 유지하면서 이동해야 함 */
+	transform: skewX(var(--skew-deg)) translate(10px, -5px) !important;
+
+	/* 호버 시 맨 위로 올라오게 */
+	z-index: 50;
+	filter: brightness(1.1);
+}
+
+/* 2. 배경 박스(Shard) 테두리 색상 변경 */
+.theme-iron .ib-card:hover .ib-bg-layer {
+	border-color: var(--p-red);
+	/* 흰색 -> 빨간색 */
+	box-shadow: 0 0 15px rgba(216, 30, 40, 0.4);
+	/* 붉은 글로우 */
+	transition:
+		border-color 0.2s,
+		box-shadow 0.2s;
+}
+
+/* 3. 이름 색상 반전 (선택 사항) */
+.theme-iron .ib-card:hover .ib-name {
+	color: var(--p-red);
+	text-shadow: 2px 2px 0 var(--p-white);
+	transition: color 0.2s;
+}
+
+/* =========================================
+   2. BACKGROUND (The Black Shard)
+   ========================================= */
+
+.theme-iron .ib-bg-layer {
+	display: block !important;
+	position: absolute;
+
+	/* ★ 변수 기반 위치 설정 */
+	top: 30px;
+	left: var(--shard-left);
+	width: calc(var(--card-width) - var(--shard-left) - 20px);
+	height: calc(100% - 45px);
+
+	background: var(--p-black);
+	border: 2px solid var(--p-white);
+	filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.5));
+	z-index: 0;
+
+	/* 미세한 패턴 (선택사항) */
+	background-image: repeating-linear-gradient(45deg,
+			rgba(255, 255, 255, 0.03) 0px,
+			rgba(255, 255, 255, 0.03) 1px,
+			transparent 1px,
+			transparent 10px);
+}
+
+/* 장식용 붉은 띠 (Red Slash) */
+.theme-iron .ib-card::before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 40px;
+	width: calc(var(--card-width) - 70px);
+	height: 15px;
+	background: var(--p-red);
+	transform: skewX(-20deg);
+	clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+	z-index: -2;
+	box-shadow: 2px 2px 0 #000;
+}
+
+/* =========================================
+   3. PORTRAIT (The Frame)
+   ========================================= */
+
+.theme-iron .ib-portrait-wrapper {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: var(--portrait-width, 110px);
+	height: var(--portrait-height, 110px);
+	z-index: 10;
+
+	/* 카드의 skew를 상쇄하여 이미지는 똑바로 */
+	transform: skewX(calc(var(--skew-deg) * -1));
+	transform-origin: bottom left;
+}
+
+/* =========================================
+   4. STATS AREA (Bars & Name)
+   ========================================= */
+
+.theme-iron .ib-stats-box {
+	position: relative;
+	margin-top: 35px;
+	margin-left: calc(var(--shard-left) + 40px);
+	top: auto;
+	left: auto;
+	width: calc(var(--card-width) - var(--shard-left) - 80px);
+	display: flex;
+	flex-direction: column;
+	overflow: visible !important;
+}
+
+.theme-iron .ib-conditions {
+	z-index: var(--conditions-z, 5);
+}
+
+/* [NAME] */
+.theme-iron .ib-name {
+	font-family: "Teko", sans-serif;
+	font-size: calc(2.4em * var(--name-scale, 1));
+	font-weight: 700;
+	font-style: italic;
+	color: var(--p-white);
+
+	line-height: 1.2;
+
+	text-transform: uppercase;
+	text-shadow: 3px 3px 0 var(--p-black);
+
+	margin-left: 5px;
+	margin-bottom: 12px;
+
+	padding-top: 5px;
+
+	position: relative;
+	z-index: var(--name-z, 5);
+	overflow: visible;
+
+	transform: translate(calc(var(--name-x, 0px) + 0px),
+			calc(var(--name-y, 0px) - 2px - 18px)) rotate(-2deg) rotate(var(--name-rotation, 0deg));
+}
+
+.theme-iron .ib-name::after {
+	display: none;
+}
+
+/* [BARS] */
+.theme-iron .ib-bars-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	/* ★ [수정] 다른 테마와 동일하게 박스 안에 잘 들어가도록 margin-top 제거 */
+	margin-top: 0;
+	transform: translate(calc(var(--bars-x, 0px) + 7px),
+			calc(var(--bars-y, 0px) - 23px));
+
+	overflow: visible;
+	padding-bottom: 2px;
+}
+
+.theme-iron .ib-dots-wrapper {
+	transform: translate(var(--dots-x, 0px), var(--dots-y, 0px));
+}
+
+.theme-iron .ib-numbers-wrapper {
+	transform: translate(var(--numbers-x, 0px), var(--numbers-y, 0px));
+}
+
+.theme-iron .ib-badges-wrapper {
+	transform: translate(var(--badges-x, 0px), var(--badges-y, 0px));
+}
+
+.theme-iron .ib-bar-row {
+	height: 20px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	transition: transform 0.2s ease;
+	/* [Fix] Adjust width to account for negative margins and prevent overflow */
+	width: calc(100% - 5px);
+	box-sizing: border-box;
+}
+
+/* 계단식 배치 효과 */
+.theme-iron .ib-bar-row:nth-child(2) {
+	margin-left: 10px;
+	width: calc(100% - 15px);
+}
+
+.theme-iron .ib-bar-row:nth-child(3) {
+	margin-left: 20px;
+	width: calc(100% - 25px);
+}
+
+/* Bar Label (Tag) */
+.theme-iron .ib-label {
+	font-family: var(--hud-font-body, "Oswald"), sans-serif;
+	font-weight: bold;
+	font-size: calc(0.9em * var(--label-font-size, 1));
+	color: var(--label-color, var(--p-black));
+	background: var(--p-white);
+	padding: 2px 5px;
+	margin-right: -5px;
+	z-index: 5;
+	clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+	text-align: center;
+	min-width: 35px;
+}
+
+/* Bar Container */
+.theme-iron .ib-bar-container {
+	flex: 1;
+	height: 100%;
+	background: rgba(50, 50, 50, 0.8);
+	border: 2px solid var(--p-white);
+	clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+	position: relative;
+	overflow: visible;
+	--bar-segment-inset: 1px;
+	--bar-segment-color: var(--p-black);
+	--bar-segment-shadow: 1px 0 0 rgba(245, 245, 245, 0.62);
+	--bar-segment-opacity: 0.92;
+}
+
+.theme-iron .ib-bar-threshold-marker {
+	--bar-marker-width: 2px;
+	--bar-marker-offset: 0px;
+	--bar-marker-depth: 6px;
+	--bar-marker-color: color-mix(in srgb, var(--marker-color, #fff) 66%, var(--p-white) 34%);
+	--bar-marker-shadow: 1px 0 0 rgba(0, 0, 0, 0.45);
+	--bar-marker-opacity: 0.92;
+}
+
+/* Bar Fill */
+.theme-iron .ib-bar-fill {
+	background: var(--attr-color);
+	background-image: linear-gradient(45deg,
+			rgba(0, 0, 0, 0.2) 25%,
+			transparent 25%,
+			transparent 50%,
+			rgba(0, 0, 0, 0.2) 50%,
+			rgba(0, 0, 0, 0.2) 75%,
+			transparent 75%,
+			transparent);
+	background-size: 10px 10px;
+	box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Value text */
+.theme-iron .ib-val {
+	position: absolute;
+	right: 15px;
+	top: -3px;
+	font-family: var(--hud-font-body, "Teko"), sans-serif;
+	font-size: calc(1.3em * var(--value-font-size, 1));
+	font-weight: 700;
+	font-style: italic;
+	color: var(--value-color, var(--p-white));
+	text-shadow: 2px 2px 0 var(--p-black);
+	z-index: 20;
+}
+
+/* [Conditions] (Top Right of Shard) */
+.theme-iron .ib-conditions {
+	position: absolute;
+	top: -30px;
+	right: 0;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	width: 200px;
+	gap: 5px;
+	transform: translate(var(--conditions-x, 0px), var(--conditions-y, 0px)) skewX(calc(var(--skew-deg) * -1));
+}
+
+.theme-iron .ib-cond-icon {
+	background: var(--p-black);
+	border: 2px solid var(--p-white);
+	box-shadow: 2px 2px 0 var(--p-red);
+	border-radius: 0;
+}
+
+/* =========================================
+   5. FORMAT OVERRIDES (Box vs Popout)
+   ========================================= */
+
+/* [BOX FORMAT] - Jail Style */
+.theme-iron .ib-card.format-box .ib-portrait-wrapper {
+	overflow: hidden;
+	clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+	background: var(--p-black);
+	border: none;
+	box-shadow: none;
+}
+
+.theme-iron .ib-card.format-box .ib-portrait-bg {
+	display: block !important;
+	position: absolute;
+	inset: 0;
+	background: transparent;
+	border: 3px solid var(--p-white);
+	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+	z-index: 10;
+	pointer-events: none;
+}
+
+.theme-iron .ib-card.format-box .ib-portrait {
+	/* [기존 코드] */
+	/* width: 100%; height: 100%; */
+	/* object-fit: cover; */
+
+	/* [★ 수정 코드] Fantasy 테마와 동일하게 높이 제한 해제 */
+	width: 100%;
+	height: auto;
+	/* 세로 길이를 이미지 원본 비율대로 둡니다 */
+	min-height: 100%;
+	/* 최소한 박스는 채우도록 */
+	display: block;
+
+	position: absolute;
+	/* 위치 이동이 자유롭도록 절대 좌표 설정 */
+	top: 0;
+	left: 0;
+
+	object-position: top center;
+	z-index: 1;
+
+	/* [기존 코드 유지] */
+	transform: scale(var(--portrait-scale, 1)) translate(var(--portrait-x, 0px), var(--portrait-y, 0px));
+}
+
+/* [POPOUT FORMAT] - Popout Style */
+.theme-iron .ib-card.format-popout .ib-portrait-wrapper {
+	/* 1. 이미지가 밖으로 튀어나올 수 있게 함 */
+	overflow: visible;
+	clip-path: none;
+
+	/* 래퍼 자체의 배경/테두리는 제거 (이미지가 가려지지 않게) */
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+.theme-iron .ib-card.format-popout .ib-portrait-bg {
+	display: block;
+	position: absolute;
+	inset: 0;
+	/* 부모 크기에 맞춤 */
+	z-index: -1;
+	/* 이미지 뒤로 보냄 */
+
+	/* Box 모드와 동일한 스타일 적용 */
+	background: var(--p-black);
+	border: 3px solid var(--p-white);
+	box-shadow: var(--shadow-hard);
+
+	/* ★ 박스 모양(사다리꼴) 유지 */
+	clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+}
+
+.theme-iron .ib-card.format-popout.hide-bg .ib-portrait-bg {
+	display: none !important;
+}
+
+/* =========================================
+   6. ACTION MENU STYLES
+   ========================================= */
+
+.theme-iron .ib-action-btn {
+	position: relative;
+	height: 40px;
+	background: var(--p-white);
+	color: var(--p-black);
+	border: 2px solid var(--p-black);
+	transform: skewX(var(--skew-deg));
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	font-family: "Oswald", sans-serif;
+	font-weight: bold;
+	font-size: 1.2em;
+	box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+	width: auto;
+}
+
+.theme-iron .ib-action-btn:hover {
+	transform: skewX(var(--skew-deg)) translateX(-10px);
+}
+
+.theme-iron .ib-action-btn.btn-attack {
+	height: 60px;
+	width: 220px;
+	background: var(--p-black);
+	color: var(--p-white);
+	border: 2px solid var(--p-white);
+	box-shadow: var(--shadow-glow-red);
+	font-size: 1.5em;
+}
+
+.theme-iron .ib-action-btn.btn-attack:hover {
+	background: var(--p-red);
+	color: var(--p-black);
+	border-color: var(--p-black);
+}
+
+.theme-iron .ib-btn-content {
+	transform: skewX(calc(var(--skew-deg) * -1));
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Sub Menu */
+.theme-iron .ib-sub-menu {
+	background: var(--p-black);
+	border: 2px solid var(--p-white);
+
+	/* 기울기 적용 */
+	transform: skewX(var(--skew-deg));
+
+	/* ★ 핵심 수정: 기준점을 '중앙'에서 '오른쪽 위'로 고정 */
+	transform-origin: top right;
+
+	padding: 10px;
+	width: 100%;
+	box-shadow: var(--shadow-glow-red);
+
+	/* ★ [수정] 상단 여백 제거 (10px -> 0) */
+	/* 메인 메뉴와 높이를 맞춰서 일체감을 줍니다. */
+	margin-top: 0;
+}
+
+/* 1. 위로 열릴 때(.align-up) 기준점 변경 (기존 코드 유지) */
+.theme-iron #ib-sub-menu-container.align-up .ib-sub-menu {
+	transform-origin: bottom right !important;
+}
+
+/* 2. [기본 상태] 간격 밀착 (신규 추가) */
+/* 기본 10px(base) -> -5px로 변경하여 메인 메뉴에 바짝 붙임 */
+#ib-sub-menu-container.theme-iron {
+	margin-right: -5px !important;
+	z-index: 10;
+}
+
+/* 3. [위로 열릴 때] 간격 벌림 (기존 코드 유지) */
+/* 기울기로 인한 상단 충돌 방지를 위해 이 때는 거리를 둠 */
+#ib-sub-menu-container.theme-iron.align-up {
+	margin-right: 35px !important;
+	z-index: 10;
+}
+
+.theme-iron .ib-menu-header {
+	background: var(--p-white);
+	color: var(--p-black);
+	padding: 5px 15px;
+	margin-bottom: 10px;
+	transform: skewX(calc(var(--skew-deg) -1));
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: bold;
+}
+
+.theme-iron .ib-list-item {
+	background: transparent;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 8px 15px;
+	color: var(--p-gray);
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.theme-iron .ib-list-item:hover {
+	background: var(--p-white);
+	color: var(--p-black);
+}
+
+.theme-iron .ib-item-content {
+	transform: skewX(calc(var(--skew-deg) * -1));
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Tabs */
+.theme-iron .ib-magic-tabs {
+	display: flex;
+	gap: 5px;
+	padding: 0 10px 10px 10px;
+}
+
+.theme-iron .ib-tab-btn {
+	background: var(--p-black);
+	color: var(--p-gray);
+	border: 1px solid var(--p-gray);
+	padding: 2px 8px;
+	cursor: pointer;
+	transform: skewX(var(--skew-deg) * -1);
+}
+
+.theme-iron .ib-tab-btn.active {
+	background: var(--p-blue);
+	color: var(--p-black);
+}
+
+/* ★ [수정/추가] Iron 테마 스크롤 영역 높이 제한 */
+/* 사이드바 레이아웃(스킬, 주문 등)에서 목록이 길어질 때 스크롤이 생기도록 설정 */
+.theme-iron .ib-scroll-area,
+.theme-iron .ib-sidebar-panel {
+	max-height: 450px;
+	/* 적절한 최대 높이 설정 */
+	overflow-y: auto;
+	/* 내용이 넘치면 스크롤 생성 */
+}
+
+/* 스크롤바 디자인 */
+.theme-iron .ib-scroll-area::-webkit-scrollbar,
+.theme-iron .ib-sidebar-panel::-webkit-scrollbar {
+	width: 4px;
+}
+
+.theme-iron .ib-scroll-area::-webkit-scrollbar-thumb,
+.theme-iron .ib-sidebar-panel::-webkit-scrollbar-thumb {
+	background: var(--p-red);
+	border-radius: 2px;
+}
+
+.theme-iron .ib-scroll-area::-webkit-scrollbar-track,
+.theme-iron .ib-sidebar-panel::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================
+   TURN INDICATOR - FINAL MASTER (BLACK INK STYLE)
+   ========================================= */
+
+/* 1. 카드 본체: 묵직하게 자리 잡기 */
+.theme-iron .ib-card.is-turn {
+	z-index: 100 !important;
+
+	/* [핵심 수정] translate(?, -10px) -> translate(5px, 0) */
+	/* 이제 카드는 위로 올라가지 않고 옆으로만 5px 이동합니다. */
+	transform: skewX(var(--skew-deg)) scale(1.02) translate(5px, 0) !important;
+
+	transition: transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* 2. 배경 박스: 붉은색 박동 + 노이즈 패턴 */
+.theme-iron .ib-card.is-turn .ib-bg-layer {
+	border: 2px solid var(--p-white);
+
+	/* 하드 쉐도우 (블러 없음) */
+	box-shadow:
+		0 0 0 4px var(--p-red),
+		12px 12px 0 var(--p-black);
+
+	/* 빗금 패턴 */
+	background-image: repeating-linear-gradient(135deg,
+			var(--p-black),
+			var(--p-black) 5px,
+			#220505 5px,
+			#220505 10px);
+	background-size: 100% 100%;
+
+	/* 배경 글리치 애니메이션 (2.5초 주기) */
+	animation: iron-turn-glitch-hq 2.5s infinite linear;
+}
+
+/* 3. 이름 텍스트: 화이트 + 헤비 블랙 쉐도우 (가독성 최우선) */
+.theme-iron .ib-card.is-turn .ib-name {
+	/* 기존 초기화 유지 */
+	background: transparent;
+	box-shadow: none;
+	clip-path: none;
+
+	color: var(--p-white);
+	z-index: 200;
+
+	text-shadow:
+		-2px -2px 0 #000,
+		2px -2px 0 #000,
+		-2px 2px 0 #000,
+		2px 2px 0 #000,
+		3px 3px 0 #000,
+		4px 4px 0 #000;
+
+	transform-origin: left center;
+
+	/* [핵심 수정] 
+       높이: -30px -> -15px (절반으로 줄임) 
+       크기: 1.2 -> 1.1 (부담스럽지 않게) 
+       회전: -3deg -> -2deg (살짝만) 
+    */
+	transform: translate(15px, -15px) scale(1.1) rotate(-2deg) rotate(var(--name-rotation, 0deg));
+
+	animation: iron-text-slam 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* 4. 초상화 래퍼: 확대 없이 제자리 유지 */
+.theme-iron .ib-card.is-turn .ib-portrait-wrapper {
+	/* 확대(scale) 없음. 위치 이동 없음. */
+	transform: skewX(calc(var(--skew-deg) * -1)) scale(1);
+	z-index: 120;
+	transition: transform 0.3s;
+}
+
+/* 5. 초상화 테두리: 배경 박스와 싱크를 맞춘 글리치 */
+.theme-iron .ib-card.is-turn .ib-portrait-bg {
+	border-color: var(--p-white);
+	/* 배경 박스 애니메이션과 동일한 시간(2.5s)으로 동기화 */
+	animation: iron-portrait-sync-glitch 2.5s infinite linear;
+}
+
+/* 6. (기존 유지) 붉은 띠 숨기기 */
+.theme-iron .ib-card.is-turn::before {
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+/* =========================================
+   ANIMATION KEYFRAMES
+   ========================================= */
+
+/* [배경 박스 글리치] */
+@keyframes iron-turn-glitch-hq {
+
+	0%,
+	45% {
+		background-position: 0 0;
+		transform: translate(0, 0);
+		box-shadow:
+			0 0 0 4px var(--p-red),
+			12px 12px 0 var(--p-black);
+	}
+
+	46% {
+		/* 1차 충격 */
+		background-position: 10px 0;
+		transform: translate(-3px, 1px);
+		border-color: var(--p-red);
+		box-shadow:
+			-4px 4px 0 var(--p-white),
+			10px 10px 0 var(--p-red);
+	}
+
+	47% {
+		/* 회복 */
+		background-position: -5px 0;
+		transform: translate(2px, -2px);
+		border-color: var(--p-white);
+		box-shadow:
+			0 0 0 4px var(--p-red),
+			12px 12px 0 var(--p-black);
+	}
+
+	49% {
+		/* 2차 충격 (반전) */
+		background-position: 0 5px;
+		transform: translate(0, 0) scale(1.02);
+		border-color: var(--p-black);
+		box-shadow:
+			2px 2px 0 3px var(--p-white),
+			14px 14px 0 var(--p-red);
+	}
+
+	55%,
+	100% {
+		background-position: 0 0;
+		transform: translate(0, 0);
+		border-color: var(--p-white);
+		box-shadow:
+			0 0 0 4px var(--p-red),
+			12px 12px 0 var(--p-black);
+	}
+}
+
+/* [초상화 테두리 글리치 (배경과 싱크)] */
+@keyframes iron-portrait-sync-glitch {
+
+	0%,
+	45% {
+		border-color: var(--p-white);
+		box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+		transform: translate(0, 0);
+	}
+
+	46% {
+		border-color: var(--p-red);
+		box-shadow: 0 0 15px var(--p-red);
+		transform: translate(-2px, 2px);
+	}
+
+	47% {
+		border-color: var(--p-white);
+		transform: translate(1px, -1px);
+	}
+
+	49% {
+		border-color: var(--p-black);
+		border-width: 4px;
+		transform: translate(0, 0);
+	}
+
+	55%,
+	100% {
+		border-color: var(--p-white);
+		border-width: 3px;
+		box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+		transform: translate(0, 0);
+	}
+}
+
+/* [텍스트 등장 (쿵!)] */
+@keyframes iron-text-slam {
+
+	/* 시작: 적당한 높이에서 시작 */
+	0% {
+		opacity: 0;
+		transform: translate(15px, -25px) scale(1.3) rotate(-4deg) rotate(var(--name-rotation, 0deg));
+	}
+
+	/* 끝: 설정한 위치(-15px)에 부드럽게 안착 */
+	100% {
+		opacity: 1;
+		transform: translate(15px, -15px) scale(1.1) rotate(-2deg) rotate(var(--name-rotation, 0deg));
+	}
+}
+
+/* IRON THEME: 기울기 적용 및 이미지 보정 */
+.theme-iron .ib-identity-header {
+	transform: skewX(-10deg);
+	/* Iron 테마는 버튼들도 기울어져 있으므로, 헤더 위치를 미세 조정 */
+	margin-right: -5px;
+}
+
+.theme-iron .ib-identity-img-box {
+	border-color: #fff;
+	box-shadow: 3px 3px 0 #000;
+}
+
+/* ★ [핵심 수정] 이미지는 반대로 기울여서 원상복구 + 빈틈 없게 약간 확대 */
+.theme-iron .ib-identity-img-box img {
+	transform: skewX(10deg) scale(1.2);
+}
+
+.theme-iron .ib-identity-name {
+	color: #fff;
+	text-shadow: 2px 2px 0 #000;
+}
+
+.theme-iron .ib-identity-sub {
+	color: #d81e28;
+	/* Iron Red */
+}
+
+/* QUICK SLOTS (Iron Style) */
+
+.theme-iron .ib-quick-slot-container {
+	display: flex;
+	justify-content: flex-end;
+	gap: 4px;
+	margin-bottom: 15px;
+
+	/* Iron 테마 전체 기울기 */
+	transform: skewX(-10deg);
+	margin-right: -5px;
+	/* 기울기 보정 */
+
+	/* ★ [추가] 높이 제한 및 스크롤 */
+	max-height: 90px;
+	/* 2줄 (아이콘 40px + 간격) */
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 5px;
+	padding-top: 3px;
+}
+
+.theme-iron .ib-quick-slot {
+	width: 40px;
+	height: 40px;
+	background: var(--p-white);
+	border: 2px solid var(--p-black);
+	cursor: pointer;
+	overflow: hidden;
+	transition: all 0.1s;
+	box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.theme-iron .ib-quick-slot img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/* 내부 이미지 역보정 (찌그러짐 방지) */
+	transform: skewX(10deg) scale(1.2);
+}
+
+.theme-iron .ib-quick-slot:hover {
+	transform: translateY(-3px);
+	box-shadow: 4px 4px 0 var(--p-red);
+	border-color: var(--p-red);
+}
+
+/* Star Icon in List */
+.theme-iron .ib-fav-btn {
+	color: #666;
+	transition: all 0.2s;
+}
+
+.theme-iron .ib-fav-btn:hover {
+	color: var(--p-black);
+}
+
+.theme-iron .ib-fav-btn.active {
+	color: var(--p-red);
+}
+
+/* 퀵 슬롯 스크롤바 커스텀 (아이언 스타일) */
+.theme-iron .ib-quick-slot-container::-webkit-scrollbar {
+	width: 4px;
+}
+
+.theme-iron .ib-quick-slot-container::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-iron .ib-quick-slot-container::-webkit-scrollbar-thumb {
+	background: var(--p-red);
+	/* 붉은색 스크롤바 */
+}
+
+/* =========================================
+   [FIX] Spell Slot Counters in Tabs
+   ========================================= */
+
+/* 1. 기본 상태 (비활성 탭 - 검은 배경) */
+.theme-iron .ib-tab-btn .ib-slot-text {
+	font-size: 0.8em;
+	color: var(--p-gray);
+	/* 기본: 회색 */
+	margin-left: 3px;
+	font-weight: normal;
+}
+
+/* 슬롯이 다 떨어졌을 때 (비활성 탭) */
+.theme-iron .ib-tab-btn .ib-slot-text.empty {
+	color: var(--p-red);
+	/* 빨간색 */
+	text-decoration: line-through;
+}
+
+/* 2. 활성 상태 (누른 탭 - 파란 배경) */
+/* ★ 중요: 배경이 밝은 파란색이므로 글자는 검은색이어야 잘 보임 */
+.theme-iron .ib-tab-btn.active .ib-slot-text {
+	color: #000;
+	/* 검은색 (잘 보임!) */
+	font-weight: bold;
+	/* 강조 */
+	opacity: 0.7;
+	/* 숫자만 살짝 연하게 */
+}
+
+/* 슬롯이 다 떨어졌을 때 (활성 탭) */
+.theme-iron .ib-tab-btn.active .ib-slot-text.empty {
+	color: #8a1c1c;
+	/* 짙은 핏빛 빨강 (파란 배경 위에서도 읽힘) */
+	text-decoration: none;
+	/* 탭 활성화 중엔 잘 보이게 취소선 제거(선택) */
+}
+
+/* =========================================
+   [FIX] Iron Theme List Item Hover Contrast
+   ========================================= */
+
+/* 리스트에 마우스를 올리면(Hover), 내부의 모든 텍스트(span, div)를 검은색으로 강제 변경 */
+.theme-iron .ib-list-item:hover span,
+.theme-iron .ib-list-item:hover div {
+	color: var(--p-black) !important;
+	text-shadow: none !important;
+}
+
+/* ★ 예외 처리: 내부에 있는 버튼(공격/대미지 버튼)은 제외 */
+/* 버튼들은 각자 고유의 색상과 호버 효과가 있으므로 검은색 강제화를 막아야 함 */
+.theme-iron .ib-list-item:hover button {
+	color: #eee !important;
+	/* 기본적으로 밝은 글씨 유지 */
+}
+
+/* 버튼 자체에 마우스를 올렸을 때는 버튼의 스크립트 효과(반전)를 따름 */
+.theme-iron .ib-list-item:hover button:hover {
+	color: #000 !important;
+}
+
+/* =========================================
+   SIDEBAR: IRON THEME (Simple & Strong Red)
+   ========================================= */
+
+/* 1. 사이드바 패널 배경 */
+.theme-iron .ib-sidebar-panel {
+	background: var(--p-black);
+	border-right: 1px solid rgba(255, 255, 255, 0.2);
+	padding-top: 5px;
+}
+
+/* 2. 탭 버튼 기본 (비활성) */
+.theme-iron .ib-side-tab {
+	font-family: "Oswald", sans-serif;
+	font-weight: 600;
+	color: #888;
+	/* 비활성: 회색 */
+	background: transparent;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	transition: all 0.1s;
+}
+
+/* 호버 효과 */
+.theme-iron .ib-side-tab:hover {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.1);
+}
+
+/* 3. 활성 상태 (Active) - ★ 확실한 빨간색 적용 */
+
+/* [RED THEME] 인벤토리, 공격 (Attacks, Inventory) */
+/* .theme-iron 안에 있는 .theme-red 요소를 찾습니다 */
+.theme-iron .theme-red .ib-side-tab.active {
+	background: var(--p-red) !important;
+	/* 강렬한 빨강 */
+	color: var(--p-white) !important;
+	/* 흰색 글씨 */
+	font-weight: bold;
+	border-right: none;
+	box-shadow: inset 5px 0 0 rgba(0, 0, 0, 0.3);
+	/* 안쪽 그림자로 깊이감 */
+}
+
+/* [BLUE THEME] 주문, 액션 (Spells, Actions) */
+/* .theme-iron 안에 있는 .theme-blue 요소를 찾습니다 */
+.theme-iron .theme-blue .ib-side-tab.active {
+	background: var(--p-blue) !important;
+	/* 형광 파랑 */
+	color: var(--p-black) !important;
+	/* 검은 글씨 */
+	font-weight: bold;
+	border-right: none;
+	box-shadow: inset 5px 0 0 rgba(0, 0, 0, 0.3);
+}
+
+/* 우측 패널 헤더 구분선 */
+.theme-iron .ib-main-panel .ib-menu-header {
+	border-bottom: 2px solid var(--p-white);
+	margin-bottom: 5px;
+}
+
+/* --- IRON THEME ACTION ICONS --- */
+
+/* 비용 래퍼: 한 줄 정렬 */
+.theme-iron .ib-cost-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	white-space: nowrap;
+}
+
+/* 텍스트 (V,S,M 등) */
+.theme-iron .ib-cost-text {
+	font-size: 0.85em;
+	color: #666;
+	font-weight: bold;
+	transform: skewX(-10deg);
+	/* Iron 테마 특유의 기울기 */
+}
+
+/* 공통 아이콘 베이스 */
+.theme-iron .ib-act-icon,
+.theme-iron .ib-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 18px;
+	min-width: 18px;
+	padding: 0 2px;
+	border: 2px solid #000;
+	/* 검은 테두리 */
+	font-family: "Oswald", sans-serif;
+	font-weight: bold;
+	font-size: 10px;
+	line-height: 1;
+	transform: skewX(-10deg);
+	/* 기울기 */
+	color: #000;
+	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* 액션 타입별 색상 보강 */
+.theme-iron .ib-act-icon.action {
+	background: #fff;
+	color: #000;
+}
+
+/* 흰색 배경 + 검은 글씨 */
+.theme-iron .ib-act-icon.bonus {
+	background: #ffffff;
+	color: #000000;
+}
+
+/* 검정 배경 + 흰 글씨 */
+.theme-iron .ib-act-icon.reaction {
+	background: #d81e28;
+	color: #fff;
+	border-color: #fff;
+}
+
+/* 빨강 배경 */
+
+/* ★ [추가] 안 보이던 아이콘들 색상 정의 */
+.theme-iron .ib-act-icon.special {
+	background: #9b59b6;
+	color: #fff;
+	border-color: #fff;
+}
+
+/* 보라색 (Special) */
+.theme-iron .ib-act-icon.time {
+	background: #95a5a6;
+	color: #000;
+}
+
+/* 회색 (Time: Minute/Hour) */
+.theme-iron .ib-act-icon.legendary {
+	background: #f1c40f;
+	color: #000;
+}
+
+/* 노랑 (Legendary) */
+.theme-iron .ib-act-icon.lair {
+	background: #8e44ad;
+	color: #fff;
+	border-color: #fff;
+}
+
+/* 진보라 (Lair) */
+.theme-iron .ib-act-icon.crew {
+	background: #34495e;
+	color: #fff;
+	border-color: #fff;
+}
+
+/* 네이비 (Crew) */
+.theme-iron .ib-act-icon.crew {
+	background: #34495e;
+	color: #fff;
+	border-color: #fff;
+}
+
+/* 네이비 (Crew) */
+.theme-iron .ib-tag.conc {
+	background: #1bd1ff;
+	color: #000000;
+}
+
+/* 네이비 (Crew) */
+/* 기본값 (정의되지 않은 타입) */
+.theme-iron .ib-act-icon.default {
+	background: #7f8c8d;
+	color: #fff;
+	border-color: #fff;
+}
+
+/* =========================================
+   RICH TOOLTIP - IRON THEME (Persona Style)
+   ========================================= */
+#ib-rich-tooltip.theme-iron {
+	/* [배경/글자] 진한 검정 배경 + 흰 글씨 */
+	--tooltip-bg: var(--p-black, #080808);
+	--tooltip-border: var(--p-white, #f5f5f5);
+	--tooltip-text: var(--p-white, #f5f5f5);
+
+	/* [제목] 강렬한 레드 포인트 */
+	--tooltip-header: var(--p-red, #d81e28);
+
+	/* [스타일] */
+	border-width: 2px;
+	/* 테두리 두껍게 */
+	border-radius: 0;
+	/* 둥근 모서리 제거 (각지게) */
+
+	/* [핵심] 붉은색 하드 쉐도우 (블러 없이 딱 떨어지는 그림자) */
+	box-shadow: 5px 5px 0 var(--p-red);
+
+	/* 폰트 통일 */
+	font-family: "Oswald", sans-serif;
+	letter-spacing: 0.5px;
+
+	/* 배경에 미세한 빗금 패턴 추가 (스타일리시함 UP) */
+	background-image: repeating-linear-gradient(45deg,
+			rgba(255, 255, 255, 0.03) 0px,
+			rgba(255, 255, 255, 0.03) 1px,
+			transparent 1px,
+			transparent 10px);
+}
+
+/* 헤더 구분선도 흰색으로 변경 */
+#ib-rich-tooltip.theme-iron .ib-tooltip-header {
+	border-bottom: 2px solid var(--p-white);
+}
+
+/* =========================================
+   search - FIX
+   ========================================= */
+
+.theme-iron .ib-search-container {
+	/* 부모가 기울어져 있으므로, 입력창은 반대로 기울여서 가독성 확보 */
+	transform: skewX(-10deg);
+}
+
+.theme-iron .ib-search-input {
+	transform: skewX(10deg);
+}
+
+.theme-iron .ib-search-container i {
+	transform: skewX(10deg);
+}
+
+/* =========================================
+   IRON THEME SPECIAL (Ultimate Fix)
+   ========================================= */
+
+/* ID(#ib-action-menu)를 포함해 우선순위를 최상으로 높임 */
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type {
+	/* [기존 .btn-attack 스타일 복구] */
+	height: 60px !important;
+	width: 220px !important;
+	margin-bottom: 5px !important;
+
+	/* 검은 배경 (그라데이션 X) */
+	background: var(--p-black) !important;
+
+	/* 흰색 글씨/테두리 */
+	color: var(--p-white) !important;
+	border: 2px solid var(--p-white) !important;
+
+	/* 붉은 글로우 그림자 */
+	box-shadow: 0 0 10px var(--p-red) !important;
+
+	/* 폰트 크기 */
+	font-size: 1.5em !important;
+
+	/* 기울기 강제 적용 (상속 문제 방지) */
+	transform: skewX(-10deg) !important;
+}
+
+/* [호버 효과 복구] */
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type:hover {
+	/* 붉은 배경 반전 */
+	background: var(--p-red) !important;
+	color: var(--p-black) !important;
+	border-color: var(--p-black) !important;
+
+	/* 왼쪽 이동 애니메이션 */
+	transform: skewX(-10deg) translateX(-10px) !important;
+	box-shadow: none !important;
+}
+
+/* [아이콘/이미지 크기 보정] */
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type i,
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type img {
+	font-size: 1em !important;
+	width: 32px !important;
+	height: 32px !important;
+	color: inherit !important;
+}
+
+/* =========================================
+   IRON THEME HERO BUTTON - ALIGNMENT FIX
+   ========================================= */
+
+/* 1. 내부 컨테이너 수직 중앙 정렬 강제 */
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type .ib-btn-content {
+	display: flex !important;
+	align-items: center !important;
+	/* 수직 중앙 */
+	justify-content: space-between !important;
+	/* 양끝 정렬 유지 */
+	height: 100% !important;
+	/* 높이 꽉 채우기 */
+}
+
+/* 2. 아이콘/이미지가 위로 뜨는 현상 방지 (flex-box 안에서 중앙 배치) */
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type i,
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type img:not(.ib-custom-bg) {
+	display: flex !important;
+	align-items: center !important;
+	height: auto !important;
+	margin-top: 0 !important;
+
+	/* 혹시 그래도 안 맞으면 아래 top 값을 조절하세요 (예: 2px) */
+	position: relative !important;
+	top: 0px !important;
+}
+
+/* 3. 텍스트 줄 간격 초기화 (글자가 너무 커서 밀어내는 것 방지) */
+:is(#ib-action-menu, .ib-menu-live-buttons).theme-iron:not(.no-first-button-emphasis) .ib-action-btn:first-of-type span {
+	display: flex !important;
+	align-items: center !important;
+	line-height: 1 !important;
+	/* 줄 간격을 글자 크기에 딱 맞춤 */
+	height: 100% !important;
+}
+
+.theme-iron .ib-custom-bg {
+	--bg-unskew: 10deg;
+	/* 이미지가 꽉 차 보이도록 기본 스케일을 약간 키워주는 팁 (빈틈 방지) */
+	width: 110% !important;
+	height: 110% !important;
+}
+
+/* =========================================
+   10. RESOURCE PIPS (Iron Style: Ammo Clips)
+   ========================================= */
+
+.theme-iron .ib-pip-container {
+	transform: skewX(-10deg);
+	padding-left: 5px;
+}
+
+.theme-iron .ib-dots-wrapper {
+	/* 만약 dots가 카드의 overflow에 걸린다면, 여기서 overflow를 풀어줄 수 있음. 
+       하지만 Iron 테마 ib-stats-box는 overflow:visible이므로 괜찮음.
+    */
+}
+
+.theme-iron .ib-pip {
+	width: calc(10px * var(--dot-scale, 1));
+	height: calc(6px * var(--dot-scale, 1));
+	border-radius: 1px;
+	/* Rectangular */
+	border: 1px solid var(--p-gray);
+	background: rgba(0, 0, 0, 0.5);
+	box-shadow: none;
+	transition: all 0.2s;
+}
+
+.theme-iron .ib-pip.filled {
+	background: var(--attr-color, var(--p-blue));
+	border-color: #fff;
+	box-shadow: 0 0 5px var(--attr-color, var(--p-blue));
+	transform: scale(1.1);
+}
+
+.theme-iron .ib-pip.empty {
+	background: #222;
+	border-color: #444;
+	opacity: 0.5;
+}
+
+.theme-iron .ib-pip-header {
+	font-family: var(--hud-font-body, "Teko"), sans-serif;
+	text-transform: uppercase;
+	color: var(--attr-color, var(--p-white));
+	letter-spacing: 1px;
+}
+
+.theme-iron .ib-pip-val {
+	color: var(--p-white);
+	text-shadow: 1px 1px 0 #000;
+}
+
+/* =========================================
+   11. NUMBER STYLE (Iron Theme)
+   ========================================= */
+
+.theme-iron .ib-number-row {
+	background: var(--p-black);
+	border: 2px solid var(--p-white);
+	border-left: 4px solid var(--attr-color, var(--p-red));
+	border-radius: 0;
+	box-shadow: 2px 2px 0 var(--p-black);
+
+	/* Apply Skew to match theme, keep translate for positioning */
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px));
+}
+
+.theme-iron .ib-number-row:hover {
+	background: var(--p-red);
+	border-color: var(--p-black);
+	z-index: 50;
+}
+
+.theme-iron .ib-number-label {
+	font-family: var(--hud-font-body, "Oswald"), sans-serif;
+	color: var(--label-color, var(--p-gray));
+	font-size: calc(0.9em * var(--number-scale, 1) * var(--label-font-size, 1));
+	font-weight: bold;
+}
+
+.theme-iron .ib-number-row:hover .ib-number-label {
+	color: var(--p-black);
+}
+
+.theme-iron .ib-number-value {
+	font-family: var(--hud-font-body, "Teko"), sans-serif;
+	font-size: calc(1.4em * var(--number-scale, 1) * var(--value-font-size, 1));
+	color: var(--value-color, var(--p-white));
+	text-shadow: 2px 2px 0 var(--p-black);
+}
+
+.theme-iron .ib-number-row:hover .ib-number-value {
+	color: var(--p-black);
+	text-shadow: none;
+}
+
+/* =========================================
+   12. BADGE STYLE (Iron Style)
+   ========================================= */
+.theme-iron .ib-badge-row {
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px)) skewX(calc(var(--skew-deg) * -1));
+}
+
+.theme-iron .ib-badge-bg-icon {
+	filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.8));
+}
+
+.theme-iron .ib-badge-bg-icon {
+	filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.8));
+}
+
+/* =========================================
+   13. DC BADGE (Iron Style)
+   ========================================= */
+
+.theme-iron .ib-dc-badge {
+	background: var(--p-black);
+	color: var(--p-blue);
+	border: 1px solid var(--p-blue);
+	font-family: var(--hud-font-body, "Oswald"), sans-serif;
+	font-weight: bold;
+	transform: skewX(var(--skew-deg));
+	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.theme-iron .ib-tab-btn.active .ib-dc-badge {
+	background: rgba(0, 0, 0, 0.3);
+	color: var(--p-black);
+	border-color: var(--p-black);
+}
+
+.theme-iron .ib-collapse-btn {
+	color: var(--p-blue);
+	transform: skewX(calc(var(--skew-deg) * -1));
+	margin-left: 5px;
+}
+
+.theme-iron .ib-collapse-btn:hover {
+	color: #fff;
+	text-shadow: 0 0 5px var(--p-blue);
+	transform: skewX(calc(var(--skew-deg) * -1)) scale(1.1);
+}
+
+#ib-hud-layer.theme-iron.collapse-mode {
+	--collapse-border-color: var(--p-white);
+	--collapse-border-hover: rgba(216, 30, 40, 0.8);
+	--collapse-border-radius: 0px;
+	--collapse-bg: #080808;
+}
+
+#ib-hud-layer.theme-iron .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper {
+	position: relative;
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	border-radius: var(--collapse-border-radius);
+	background: var(--collapse-bg);
+	border: 2px solid var(--collapse-border-color);
+	transform: skewX(-10deg) !important;
+	overflow: hidden !important;
+	margin: 0 !important;
+	box-shadow: 
+		3px 3px 0 rgba(0, 0, 0, 0.8),
+		inset 0 0 0 1px var(--p-black);
+	z-index: 2;
+	transition: all 0.2s ease;
+}
+
+/* Add red accent slash at bottom */
+#ib-hud-layer.theme-iron .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper::before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 6px;
+	background: var(--p-red);
+	z-index: 5;
+}
+
+#ib-hud-layer.theme-iron .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background-image: repeating-linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.05) 0px,
+		rgba(255, 255, 255, 0.05) 1px,
+		transparent 1px,
+		transparent 6px
+	);
+	z-index: 10;
+	box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Fix image counter-skew in collapsed mode */
+#ib-hud-layer.theme-iron .ib-card.is-collapsed:not(.card-hovered) .ib-portrait {
+	transform: skewX(10deg) scale(calc(1.3 * var(--collapse-portrait-scale, 1))) translate(var(--collapse-portrait-x, 0px), var(--collapse-portrait-y, 0px)) !important;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: contrast(1.1) brightness(1.1);
+}
+
+/* =========================================
+   VOICE ACTIVITY INDICATOR
+   ========================================= */
+
+.theme-iron .ib-card.ib-speaking .ib-bg-layer {
+	border: 3px solid var(--p-red);
+	filter:
+		drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.5))
+		drop-shadow(0 0 1px rgba(216, 30, 40, 0.9))
+		drop-shadow(0 0 1px rgba(216, 30, 40, 0.9))
+		drop-shadow(0 0 4px rgba(216, 30, 40, 0.6))
+		drop-shadow(0 0 12px rgba(216, 30, 40, 0.3));
+	animation: ib-voice-iron 2s ease-in-out infinite;
+}
+
+.theme-iron .ib-card.ib-speaking .ib-portrait-bg {
+	border: 4px solid var(--p-red);
+}
+
+.theme-iron .ib-card.ib-speaking .ib-name {
+	text-shadow:
+		0 0 2px rgba(216, 30, 40, 0.9),
+		0 0 2px rgba(216, 30, 40, 0.9),
+		0 0 8px rgba(216, 30, 40, 0.5);
+}
+
+.theme-iron .ib-card.ib-speaking .ib-portrait-wrapper {
+	filter:
+		drop-shadow(0 0 1px rgba(216, 30, 40, 0.9))
+		drop-shadow(0 0 1px rgba(216, 30, 40, 0.9))
+		drop-shadow(0 0 4px rgba(216, 30, 40, 0.6))
+		drop-shadow(0 0 12px rgba(216, 30, 40, 0.3));
+	animation: ib-voice-iron-portrait 2s ease-in-out infinite;
+}
+
+@keyframes ib-voice-iron {
+	0%, 100% {
+		filter:
+			drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0 0 1px rgba(216, 30, 40, 0.7))
+			drop-shadow(0 0 1px rgba(216, 30, 40, 0.7))
+			drop-shadow(0 0 3px rgba(216, 30, 40, 0.4))
+			drop-shadow(0 0 8px rgba(216, 30, 40, 0.15));
+	}
+	50% {
+		filter:
+			drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0 0 1px rgba(216, 30, 40, 1))
+			drop-shadow(0 0 2px rgba(216, 30, 40, 1))
+			drop-shadow(0 0 6px rgba(216, 30, 40, 0.7))
+			drop-shadow(0 0 16px rgba(216, 30, 40, 0.35));
+	}
+}
+
+@keyframes ib-voice-iron-portrait {
+	0%, 100% {
+		filter:
+			drop-shadow(0 0 1px rgba(216, 30, 40, 0.7))
+			drop-shadow(0 0 1px rgba(216, 30, 40, 0.7))
+			drop-shadow(0 0 3px rgba(216, 30, 40, 0.4))
+			drop-shadow(0 0 8px rgba(216, 30, 40, 0.15));
+	}
+	50% {
+		filter:
+			drop-shadow(0 0 1px rgba(216, 30, 40, 1))
+			drop-shadow(0 0 2px rgba(216, 30, 40, 1))
+			drop-shadow(0 0 6px rgba(216, 30, 40, 0.7))
+			drop-shadow(0 0 16px rgba(216, 30, 40, 0.35));
+	}
+}

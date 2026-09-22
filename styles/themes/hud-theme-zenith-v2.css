@@ -1,0 +1,636 @@
+/* =========================================
+   Stylish Action HUD - THEME: ZENITH v2 (SHATTERED)
+   Style: No-panel shard composition. Rotated portrait chip,
+          ink ribbon nameplate, echelon gauge shards,
+          halftone slash backdrop, hard offset shadows.
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700;1,800&family=Saira:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
+
+.theme-zenith {
+	/* [COLORS] */
+	--z-ink: #14161f;
+	--z-ink-2: #232634;
+	--z-paper: #f6f5ef;
+	--z-paper-dim: #e8e6dc;
+	--z-blue: #2b41f0;
+	--z-blue-deep: #1c2cba;
+	--z-dim: #70737f;
+	--z-shadow: rgba(10, 12, 20, 0.55);
+
+	--z-font-header: "Kanit", sans-serif;
+	--z-font-body: "Saira", sans-serif;
+
+	/* [GEOMETRY] */
+	--z-skew: -14deg;
+	--z-unskew: 14deg;
+
+	--card-width: 470px;
+	--card-height: auto;
+	--portrait-width: 112px;
+	--portrait-height: 116px;
+
+	--hud-font-header: var(--z-font-header);
+	--hud-font-body: var(--z-font-body);
+}
+
+/* =========================================
+   1. CARD — no panel, a cluster of shards
+   ========================================= */
+.theme-zenith .ib-card {
+	width: var(--card-width) !important;
+	min-height: 140px;
+	display: block;
+	padding: 16px 26px 14px 136px;
+	background: transparent;
+	overflow: visible !important;
+	margin-bottom: 14px;
+	transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.theme-zenith .ib-card:hover { transform: translateX(7px); }
+
+/* Backdrop: halftone slash + ink underline streak (NOT a panel) */
+.theme-zenith .ib-bg-layer {
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+.theme-zenith .ib-bg-layer::before {
+	content: "";
+	position: absolute;
+	left: 84px; right: -20px; top: 22px; bottom: -8px;
+	transform: skewX(-18deg);
+	background:
+		radial-gradient(circle, rgba(43, 65, 240, 0.55) 1.5px, transparent 1.9px);
+	background-size: 9px 9px;
+	-webkit-mask-image: linear-gradient(100deg, #000 30%, transparent 92%);
+	        mask-image: linear-gradient(100deg, #000 30%, transparent 92%);
+	pointer-events: none;
+}
+.theme-zenith .ib-bg-layer::after {
+	content: "";
+	position: absolute;
+	left: 118px; right: -34px; bottom: -12px;
+	height: 5px;
+	transform: skewX(-32deg);
+	background: linear-gradient(90deg, var(--z-ink) 0 75%, var(--z-blue) 75%);
+	pointer-events: none;
+}
+
+/* =========================================
+   2. PORTRAIT — rotated chip, hard blue echo
+   ========================================= */
+.theme-zenith .ib-portrait-wrapper {
+	position: absolute;
+	left: 8px; bottom: 12px;
+	width: var(--portrait-width);
+	height: var(--portrait-height);
+	background: linear-gradient(170deg, var(--z-ink-2), var(--z-ink) 70%);
+	border: 3px solid var(--z-ink);
+	transform: rotate(-6deg);
+	box-shadow: 8px 8px 0 var(--z-blue);
+	z-index: 6;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.theme-zenith .ib-card:hover .ib-portrait-wrapper { transform: rotate(-7.5deg) translateY(-2px); }
+.theme-zenith .ib-portrait { color: var(--z-paper); }
+.theme-zenith .ib-portrait .ib-mono {
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 700;
+	transform: rotate(6deg);
+}
+
+/* =========================================
+   3. NAME — ink ribbon slashing across
+   ========================================= */
+.theme-zenith .ib-stats-box {
+	position: relative;
+	display: block;
+	padding: 0;
+}
+.theme-zenith .ib-name {
+	width: calc(100% + 34px);
+	margin-left: -14px;
+	padding: 3px 26px 4px 20px;
+	background: var(--z-ink);
+	color: var(--z-paper);
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 700;
+	text-transform: uppercase;
+	font-size: calc(1.62em * var(--name-scale, 1));
+	letter-spacing: 0.02em;
+	line-height: 1.08;
+	clip-path: polygon(10px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+	transform: translate(var(--name-x, 0), var(--name-y, 0)) rotate(-2.5deg) rotate(var(--name-rotation, 0deg));
+	transform-origin: left center;
+	margin-bottom: 12px;
+	z-index: 5;
+	transition: background 0.2s ease;
+}
+.theme-zenith .ib-name .ib-name-text { position: relative; }
+/* blue tick on the ribbon */
+.theme-zenith .ib-name::after {
+	content: "";
+	position: absolute; top: 0; bottom: 0; right: 26px;
+	width: 9px;
+	background: var(--z-blue);
+	transform: skewX(-16deg);
+}
+
+/* =========================================
+   4. CONDITIONS — floating diamonds above
+   ========================================= */
+.theme-zenith .ib-conditions {
+	top: -22px; right: 4px; gap: 9px;
+	transform: translate(var(--conditions-x, 0), var(--conditions-y, 0));
+	z-index: 8;
+}
+.theme-zenith .ib-cond-icon {
+	width: 23px; height: 23px;
+	/* Dark ink shard so Foundry's white/light status icons stay readable */
+	background: var(--z-ink);
+	color: var(--z-paper);
+	border: 2px solid var(--z-blue);
+	transform: rotate(45deg);
+	box-shadow: 2px 2px 0 var(--z-shadow);
+}
+.theme-zenith .ib-cond-icon .glyph,
+.theme-zenith .ib-cond-icon i { font-size: 11px; transform: rotate(-45deg); }
+.theme-zenith .ib-cond-val {
+	bottom: -7px; right: -7px;
+	background: var(--z-blue); color: #fff;
+	font-family: var(--z-font-body); font-weight: 600; font-size: 9px;
+	padding: 1px 4px; border: none; border-radius: 0;
+	transform: skewX(-12deg);
+	z-index: 12;
+}
+
+/* =========================================
+   5. BARS — echelon gauge shards
+   ========================================= */
+.theme-zenith .ib-bars-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+	transform: translate(var(--bars-x, 0), var(--bars-y, 0)) rotate(-2deg);
+	transform-origin: left center;
+}
+.theme-zenith .ib-bar-row {
+	height: 26px;
+	gap: 0;
+	background: var(--z-paper);
+	transform: skewX(var(--z-skew));
+	box-shadow: 4px 4px 0 var(--z-shadow);
+	padding-right: 64px;
+}
+#ib-hud-layer.theme-zenith .ib-bar-row {
+	transform: translate(var(--row-x, 0px), var(--row-y, 0px)) scale(var(--bar-scale, 1)) skewX(var(--z-skew));
+}
+/* echelon stagger */
+.theme-zenith .ib-bar-row:nth-child(2) { width: calc(100% - 34px); margin-left: 16px; }
+.theme-zenith .ib-bar-row:nth-child(3) { width: calc(100% - 68px); margin-left: 32px; }
+.theme-zenith .ib-label {
+	align-self: stretch;
+	display: flex; align-items: center;
+	min-width: 52px; justify-content: center;
+	padding: 0 8px;
+	background: var(--z-ink);
+	color: var(--z-paper);
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 600;
+	font-size: calc(0.74em * var(--label-font-size, 1));
+	letter-spacing: 0.1em; text-transform: uppercase;
+	margin-right: 9px;
+}
+.theme-zenith .ib-bar-container {
+	height: 10px;
+	background: rgba(20, 22, 31, 0.16);
+	border: none;
+	box-shadow: none;
+	align-self: center;
+	overflow: hidden;
+	--bar-segment-inset: 0;
+	--bar-segment-color: rgba(20, 22, 31, 0.58);
+	--bar-segment-shadow: none;
+	--bar-segment-opacity: 0.8;
+}
+
+.theme-zenith .ib-bar-threshold-marker {
+	--bar-marker-width: 2px;
+	--bar-marker-offset: 0px;
+	--bar-marker-depth: 6px;
+	--bar-marker-color: color-mix(in srgb, var(--marker-color, #fff) 60%, var(--z-ink) 40%);
+	--bar-marker-shadow: 1px 0 0 rgba(20, 22, 31, 0.52);
+	--bar-marker-opacity: 0.9;
+}
+.theme-zenith .ib-bar-fill {
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 45%),
+		var(--attr-color, var(--z-blue)) !important;
+	box-shadow: none;
+}
+.theme-zenith .ib-bar-fill::after {
+	content: ""; position: absolute; top: -2px; bottom: -2px; right: 0;
+	width: 3px; background: var(--z-ink);
+}
+.theme-zenith .ib-bar-buffer { display: none; }
+.theme-zenith .ib-val {
+	right: 10px; top: 50%;
+	transform: translateY(-52%) skewX(var(--z-unskew));
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 700;
+	font-size: calc(0.98em * var(--value-font-size, 1));
+	color: var(--z-ink);
+	text-shadow: none;
+}
+
+/* =========================================
+   6. NUMBER CHIPS — scattered ticket stubs
+   ========================================= */
+.theme-zenith .ib-numbers-wrapper {
+	margin-top: 12px; gap: 9px;
+	transform: rotate(-2deg);
+	transform-origin: left center;
+}
+.theme-zenith .ib-number-row {
+	padding: 1px 11px;
+	background: var(--z-paper);
+	border: 2px solid var(--z-ink);
+	transform: skewX(var(--z-skew));
+	box-shadow: 3px 3px 0 var(--z-shadow);
+	transition: all 0.15s ease;
+}
+.theme-zenith .ib-number-row:nth-child(even) { transform: skewX(var(--z-skew)) translateY(3px); }
+.theme-zenith .ib-number-row:hover { background: var(--z-ink); }
+.theme-zenith .ib-number-row:hover .ib-number-label,
+.theme-zenith .ib-number-row:hover .ib-number-value { color: var(--z-paper); }
+.theme-zenith .ib-number-label {
+	font-family: var(--z-font-body); font-weight: 600; font-size: 0.6em;
+	letter-spacing: 0.1em; text-transform: uppercase;
+	color: var(--z-dim);
+	transform: skewX(var(--z-unskew));
+}
+.theme-zenith .ib-number-value {
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 700; font-size: 1.05em;
+	color: var(--z-blue);
+	transform: skewX(var(--z-unskew));
+	text-shadow: none;
+}
+
+/* =========================================
+   7. TURN INDICATOR — blue surge
+   ========================================= */
+.theme-zenith .ib-card.is-turn { transform: translateX(10px); }
+.theme-zenith .ib-card.is-turn .ib-name { background: var(--z-blue); }
+.theme-zenith .ib-card.is-turn .ib-name::after { background: var(--z-paper); }
+.theme-zenith .ib-card.is-turn .ib-portrait-wrapper {
+	border-color: var(--z-blue);
+	box-shadow: 8px 8px 0 var(--z-ink), 12px 12px 0 rgba(43, 65, 240, 0.35);
+}
+.theme-zenith .ib-card.is-turn .ib-label { background: var(--z-blue); }
+
+.theme-zenith .ib-end-turn-btn {
+	top: auto; bottom: 30px; right: -2px;
+	width: 30px; height: 30px;
+	background: var(--z-blue); color: #fff;
+	border: 2px solid var(--z-paper);
+	border-radius: 0;
+	transform: rotate(45deg);
+	font-size: 12px;
+	opacity: 0;
+	box-shadow: 3px 3px 0 var(--z-shadow);
+	transition: all 0.2s ease;
+	z-index: 10;
+}
+.theme-zenith .ib-end-turn-btn .glyph,
+.theme-zenith .ib-end-turn-btn i { transform: rotate(-45deg); }
+.theme-zenith .ib-card.is-turn .ib-end-turn-btn { opacity: 1; }
+.theme-zenith .ib-end-turn-btn:hover {
+	background: var(--z-ink) !important;
+	transform: rotate(45deg) scale(1.12) !important;
+	box-shadow: 3px 3px 0 rgba(43, 65, 240, 0.6);
+}
+
+/* =========================================
+   8. ACTION BUTTONS — echelon command stack
+   ========================================= */
+#ib-sub-menu-container.theme-zenith { margin-right: 100px; }
+
+/* drop common menu gap; Zenith spacing comes from button margin-bottom */
+#ib-action-menu.theme-zenith { gap: 0; }
+
+.theme-zenith .ib-action-btn {
+	width: 236px; height: 47px;
+	margin-bottom: 11px; padding: 0 24px;
+	margin-left: 0;
+	margin-right: var(--ib-action-stagger, 0px);
+	background: var(--z-paper);
+	border: none;
+	color: var(--z-ink);
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 600; font-size: 1.32em;
+	text-transform: uppercase; letter-spacing: 0.03em;
+	transform: skewX(var(--z-skew));
+	box-shadow: 5px 5px 0 var(--z-shadow);
+	overflow: visible;
+	transition: all 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+/* the stair: each command steps further left */
+.theme-zenith .ib-action-btn .ib-btn-content {
+	justify-content: flex-end;
+	gap: 12px;
+	transform: skewX(var(--z-unskew));
+}
+.theme-zenith .ib-action-btn .glyph,
+.theme-zenith .ib-action-btn i { color: var(--z-blue); font-size: 0.78em; }
+.theme-zenith .ib-action-btn::before {
+	content: "";
+	position: absolute; top: 0; bottom: 0; left: 0; width: 7px;
+	background: var(--z-ink);
+	transition: width 0.16s ease;
+}
+.theme-zenith .ib-action-btn:hover {
+	transform: skewX(var(--z-skew)) translateX(-10px);
+	box-shadow: 9px 7px 0 var(--z-shadow);
+	color: var(--z-ink);
+}
+.theme-zenith .ib-action-btn:hover::before { width: 12px; background: var(--z-blue); }
+.theme-zenith .ib-action-btn.btn-attack {
+	width: 264px; height: 58px;
+	font-size: 1.62em; font-weight: 700;
+	background: var(--z-blue);
+	color: #fff;
+	box-shadow: 6px 6px 0 var(--z-shadow);
+}
+.theme-zenith .ib-action-btn.btn-attack .glyph,
+.theme-zenith .ib-action-btn.btn-attack i { color: #fff; }
+.theme-zenith .ib-action-btn.btn-attack::before { background: var(--z-ink); }
+.theme-zenith .ib-action-btn.btn-attack:hover { background: var(--z-blue-deep); color: #fff; }
+
+/* =========================================
+   9. SUB MENU — tilted dossier, breakout header
+   ========================================= */
+.theme-zenith .ib-sub-menu {
+	width: 396px;
+	position: relative;
+	background: var(--z-paper);
+	border: none;
+	transform: rotate(1.6deg);
+	box-shadow: 9px 9px 0 var(--z-shadow);
+	overflow: visible !important;
+	margin-top: 16px;
+}
+/* corner notch deco */
+.theme-zenith .ib-sub-menu::after {
+	content: "";
+	position: absolute; right: -14px; bottom: -18px;
+	width: 22px; height: 22px;
+	background: var(--z-blue);
+	transform: rotate(45deg);
+	z-index: -1;
+}
+
+.theme-zenith .ib-sidebar-panel {
+	width: 84px; padding: 18px 0 14px 0; gap: 8px;
+	background: transparent;
+	border: none;
+	margin-left: -12px;
+}
+.theme-zenith .ib-side-tab {
+	padding: 8px 4px;
+	background: var(--z-ink);
+	color: rgba(246, 245, 239, 0.55);
+	font-family: var(--z-font-body); font-weight: 600; font-size: 0.68em;
+	letter-spacing: 0.06em; text-transform: uppercase;
+	transform: skewX(-8deg);
+	box-shadow: 3px 3px 0 var(--z-shadow);
+	transition: all 0.15s ease;
+}
+.theme-zenith .ib-side-tab > * { transform: skewX(8deg); }
+.theme-zenith .ib-side-tab .glyph,
+.theme-zenith .ib-side-tab i { display: block; margin-bottom: 3px; font-size: 1.25em; }
+.theme-zenith .ib-side-tab:hover { color: var(--z-paper); transform: skewX(-8deg) translateX(-3px); }
+.theme-zenith .ib-side-tab.active {
+	background: var(--z-blue);
+	color: #fff;
+	transform: skewX(-8deg) translateX(-6px);
+	box-shadow: 4px 4px 0 var(--z-shadow);
+}
+
+.theme-zenith .ib-main-panel { max-height: 460px; overflow: visible; }
+.theme-zenith .ib-menu-header {
+	display: flex; align-items: center; justify-content: space-between; gap: 10px;
+	min-width: 0;
+	width: calc(100% + 26px);
+	margin: -10px 0 0 -8px;
+	padding: 8px 20px 9px;
+	background: var(--z-ink);
+	border: none;
+	transform: rotate(1.6deg);
+	box-shadow: 5px 5px 0 var(--z-blue);
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 700; font-size: 1.5em;
+	text-transform: uppercase; letter-spacing: 0.02em;
+	color: var(--z-paper);
+	position: relative; z-index: 4;
+}
+.theme-zenith .ib-menu-header .ib-font-hero {
+	font-family: var(--z-font-header);
+	font-style: italic; font-weight: 700; font-size: 1em;
+	color: var(--z-paper);
+}
+.theme-zenith .ib-dc-badge {
+	font-family: var(--z-font-body); font-weight: 600; font-size: 0.44em;
+	font-style: normal; letter-spacing: 0.08em;
+	white-space: nowrap; flex-shrink: 0; margin-left: 10px;
+	padding: 3px 10px; border-radius: 0;
+	background: var(--z-blue); color: #fff;
+	border: none;
+	transform: skewX(-12deg);
+}
+
+.theme-zenith .ib-magic-tabs {
+	gap: 8px; padding: 14px 16px 10px;
+	background: transparent;
+	border-bottom: 2px solid var(--z-ink);
+	margin: 0 10px;
+}
+.theme-zenith .ib-tab-btn {
+	display: flex; align-items: center; gap: 6px;
+	padding: 3px 12px;
+	background: var(--z-paper);
+	border: 2px solid var(--z-ink);
+	color: var(--z-ink);
+	font-family: var(--z-font-body); font-weight: 600; font-size: 0.78em;
+	text-transform: uppercase; letter-spacing: 0.04em;
+	transform: skewX(var(--z-skew));
+	transition: all 0.15s ease;
+}
+.theme-zenith .ib-tab-btn > * { transform: skewX(var(--z-unskew)); }
+.theme-zenith .ib-tab-btn:hover { background: var(--z-ink); color: var(--z-paper); }
+.theme-zenith .ib-tab-btn.active {
+	background: var(--z-blue); color: #fff;
+	border-color: var(--z-blue);
+	box-shadow: 3px 3px 0 var(--z-shadow);
+	transform: skewX(var(--z-skew)) translateY(-2px);
+}
+.theme-zenith .ib-tab-btn .ib-slot-text { font-size: 0.82em; opacity: 0.65; }
+.theme-zenith .ib-tab-btn .ib-slot-text.empty { color: #d8312b; opacity: 1; }
+.theme-zenith .ib-tab-btn.active .ib-slot-text.empty { color: #ffd3d0; }
+
+.theme-zenith .ib-list-area { padding: 9px 14px 12px; max-height: 300px; overflow-y: auto; }
+.theme-zenith .ib-list-item {
+	padding: 8px 12px;
+	border-left: 3px solid transparent;
+	transition: all 0.13s ease;
+}
+.theme-zenith .ib-list-item:nth-child(even) { background: rgba(20, 22, 31, 0.045); }
+.theme-zenith .ib-list-item:hover {
+	background: rgba(43, 65, 240, 0.09);
+	border-left-color: var(--z-blue);
+	transform: translateX(4px) skewX(-2deg);
+}
+.theme-zenith .ib-list-img {
+	width: 30px; height: 30px;
+	display: flex; align-items: center; justify-content: center;
+	background: var(--z-ink); color: var(--z-paper);
+	border: none; flex-shrink: 0;
+	transform: rotate(45deg) scale(0.78);
+}
+.theme-zenith .ib-list-img .glyph,
+.theme-zenith .ib-list-img i { transform: rotate(-45deg) scale(1.28); }
+.theme-zenith .ib-font-hero {
+	font-family: var(--z-font-body); font-weight: 600;
+	color: var(--z-ink); font-size: 1em;
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.theme-zenith .ib-act-icon {
+	display: inline-flex; align-items: center; justify-content: center;
+	min-width: 22px; height: 20px; padding: 0 7px;
+	background: var(--z-blue); color: #fff;
+	border: none;
+	font-family: var(--z-font-header); font-style: italic; font-weight: 600; font-size: 0.78em;
+	transform: skewX(var(--z-skew));
+}
+.theme-zenith .ib-act-icon.reaction { background: var(--z-ink); color: var(--z-paper); }
+
+/* keep vertical scroll, hide visible scrollbars (jitter on rotated panel) */
+/* CSS scroll-shadow: the `local` cover gradient masks the `scroll` blue shadow
+   once fully scrolled, so the pale-blue "more below" cue self-hides at the bottom */
+.theme-zenith .ib-scroll-area,
+.theme-zenith .ib-list-area {
+	scrollbar-width: none;
+	background:
+		linear-gradient(to top,
+			var(--z-paper) 55%,
+			rgba(246, 245, 239, 0) 100%) bottom center / 100% 26px no-repeat local,
+		linear-gradient(to top,
+			rgba(43, 65, 240, 0.26) 0%,
+			rgba(43, 65, 240, 0) 100%) bottom center / 100% 22px no-repeat scroll;
+}
+.theme-zenith .ib-scroll-area::-webkit-scrollbar,
+.theme-zenith .ib-list-area::-webkit-scrollbar { width: 0; height: 0; }
+
+/* =========================================
+   9b. QUICK SLOTS / FAVORITES — ticket stubs, hard blue echo
+   ========================================= */
+.theme-zenith .ib-quick-slot-container {
+	display: flex;
+	justify-content: flex-end;
+	gap: 7px;
+	margin-bottom: 14px;
+	/* match the theme's slanted, right-aligned shard composition */
+	transform: skewX(var(--z-skew));
+	margin-right: -4px;
+	max-height: 92px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 5px;
+	padding-top: 3px;
+}
+.theme-zenith .ib-quick-slot {
+	width: 42px;
+	height: 42px;
+	background: var(--z-paper);
+	border: 2px solid var(--z-ink);
+	cursor: pointer;
+	overflow: hidden;
+	box-shadow: 3px 3px 0 var(--z-shadow);
+	transition: all 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.theme-zenith .ib-quick-slot img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/* counter-skew the artwork so it stays upright in the stub */
+	transform: skewX(var(--z-unskew)) scale(1.2);
+}
+.theme-zenith .ib-quick-slot:hover {
+	transform: translateY(-3px);
+	box-shadow: 5px 6px 0 var(--z-blue);
+	border-color: var(--z-blue);
+}
+.theme-zenith .ib-quick-slot-container::-webkit-scrollbar { width: 4px; }
+.theme-zenith .ib-quick-slot-container::-webkit-scrollbar-track { background: rgba(20, 22, 31, 0.1); }
+.theme-zenith .ib-quick-slot-container::-webkit-scrollbar-thumb { background: var(--z-blue); }
+
+/* favorite star in the list rows */
+.theme-zenith .ib-fav-btn {
+	color: var(--z-dim);
+	transition: all 0.16s ease;
+}
+.theme-zenith .ib-fav-btn:hover { color: var(--z-ink); }
+.theme-zenith .ib-fav-btn.active { color: var(--z-blue); }
+
+/* =========================================
+   9c. COMPACT / COLLAPSE — tilted ink chip, hard blue echo
+   ========================================= */
+#ib-hud-layer.theme-zenith.collapse-mode {
+	--collapse-border-color: var(--z-ink);
+	--collapse-border-hover: var(--z-blue);
+	--collapse-border-radius: 0px;
+	--collapse-bg: linear-gradient(170deg, var(--z-ink-2), var(--z-ink) 70%);
+}
+
+#ib-hud-layer.theme-zenith .ib-card.is-collapsed:not(.card-hovered) .ib-portrait-wrapper {
+	position: relative;
+	width: var(--collapse-width, var(--collapse-size)) !important;
+	height: var(--collapse-height, var(--collapse-size)) !important;
+	border-radius: var(--collapse-border-radius);
+	border: 3px solid var(--collapse-border-color);
+	background: var(--collapse-bg);
+	transform: rotate(-6deg) !important;
+	clip-path: var(--collapse-clip-path, none);
+	box-shadow: 6px 6px 0 var(--z-blue);
+	overflow: hidden !important;
+	margin: 0 !important;
+	z-index: 2;
+}
+
+#ib-hud-layer.theme-zenith .ib-card.is-collapsed:not(.card-hovered) .ib-portrait {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* =========================================
+   10. SEARCH / TOOLTIP HOOKS
+   ========================================= */
+.theme-zenith .ib-search-container {
+	background: var(--z-paper-dim);
+	border-bottom: 2px solid var(--z-ink);
+}
+.theme-zenith .ib-search-input {
+	color: var(--z-ink);
+	font-family: var(--z-font-body);
+}
+.theme-zenith .ib-search-input::placeholder { color: var(--z-dim); }
+
+.theme-zenith {
+	--tooltip-bg: rgba(246, 245, 239, 0.98);
+	--tooltip-border: var(--z-ink);
+	--tooltip-text: #3a3d49;
+	--tooltip-header: var(--z-ink);
+	--g-accent: var(--z-blue);
+}
