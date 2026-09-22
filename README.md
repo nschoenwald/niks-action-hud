@@ -51,14 +51,10 @@ Nik's Action HUD is the standalone consolidation of `stylish-action-hud` and the
 
 ## 📦 Installation
 
-To install in Foundry VTT via Manifest URL:
-1. In Foundry VTT Setup, navigate to the **Add-on Modules** tab.
-2. Click **Install Module**.
-3. Paste the following Manifest URL into the Manifest URL input:
-   ```
-   https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.json
-   ```
-4. Click **Install**.
+Install directly within Foundry VTT via Manifest URL:
+```
+https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.json
+```
 
 ---
 
