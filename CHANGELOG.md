@@ -2,6 +2,25 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.0.3] - 2026-09-23
+
+### Right-Click Directly Opens Item Sheet
+- **Direct Item Sheet Navigation**: Right-clicking any item, feature, or spell in the Action HUD list now directly opens that item's sheet (`item.sheet.render(true)`).
+- **Removed Editable Resource Functionality**: Completely removed the legacy "Editable Resource" prompt dialog, status-effect resource extraction (`getResourceForEdit`), and right-click interceptors that previously prevented opening item sheets.
+
+### Persistent Size Drag Indicator & Setting Cleanups
+- **Always Visible Drag Handle**: The bottom-right HUD resize drag indicator handle (`#niks-resize-handle`) is now permanently visible on the HUD at all times (`opacity: 0.65` resting, `0.9` on HUD hover, `1.0` during active resize/drag) rather than hidden until hover.
+- **Baked In Resize Settings**: Removed `enableResizeHandle` and `showScaleIndicator` from module settings registration, keeping interactive corner dragging and scale toast feedback permanently enabled as native core behaviors.
+
+### Removed Reduce Motion Setting & Logic
+- **Purged Reduce Motion**: Removed the `reduceMotion` setting and cleaned up all `.reduce-motion` and `@media (prefers-reduced-motion: reduce)` style overrides that forced animations and transitions off, streamlining runtime CSS.
+
+### Mouse Wheel Scaling Modifier Default
+- **Shift as Default Modifier**: Changed the default modifier key for mouse wheel scaling from `Ctrl` to `Shift` (`scaleModifierKey: "shift"`).
+- **Dynamic Modifier Evaluation**: Updated the wheel resize event listener in `scripts/features/action-menu/drag.js` to actively read `scaleModifierKey` (Shift, Ctrl/Cmd, Alt, or None) rather than relying on hardcoded keys.
+
+---
+
 ## [14.0.2] - 2026-09-23
 
 ### Fixed

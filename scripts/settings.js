@@ -200,16 +200,6 @@ export class SettingsManager {
 		});
 
 		// 2.4 HUD Scaling & Sizing Suite
-		game.settings.register(MODULE_ID, "enableResizeHandle", {
-			name: "NIKS_ACTION_HUD.Settings.EnableResizeHandleName",
-			hint: "NIKS_ACTION_HUD.Settings.EnableResizeHandleHint",
-			scope: "client",
-			config: true,
-			type: Boolean,
-			default: true,
-			onChange: () => ActionMenu.refresh(),
-		});
-
 		game.settings.register(MODULE_ID, "wheelResize", {
 			name: "NIKS_ACTION_HUD.Settings.WheelResizeName",
 			hint: "NIKS_ACTION_HUD.Settings.WheelResizeHint",
@@ -226,21 +216,12 @@ export class SettingsManager {
 			config: true,
 			type: String,
 			choices: {
+				shift: "NIKS_ACTION_HUD.Settings.ScaleModShift",
 				ctrl: "NIKS_ACTION_HUD.Settings.ScaleModCtrl",
 				alt: "NIKS_ACTION_HUD.Settings.ScaleModAlt",
-				shift: "NIKS_ACTION_HUD.Settings.ScaleModShift",
 				none: "NIKS_ACTION_HUD.Settings.ScaleModNone",
 			},
-			default: "ctrl",
-		});
-
-		game.settings.register(MODULE_ID, "showScaleIndicator", {
-			name: "NIKS_ACTION_HUD.Settings.ShowScaleIndicatorName",
-			hint: "NIKS_ACTION_HUD.Settings.ShowScaleIndicatorHint",
-			scope: "client",
-			config: true,
-			type: Boolean,
-			default: true,
+			default: "shift",
 		});
 
 		// 2.5 Submenu & Tooltip Display
@@ -270,15 +251,6 @@ export class SettingsManager {
 				anchor: "IBHUD.Settings.TooltipPosition.Anchor",
 				cursor: "IBHUD.Settings.TooltipPosition.Cursor",
 			},
-		});
-
-		game.settings.register(MODULE_ID, "reduceMotion", {
-			name: "IBHUD.Settings.ReduceMotion.Name",
-			hint: "IBHUD.Settings.ReduceMotion.Hint",
-			scope: "client",
-			config: true,
-			type: Boolean,
-			default: false,
 		});
 
 		// 2.6 Permissions & Roles (World Settings)

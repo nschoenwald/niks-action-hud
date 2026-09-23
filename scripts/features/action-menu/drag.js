@@ -353,7 +353,14 @@ export function attachWheelResize(ActionMenu) {
 			const wheelResizeEnabled = game.settings.get(MODULE_ID, "wheelResize");
 			if (!wheelResizeEnabled) return;
 
-			if (event.ctrlKey || event.altKey || event.metaKey) {
+			const mod = game.settings.get(MODULE_ID, "scaleModifierKey") ?? "shift";
+			let isModPressed = false;
+			if (mod === "shift") isModPressed = event.shiftKey;
+			else if (mod === "ctrl") isModPressed = event.ctrlKey || event.metaKey;
+			else if (mod === "alt") isModPressed = event.altKey;
+			else if (mod === "none") isModPressed = true;
+
+			if (isModPressed) {
 				event.preventDefault();
 				event.stopPropagation();
 

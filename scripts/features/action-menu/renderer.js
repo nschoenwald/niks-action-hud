@@ -551,10 +551,8 @@ export const buildListItems = (ActionMenu, items) => {
 			} else if (item.id.startsWith("macro-") && item.customCatIndex !== undefined) {
 				const realId = item.id.replace("macro-", "");
 				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.editGlobalMacro('${realId}', ${item.customCatIndex}, ${item.customTabIndex}, ${item.customItemIndex})"`;
-			} else if (item.isExhausted && item.isSingleUse) {
-				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.restoreItem('${item.id}')"`;
 			} else {
-				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.editResource('${item.id}')"`;
+				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.openItem('${item.id}')"`;
 			}
 
 			const costHtml = item.cost
@@ -695,9 +693,6 @@ export const renderMain = (ActionMenu) => {
 
 	const menuLayersHtml = isImageTheme ? buildAMLayersHtml(config.amMenuLayers) : "";
 
-	const reduceMotion = game.settings.get(MODULE_ID, "reduceMotion");
-	const motionClass = reduceMotion ? "reduce-motion" : "force-motion";
-
 	const zoom = cfg.scale || 1;
 	let posStyle = "";
 	if (cfg.anchor.anchorX === "right") {
@@ -725,7 +720,7 @@ export const renderMain = (ActionMenu) => {
 		$(document.getElementById("interface") || document.body).append(root);
 	}
 
-	root.attr("class", `theme-${cfg.theme} ${motionClass} ${fontClass}`.trim());
+	root.attr("class", `theme-${cfg.theme} ${fontClass}`.trim());
 	root.attr("style", `${posStyle} zoom: ${cfg.scale}; --am-scale: ${cfg.scale}; --am-base-scale: ${cfg.baseScale}; --am-auto-scale: ${cfg.autoScale}; ${fontStyle}`);
 	root.attr("data-anchor-x", cfg.anchor.anchorX);
 	root.attr("data-anchor-y", cfg.anchor.anchorY);

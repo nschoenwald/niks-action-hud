@@ -165,8 +165,8 @@ export const removePersonalItem = async (
 	}
 };
 
-export const editResource = async (ActionMenu, itemId) => {
-	if (!ActionMenu.currentActor) return;
+export const openItem = async (ActionMenu, itemId) => {
+	if (!ActionMenu?.currentActor) return;
 
 	const actor = ActionMenu.currentActor;
 	let realId = String(itemId || "");
@@ -176,24 +176,25 @@ export const editResource = async (ActionMenu, itemId) => {
 	}
 	realId = realId.split("_")[0];
 
-	// Resource trackers ("res-primary", "res-secondary", etc.) have no item sheet
-	if (!realId.startsWith("res-")) {
-		let item = actor.items?.get(realId);
-		if (!item && typeof fromUuidSync === "function") {
-			try {
-				item = fromUuidSync(itemId) || fromUuidSync(realId);
-			} catch (e) {}
-		}
-
-		if (item && item.sheet) {
-			item.sheet.render(true);
-			return;
-		}
+	let item = actor.items?.get(realId);
+	if (!item && typeof fromUuidSync === "function") {
+		try {
+			item = fromUuidSync(itemId) || fromUuidSync(realId);
+		} catch (e) {}
+	}
+	if (!item && typeof fromUuid === "function") {
+		try {
+			item = (await fromUuid(itemId)) || (await fromUuid(realId));
+		} catch (e) {}
 	}
 
-	const { editResource: editResourceDialog } = await import("./dialogs.js");
-	await editResourceDialog(ActionMenu, itemId);
+	if (item?.sheet) {
+		item.sheet.render(true);
+		return item;
+	}
 };
+
+export const editResource = openItem;
 
 export const editMacro = async (ActionMenu, macroId) => {
 	if (!ActionMenu.currentActor) return;

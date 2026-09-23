@@ -57,13 +57,16 @@ import {
 	previewAMImages as previewAMImagesModule,
 } from "./action-menu/drag.js";
 import {
-	editResource as editResourceModule,
 	editSpellSlots as editSpellSlotsModule,
 	restoreItem as restoreItemModule,
 } from "./action-menu/dialogs.js";
 import { canRestoreActionMenuCategory } from "./action-menu/category-visibility.js";
 
-import { editMacro as editMacroModule, editGlobalMacro as editGlobalMacroModule } from "./action-menu/actions.js";
+import {
+	openItem as openItemModule,
+	editMacro as editMacroModule,
+	editGlobalMacro as editGlobalMacroModule,
+} from "./action-menu/actions.js";
 
 const getSubMenuWrapper = (container, categoryId) =>
 	container
@@ -561,69 +564,14 @@ export class ActionMenu {
 	}
 
 	/**
-	 * 자원 수정 다이얼로그 호출
+	 * Open Item Sheet
 	 */
+	static async openItem(itemId) {
+		await openItemModule(ActionMenu, itemId);
+	}
+
 	static async editResource(itemId) {
-		await editResourceModule(ActionMenu, itemId);
-	}
-
-	static async editMacro(macroId) {
-		await editMacroModule(ActionMenu, macroId);
-	}
-	static async editCustomMacro(macroId, catIndex, tabIndex, itemIndex) {
-		await editCustomMacroModule(ActionMenu, macroId, {
-			catIdx: catIndex,
-			tabIdx: tabIndex,
-			itemIdx: itemIndex,
-		});
-	}
-	static async editGlobalMacro(macroId, catIndex, tabIndex, itemIndex) {
-		await editGlobalMacroModule(ActionMenu, macroId, {
-			catIdx: catIndex,
-			tabIdx: tabIndex,
-			itemIdx: itemIndex,
-		});
-	}
-
-	/**
-	 * Edit Spell Slots (Sidebar Tab)
-	 */
-	static async editSpellSlots(categoryId, tabId) {
-		await editSpellSlotsModule(ActionMenu, categoryId, tabId);
-	}
-
-	/**
-	 * Restore Item
-	 * - Restore prepared spell slot or reset frequency
-	 */
-	static async restoreItem(itemId) {
-		await restoreItemModule(ActionMenu, itemId);
-	}
-
-	static showMenu() {
-		const root = $(`#${ActionMenu.ROOT_ID}`);
-		if (root.length) {
-			root.show();
-		}
-	}
-
-	static hideMenu() {
-		const root = $(`#${ActionMenu.ROOT_ID}`);
-		if (root.length) {
-			root.hide();
-		}
-		const subMenu = $(`#${ActionMenu.SUB_ID}`);
-		if (subMenu.length) {
-			subMenu.removeClass("active");
-		}
-		ActionMenu.hideTooltip(true);
-	}
-
-	/**
-	 * 자원 수정 다이얼로그 호출
-	 */
-	static async editResource(itemId) {
-		await editResourceModule(ActionMenu, itemId);
+		await openItemModule(ActionMenu, itemId);
 	}
 
 	static async editMacro(macroId) {

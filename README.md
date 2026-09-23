@@ -17,8 +17,8 @@ Nik's Action HUD is the standalone consolidation of `stylish-action-hud` and the
 - **Unlinked NPC Favorites Sync**: Native synchronization of favorite slots for unlinked tokens without flag collisions or data corruption (built-in).
 - **Multi-Row Favorites**: Favorite quick-slots wrap onto multiple lines cleanly without horizontal clipping (built-in).
 - **Live Scaling & Wheel Resizing**:
-  - Drag the bottom-right corner resize handle to adjust scale live.
-  - Hold `Ctrl`, `Alt`, or `Cmd` and scroll the mouse wheel over the HUD to adjust scale on the fly.
+  - Drag the bottom-right corner resize handle (permanently visible on HUD) to adjust scale live.
+  - Hold `Shift` (configurable to Ctrl/Alt/None) and scroll the mouse wheel over the HUD to adjust scale on the fly.
   - Visual scale toast indicator shows current zoom percentage.
 - **Clean Configuration Panel**: Streamlined single-panel settings dialog focused on key display and sizing options.
 - **Intuitive Module Settings**: Master "Disable HUD" toggle right at the top of Foundry's settings, followed by the config panel shortcut, sizing controls, and display options.
