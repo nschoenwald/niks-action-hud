@@ -307,6 +307,7 @@ export const prepareContext = async (app, options) => {
 		.filter(a => a.hasPlayerOwner || game.user.isGM)
 		.map(a => ({ id: a.id, name: a.name, type: a.type, img: a.img }))
 		.sort((a, b) => a.name.localeCompare(b.name));
+	const adapter = window.ActionHUD?.adapter || adapterRegistry.createSystemAdapter(game.system.id);
 	const adapterMenuPreview = await prepareExternalAdapterMenu(
 		app,
 		adapter,

@@ -1084,8 +1084,8 @@ export const onSave = async (app, event, target) => {
 			// Use anchor mode consistently (layout-manager uses anchor mode)
 			positionDataToKeep.positionMode = "anchor";
 
-			if (window.stylishActionHUD?.socket?.executeForEveryone) {
-				await window.stylishActionHUD.socket.executeForEveryone(
+			if ((window.ActionHUD || window.stylishActionHUD)?.socket?.executeForEveryone) {
+				await (window.ActionHUD || window.stylishActionHUD).socket.executeForEveryone(
 					"syncClientPositions",
 					positionDataToKeep,
 				);
@@ -1107,14 +1107,14 @@ export const onSave = async (app, event, target) => {
 		const actorSettings = app.tempData.actorSettings[actorId];
 
 		// Portrait variants → world-visible via socket (everyone sees portrait changes)
-		if (actorSettings && window.stylishActionHUD?.socket) {
+		if (actorSettings && (window.ActionHUD || window.stylishActionHUD)?.socket) {
 			const variants = Array.isArray(actorSettings.portraitVariants)
 				? actorSettings.portraitVariants
 				: [];
 			const activeId = actorSettings.activePortraitVariantId || variants[0]?.id || null;
 			const voiceId = actorSettings.voicePortraitVariantId || null;
 			try {
-				await window.stylishActionHUD.socket.executeAsGM(
+				await (window.ActionHUD || window.stylishActionHUD).socket.executeAsGM(
 					"savePortraitVariants",
 					actorId,
 					variants,
@@ -1208,8 +1208,8 @@ export const onSave = async (app, event, target) => {
 
 	await game.settings.set(MODULE_ID, "clientPositions", clientPos);
 
-	if (window.stylishActionHUD) window.stylishActionHUD._isSavingConfig = false;
-	if (window.stylishActionHUD) window.stylishActionHUD.refresh();
+	if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD)._isSavingConfig = false;
+	if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD).refresh();
 	if (window.ActionHUD.actionMenu) window.StylishAction.refresh();
 
 	await app.close();
@@ -1224,8 +1224,8 @@ export const onEditLayout = async (app, event, target) => {
 	}
 	await app._onSave(event, target);
 
-	if (window.stylishActionHUD) {
-		window.stylishActionHUD.toggleEditMode(true);
+	if ((window.ActionHUD || window.stylishActionHUD)) {
+		(window.ActionHUD || window.stylishActionHUD).toggleEditMode(true);
 	}
 };
 
@@ -1305,7 +1305,7 @@ export const onReset = async (app, event, target) => {
 	if (isGlobal) {
 		let globalAttributes = defaultRegistry.getDefaultAttributes(
 			game.system.id,
-			window.stylishActionHUD?.adapter,
+			(window.ActionHUD || window.stylishActionHUD)?.adapter,
 		);
 		if (globalAttributes.length === 0) {
 			globalAttributes = [
@@ -1323,11 +1323,11 @@ export const onReset = async (app, event, target) => {
 			globalAttributes,
 			customMenu: defaultRegistry.getDefaultLayout(
 				game.system.id,
-				window.stylishActionHUD?.adapter,
+				(window.ActionHUD || window.stylishActionHUD)?.adapter,
 			),
 			statusEffects: defaultRegistry.getDefaultStatusEffects(
 				game.system.id,
-				window.stylishActionHUD?.adapter,
+				(window.ActionHUD || window.stylishActionHUD)?.adapter,
 			),
 		};
 		for (const scope of scopesToReset) {
@@ -1506,7 +1506,7 @@ export const onDrop = async (app, event, targetZone) => {
 
 	app._captureInputData(app.element);
 
-	const adapter = window.stylishActionHUD?.adapter;
+	const adapter = (window.ActionHUD || window.stylishActionHUD)?.adapter;
 	if (!adapter) return;
 
 	let newItem = null;
@@ -1600,14 +1600,14 @@ export const onLoadConfigPreset = async (app, event, target) => {
 	} catch { return; }
 	if (!confirmed) return;
 
-	if (window.stylishActionHUD) window.stylishActionHUD._isSavingConfig = true;
+	if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD)._isSavingConfig = true;
 	await game.settings.set(MODULE_ID, "configuration", foundry.utils.deepClone(preset.config));
-	if (window.stylishActionHUD) window.stylishActionHUD._isSavingConfig = false;
+	if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD)._isSavingConfig = false;
 	ui.notifications.info(game.i18n.format("IBHUD.Preset.Full.Loaded", { name }));
 
 	app.isInitialized = false;
 	app.render();
-	if (window.stylishActionHUD) window.stylishActionHUD.refresh();
+	if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD).refresh();
 	if (window.StylishAction) window.StylishAction.refresh();
 };
 
@@ -1796,7 +1796,7 @@ export const onImportConfigPresetFile = async (app, event, target) => {
 
 			app.isInitialized = false;
 			app.render();
-			if (window.stylishActionHUD) window.stylishActionHUD.refresh();
+			if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD).refresh();
 			if (window.StylishAction) window.StylishAction.refresh();
 		} catch (e) {
 			console.error("Stylish HUD | Preset import failed:", e);
@@ -1879,7 +1879,7 @@ export const onImportPreset = async (app, event, target) => {
 		app.isInitialized = false;
 		app.render();
 
-		if (window.stylishActionHUD) window.stylishActionHUD.refresh();
+		if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD).refresh();
 		if (window.StylishAction) window.StylishAction.refresh();
 	} else {
 		ui.notifications.error(result.error || game.i18n.localize("IBHUD.Preset.ImportFailed"));
@@ -1964,7 +1964,7 @@ export const onImportTheme = async (app) => {
 			app.isInitialized = false;
 			app.render();
 
-			if (window.stylishActionHUD) window.stylishActionHUD.refresh();
+			if ((window.ActionHUD || window.stylishActionHUD)) (window.ActionHUD || window.stylishActionHUD).refresh();
 			if (window.StylishAction) window.StylishAction.refresh();
 		} else if (result.error !== "Cancelled") {
 			ui.notifications.error(result.error || game.i18n.localize("IBHUD.Theme.ImportFailed"));

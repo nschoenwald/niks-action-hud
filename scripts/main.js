@@ -68,6 +68,7 @@ class ActionHUD {
 // Assign global reference for API
 window.ActionHUD = ActionHUD;
 window.ActionHUD.actionMenu = ActionMenu;
+window.stylishActionHUD = ActionHUD;
 
 Hooks.once("init", () => {
 	ActionHUD.initialize();

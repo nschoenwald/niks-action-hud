@@ -2,6 +2,14 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.0.2] - 2026-09-23
+
+### Fixed
+- **Config Dialog ReferenceError (`adapter is not defined`)**: Resolved an issue in `scripts/config/context.js` where `adapter` was passed to `prepareExternalAdapterMenu` without being declared in `prepareContext`. `adapter` is now safely resolved via `window.ActionHUD?.adapter || adapterRegistry.createSystemAdapter(game.system.id)`.
+- **Global API Alias & Handlers Consistency**: Added `window.stylishActionHUD = ActionHUD` backwards-compatibility alias in `scripts/main.js` and updated config handlers in `scripts/config/handlers.js` to reference `(window.ActionHUD || window.stylishActionHUD)` cleanly.
+
+---
+
 ## [14.0.1] - 2026-09-22
 
 ### Foundry V14 Exclusivity & V13 Deprecation Cleanup
