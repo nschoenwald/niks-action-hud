@@ -1,0 +1,327 @@
+/* =========================================
+   Nik's Action HUD - THEME: ARCANUM
+   Style: Astral High Magic, Celestial Velvet,
+          Burnished Gold-Leaf Filigree, Starlight Glow.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap");
+
+.theme-arcanum {
+	/* Solid Opaque Palette */
+	--arc-void: #080914;
+	--arc-surface: #140f26;
+	--arc-surface-solid: #140f26;
+	--arc-surface-elevated: #1a1332;
+	--arc-surface-sidebar: #0e0a1c;
+	--arc-surface-header: #120d22;
+	--arc-surface-search: #0e0a1b;
+	--arc-gold: #d4af37;
+	--arc-gold-bright: #fbbf24;
+	--arc-gold-dim: #5c4a18;
+	--arc-gold-hairline: #3b2f10;
+	--arc-amber: #f59e0b;
+	--arc-amber-deep: #b45309;
+	--arc-lavender: #c084fc;
+	--arc-cyan: #38bdf8;
+	--arc-text-primary: #f8fafc;
+	--arc-text-cream: #fef3c7;
+	--arc-text-muted: #cbd5e1;
+	--arc-shadow: #04050c;
+	--arc-glow: 0 0 16px rgba(212, 175, 55, 0.4);
+
+	/* Typography */
+	--arc-font-header: "Cinzel", serif;
+	--arc-font-body: "Cormorant Garamond", serif;
+	--hud-font-header: var(--arc-font-header);
+	--hud-font-body: var(--arc-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #120d24;
+	--tooltip-border: #d4af37;
+	--tooltip-text: #e2e8f0;
+	--tooltip-header: #fef3c7;
+	--g-accent: var(--arc-gold);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Diamond-Chamfered Gold
+   ========================================= */
+.theme-arcanum .ib-action-btn {
+	width: 236px;
+	height: 48px;
+	margin-bottom: 8px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #1e163a, #130d26);
+	border: 1px solid var(--arc-gold-dim);
+	clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+	color: var(--arc-text-cream);
+	font-family: var(--arc-font-header);
+	font-weight: 600;
+	font-size: 1.15em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.12),
+		inset 0 0 10px #0a0715,
+		0 4px 14px var(--arc-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-arcanum .ib-action-btn .ib-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-arcanum .ib-action-btn .glyph,
+.theme-arcanum .ib-action-btn i {
+	color: var(--arc-gold);
+	font-size: 0.82em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-arcanum .ib-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--arc-gold);
+	background: linear-gradient(135deg, #2b1f52, #1a1236);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.2),
+		0 6px 18px var(--arc-shadow),
+		var(--arc-glow);
+	transform: translateX(4px);
+}
+
+.theme-arcanum .ib-action-btn:hover .glyph,
+.theme-arcanum .ib-action-btn:hover i {
+	color: var(--arc-gold-bright);
+	transform: scale(1.15);
+}
+
+.theme-arcanum .ib-action-btn.btn-attack,
+.theme-arcanum .ib-action-btn.ib-action-btn-first {
+	height: 52px;
+	font-size: 1.25em;
+	font-weight: 700;
+	background: linear-gradient(135deg, #321f5c, #1a1033);
+	border-color: var(--arc-gold);
+	box-shadow:
+		inset 0 1px 0 #fbbf24,
+		0 6px 20px var(--arc-shadow),
+		0 0 16px rgba(212, 175, 55, 0.4);
+}
+
+.theme-arcanum .ib-action-btn.btn-attack .glyph,
+.theme-arcanum .ib-action-btn.btn-attack i {
+	color: var(--arc-gold-bright);
+}
+
+/* =========================================
+   2. SUBMENU — Astral Grimoire Panel
+   ========================================= */
+.theme-arcanum .ib-sub-menu {
+	width: 412px;
+	background: #140f26;
+	border: 1px solid var(--arc-gold-dim);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px #2a1f4a,
+		0 16px 36px var(--arc-shadow);
+}
+
+.theme-arcanum .ib-sidebar-panel {
+	width: 78px;
+	padding: 12px 0 12px 6px;
+	gap: 6px;
+	background: var(--arc-surface-sidebar);
+	border-right: 1px solid var(--arc-gold-hairline);
+}
+
+.theme-arcanum .ib-side-tab {
+	padding: 10px 4px;
+	background: #140f26;
+	color: var(--arc-text-muted);
+	font-family: var(--arc-font-header);
+	font-size: 0.72em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-arcanum .ib-side-tab .glyph,
+.theme-arcanum .ib-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.3em;
+	color: var(--arc-lavender);
+	transition: color 0.16s ease;
+}
+
+.theme-arcanum .ib-side-tab:hover {
+	color: #fff;
+	background: #1e1638;
+}
+
+.theme-arcanum .ib-side-tab.active {
+	background: #241a44;
+	color: #fff;
+	border-left-color: var(--arc-gold);
+}
+
+.theme-arcanum .ib-side-tab.active .glyph,
+.theme-arcanum .ib-side-tab.active i {
+	color: var(--arc-gold-bright);
+}
+
+.theme-arcanum .ib-main-panel {
+	max-height: 480px;
+	background: #140f26;
+}
+
+.theme-arcanum .ib-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--arc-surface-header);
+	border-bottom: 1px solid var(--arc-gold-dim);
+	font-family: var(--arc-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--arc-text-cream);
+}
+
+.theme-arcanum .ib-menu-header .ib-font-hero {
+	font-family: var(--arc-font-header);
+	font-weight: 700;
+	color: var(--arc-text-cream);
+}
+
+.theme-arcanum .ib-dc-badge {
+	font-family: var(--arc-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, var(--arc-amber), var(--arc-amber-deep));
+	color: #fff;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-arcanum .ib-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--arc-surface-sidebar);
+	border-bottom: 1px solid var(--arc-gold-hairline);
+}
+
+.theme-arcanum .ib-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #1a1332;
+	border: 1px solid var(--arc-gold-hairline);
+	color: var(--arc-text-muted);
+	font-family: var(--arc-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-arcanum .ib-tab-btn:hover {
+	color: #fff;
+	border-color: var(--arc-gold-dim);
+	background: #251c46;
+}
+
+.theme-arcanum .ib-tab-btn.active {
+	background: #2f2258;
+	color: #fff;
+	border-color: var(--arc-gold);
+	box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+/* List Items */
+.theme-arcanum .ib-list-item {
+	padding: 8px 12px;
+	background: #140f26;
+	border-left: 2px solid transparent;
+	transition: all 0.15s ease;
+}
+
+.theme-arcanum .ib-list-item:hover {
+	background: #20173c;
+	border-left-color: var(--arc-gold);
+	transform: translateX(3px);
+}
+
+.theme-arcanum .ib-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--arc-gold-dim);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-arcanum .ib-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #2a1f4c;
+	color: var(--arc-gold-bright);
+	border: 1px solid var(--arc-gold-dim);
+	font-family: var(--arc-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.theme-arcanum .ib-search-container {
+	background: var(--arc-surface-search);
+	border-bottom: 1px solid var(--arc-gold-hairline);
+}
+
+.theme-arcanum .ib-search-input {
+	background: #140f26;
+	color: var(--arc-text-cream);
+	font-family: var(--arc-font-body);
+	font-size: 1.05em;
+}
+
+.theme-arcanum .ib-search-input::placeholder {
+	color: #64748b;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-arcanum .ib-quick-slot-container {
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.theme-arcanum .ib-quick-slot {
+	width: 40px;
+	height: 40px;
+	background: #1a1332;
+	border: 1px solid var(--arc-gold-dim);
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	box-shadow: 0 2px 8px var(--arc-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-arcanum .ib-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--arc-gold);
+	background: #241a44;
+	box-shadow: var(--arc-glow), 0 4px 12px var(--arc-shadow);
+}
+
+.theme-arcanum .ib-quick-slot.active {
+	border-color: var(--arc-gold-bright);
+	box-shadow: 0 0 16px var(--arc-gold);
+}

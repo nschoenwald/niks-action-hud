@@ -1,0 +1,171 @@
+<!-- General & Behavior Tab -->
+<div class="hud-tab-pane {{#if isGeneralTab}}active{{/if}}" data-tab="general">
+
+    <!-- Card 1: Master Control -->
+    <div class="hud-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-power-off"></i></div>
+            <div class="hud-card-titles">
+                <h4>Master Controls</h4>
+                <p>Toggle the HUD on or off globally or adjust GM view overrides.</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Enable Action HUD</label>
+                    <span class="hud-setting-hint">Master toggle for the canvas-docked token action bar.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <label class="hud-switch">
+                        <input type="checkbox" class="hud-switch-input" name="enableActionMenu" {{#if enableActionMenu}}checked{{/if}}>
+                        <span class="hud-switch-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            {{#if isGM}}
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Hide HUD for GM</label>
+                    <span class="hud-setting-hint">Hide the Action HUD on your GM client while keeping it active for players.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <label class="hud-switch">
+                        <input type="checkbox" class="hud-switch-input" name="gmHudHidden" {{#if gmHudHidden}}checked{{/if}}>
+                        <span class="hud-switch-slider"></span>
+                    </label>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- Card 2: Interaction & Automation -->
+    <div class="hud-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-hand-pointer"></i></div>
+            <div class="hud-card-titles">
+                <h4>Interaction & Automation</h4>
+                <p>Configure how menus and submenus react during active gameplay.</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Close Menu After Action Use</label>
+                    <span class="hud-setting-hint">Automatically dismiss open submenu drawers immediately after rolling an attack, spell, or item.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <label class="hud-switch">
+                        <input type="checkbox" class="hud-switch-input" name="closeMenuOnUse" {{#if closeMenuOnUse}}checked{{/if}}>
+                        <span class="hud-switch-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Hide Empty Submenus</label>
+                    <span class="hud-setting-hint">Automatically conceal category buttons (like Spells or Attacks) if the controlled token has no matching items.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <label class="hud-switch">
+                        <input type="checkbox" class="hud-switch-input" name="hideEmptySubmenus" {{#if hideEmptySubmenus}}checked{{/if}}>
+                        <span class="hud-switch-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            {{#if isDnd5eSystem}}
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Group Actions by Activation Type</label>
+                    <span class="hud-setting-hint">Sort and section actions into Action, Bonus Action, Reaction, and Legendary Action headers.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <label class="hud-switch">
+                        <input type="checkbox" class="hud-switch-input" name="dnd5eGroupActionsByActivation" {{#if dnd5eGroupActionsByActivation}}checked{{/if}}>
+                        <span class="hud-switch-slider"></span>
+                    </label>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- Card 3: Display Rules & Positioning -->
+    <div class="hud-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-eye"></i></div>
+            <div class="hud-card-titles">
+                <h4>Display Rules & Triggers</h4>
+                <p>Choose when the HUD appears and how submenu drawers unfold.</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Visibility Trigger</label>
+                    <span class="hud-setting-hint">When should the Action HUD be shown on the canvas?</span>
+                </div>
+                <div class="hud-setting-control">
+                    <select name="actionMenuVisibility" class="hud-select">
+                        <option value="always" {{#if (eq actionMenuVisibility "always")}}selected{{/if}}>Always Visible (Token Selected)</option>
+                        <option value="combat" {{#if (eq actionMenuVisibility "combat")}}selected{{/if}}>In Combat Only</option>
+                        <option value="hover" {{#if (eq actionMenuVisibility "hover")}}selected{{/if}}>On Token Hover</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Submenu Expansion Direction</label>
+                    <span class="hud-setting-hint">Side on which secondary submenus and item trays unfold.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <select name="actionMenuSubmenuSide" class="hud-select">
+                        <option value="auto" {{#if (eq actionMenuSubmenuSide "auto")}}selected{{/if}}>Automatic (Screen Edge Aware)</option>
+                        <option value="left" {{#if (eq actionMenuSubmenuSide "left")}}selected{{/if}}>Force Left</option>
+                        <option value="right" {{#if (eq actionMenuSubmenuSide "right")}}selected{{/if}}>Force Right</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Tooltip Anchor Mode</label>
+                    <span class="hud-setting-hint">Position item details tooltip adjacent to the button or tracking the mouse cursor.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <select name="tooltipPosition" class="hud-select">
+                        <option value="anchor" {{#if (eq tooltipPosition "anchor")}}selected{{/if}}>Anchor to HUD Item</option>
+                        <option value="cursor" {{#if (eq tooltipPosition "cursor")}}selected{{/if}}>Follow Cursor</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4: Excluded Actor Types -->
+    <div class="hud-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-filter"></i></div>
+            <div class="hud-card-titles">
+                <h4>Excluded Actor Types</h4>
+                <p>Prevent the Action HUD from appearing when controlling specific document types (e.g. vehicles, loot, group).</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-chip-group">
+                {{#each allActorTypes}}
+                <label class="hud-chip {{#if this.checked}}active{{/if}}">
+                    <input type="checkbox" name="excludedActorTypes.{{this.value}}" {{#if this.checked}}checked{{/if}}>
+                    <span><i class="fas {{#if this.checked}}fa-check-circle{{else}}fa-circle{{/if}}"></i> {{this.label}}</span>
+                </label>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+</div>

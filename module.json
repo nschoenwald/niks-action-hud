@@ -2,7 +2,7 @@
   "id": "niks-action-hud",
   "title": "Nik's Action HUD",
   "description": "A stylish, canvas-docked Action HUD for Foundry VTT. Quick access to attacks, spells, features, inventory, and utility rolls.",
-  "version": "14.0.5",
+  "version": "14.1.0",
   "url": "https://github.com/nschoenwald/niks-action-hud",
   "manifest": "https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.json",
   "download": "https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.zip",
@@ -40,7 +40,12 @@
     "styles/themes/hud-theme-cyberpunk.css",
     "styles/themes/hud-theme-rift.css",
     "styles/themes/hud-theme-zenith-v2.css",
-    "styles/themes/hud-theme-medieval.css"
+    "styles/themes/hud-theme-medieval.css",
+    "styles/themes/hud-theme-arcanum.css",
+    "styles/themes/hud-theme-obsidian.css",
+    "styles/themes/hud-theme-grimoire.css",
+    "styles/themes/hud-theme-eldritch.css",
+    "styles/themes/hud-theme-valiant.css"
   ],
   "languages": [
     {

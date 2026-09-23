@@ -124,37 +124,7 @@ export class SettingsManager {
 			default: {},
 		});
 
-		game.settings.register(MODULE_ID, "actorPresets", {
-			name: "Actor Presets",
-			scope: "world",
-			config: false,
-			type: Object,
-			default: {},
-		});
 
-		game.settings.register(MODULE_ID, "personalActorPresets", {
-			name: "Personal Actor Presets",
-			scope: "client",
-			config: false,
-			type: Object,
-			default: {},
-		});
-
-		game.settings.register(MODULE_ID, "clientActorOverrides", {
-			name: "Client Actor Overrides",
-			scope: "client",
-			config: false,
-			type: Object,
-			default: {},
-		});
-
-		game.settings.register(MODULE_ID, "trackingConfigRole", {
-			name: "Tracking Config Role",
-			scope: "world",
-			config: false,
-			type: Number,
-			default: 4,
-		});
 
 		// =========================================
 		// 2. USER-FACING SETTINGS & CONFIG MENU

@@ -490,7 +490,7 @@ export const previewUpdate = (ActionMenu, data) => {
 	const root = document.getElementById(ActionMenu.ROOT_ID);
 	if (!root) return;
 
-	const zoom = parseFloat(root.style.zoom) || 1;
+	const zoom = parseFloat(data.scale ?? root.style.zoom) || 1;
 	if (data.anchorX !== undefined && data.offsetX !== undefined) {
 		if (data.anchorX === "right") {
 			root.style.right = `${data.offsetX / zoom}px`;
@@ -511,7 +511,49 @@ export const previewUpdate = (ActionMenu, data) => {
 		}
 		root.dataset.anchorY = data.anchorY;
 	}
-	if (data.scale !== undefined) root.style.zoom = data.scale;
+	if (data.scale !== undefined) {
+		root.style.zoom = data.scale;
+		root.style.setProperty("--am-scale", data.scale);
+	}
+	if (data.theme) {
+		const themeClass = `theme-${data.theme}`;
+		root.className = (root.className.replace(/\btheme-\S+/g, "").trim() + ` ${themeClass}`).trim();
+		const sub = document.getElementById(ActionMenu.SUB_ID);
+		if (sub) sub.className = (sub.className.replace(/\btheme-\S+/g, "").trim() + ` ${themeClass}`).trim();
+		const tip = document.getElementById("ib-rich-tooltip");
+		if (tip) tip.className = (tip.className.replace(/\btheme-\S+/g, "").trim() + ` ${themeClass}`).trim();
+	}
+	if (data.font !== undefined) {
+		const sub = document.getElementById(ActionMenu.SUB_ID);
+		const tip = document.getElementById("ib-rich-tooltip");
+		if (data.font) {
+			root.classList.add("am-custom-font");
+			root.style.setProperty("--am-font-family", `'${data.font}'`);
+			if (sub) {
+				sub.classList.add("am-custom-font");
+				sub.style.setProperty("--am-font-family", `'${data.font}'`);
+			}
+			if (tip) {
+				tip.classList.add("am-custom-font");
+				tip.style.setProperty("--am-font-family", `'${data.font}'`);
+			}
+		} else {
+			root.classList.remove("am-custom-font");
+			root.style.removeProperty("--am-font-family");
+			if (sub) {
+				sub.classList.remove("am-custom-font");
+				sub.style.removeProperty("--am-font-family");
+			}
+			if (tip) {
+				tip.classList.remove("am-custom-font");
+				tip.style.removeProperty("--am-font-family");
+			}
+		}
+	}
+	if (data.emphasizeFirst !== undefined) {
+		const menu = document.getElementById(ActionMenu.ID);
+		if (menu) menu.classList.toggle("no-first-button-emphasis", !data.emphasizeFirst);
+	}
 };
 
 const AM_ELEMENT_MAP = [

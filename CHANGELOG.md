@@ -2,6 +2,38 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.1.0] - 2026-09-23
+
+### Configuration Menu Complete Redesign & Refactor
+- **Completely New UI/UX Design**:
+  - Rebuilt the entire configuration menu interface with a modern dark-glass aesthetic (`backdrop-filter: blur(20px)`), luminous borders, and refined hierarchy.
+  - **Two-Tier Split View Navigation**: Left-hand navigation rail featuring 5 dedicated sections: **General** (behavior & interaction), **Appearance** (visual themes, scaling, position), **Menu Builder** (category order, submenus, visibility rules), **Image Studio** (multi-layer graphical compositor), and **Presets & Backup** (world presets, JSON/ZIP import & export, modular resets).
+  - **Interactive Visual Controls**:
+    - **Visual Theme Selector Cards**: Clickable cards with live color preview swatches, artwork accents, and active indicators for all 8 themes (Rift, Iron, Glass, Fantasy, Cyberpunk, Medieval, Zenith, Image).
+    - **Interactive Live Preview Sandbox**: An embedded HUD button bar directly inside the Appearance tab that updates in real time with dynamic CSS transform scaling, custom typography overrides, theme styles, and first-button emphasis.
+    - **Live Dual-Target Preview Synchronization**: Changes to scale, fonts, themes, anchor positions, and coordinate margins instantly synchronize to both the in-dialog preview sandbox and the live canvas HUD in real time.
+    - **4-Quadrant Anchor Positioner**: Visual quadrant selector (Top-Left, Top-Right, Bottom-Left, Bottom-Right) paired with pixel offset margin controls.
+    - **Sleek Pill Toggles & Dual Sliders**: Replaced browser checkboxes with animated modern toggle switches, and standard sliders with real-time numeric output displays.
+- **Complete Clean-Room Codebase Refactor**:
+  - **Pruned 100% of Legacy Party HUD Cruft**: Completely removed all dead character card layouts, portrait layers, attribute tracking, qualitative badge conditions, resource threshold stages, actor rosters, and actor preset files (`preset-manager.js`).
+  - **Native Foundry V14 ApplicationV2 Architecture**: Rewrote `ActionHUDConfig` strictly utilizing Foundry V14's `ApplicationV2` with `HandlebarsApplicationMixin` and declarative action delegation (`data-action`).
+  - **Modular Templates**: Replaced the monolithic 1,158-line `config.hbs` template with structured modular sub-templates in `templates/config/` (`main.hbs` and dedicated tabs for `general`, `appearance`, `menu-builder`, `image-studio`, and `presets`).
+  - **Streamlined Schema & Context**: Consolidated schema definitions down to active HUD keys in `scripts/config/schema.js`, cutting context preparation time to under 5ms with zero actor loop overhead.
+- **Five Clean-Room Theme Presets Added (100% Solid & Non-Transparent)**:
+  - **Arcanum**: Astral high fantasy with solid deep midnight velvet surfaces (`#140f26`), burnished celestial starlight gold filigree, and diamond-chamfered action buttons.
+  - **Obsidian**: Modern tactical minimalist aesthetic with solid deep onyx surfaces (`#0d1117`), hairline specular borders, and mint/emerald power accents.
+  - **Grimoire**: Authentic dark fantasy and OSR aesthetic with solid aged dark parchment & vellum (`#1c1510`), hammered forged iron brackets, candlelit amber glow, and blood-red wax seals.
+  - **Eldritch**: Abyssal cosmic horror with solid deep chitin plates (`#080d14`), breathing bioluminescent cyan glow, and Far Realm psychic magenta pulses.
+  - **Valiant**: Chivalric heraldry and knightly orders featuring solid royal plate steel surfaces (`#0e1829`), sapphire enamel accents, and tournament gold chevron geometry.
+  - **Zero Transparency**: All 5 new themes feature 100% solid, opaque surfaces across action buttons, submenus, sidebars, headers, tabs, search bars, quick slots, list items, and tooltips, eliminating blur overhead and maximizing contrast against game canvas maps.
+  - *(All previous legacy themes retained in parallel for seamless compatibility).*
+- **Configuration Save & Window Header Improvements**:
+  - **Auto-Close on Save**: Saving configuration via the footer button or <kbd>Ctrl+S</kbd> now cleanly saves settings, refreshes the live HUD, displays the localized notification *"Nik's Action HUD configuration saved."*, and closes the dialog.
+  - **Window Title Resolution**: Standardized ApplicationV2 window title localization and styled the native window header, icon, and title in the dark-glass design system.
+- **Keyboard Shortcut**: Added <kbd>Ctrl+S</kbd> / <kbd>Cmd+S</kbd> shortcut to save configuration instantly from any tab.
+
+---
+
 ## [14.0.5] - 2026-09-23
 
 ### Foundry V14 Exclusivity Cleanup

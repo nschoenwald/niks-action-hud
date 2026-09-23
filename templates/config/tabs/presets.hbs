@@ -1,0 +1,164 @@
+<!-- Presets & Backup Tab -->
+<div class="hud-tab-pane {{#if isPresetsTab}}active{{/if}}" data-tab="presets">
+
+    <!-- Card 1: World Configuration Presets -->
+    <div class="hud-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-bookmark"></i></div>
+            <div class="hud-card-titles">
+                <h4>Full Configuration Presets</h4>
+                <p>Save and restore entire HUD configurations (themes, behaviors, custom menus) within this world.</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-preset-controls-grid">
+                <!-- Save New Preset -->
+                <div class="hud-preset-action-box">
+                    <label>Save Current as Preset</label>
+                    <div class="hud-input-with-button">
+                        <input type="text" name="newConfigPresetName" class="hud-input" placeholder="Preset name (e.g. Gritty Dark)">
+                        <button type="button" class="hud-btn hud-btn-primary" data-action="saveConfigPreset">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Load Existing Preset -->
+                <div class="hud-preset-action-box">
+                    <label>Load or Delete Preset</label>
+                    <div class="hud-input-with-button">
+                        <select name="loadConfigPresetSelect" class="hud-select">
+                            <option value="">-- Select Saved Preset --</option>
+                            {{#each configPresets}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                        <button type="button" class="hud-btn" data-action="loadConfigPreset">
+                            <i class="fas fa-folder-open"></i> Load
+                        </button>
+                        <button type="button" class="hud-btn hud-btn-danger" data-action="deleteConfigPreset">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Action Menu Layout Presets -->
+    <div class="hud-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-th-large"></i></div>
+            <div class="hud-card-titles">
+                <h4>Action Menu Layout Presets</h4>
+                <p>Save and switch category order and submenu configurations independently from themes.</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-preset-controls-grid">
+                <div class="hud-preset-action-box">
+                    <label>Save Menu Layout</label>
+                    <div class="hud-input-with-button">
+                        <input type="text" name="newActionMenuPresetName" class="hud-input" placeholder="Layout name (e.g. Caster Focus)">
+                        <button type="button" class="hud-btn hud-btn-primary" data-action="saveActionMenuPreset">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hud-preset-action-box">
+                    <label>Load or Delete Layout</label>
+                    <div class="hud-input-with-button">
+                        <select name="loadActionMenuPresetSelect" class="hud-select">
+                            <option value="">-- Select Layout Preset --</option>
+                            {{#each actionMenuPresets}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                        <button type="button" class="hud-btn" data-action="loadActionMenuPreset">
+                            <i class="fas fa-folder-open"></i> Load
+                        </button>
+                        <button type="button" class="hud-btn hud-btn-danger" data-action="deleteActionMenuPreset">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: File Import / Export -->
+    <div class="hud-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-file-export"></i></div>
+            <div class="hud-card-titles">
+                <h4>File Import & Export</h4>
+                <p>Backup configurations as downloadable JSON files, or package custom image themes as ZIP archives.</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-export-grid">
+                <div class="hud-export-box">
+                    <div class="hud-export-info">
+                        <h5><i class="fas fa-file-code"></i> JSON Configuration File</h5>
+                        <p>Export all settings, colors, anchors, and menus to JSON, or import on another world or machine.</p>
+                    </div>
+                    <div class="hud-export-actions">
+                        <button type="button" class="hud-btn" data-action="exportConfigPresetFile">
+                            <i class="fas fa-download"></i> Export JSON
+                        </button>
+                        <button type="button" class="hud-btn" data-action="importConfigPresetFile">
+                            <i class="fas fa-upload"></i> Import JSON
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hud-export-box">
+                    <div class="hud-export-info">
+                        <h5><i class="fas fa-file-zipper"></i> Theme Package Archive (.zip)</h5>
+                        <p>Packs the active theme settings and all referenced local graphics into an archive package.</p>
+                    </div>
+                    <div class="hud-export-actions">
+                        <button type="button" class="hud-btn" data-action="exportTheme">
+                            <i class="fas fa-download"></i> Export Theme ZIP
+                        </button>
+                        <button type="button" class="hud-btn" data-action="importTheme">
+                            <i class="fas fa-upload"></i> Import Theme ZIP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4: Factory Reset -->
+    <div class="hud-card hud-danger-card">
+        <div class="hud-card-header">
+            <div class="hud-card-icon"><i class="fas fa-rotate-left"></i></div>
+            <div class="hud-card-titles">
+                <h4>Reset to Defaults</h4>
+                <p>Restore default module settings section-by-section, or execute a clean factory reset.</p>
+            </div>
+        </div>
+        <div class="hud-card-body">
+            <div class="hud-reset-buttons-grid">
+                <button type="button" class="hud-btn hud-btn-outline-danger" data-action="reset" data-scope="appearance">
+                    <i class="fas fa-palette"></i> Reset Appearance
+                </button>
+                <button type="button" class="hud-btn hud-btn-outline-danger" data-action="reset" data-scope="behavior">
+                    <i class="fas fa-sliders"></i> Reset Behavior
+                </button>
+                <button type="button" class="hud-btn hud-btn-outline-danger" data-action="reset" data-scope="menu">
+                    <i class="fas fa-sitemap"></i> Reset Menu Layout
+                </button>
+                <button type="button" class="hud-btn hud-btn-outline-danger" data-action="reset" data-scope="layers">
+                    <i class="fas fa-layer-group"></i> Reset Image Layers
+                </button>
+                <button type="button" class="hud-btn hud-btn-danger" data-action="reset" data-scope="all">
+                    <i class="fas fa-triangle-exclamation"></i> Factory Reset All
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

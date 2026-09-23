@@ -21,11 +21,12 @@ export const ACTION_MENU_PRESET_KEYS = [
 	"amSubMenuLayers",
 	...AM_ELEMENTS.flatMap((element) => [
 		`${element.id}Layers`,
+		`${element.id}Scale`,
+		`${element.id}X`,
+		`${element.id}Y`,
 		`${element.id}Color`,
-		`${element.id}TextX`,
-		`${element.id}TextY`,
-		`${element.id}TextScale`,
-		`${element.id}TextRotation`,
+		`${element.id}FontFamily`,
+		`${element.id}TextColor`,
 	]),
 ];
 

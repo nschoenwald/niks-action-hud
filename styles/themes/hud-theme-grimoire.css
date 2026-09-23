@@ -1,0 +1,316 @@
+/* =========================================
+   Nik's Action HUD - THEME: GRIMOIRE
+   Style: Dark Fantasy, Weathered Ancient Parchment,
+          Hammered Forged Iron, Blood-Red Wax Seals, Candlelight Amber.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=MedievalSharp&display=swap");
+
+.theme-grimoire {
+	/* Solid Opaque Palette */
+	--grim-void: #0e0a07;
+	--grim-surface: #1c1510;
+	--grim-surface-solid: #1c1510;
+	--grim-surface-elevated: #261d16;
+	--grim-surface-sidebar: #130e0a;
+	--grim-surface-header: #17110c;
+	--grim-surface-search: #120d09;
+	--grim-surface-hover: #2e231b;
+	--grim-iron: #4d3522;
+	--grim-iron-dark: #2d1e13;
+	--grim-iron-light: #6b4d32;
+	--grim-amber: #f59e0b;
+	--grim-amber-dim: #784807;
+	--grim-crimson: #dc2626;
+	--grim-crimson-dim: #7f1d1d;
+	--grim-parchment: #fef3c7;
+	--grim-parchment-dim: #d4b996;
+	--grim-shadow: #060403;
+	--grim-glow: 0 0 20px rgba(245, 158, 11, 0.35);
+
+	/* Typography */
+	--grim-font-header: "MedievalSharp", cursive, serif;
+	--grim-font-body: "Crimson Text", Georgia, serif;
+	--hud-font-header: var(--grim-font-header);
+	--hud-font-body: var(--grim-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #1a130e;
+	--tooltip-border: #f59e0b;
+	--tooltip-text: #fef3c7;
+	--tooltip-header: #f59e0b;
+	--g-accent: var(--grim-amber);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Forged Iron & Vellum
+   ========================================= */
+.theme-grimoire .ib-action-btn {
+	width: 236px;
+	height: 48px;
+	margin-bottom: 8px;
+	padding: 0 22px;
+	background: linear-gradient(180deg, #2a1f16, #18110b);
+	border: 1px solid var(--grim-iron);
+	border-radius: 4px;
+	color: var(--grim-parchment);
+	font-family: var(--grim-font-header);
+	font-size: 1.18em;
+	letter-spacing: 0.04em;
+	box-shadow:
+		inset 0 1px 0 #3d2c1e,
+		inset 0 0 10px #0a0705,
+		0 4px 12px var(--grim-shadow);
+	transition: all 0.18s ease;
+	position: relative;
+}
+
+.theme-grimoire .ib-action-btn .ib-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-grimoire .ib-action-btn .glyph,
+.theme-grimoire .ib-action-btn i {
+	color: var(--grim-amber);
+	font-size: 0.85em;
+	transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.theme-grimoire .ib-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--grim-amber);
+	background: linear-gradient(180deg, #38291d, #20170f);
+	box-shadow:
+		inset 0 1px 0 #543e2c,
+		inset 0 0 14px rgba(245, 158, 11, 0.15),
+		0 6px 16px var(--grim-shadow),
+		var(--grim-glow);
+	transform: translateX(3px);
+}
+
+.theme-grimoire .ib-action-btn:hover .glyph,
+.theme-grimoire .ib-action-btn:hover i {
+	color: #fbbf24;
+	transform: scale(1.15);
+}
+
+.theme-grimoire .ib-action-btn.btn-attack,
+.theme-grimoire .ib-action-btn.ib-action-btn-first {
+	height: 52px;
+	font-size: 1.25em;
+	background: linear-gradient(180deg, #441812, #260e0a);
+	border-color: var(--grim-crimson);
+	box-shadow:
+		inset 0 1px 0 #6e271d,
+		0 6px 18px var(--grim-shadow),
+		0 0 16px rgba(220, 38, 38, 0.35);
+}
+
+.theme-grimoire .ib-action-btn.btn-attack .glyph,
+.theme-grimoire .ib-action-btn.btn-attack i {
+	color: #f87171;
+}
+
+/* =========================================
+   2. SUBMENU — Ancient Tome Codex
+   ========================================= */
+.theme-grimoire .ib-sub-menu {
+	width: 412px;
+	background: #1c1510;
+	border: 2px solid var(--grim-iron);
+	border-radius: 6px;
+	box-shadow:
+		inset 0 0 24px #0d0906,
+		0 16px 36px var(--grim-shadow);
+	overflow: hidden;
+}
+
+.theme-grimoire .ib-sidebar-panel {
+	width: 76px;
+	padding: 12px 0 12px 6px;
+	gap: 6px;
+	background: #130e0a;
+	border-right: 1px solid var(--grim-iron);
+}
+
+.theme-grimoire .ib-side-tab {
+	padding: 9px 4px;
+	background: #130e0a;
+	color: var(--grim-parchment-dim);
+	font-family: var(--grim-font-header);
+	font-size: 0.78em;
+	letter-spacing: 0.04em;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-grimoire .ib-side-tab .glyph,
+.theme-grimoire .ib-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.3em;
+	color: #927556;
+	transition: color 0.16s ease;
+}
+
+.theme-grimoire .ib-side-tab:hover {
+	color: #fff;
+	background: #231912;
+}
+
+.theme-grimoire .ib-side-tab.active {
+	background: #2c1f14;
+	color: #fff;
+	border-left-color: var(--grim-amber);
+}
+
+.theme-grimoire .ib-side-tab.active .glyph,
+.theme-grimoire .ib-side-tab.active i {
+	color: var(--grim-amber);
+}
+
+.theme-grimoire .ib-main-panel {
+	max-height: 480px;
+	background: #1c1510;
+}
+
+.theme-grimoire .ib-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: #17110c;
+	border-bottom: 1px solid var(--grim-iron);
+	font-family: var(--grim-font-header);
+	font-size: 1.25em;
+	color: var(--grim-parchment);
+}
+
+.theme-grimoire .ib-menu-header .ib-font-hero {
+	font-family: var(--grim-font-header);
+	color: var(--grim-parchment);
+}
+
+.theme-grimoire .ib-dc-badge {
+	font-family: var(--grim-font-header);
+	font-size: 0.65em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: #5c1414;
+	color: #fef2f2;
+	border: 1px solid var(--grim-crimson);
+}
+
+/* Tabs */
+.theme-grimoire .ib-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: #120d09;
+	border-bottom: 1px solid var(--grim-iron);
+}
+
+.theme-grimoire .ib-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #1e1611;
+	border: 1px solid var(--grim-iron);
+	border-radius: 4px;
+	color: var(--grim-parchment-dim);
+	font-family: var(--grim-font-header);
+	font-size: 0.8em;
+	transition: all 0.16s ease;
+}
+
+.theme-grimoire .ib-tab-btn:hover {
+	color: #fff;
+	background: #2a1f18;
+	border-color: #6b4d32;
+}
+
+.theme-grimoire .ib-tab-btn.active {
+	background: #332111;
+	color: #fff;
+	border-color: var(--grim-amber);
+	box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
+}
+
+/* List Items */
+.theme-grimoire .ib-list-item {
+	padding: 8px 12px;
+	background: #1c1510;
+	border-left: 2px solid transparent;
+	transition: all 0.15s ease;
+}
+
+.theme-grimoire .ib-list-item:hover {
+	background: #281d15;
+	border-left-color: var(--grim-amber);
+	transform: translateX(3px);
+}
+
+.theme-grimoire .ib-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--grim-iron);
+}
+
+.theme-grimoire .ib-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #2b1d11;
+	color: var(--grim-amber);
+	border: 1px solid #54391e;
+	font-family: var(--grim-font-header);
+	font-size: 0.8em;
+}
+
+.theme-grimoire .ib-search-container {
+	background: #120d09;
+	border-bottom: 1px solid var(--grim-iron);
+}
+
+.theme-grimoire .ib-search-input {
+	color: var(--grim-parchment);
+	background: #1a130e;
+	border: 1px solid var(--grim-iron);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--grim-font-body);
+	font-size: 1.1em;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-grimoire .ib-quick-slot-container {
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.theme-grimoire .ib-quick-slot {
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+	background: #1e1610;
+	border: 1px solid var(--grim-iron);
+	box-shadow: inset 0 0 8px #0d0906, 0 2px 8px var(--grim-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-grimoire .ib-quick-slot:hover {
+	background: #2b1f16;
+	transform: translateY(-2px);
+	border-color: var(--grim-amber);
+	box-shadow: var(--grim-glow), 0 4px 12px var(--grim-shadow);
+}
+
+.theme-grimoire .ib-quick-slot.active {
+	border-color: var(--grim-amber);
+	box-shadow: 0 0 14px var(--grim-amber);
+}

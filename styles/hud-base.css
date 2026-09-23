@@ -3484,7 +3484,9 @@
 #ib-action-root.am-custom-font .ib-identity-name,
 #ib-action-root.am-custom-font .ib-identity-sub,
 #ib-action-root.am-custom-font .ib-font-hero,
+#ib-action-root.am-custom-font .ib-action-btn,
 #ib-action-root.am-custom-font .ib-btn-content,
+#ib-action-root.am-custom-font .ib-btn-content span,
 #ib-action-root.am-custom-font .ib-tab-btn,
 #ib-action-root.am-custom-font .ib-tab-btn span,
 #ib-action-root.am-custom-font .ib-side-tab,
@@ -3495,11 +3497,14 @@
 #ib-action-root.am-custom-font .ib-item-content,
 #ib-action-root.am-custom-font .ib-list-header,
 #ib-action-root.am-custom-font .ib-collapse-btn,
-#ib-action-root.am-custom-font .ib-quick-slot-container {
+#ib-action-root.am-custom-font .ib-quick-slot-container,
+#ib-action-sub-menu.am-custom-font,
+#ib-action-sub-menu.am-custom-font * {
 	font-family: var(--am-font-family), sans-serif !important;
 }
 
-#ib-rich-tooltip.am-custom-font .ib-tooltip-title {
+#ib-rich-tooltip.am-custom-font,
+#ib-rich-tooltip.am-custom-font * {
 	font-family: var(--am-font-family), sans-serif !important;
 }
 

@@ -21,10 +21,14 @@ Nik's Action HUD is the standalone consolidation of `stylish-action-hud` and the
   - Drag the bottom-right corner resize handle (permanently visible on HUD) to adjust scale live.
   - Hold `Shift` (configurable to Ctrl/Alt/None) and scroll the mouse wheel over the HUD to adjust scale on the fly.
   - Visual scale toast indicator shows current zoom percentage.
-- **Clean Configuration Panel**: Streamlined single-panel settings dialog focused on key display and sizing options.
-- **Intuitive Module Settings**: Master "Disable HUD" toggle right at the top of Foundry's settings, followed by the config panel shortcut, sizing controls, and display options.
-- **Custom Menu Builder**: Full drag-and-drop menu customization, custom categories, macros, and action sorting.
-- **Themes**: Rift (default theme), Iron, Glass, Fantasy, Medieval, Cyberpunk, Zenith, and Image themes.
+- **Redesigned Configuration Suite (v14.1.0)**:
+  - **Modern Dark-Glass UI/UX**: Completely overhauled configuration dialog featuring split sidebar navigation, luminous accents, and frosted glass surfaces.
+  - **Visual Theme Selector**: Clickable cards with color swatches and active glow indicators for 13 themes, including 5 brand-new 100% solid, non-transparent clean-room designs (**Arcanum**, **Obsidian**, **Grimoire**, **Eldritch**, **Valiant**) alongside existing classics (**Rift**, **Iron**, **Glass**, **Fantasy**, **Cyberpunk**, **Medieval**, **Zenith**, and **Image Studio**).
+  - **Interactive Live Preview Sandbox**: Embedded HUD preview strip that immediately reflects your theme, typography, and button emphasis choices in real time.
+  - **Interactive 4-Quadrant Anchor Positioner**: Visual quadrant selector for instant placement to any screen corner with precision pixel offset margins.
+  - **Drag-and-Drop Menu Builder**: Easily reorder categories, customize labels and icons, configure visibility by actor type, and build custom submenus.
+  - **Image Theme Studio**: Dedicated multi-layer compositor to customize background graphics, button frames, and panel textures.
+  - **Presets & Backups**: World presets, JSON file export/import, theme ZIP packaging, and modular section resets.
 
 ### DnD5e 6.0+ Integration
 - **Default Action Menu Categories**: Standardized to **Attacks / Spells / Features / Abilities / Items**.

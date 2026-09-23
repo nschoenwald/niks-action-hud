@@ -125,7 +125,18 @@
         "Medieval": "Medieval (Kings Decree)",
         "Zenith": "Zenith",
         "Rift": "Rift",
+        "Arcanum": "Arcanum",
+        "Obsidian": "Obsidian",
+        "Grimoire": "Grimoire",
+        "Eldritch": "Eldritch",
+        "Valiant": "Valiant",
         "Image": "Custom (Full Custom)"
+      },
+      "Config": {
+        "Saved": "Nik's Action HUD configuration saved.",
+        "FontDefault": "Default Font",
+        "ResetConfirmTitle": "Reset Configuration",
+        "ResetConfirmMessage": "Are you sure you want to reset {scope} settings to defaults?"
       },
       "NewEffect": "New Effect",
       "NewCategory": "New Category",
@@ -789,8 +800,42 @@
       "ConfigMenuName": "Action HUD Configuration",
       "ConfigMenuLabel": "Configure Action HUD",
       "ConfigMenuHint": "Open the visual configuration panel for Action HUD themes, layout, rules, and categories.",
+      "ActionConfig": {
+        "Title": "Nik's Action HUD Configuration"
+      },
       "HideEmptySubmenusName": "Hide Empty Submenus",
       "HideEmptySubmenusHint": "Hides action buttons and submenus that have no entries for the active actor (e.g. hiding the Spells button for non-spellcasters)."
+    },
+    "Themes": {
+      "Rift": "Rift",
+      "Iron": "Iron",
+      "Glass": "Glass",
+      "Fantasy": "Fantasy",
+      "Cyberpunk": "Cyberpunk",
+      "Medieval": "Medieval",
+      "Zenith": "Zenith",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "Image": "Custom Image Studio"
+    },
+    "Config": {
+      "Title": "Nik's Action HUD Configuration",
+      "Saved": "Nik's Action HUD configuration saved.",
+      "FontDefault": "Default Font",
+      "ResetConfirmTitle": "Reset Configuration",
+      "ResetConfirmMessage": "Are you sure you want to reset {scope} settings to defaults?",
+      "Elements": {
+        "ButtonFrame": "Button Frame",
+        "MenuHeader": "Sub-Menu Header",
+        "SidebarPanel": "Sidebar Panel",
+        "TabButton": "Tab Button",
+        "QuickSlot": "Quick Slot",
+        "SideTab": "Side Tab",
+        "ListItem": "Item Box"
+      }
     },
     "UI": {
       "AllSpells": "All",

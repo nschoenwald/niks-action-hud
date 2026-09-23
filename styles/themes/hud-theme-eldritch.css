@@ -1,0 +1,322 @@
+/* =========================================
+   Nik's Action HUD - THEME: ELDRITCH
+   Style: Abyssal Cosmic Horror, Black Chitin Plates,
+          Bioluminescent Cyan Glow, Far Realm Psychic Magenta.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Syne:wght@700;800&display=swap");
+
+.theme-eldritch {
+	/* Solid Opaque Palette */
+	--eld-void: #03060a;
+	--eld-surface: #080d14;
+	--eld-surface-solid: #080d14;
+	--eld-surface-elevated: #0f1722;
+	--eld-surface-sidebar: #05080d;
+	--eld-surface-header: #070c13;
+	--eld-surface-search: #04070b;
+	--eld-surface-hover: #142030;
+	--eld-chitin: #0e1722;
+	--eld-cyan: #06b6d4;
+	--eld-cyan-bright: #22d3ee;
+	--eld-cyan-dim: #0e3b4d;
+	--eld-magenta: #d946ef;
+	--eld-magenta-dim: #4a0e5c;
+	--eld-toxic: #10b981;
+	--eld-text-primary: #e0f2fe;
+	--eld-text-muted: #7dd3fc;
+	--eld-shadow: #020305;
+	--eld-glow: 0 0 22px rgba(6, 182, 212, 0.4);
+
+	/* Typography */
+	--eld-font-header: "Syne", sans-serif;
+	--eld-font-body: "Rajdhani", sans-serif;
+	--hud-font-header: var(--eld-font-header);
+	--hud-font-body: var(--eld-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #060a10;
+	--tooltip-border: #06b6d4;
+	--tooltip-text: #e0f2fe;
+	--tooltip-header: #22d3ee;
+	--g-accent: var(--eld-cyan);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Asymmetric Solid Chitin
+   ========================================= */
+.theme-eldritch .ib-action-btn {
+	width: 236px;
+	height: 48px;
+	margin-bottom: 8px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #0e1824, #070c13);
+	border: 1px solid var(--eld-cyan-dim);
+	clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+	color: var(--eld-text-primary);
+	font-family: var(--eld-font-body);
+	font-weight: 700;
+	font-size: 1.25em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	box-shadow:
+		inset 0 1px 0 #1b2f44,
+		0 4px 14px var(--eld-shadow);
+	transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-eldritch .ib-action-btn .ib-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-eldritch .ib-action-btn .glyph,
+.theme-eldritch .ib-action-btn i {
+	color: var(--eld-cyan);
+	font-size: 0.85em;
+	transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.theme-eldritch .ib-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--eld-cyan);
+	background: linear-gradient(135deg, #152538, #0b131e);
+	box-shadow:
+		inset 0 1px 0 #284766,
+		0 6px 18px var(--eld-shadow),
+		var(--eld-glow);
+	transform: translateX(4px);
+}
+
+.theme-eldritch .ib-action-btn:hover .glyph,
+.theme-eldritch .ib-action-btn:hover i {
+	color: var(--eld-cyan-bright);
+	transform: scale(1.15);
+}
+
+.theme-eldritch .ib-action-btn.btn-attack,
+.theme-eldritch .ib-action-btn.ib-action-btn-first {
+	height: 52px;
+	font-size: 1.35em;
+	background: linear-gradient(135deg, #320f44, #12071a);
+	border-color: var(--eld-magenta);
+	box-shadow:
+		inset 0 1px 0 #571775,
+		0 6px 20px var(--eld-shadow),
+		0 0 18px rgba(217, 70, 239, 0.35);
+}
+
+.theme-eldritch .ib-action-btn.btn-attack .glyph,
+.theme-eldritch .ib-action-btn.btn-attack i {
+	color: #f0abfc;
+}
+
+/* =========================================
+   2. SUBMENU — Abyssal Chitin Panel
+   ========================================= */
+.theme-eldritch .ib-sub-menu {
+	width: 412px;
+	background: #080d14;
+	border: 1px solid var(--eld-cyan-dim);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 24px #04070c,
+		0 18px 40px var(--eld-shadow);
+	overflow: hidden;
+}
+
+.theme-eldritch .ib-sidebar-panel {
+	width: 76px;
+	padding: 12px 0 12px 6px;
+	gap: 6px;
+	background: #05080d;
+	border-right: 1px solid #0e2736;
+}
+
+.theme-eldritch .ib-side-tab {
+	padding: 9px 4px;
+	background: #05080d;
+	color: var(--eld-text-muted);
+	font-family: var(--eld-font-body);
+	font-weight: 600;
+	font-size: 0.85em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-eldritch .ib-side-tab .glyph,
+.theme-eldritch .ib-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.3em;
+	color: var(--eld-cyan-dim);
+	transition: color 0.16s ease;
+}
+
+.theme-eldritch .ib-side-tab:hover {
+	color: #fff;
+	background: #0d1522;
+}
+
+.theme-eldritch .ib-side-tab.active {
+	background: #0b2432;
+	color: #fff;
+	border-left-color: var(--eld-cyan);
+}
+
+.theme-eldritch .ib-side-tab.active .glyph,
+.theme-eldritch .ib-side-tab.active i {
+	color: var(--eld-cyan-bright);
+}
+
+.theme-eldritch .ib-main-panel {
+	max-height: 480px;
+	background: #080d14;
+}
+
+.theme-eldritch .ib-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: #070c13;
+	border-bottom: 1px solid var(--eld-cyan-dim);
+	font-family: var(--eld-font-header);
+	font-size: 1.15em;
+	letter-spacing: 0.04em;
+	color: var(--eld-text-primary);
+}
+
+.theme-eldritch .ib-menu-header .ib-font-hero {
+	font-family: var(--eld-font-header);
+	color: var(--eld-text-primary);
+}
+
+.theme-eldritch .ib-dc-badge {
+	font-family: var(--eld-font-body);
+	font-weight: 700;
+	font-size: 0.75em;
+	padding: 2px 8px;
+	border-radius: 4px;
+	background: #4a0e5c;
+	color: #f0abfc;
+	border: 1px solid var(--eld-magenta);
+}
+
+/* Tabs */
+.theme-eldritch .ib-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: #04070b;
+	border-bottom: 1px solid #0e2736;
+}
+
+.theme-eldritch .ib-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #0b131e;
+	border: 1px solid #0e2736;
+	color: var(--eld-text-muted);
+	font-family: var(--eld-font-body);
+	font-weight: 600;
+	font-size: 0.9em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-eldritch .ib-tab-btn:hover {
+	color: #fff;
+	background: #101c2c;
+	border-color: var(--eld-cyan-dim);
+}
+
+.theme-eldritch .ib-tab-btn.active {
+	background: #0a2736;
+	color: #fff;
+	border-color: var(--eld-cyan);
+	box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+}
+
+/* List Items */
+.theme-eldritch .ib-list-item {
+	padding: 8px 12px;
+	background: #080d14;
+	border-left: 2px solid transparent;
+	transition: all 0.15s ease;
+}
+
+.theme-eldritch .ib-list-item:hover {
+	background: #0f1825;
+	border-left-color: var(--eld-cyan);
+	transform: translateX(3px);
+}
+
+.theme-eldritch .ib-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--eld-cyan-dim);
+}
+
+.theme-eldritch .ib-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #0b2432;
+	color: var(--eld-cyan-bright);
+	border: 1px solid var(--eld-cyan-dim);
+	font-family: var(--eld-font-body);
+	font-weight: 700;
+	font-size: 0.85em;
+}
+
+.theme-eldritch .ib-search-container {
+	background: #04070b;
+	border-bottom: 1px solid #0e2736;
+}
+
+.theme-eldritch .ib-search-input {
+	color: var(--eld-text-primary);
+	background: #080d14;
+	border: 1px solid #0e2736;
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--eld-font-body);
+	font-size: 1.1em;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-eldritch .ib-quick-slot-container {
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.theme-eldritch .ib-quick-slot {
+	width: 40px;
+	height: 40px;
+	background: #0b131e;
+	border: 1px solid var(--eld-cyan-dim);
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	box-shadow: 0 2px 8px var(--eld-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-eldritch .ib-quick-slot:hover {
+	background: #111e30;
+	transform: translateY(-2px);
+	border-color: var(--eld-cyan-bright);
+	box-shadow: var(--eld-glow), 0 4px 12px var(--eld-shadow);
+}
+
+.theme-eldritch .ib-quick-slot.active {
+	border-color: var(--eld-magenta);
+	box-shadow: 0 0 16px var(--eld-magenta);
+}

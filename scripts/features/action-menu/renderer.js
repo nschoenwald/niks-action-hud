@@ -987,7 +987,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		}
 
 		const html = `
-                <div class="ib-sub-menu theme-${data.theme || "red"} layout-sidebar">
+                <div class="ib-sub-menu theme-${data.theme || subConfig?.theme || "rift"} layout-sidebar">
                     ${subMenuLayersHtml}
                     <div class="ib-sidebar-panel custom-scrollbar" ${sidebarStyle ? `style="${sidebarStyle}"` : ""}>
                         ${sidebarBgHtml}
@@ -1071,7 +1071,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		}
 
 		const html = `
-                <div class="ib-sub-menu theme-${data.theme || "red"}">
+                <div class="ib-sub-menu theme-${data.theme || subConfig?.theme || "rift"}">
                     ${subMenuLayersHtml}
                     <div class="ib-menu-header" ${menuHeaderStyle ? `style="${menuHeaderStyle}"` : ""}>
                         ${menuHeaderBgHtml}

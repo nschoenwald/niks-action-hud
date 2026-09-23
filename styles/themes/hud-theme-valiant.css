@@ -1,0 +1,325 @@
+/* =========================================
+   Nik's Action HUD - THEME: VALIANT
+   Style: Chivalric Heraldry, Polished Plate Steel,
+          Royal Sapphire Enamel, Mirrored Platinum & Tournament Gold.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,500;0,600;0,700;1,600&family=Marcellus&family=Oswald:wght@500;600;700&display=swap");
+
+.theme-valiant {
+	/* Solid Opaque Palette */
+	--val-void: #070c16;
+	--val-surface: #0e1829;
+	--val-surface-solid: #0e1829;
+	--val-surface-elevated: #16243d;
+	--val-surface-sidebar: #09101c;
+	--val-surface-header: #0c1524;
+	--val-surface-search: #080e18;
+	--val-surface-hover: #1c2d4c;
+	--val-steel: #334155;
+	--val-steel-light: #64748b;
+	--val-platinum: #cbd5e1;
+	--val-platinum-dim: #334862;
+	--val-gold: #eab308;
+	--val-gold-bright: #facc15;
+	--val-gold-dim: #715509;
+	--val-blue: #3b82f6;
+	--val-blue-deep: #1d4ed8;
+	--val-text-primary: #f8fafc;
+	--val-text-muted: #cbd5e1;
+	--val-shadow: #03060c;
+	--val-glow: 0 4px 22px rgba(59, 130, 246, 0.35);
+
+	/* Typography */
+	--val-font-header: "Marcellus", serif;
+	--val-font-body: "Barlow Semi Condensed", sans-serif;
+	--val-font-num: "Oswald", sans-serif;
+	--hud-font-header: var(--val-font-header);
+	--hud-font-body: var(--val-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #0a1220;
+	--tooltip-border: #cbd5e1;
+	--tooltip-text: #f8fafc;
+	--tooltip-header: #facc15;
+	--g-accent: var(--val-blue);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Heraldic Shield Chevron
+   ========================================= */
+.theme-valiant .ib-action-btn {
+	width: 236px;
+	height: 48px;
+	margin-bottom: 8px;
+	padding: 0 24px 0 20px;
+	background: linear-gradient(135deg, #182844, #0d1626);
+	border: 1px solid var(--val-platinum-dim);
+	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+	color: var(--val-text-primary);
+	font-family: var(--val-font-body);
+	font-weight: 700;
+	font-size: 1.25em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	box-shadow:
+		inset 0 1px 0 #2e456d,
+		0 4px 14px var(--val-shadow);
+	transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-valiant .ib-action-btn .ib-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-valiant .ib-action-btn .glyph,
+.theme-valiant .ib-action-btn i {
+	color: var(--val-gold);
+	font-size: 0.85em;
+	transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.theme-valiant .ib-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--val-gold);
+	background: linear-gradient(135deg, #22375c, #121f35);
+	box-shadow:
+		inset 0 1px 0 #3e5e94,
+		0 6px 18px var(--val-shadow),
+		0 0 18px rgba(59, 130, 246, 0.35);
+	transform: translateX(4px);
+}
+
+.theme-valiant .ib-action-btn:hover .glyph,
+.theme-valiant .ib-action-btn:hover i {
+	color: var(--val-gold-bright);
+	transform: scale(1.15);
+}
+
+.theme-valiant .ib-action-btn.btn-attack,
+.theme-valiant .ib-action-btn.ib-action-btn-first {
+	height: 52px;
+	font-size: 1.35em;
+	background: linear-gradient(135deg, #1d4ed8, #0e245a);
+	border-color: var(--val-platinum);
+	box-shadow:
+		inset 0 1px 0 #60a5fa,
+		0 6px 20px var(--val-shadow),
+		0 0 18px rgba(59, 130, 246, 0.4);
+}
+
+.theme-valiant .ib-action-btn.btn-attack .glyph,
+.theme-valiant .ib-action-btn.btn-attack i {
+	color: var(--val-gold-bright);
+}
+
+/* =========================================
+   2. SUBMENU — Knightly Fortress Panel
+   ========================================= */
+.theme-valiant .ib-sub-menu {
+	width: 412px;
+	background: #0e1829;
+	border: 1px solid var(--val-platinum-dim);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+	box-shadow:
+		inset 0 1px 0 #1e304f,
+		0 18px 40px var(--val-shadow);
+	overflow: hidden;
+}
+
+.theme-valiant .ib-sidebar-panel {
+	width: 76px;
+	padding: 12px 0 12px 6px;
+	gap: 6px;
+	background: #09101c;
+	border-right: 1px solid var(--val-platinum-dim);
+}
+
+.theme-valiant .ib-side-tab {
+	padding: 9px 4px;
+	background: #09101c;
+	color: var(--val-text-muted);
+	font-family: var(--val-font-body);
+	font-weight: 700;
+	font-size: 0.85em;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-valiant .ib-side-tab .glyph,
+.theme-valiant .ib-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.3em;
+	color: var(--val-steel-light);
+	transition: color 0.16s ease;
+}
+
+.theme-valiant .ib-side-tab:hover {
+	color: #fff;
+	background: #142035;
+}
+
+.theme-valiant .ib-side-tab.active {
+	background: #152c4e;
+	color: #fff;
+	border-left-color: var(--val-blue);
+}
+
+.theme-valiant .ib-side-tab.active .glyph,
+.theme-valiant .ib-side-tab.active i {
+	color: var(--val-gold-bright);
+}
+
+.theme-valiant .ib-main-panel {
+	max-height: 480px;
+	background: #0e1829;
+}
+
+.theme-valiant .ib-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: #0c1524;
+	border-bottom: 1px solid var(--val-platinum-dim);
+	font-family: var(--val-font-header);
+	font-size: 1.22em;
+	letter-spacing: 0.04em;
+	color: #ffffff;
+}
+
+.theme-valiant .ib-menu-header .ib-font-hero {
+	font-family: var(--val-font-header);
+	color: #ffffff;
+}
+
+.theme-valiant .ib-dc-badge {
+	font-family: var(--val-font-num);
+	font-weight: 700;
+	font-size: 0.75em;
+	padding: 2px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, var(--val-blue-deep), var(--val-blue));
+	color: #ffffff;
+	border: 1px solid #60a5fa;
+}
+
+/* Tabs */
+.theme-valiant .ib-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: #080e18;
+	border-bottom: 1px solid var(--val-platinum-dim);
+}
+
+.theme-valiant .ib-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #121f33;
+	border: 1px solid var(--val-platinum-dim);
+	color: var(--val-text-muted);
+	font-family: var(--val-font-body);
+	font-weight: 600;
+	font-size: 0.88em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-valiant .ib-tab-btn:hover {
+	color: #fff;
+	background: #1a2c48;
+	border-color: var(--val-platinum);
+}
+
+.theme-valiant .ib-tab-btn.active {
+	background: #1d3b66;
+	color: #fff;
+	border-color: var(--val-blue);
+	box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+}
+
+/* List Items */
+.theme-valiant .ib-list-item {
+	padding: 8px 12px;
+	background: #0e1829;
+	border-left: 2px solid transparent;
+	transition: all 0.15s ease;
+}
+
+.theme-valiant .ib-list-item:hover {
+	background: #17243c;
+	border-left-color: var(--val-blue);
+	transform: translateX(3px);
+}
+
+.theme-valiant .ib-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--val-platinum-dim);
+}
+
+.theme-valiant .ib-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #152c4e;
+	color: var(--val-gold-bright);
+	border: 1px solid var(--val-blue);
+	font-family: var(--val-font-num);
+	font-weight: 700;
+	font-size: 0.82em;
+}
+
+.theme-valiant .ib-search-container {
+	background: #080e18;
+	border-bottom: 1px solid var(--val-platinum-dim);
+}
+
+.theme-valiant .ib-search-input {
+	color: #ffffff;
+	background: #0e1829;
+	border: 1px solid var(--val-platinum-dim);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--val-font-body);
+	font-size: 1.1em;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-valiant .ib-quick-slot-container {
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.theme-valiant .ib-quick-slot {
+	width: 40px;
+	height: 40px;
+	background: #121e33;
+	border: 1px solid var(--val-platinum-dim);
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	box-shadow: 0 2px 8px var(--val-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-valiant .ib-quick-slot:hover {
+	background: #1a2a46;
+	transform: translateY(-2px);
+	border-color: var(--val-gold);
+	box-shadow: var(--val-glow), 0 4px 12px var(--val-shadow);
+}
+
+.theme-valiant .ib-quick-slot.active {
+	border-color: var(--val-gold-bright);
+	box-shadow: 0 0 16px var(--val-gold);
+}

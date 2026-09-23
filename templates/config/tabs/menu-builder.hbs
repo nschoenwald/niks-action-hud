@@ -1,0 +1,149 @@
+<!-- Menu Builder Tab -->
+<div class="hud-tab-pane {{#if isMenuTab}}active{{/if}}" data-tab="menu">
+
+    <div class="hud-tab-intro">
+        <div class="hud-intro-content">
+            <h4><i class="fas fa-sitemap"></i> Action HUD Menu Builder</h4>
+            <p>Customize the order, appearance, visibility, and contents of category buttons on your Action HUD.</p>
+        </div>
+        <div class="hud-intro-actions">
+            <button type="button" class="hud-btn hud-btn-primary" data-action="addCategory">
+                <i class="fas fa-plus"></i> Add Custom Category
+            </button>
+        </div>
+    </div>
+
+    <!-- Categories List -->
+    <div class="hud-categories-list">
+        {{#each customMenu}}
+        <div class="hud-category-card {{#if this._collapsed}}collapsed{{/if}}" 
+             draggable="true" 
+             data-cat-index="{{@index}}">
+
+            <div class="hud-cat-header" data-action="toggleCollapseCategory">
+                <div class="hud-cat-drag-handle" title="Drag to reorder"><i class="fas fa-grip-vertical"></i></div>
+                <div class="hud-cat-icon-badge">
+                    {{#if this.img}}
+                    <img src="{{this.img}}" alt="">
+                    {{else}}
+                    <i class="{{#if this.icon}}{{this.icon}}{{else}}fas fa-folder{{/if}}"></i>
+                    {{/if}}
+                </div>
+                <div class="hud-cat-title">
+                    <span class="hud-cat-name">{{#if this.label}}{{this.label}}{{else}}Unnamed Category{{/if}}</span>
+                    <span class="hud-cat-meta">
+                        {{#if this.systemId}}
+                        <span class="hud-badge hud-badge-system">System Category</span>
+                        {{else}}
+                        <span class="hud-badge hud-badge-custom">Custom</span>
+                        {{/if}}
+                        {{#if this.tabs.length}}<span class="hud-badge-outline">{{this.tabs.length}} Submenus</span>{{/if}}
+                    </span>
+                </div>
+                <div class="hud-cat-actions" onclick="event.stopPropagation()">
+                    <button type="button" class="hud-btn-icon" data-action="toggleCollapseCategory" title="Expand / Collapse">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    {{#unless this.systemId}}
+                    <button type="button" class="hud-btn-icon hud-btn-danger" data-action="removeCategory" title="Delete Category">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    {{/unless}}
+                </div>
+            </div>
+
+            <!-- Expandable Category Body -->
+            <div class="hud-cat-body">
+                <div class="hud-cat-settings-grid">
+                    <div class="hud-field-group">
+                        <label>Category Label</label>
+                        <input type="text" name="customMenu.{{@index}}.label" value="{{this.label}}" class="hud-input">
+                    </div>
+                    <div class="hud-field-group">
+                        <label>Icon Class (FontAwesome / RPG-Awesome)</label>
+                        <input type="text" name="customMenu.{{@index}}.icon" value="{{this.icon}}" class="hud-input" placeholder="fas fa-swords">
+                    </div>
+                    <div class="hud-field-group">
+                        <label>Icon Image Override</label>
+                        <div class="hud-input-with-button">
+                            <input type="text" name="customMenu.{{@index}}.img" value="{{this.img}}" class="hud-input" placeholder="path/to/icon.png">
+                            <button type="button" class="hud-btn-browse" data-file-picker="customMenu.{{@index}}.img"><i class="fas fa-folder-open"></i></button>
+                        </div>
+                    </div>
+                    <div class="hud-field-group">
+                        <label>Custom Button Background</label>
+                        <div class="hud-input-with-button">
+                            <input type="text" name="customMenu.{{@index}}.buttonImg" value="{{this.buttonImg}}" class="hud-input" placeholder="path/to/bg.png">
+                            <button type="button" class="hud-btn-browse" data-file-picker="customMenu.{{@index}}.buttonImg"><i class="fas fa-folder-open"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-Menus / Tabs Manager (Custom Categories) -->
+                {{#unless this.systemId}}
+                <div class="hud-subcategories-section">
+                    <div class="hud-sub-header">
+                        <h5>Submenus & Item Trays</h5>
+                        <button type="button" class="hud-btn hud-btn-sm" data-action="addSubCategory">
+                            <i class="fas fa-plus"></i> Add Submenu
+                        </button>
+                    </div>
+
+                    <div class="hud-sub-list">
+                        {{#each this.tabs}}
+                        <div class="hud-sub-card" data-tab-index="{{@index}}">
+                            <div class="hud-sub-card-header">
+                                <div class="hud-field-group" style="flex: 1;">
+                                    <input type="text" name="customMenu.{{@../index}}.tabs.{{@index}}.label" value="{{this.label}}" class="hud-input" placeholder="Submenu Label">
+                                </div>
+                                <button type="button" class="hud-btn-icon hud-btn-danger" data-action="removeSubCategory" title="Delete Submenu">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            {{#if this.items.length}}
+                            <div class="hud-item-list">
+                                {{#each this.items}}
+                                <div class="hud-item-pill" data-item-index="{{@index}}">
+                                    {{#if this.img}}<img src="{{this.img}}" class="hud-item-thumb" alt="">{{/if}}
+                                    <span>{{this.name}}</span>
+                                    <button type="button" class="hud-item-remove" data-action="removeItem"><i class="fas fa-times"></i></button>
+                                </div>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/unless}}
+
+                <!-- Visibility Rules -->
+                <div class="hud-visibility-section">
+                    <h5>Visibility Permissions</h5>
+                    <div class="hud-field-group">
+                        <label>Visibility Mode</label>
+                        <select name="customMenu.{{@index}}.visibility.mode" class="hud-select">
+                            <option value="all" {{#if (eq this.visibility.mode "all")}}selected{{/if}}>Show for All Actors</option>
+                            <option value="types" {{#if (eq this.visibility.mode "types")}}selected{{/if}}>Filter by Actor Types</option>
+                        </select>
+                    </div>
+
+                    {{#if (eq this.visibility.mode "types")}}
+                    <div class="hud-chip-group" style="margin-top: 8px;">
+                        {{#each this.visibility._allActorTypes}}
+                        <label class="hud-chip {{#if this.checked}}active{{/if}}">
+                            <input type="checkbox" name="customMenu.{{@../index}}.visibility.actorTypes.{{this.value}}" {{#if this.checked}}checked{{/if}}>
+                            <span>{{this.label}}</span>
+                        </label>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                </div>
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+</div>
