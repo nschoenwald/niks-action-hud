@@ -323,22 +323,13 @@ export class SettingsManager {
 					ActionMenu.hideMenu();
 				}
 
-				// Reflect on live scene controls if present (supports both V14 Map/Record and V13 Array)
+				// Reflect on live scene controls if present
+				// [V14 Compatible Only]: In Foundry V14, ui.controls.controls is a Map<string, SceneControl>
+				// and SceneControl.tools is a Record<string, SceneControlTool>.
 				const layer = ui.controls;
 				if (layer?.controls instanceof Map) {
 					const tokenControl = layer.controls.get("token") ?? layer.controls.get("tokens");
 					const tool = tokenControl?.tools?.["niks-action-toggle"];
-					if (tool) {
-						tool.active = isHidden;
-						layer.render();
-					}
-				} else if (Array.isArray(layer?.controls)) {
-					const tokenControl = layer.controls.find(
-						(c) => c.name === "token" || c.name === "tokens",
-					);
-					const tool = Array.isArray(tokenControl?.tools)
-						? tokenControl.tools.find((t) => t.name === "niks-action-toggle")
-						: tokenControl?.tools?.["niks-action-toggle"];
 					if (tool) {
 						tool.active = isHidden;
 						layer.render();
@@ -372,29 +363,23 @@ export class SettingsManager {
 		});
 
 		// =========================================
-		// 4. SCENE CONTROLS (V13 Array & V14 Record compatible)
+		// 4. SCENE CONTROLS (V14+ Record structure)
 		// =========================================
+		// [V14 Compatible Only]: In Foundry V14, the getSceneControlButtons hook parameter changed
+		// from SceneControl[] (Array) to Record<string, SceneControl> (plain object).
+		// SceneControl.tools is now Record<string, SceneControlTool> (plain object keyed by name).
 		Hooks.on("getSceneControlButtons", (controls) => {
 			const hideControls = game.settings.get(MODULE_ID, "hideTokenControls");
 			if (hideControls) return;
 
-			let tokenControls = null;
-			if (Array.isArray(controls)) {
-				tokenControls = controls.find((c) => c.name === "token" || c.name === "tokens");
-			} else if (controls && typeof controls === "object") {
-				tokenControls = controls.token ?? controls.tokens ?? null;
-			}
+			// [V14 Compatible Only]: Direct property access on controls Record
+			const tokenControls = controls?.token ?? controls?.tokens ?? null;
 			if (!tokenControls?.tools) return;
 
+			// [V14 Compatible Only]: Assign directly to tools Record by name
 			const addTool = (tool) => {
-				if (Array.isArray(tokenControls.tools)) {
-					if (!tokenControls.tools.find((t) => t.name === tool.name)) {
-						tokenControls.tools.push(tool);
-					}
-				} else if (tokenControls.tools && typeof tokenControls.tools === "object") {
-					if (!tokenControls.tools[tool.name]) {
-						tokenControls.tools[tool.name] = tool;
-					}
+				if (!tokenControls.tools[tool.name]) {
+					tokenControls.tools[tool.name] = tool;
 				}
 			};
 
