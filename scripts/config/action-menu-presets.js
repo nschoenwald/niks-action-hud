@@ -15,6 +15,7 @@ export const ACTION_MENU_PRESET_KEYS = [
 	"actionMenuEmphasizeFirstButton",
 	"actionMenuUseTokenImg",
 	"closeMenuOnUse",
+	"hideEmptySubmenus",
 	"dnd5eGroupActionsByActivation",
 	"amMenuLayers",
 	"amSubMenuLayers",

@@ -2,6 +2,18 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.0.4] - 2026-09-23
+
+### Hide Empty Submenus
+- **Hide Empty Submenus Setting**: Added a new setting `hideEmptySubmenus` (default to enabled) that automatically hides action category buttons and submenus with no entries for the currently selected actor (for example, the Spells button and submenu for actors that have no spells, or Attacks for actors with no equipped weapons).
+- **Dynamic Category Button Filtering**: Evaluates category contents synchronously during HUD rendering; category buttons with zero valid entries are excluded from the main action bar.
+- **Submenu Protection & Dismissal**: If an open submenu has its last entry removed or if the user switches to an actor without entries for that submenu, the panel is automatically dismissed cleanly. Direct invocation (`toggleSubMenu` / `renderSubMenu`) prevents opening empty panels when the setting is enabled.
+- **Edit Mode Bypass**: While in Edit Mode (`window.ActionHUD.isEditMode`), all categories remain visible regardless of entry count so users can configure layouts and drop items or macros.
+- **Settings & Config Panel Integration**: Added to both Foundry VTT's Module Settings (`Configure Settings -> Module Settings -> Nik's Action HUD`) and the visual Action HUD Configuration dialog (under the Action Menu tab).
+- **Foundry V13 & V14 Compatibility**: Ensured full dual compatibility across Foundry V13 and V14 for scene controls and HUD keybinding controls.
+
+---
+
 ## [14.0.3] - 2026-09-23
 
 ### Right-Click Directly Opens Item Sheet

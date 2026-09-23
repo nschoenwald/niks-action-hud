@@ -788,7 +788,9 @@
       "EnableResizeHandleHint": "Shows a draggable handle in the bottom-right corner of the HUD to resize interactively.",
       "ConfigMenuName": "Action HUD Configuration",
       "ConfigMenuLabel": "Configure Action HUD",
-      "ConfigMenuHint": "Open the visual configuration panel for Action HUD themes, layout, rules, and categories."
+      "ConfigMenuHint": "Open the visual configuration panel for Action HUD themes, layout, rules, and categories.",
+      "HideEmptySubmenusName": "Hide Empty Submenus",
+      "HideEmptySubmenusHint": "Hides action buttons and submenus that have no entries for the active actor (e.g. hiding the Spells button for non-spellcasters)."
     },
     "UI": {
       "AllSpells": "All",

@@ -688,11 +688,58 @@ export class BaseSystemAdapter {
 	}
 
 	/**
+	 * 서브 메뉴 데이터를 동기적으로 반환합니다 (데이터 존재 여부 체크용).
+	 * @param {Actor} actor
+	 * @param {String} categoryId
+	 * @param {Object|null} category
+	 */
+	getSubMenuDataSync(actor, categoryId, category = null) {
+		const parts = String(categoryId).split("-");
+		const index = parseInt(parts[parts.length - 1], 10);
+
+		const config = game.settings.get(MODULE_ID, "configuration") || {};
+
+		let menuData = config.customMenu?.[index];
+
+		if (!menuData || String(categoryId).startsWith("menu-")) {
+			const defaultLayout = defaultRegistry.getDefaultLayout(
+				game.system.id,
+				this,
+			);
+			if (defaultLayout?.[index]) {
+				menuData = defaultLayout[index];
+			}
+		}
+
+		if (!menuData && category?.systemId) {
+			menuData = { systemId: category.systemId, label: category.label || "" };
+		}
+
+		if (!menuData) return { title: "", items: [] };
+
+		if (menuData.systemId) {
+			if (typeof this._getSystemSubMenuDataSync === "function") {
+				return this._getSystemSubMenuDataSync(actor, menuData.systemId, menuData);
+			}
+			return null;
+		}
+
+		return this._getCustomSubMenuData(actor, menuData, index);
+	}
+
+	_getSystemSubMenuDataSync(actor, systemId, menuData) {
+		return { title: menuData.label, items: [] };
+	}
+
+	/**
 	 * 시스템 데이터 로드 헬퍼
 	 * 자식 클래스(dnd5e/pf2e)에서 이 부분을 오버라이드하거나,
 	 * 기존 스위치문을 여기로 옮겨옵니다.
 	 */
 	async _getSystemSubMenuData(actor, systemId, menuData) {
+		if (typeof this._getSystemSubMenuDataSync === "function") {
+			return this._getSystemSubMenuDataSync(actor, systemId, menuData);
+		}
 		// 기본적으로 빈 데이터 반환 (각 시스템 어댑터에서 오버라이드 필요)
 		return { title: menuData.label, items: [] };
 	}

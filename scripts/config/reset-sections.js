@@ -52,6 +52,7 @@ const ACTION_MENU_BEHAVIOR_FIELDS = new Set([
 	"actionMenuUseTokenImg",
 	"actionMenuEmphasizeFirstButton",
 	"closeMenuOnUse",
+	"hideEmptySubmenus",
 	"dnd5eGroupActionsByActivation",
 ]);
 

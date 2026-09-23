@@ -52,6 +52,13 @@
                     </div>
                     <p class="notes" style="font-size: 0.95em; color: #888; margin-top: 2px;">Automatically close the action menu panel after using an item or spell.</p>
                 </div>
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label>{{localize "NIKS_ACTION_HUD.Settings.HideEmptySubmenusName"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="hideEmptySubmenus" {{#if hideEmptySubmenus}}checked{{/if}}>
+                    </div>
+                    <p class="notes" style="font-size: 0.95em; color: #888; margin-top: 2px;">{{localize "NIKS_ACTION_HUD.Settings.HideEmptySubmenusHint"}}</p>
+                </div>
                 {{#if isDnd5eSystem}}
                 <div class="form-group" style="margin-bottom: 5px;">
                     <label>{{localize "IBHUD.Config.Style.Dnd5eGroupActionsByActivation"}}</label>

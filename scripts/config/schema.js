@@ -279,6 +279,7 @@ export const GLOBAL_MENU_BEHAVIOR_FIELDS = [
 	{ key: "actionMenuUseTokenImg", type: "boolean", fallback: false },
 	{ key: "actionMenuEmphasizeFirstButton", type: "boolean", fallback: true },
 	{ key: "closeMenuOnUse", type: "boolean", fallback: false },
+	{ key: "hideEmptySubmenus", type: "boolean", fallback: true },
 	{ key: "dnd5eGroupActionsByActivation", type: "boolean", fallback: false },
 	{ key: "collapseCards", type: "boolean", fallback: false },
 	{ key: "actionMenuVisibility", type: "string", fallback: "always" },

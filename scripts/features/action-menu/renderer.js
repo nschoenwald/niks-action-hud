@@ -5,7 +5,7 @@ import { getEffectiveActorSettings } from "../../utils/client-overrides.js";
 import { getActionCategories, getSubMenuData } from "./registry.js";
 import { resolveSubMenuSide } from "./position.js";
 import { initTooltipHoverEvents } from "./tooltip.js";
-import { getCustomMenuIndex, isActionMenuCategoryVisible } from "./category-visibility.js";
+import { getCustomMenuIndex, isActionMenuCategoryVisible, hasSubMenuEntries } from "./category-visibility.js";
 import { prepareFavoriteItems } from "./favorites.js";
 
 const escapeHtml = (value) => String(value ?? "")
@@ -473,7 +473,10 @@ export const buildCategoryButtonsHtml = (ActionMenu) => {
 	const customMenu = btnConfig.customMenu || [];
 
 	return categories
-		.filter((cat) => isActionMenuCategoryVisible(cat, customMenu, inCombat))
+		.filter((cat) => isActionMenuCategoryVisible(cat, customMenu, inCombat, {
+			ActionMenu,
+			actor: ActionMenu.currentActor,
+		}))
 		.map((cat, actionIndex) => buildCategoryButtonHtml(cat, actionIndex, btnConfig))
 		.join("");
 };
@@ -770,17 +773,33 @@ export const renderMain = (ActionMenu) => {
 
 export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = null) => {
 	const container = $(`#${ActionMenu.SUB_ID}`);
-	container.removeClass("active").addClass("active");
 
 	const data = await getSubMenuData(ActionMenu, ActionMenu.currentActor, categoryId);
 	if (
 		renderGeneration !== null &&
 		renderGeneration !== ActionMenu.subMenuRenderGeneration
-	) return;
+	) return false;
 	if (!data) {
 		console.warn("StylishHUD | No submenu data available for:", categoryId);
-		return;
+		container.removeClass("active");
+		container.removeData("active-cat");
+		return false;
 	}
+
+	let hideEmpty = true;
+	try {
+		hideEmpty = Boolean(game.settings.get(MODULE_ID, "hideEmptySubmenus"));
+	} catch (_e) {
+		hideEmpty = true;
+	}
+
+	if (hideEmpty && !window.ActionHUD?.isEditMode && !hasSubMenuEntries(data)) {
+		container.removeClass("active");
+		container.removeData("active-cat");
+		return false;
+	}
+
+	container.removeClass("active").addClass("active");
 
 	container.data("menu-data", data);
 	container.data("active-cat", categoryId);

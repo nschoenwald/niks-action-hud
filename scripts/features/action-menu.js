@@ -60,7 +60,7 @@ import {
 	editSpellSlots as editSpellSlotsModule,
 	restoreItem as restoreItemModule,
 } from "./action-menu/dialogs.js";
-import { canRestoreActionMenuCategory } from "./action-menu/category-visibility.js";
+import { canRestoreActionMenuCategory, categoryHasEntries } from "./action-menu/category-visibility.js";
 
 import {
 	openItem as openItemModule,
@@ -302,9 +302,11 @@ export class ActionMenu {
 				categories,
 				config.customMenu,
 				inCombat,
+				{ ActionMenu, actor: ActionMenu.currentActor },
 			)) {
 				lastActiveCat = null;
 				container.removeData("active-cat");
+				container.removeClass("active");
 			}
 		}
 
@@ -466,16 +468,43 @@ export class ActionMenu {
 	}
 
 
+	static categoryHasEntries(categoryId, actor = null) {
+		const targetActor = actor || ActionMenu.currentActor;
+		if (!targetActor) return false;
+		const categories = getActionCategories(ActionMenu, targetActor) || [];
+		const category = categories.find((c) => String(c.id) === String(categoryId))
+			|| { id: categoryId, type: "submenu" };
+		return categoryHasEntries(ActionMenu, targetActor, category);
+	}
+
 	static async toggleSubMenu(categoryId) {
 		const container = $(`#${ActionMenu.SUB_ID}`);
 		if (
 			container.data("active-cat") === categoryId &&
 			container.hasClass("active")
 		) {
-		container.removeClass("active");
+			container.removeClass("active");
 			ActionMenu.hideTooltip(true);
 			return;
 		}
+
+		let hideEmpty = true;
+		try {
+			const settingVal = game.settings.get(MODULE_ID, "hideEmptySubmenus");
+			if (typeof settingVal === "boolean") hideEmpty = settingVal;
+		} catch (_e) {
+			hideEmpty = true;
+		}
+
+		if (hideEmpty && !window.ActionHUD?.isEditMode && ActionMenu.currentActor) {
+			if (!ActionMenu.categoryHasEntries(categoryId)) {
+				container.removeClass("active");
+				container.removeData("active-cat");
+				ActionMenu.hideTooltip(true);
+				return;
+			}
+		}
+
 		// 탭 초기화
 		ActionMenu.activeTab = null;
 		ActionMenu.activeSubTab = null;
@@ -518,7 +547,8 @@ export class ActionMenu {
 
 	static async renderSubMenu(categoryId) {
 		const generation = ++ActionMenu.subMenuRenderGeneration;
-		await renderSubMenuModule(ActionMenu, categoryId, generation);
+		const result = await renderSubMenuModule(ActionMenu, categoryId, generation);
+		if (result === false) return false;
 		return generation === ActionMenu.subMenuRenderGeneration;
 	}
 

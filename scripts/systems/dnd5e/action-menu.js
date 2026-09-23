@@ -164,7 +164,7 @@ function getDnd5eTooltip(type, key, label, abilityLabel) {
 	return "";
 }
 
-export async function _getSystemSubMenuData(actor, systemId, menuData) {
+export function _getSystemSubMenuDataSync(actor, systemId, menuData) {
 	let res = null;
 	switch (systemId) {
 		case "attack":
@@ -194,7 +194,11 @@ export async function _getSystemSubMenuData(actor, systemId, menuData) {
 			res = { title: menuData.label, items: [] };
 			break;
 	}
+	return res;
+}
 
+export async function _getSystemSubMenuData(actor, systemId, menuData) {
+	const res = this._getSystemSubMenuDataSync(actor, systemId, menuData);
 	Hooks.callAll(`${MODULE_ID}.modifyActionMenuData`, res, actor, systemId);
 	return res;
 }
@@ -203,6 +207,7 @@ export async function _getSystemSubMenuData(actor, systemId, menuData) {
    1. ATTACK (Weapons)
    ----------------------------------------- */
 export function _getWeaponData(actor) {
+	if (!actor?.items) return { title: "WEAPONS", theme: "red", hasTabs: false, items: [] };
 	const items = actor.items
 		.filter((i) => i.type === "weapon" && i.system.equipped)
 		.map((i) => {
@@ -253,6 +258,9 @@ export function _getWeaponData(actor) {
    2. MAGIC (Spells - DnD5e v6)
    ----------------------------------------- */
 export function _getSpellData(actor) {
+	if (!actor?.items) {
+		return { title: "SPELLBOOK", theme: "blue", hasTabs: true, hasSubTabs: true, items: {}, tabLabels: {}, tabTooltips: {}, subTabLabels: {} };
+	}
 	const items = {};
 	const primaryLabels = {};
 	const primaryTooltips = {};
@@ -485,6 +493,9 @@ function _dnd5eActivationGroup(type) {
 }
 
 export function _getFeatureData(actor) {
+	if (!actor?.items) {
+		return { title: "ABILITIES", theme: "blue", hasTabs: true, hasSubTabs: true, items: {}, tabLabels: {}, subTabLabels: {} };
+	}
 	const items = {
 		actions: { all: [] },
 		traits: { all: [] },
@@ -655,6 +666,9 @@ export function _getFeatureData(actor) {
    4. INVENTORY (Sidebar Layout)
    ----------------------------------------- */
 export function _getInventoryData(actor) {
+	if (!actor?.items) {
+		return { title: "INVENTORY", theme: "red", hasTabs: true, hasSubTabs: true, items: {}, tabLabels: {}, tabTooltips: {}, subTabLabels: {} };
+	}
 	const categories = {
 		weapon: {
 			label: game.i18n.localize("IBHUD.Dnd5e.InvWeapons"),
@@ -810,6 +824,9 @@ export function _buildInventoryEquipButton(item, equipped) {
    5. UTILITY (Saves, Skills, Rests - DnD5e v6)
    ----------------------------------------- */
 export function _getUtilityData(actor) {
+	if (!actor?.system) {
+		return { title: "UTILITY", theme: "blue", hasTabs: true, hasSubTabs: true, items: {}, tabLabels: {}, subTabLabels: {} };
+	}
 	const categories = {
 		save: { label: game.i18n.localize("IBHUD.Dnd5e.Saves") },
 		skill: { label: game.i18n.localize("IBHUD.Dnd5e.Skills") },

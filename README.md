@@ -10,6 +10,7 @@ Nik's Action HUD is the standalone consolidation of `stylish-action-hud` and the
 
 ### Core Action HUD
 - **Fast & Responsive Interface**: Instant access to strikes, attacks, spells, features, inventory items, and utility checks.
+- **Hide Empty Submenus**: Automatically hides action buttons and submenus with no entries for the active actor (e.g. hiding the Spells button for non-spellcasters). Default enabled and fully configurable in settings.
 - **Direct Sheet Navigation**: Right-click any action or item on the HUD to immediately open the actor sheet to that specific item (built-in).
 - **Outside-Click Dismissal**: Clicking anywhere outside the Action HUD dismisses active sub-menus immediately (built-in).
 - **Dynamic Token Header**: Displays the active token's current name directly in the header with clean typography (built-in).

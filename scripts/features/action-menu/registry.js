@@ -196,7 +196,7 @@ export const getActionCategories = (ActionMenu, actor) => {
 };
 
 const resolveSubMenuProvider = (ActionMenu, actor, categoryId) => {
-	const entries = ActionMenu._subMenuEntries.get(String(categoryId)) || [];
+	const entries = ActionMenu?._subMenuEntries?.get?.(String(categoryId)) || [];
 	const compatibleEntries = entries.filter((entry) => {
 		if (!entry.isCompatible) return true;
 		try {
@@ -216,6 +216,42 @@ const resolveSubMenuProvider = (ActionMenu, actor, categoryId) => {
 			return a.order - b.order;
 		})[0]
 		?.provider;
+};
+
+export const getSubMenuDataSync = (ActionMenu, actor, categoryId, category = null) => {
+	const provider = resolveSubMenuProvider(ActionMenu, actor, categoryId);
+	let data = null;
+	if (provider) {
+		try {
+			data = provider(actor, categoryId);
+			if (data && typeof data.then === "function") {
+				data = null;
+			}
+		} catch (error) {
+			console.warn("Nik's Action HUD | Submenu provider failed:", error);
+			data = null;
+		}
+	}
+	if (!data) {
+		data = getConfigCustomSubMenuData(ActionMenu, actor, categoryId);
+		if (data && typeof data.then === "function") {
+			data = null;
+		}
+	}
+	if (!data && ActionMenu.adapter?.getSubMenuDataSync) {
+		data = ActionMenu.adapter.getSubMenuDataSync(actor, categoryId, category);
+	}
+	if (data) {
+		const config = game.settings.get(MODULE_ID, "configuration") || {};
+		const override = getAdapterCategoryOverride(
+			config.adapterCategoryOverrides,
+			categoryId,
+		);
+		if (Object.prototype.hasOwnProperty.call(override || {}, "label")) {
+			data = { ...data, title: override.label };
+		}
+	}
+	return data;
 };
 
 export const getSubMenuData = async (ActionMenu, actor, categoryId) => {
@@ -250,6 +286,10 @@ export const getSubMenuData = async (ActionMenu, actor, categoryId) => {
 		);
 		if (Object.prototype.hasOwnProperty.call(override || {}, "label")) {
 			data = { ...data, title: override.label };
+		}
+		if (actor?.id) {
+			if (!ActionMenu._asyncSubMenuDataCache) ActionMenu._asyncSubMenuDataCache = new Map();
+			ActionMenu._asyncSubMenuDataCache.set(`${actor.id}:${categoryId}`, data);
 		}
 		Hooks.callAll(
 			`${MODULE_ID}.modifyActionMenuData`,
