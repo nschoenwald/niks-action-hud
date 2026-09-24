@@ -241,6 +241,12 @@ export const setupTooltip = (theme, actionMenuFont) => {
 		tooltip.css("--am-font-family", "");
 	}
 
+	if (game.system?.id === "dnd5e") {
+		tooltip.addClass("dnd5e dnd5e2");
+	} else if (game.system?.id) {
+		tooltip.addClass(game.system.id);
+	}
+
 	initTooltipHoverEvents();
 };
 

@@ -1246,6 +1246,25 @@
 	pointer-events: auto;
 }
 
+/* Quick slots / Favorites container base layout (horizontal row) */
+.ib-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 4px 4px 0 0;
+	box-sizing: border-box;
+}
+
+.ib-quick-slot {
+	flex-shrink: 0;
+}
+
 /* =========================================
    [LAYOUT] Sidebar Structure (No Colors)
    ========================================= */
@@ -1348,11 +1367,40 @@
 
 /* 시스템별 본문 스타일 보정 (Foundry 기본 스타일 상속) */
 #ib-rich-tooltip .editor-content p {
-	margin-bottom: 0.5em;
+	margin: 0 0 0.5em 0;
+}
+
+#ib-rich-tooltip .editor-content p:last-child {
+	margin-bottom: 0;
 }
 
 #ib-rich-tooltip .editor-content strong {
 	color: #fff;
+}
+
+/* Enriched content & D&D 5e enrichers flow naturally inline without breaking punctuation or lines */
+#ib-rich-tooltip enriched-content,
+#ib-rich-tooltip .editor-content enriched-content {
+	display: inline !important;
+}
+
+#ib-rich-tooltip .attack-extended,
+#ib-rich-tooltip .damage-extended,
+#ib-rich-tooltip .roll-link-group,
+#ib-rich-tooltip .roll-link,
+#ib-rich-tooltip .reference-link,
+#ib-rich-tooltip .content-link {
+	display: inline;
+}
+
+#ib-rich-tooltip .formula-group {
+	white-space: nowrap;
+}
+
+#ib-rich-tooltip .roll-link > i.fa-dice-d20,
+#ib-rich-tooltip a.inline-roll > i.fa-dice-d20 {
+	display: inline-block;
+	vertical-align: middle;
 }
 
 /* =========================================

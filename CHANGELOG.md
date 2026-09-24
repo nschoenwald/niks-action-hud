@@ -2,6 +2,21 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.1.1] - 2026-09-23
+
+### New Themes Button Sizing & Spacing Alignment (Rift Proportions)
+- **Tightly Spaced Buttons**: Overrode `#ib-action-menu.theme-{id} { gap: 0; }` across all 5 clean-room themes (**Arcanum**, **Obsidian**, **Grimoire**, **Eldritch**, and **Valiant**), eliminating the inherited 12px container gap and normalizing inter-button spacing to a compact, uniform 9px margin, identical to the Rift theme.
+- **Rift-Proportional Button Geometry**: Standardized action buttons across all 5 new themes to `232px` width and `46px` height.
+- **Uniform Button Appearance**: Removed contrasting hero accent colors and height overrides on the Attacks button in the 5 new themes, rendering all action category buttons with completely uniform dimensions, borders, and thematic backgrounds.
+- **Horizontal Favorites Quick Slots**: Fixed an issue where favorites / quick slot icons stacked vertically in block layout by defining base `display: flex; flex-direction: row;` styling on `.ib-quick-slot-container` and custom scrollbars across all 5 new themes.
+- **Submenu Alignment**: Standardized submenu flyout width to 406px and styled the menu collapse toggle across each new theme palette.
+
+### Tooltip D&D 5e Enricher Flow & Line Break Fix
+- **Fixed Line Break After Enrichers**: In Foundry V14, custom text enrichers are wrapped in `<enriched-content>`, which Foundry core defaults to `display: inline-block`. When an enricher (such as `[[/attack extended]]` or `[[/damage extended]]`) wrapped internally or was followed by punctuation (such as trailing periods `.`), the atomic inline-block box forced the trailing punctuation or subsequent inline text onto a line by itself.
+- **Natural Inline Flow**: Explicitly set `enriched-content` to `display: inline !important;` inside `#ib-rich-tooltip` and `#ib-rich-tooltip .editor-content`, ensuring all enriched rolls, damage expressions, attacks, and trailing punctuation flow naturally as inline text.
+- **System Typography Classes**: Added `dnd5e dnd5e2` system classes to `#ib-rich-tooltip` and `.editor-content` during tooltip initialization and rendering, ensuring system-specific typography rules, roll links, and d20 dice icons inherit properly.
+- **Paragraph Spacing**: Normalized paragraph margins inside `#ib-rich-tooltip .editor-content` (`margin: 0 0 0.5em 0`) to prevent awkward vertical spacing.
+
 ## [14.1.0] - 2026-09-23
 
 ### Configuration Menu Complete Redesign & Refactor

@@ -45,10 +45,22 @@
 /* =========================================
    1. ACTION BUTTONS — Sleek Solid Onyx Slab
    ========================================= */
+/* spacing comes from button margin-bottom, matching Rift */
+#ib-action-menu.theme-obsidian { gap: 0; }
+
+.theme-obsidian .ib-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--obs-accent-light);
+}
+
+.theme-obsidian .ib-collapse-btn:hover { color: #fff; }
+
 .theme-obsidian .ib-action-btn {
 	width: 232px;
 	height: 46px;
-	margin-bottom: 7px;
+	margin-bottom: 9px;
 	padding: 0 20px;
 	background: linear-gradient(135deg, #151c27, #0e141c);
 	border: 1px solid var(--obs-border);
@@ -56,7 +68,7 @@
 	color: var(--obs-text-primary);
 	font-family: var(--obs-font-header);
 	font-weight: 600;
-	font-size: 1.1em;
+	font-size: 1.15em;
 	letter-spacing: 0.03em;
 	box-shadow:
 		inset 0 1px 0 #232d3d,
@@ -93,18 +105,6 @@
 	transform: scale(1.1);
 }
 
-.theme-obsidian .ib-action-btn.btn-attack,
-.theme-obsidian .ib-action-btn.ib-action-btn-first {
-	height: 50px;
-	font-size: 1.2em;
-	font-weight: 700;
-	background: linear-gradient(135deg, #0e3325, #0c1824);
-	border-color: #34d399;
-	box-shadow:
-		inset 0 1px 0 #10b981,
-		0 6px 20px var(--obs-shadow),
-		0 0 18px rgba(16, 185, 129, 0.3);
-}
 
 /* =========================================
    2. SUBMENU — Floating Solid Onyx Slab
@@ -281,11 +281,26 @@
    3. QUICK SLOTS / FAVORITES
    ========================================= */
 .theme-obsidian .ib-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
 	gap: 8px;
 	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--obs-border) transparent;
 }
+.theme-obsidian .ib-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-obsidian .ib-quick-slot-container::-webkit-scrollbar-thumb { background: var(--obs-border); border-radius: 3px; }
+.theme-obsidian .ib-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
 
 .theme-obsidian .ib-quick-slot {
+	flex-shrink: 0;
 	width: 40px;
 	height: 40px;
 	border-radius: 8px;

@@ -99,6 +99,7 @@ export const renderTooltip = async (ActionMenu, tooltipItem, item, desc) => {
 	const tooltipImg = tooltipItem?.img || item?.img || "";
 
 	const typeLabel = tooltipType ? tooltipType.toUpperCase() : "";
+	const sysClass = game.system?.id === "dnd5e" ? " dnd5e dnd5e2" : (game.system?.id ? ` ${game.system.id}` : "");
 	const tooltipHtml = `
             <div class="ib-tooltip-header">
                 ${tooltipImg ? `<img src="${tooltipImg}" width="32" height="32" style="border:1px solid #555;">` : ""}
@@ -107,7 +108,7 @@ export const renderTooltip = async (ActionMenu, tooltipItem, item, desc) => {
                     ${typeLabel ? `<div class="ib-tooltip-meta">${typeLabel}</div>` : ""}
                 </div>
             </div>
-            ${enriched ? `<div class="editor-content">${enriched}</div>` : ""}
+            ${enriched ? `<div class="editor-content${sysClass}">${enriched}</div>` : ""}
         `;
 
 	const tooltip = $("#ib-rich-tooltip");

@@ -49,18 +49,30 @@
 /* =========================================
    1. ACTION BUTTONS — Heraldic Shield Chevron
    ========================================= */
+/* spacing comes from button margin-bottom, matching Rift */
+#ib-action-menu.theme-valiant { gap: 0; }
+
+.theme-valiant .ib-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--val-gold);
+}
+
+.theme-valiant .ib-collapse-btn:hover { color: var(--val-gold-bright); }
+
 .theme-valiant .ib-action-btn {
-	width: 236px;
-	height: 48px;
-	margin-bottom: 8px;
-	padding: 0 24px 0 20px;
+	width: 232px;
+	height: 46px;
+	margin-bottom: 9px;
+	padding: 0 22px 0 18px;
 	background: linear-gradient(135deg, #182844, #0d1626);
 	border: 1px solid var(--val-platinum-dim);
 	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
 	color: var(--val-text-primary);
 	font-family: var(--val-font-body);
 	font-weight: 700;
-	font-size: 1.25em;
+	font-size: 1.22em;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	box-shadow:
@@ -99,28 +111,12 @@
 	transform: scale(1.15);
 }
 
-.theme-valiant .ib-action-btn.btn-attack,
-.theme-valiant .ib-action-btn.ib-action-btn-first {
-	height: 52px;
-	font-size: 1.35em;
-	background: linear-gradient(135deg, #1d4ed8, #0e245a);
-	border-color: var(--val-platinum);
-	box-shadow:
-		inset 0 1px 0 #60a5fa,
-		0 6px 20px var(--val-shadow),
-		0 0 18px rgba(59, 130, 246, 0.4);
-}
-
-.theme-valiant .ib-action-btn.btn-attack .glyph,
-.theme-valiant .ib-action-btn.btn-attack i {
-	color: var(--val-gold-bright);
-}
 
 /* =========================================
    2. SUBMENU — Knightly Fortress Panel
    ========================================= */
 .theme-valiant .ib-sub-menu {
-	width: 412px;
+	width: 406px;
 	background: #0e1829;
 	border: 1px solid var(--val-platinum-dim);
 	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
@@ -298,11 +294,26 @@
    3. QUICK SLOTS / FAVORITES
    ========================================= */
 .theme-valiant .ib-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
 	gap: 8px;
 	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--val-gold-dim) transparent;
 }
+.theme-valiant .ib-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-valiant .ib-quick-slot-container::-webkit-scrollbar-thumb { background: var(--val-gold-dim); border-radius: 3px; }
+.theme-valiant .ib-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
 
 .theme-valiant .ib-quick-slot {
+	flex-shrink: 0;
 	width: 40px;
 	height: 40px;
 	background: #121e33;

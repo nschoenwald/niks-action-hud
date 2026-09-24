@@ -47,10 +47,22 @@
 /* =========================================
    1. ACTION BUTTONS — Diamond-Chamfered Gold
    ========================================= */
+/* spacing comes from button margin-bottom, matching Rift */
+#ib-action-menu.theme-arcanum { gap: 0; }
+
+.theme-arcanum .ib-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--arc-gold);
+}
+
+.theme-arcanum .ib-collapse-btn:hover { color: var(--arc-gold-bright); }
+
 .theme-arcanum .ib-action-btn {
-	width: 236px;
-	height: 48px;
-	margin-bottom: 8px;
+	width: 232px;
+	height: 46px;
+	margin-bottom: 9px;
 	padding: 0 22px;
 	background: linear-gradient(135deg, #1e163a, #130d26);
 	border: 1px solid var(--arc-gold-dim);
@@ -58,7 +70,7 @@
 	color: var(--arc-text-cream);
 	font-family: var(--arc-font-header);
 	font-weight: 600;
-	font-size: 1.15em;
+	font-size: 1.18em;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	box-shadow:
@@ -98,29 +110,12 @@
 	transform: scale(1.15);
 }
 
-.theme-arcanum .ib-action-btn.btn-attack,
-.theme-arcanum .ib-action-btn.ib-action-btn-first {
-	height: 52px;
-	font-size: 1.25em;
-	font-weight: 700;
-	background: linear-gradient(135deg, #321f5c, #1a1033);
-	border-color: var(--arc-gold);
-	box-shadow:
-		inset 0 1px 0 #fbbf24,
-		0 6px 20px var(--arc-shadow),
-		0 0 16px rgba(212, 175, 55, 0.4);
-}
-
-.theme-arcanum .ib-action-btn.btn-attack .glyph,
-.theme-arcanum .ib-action-btn.btn-attack i {
-	color: var(--arc-gold-bright);
-}
 
 /* =========================================
    2. SUBMENU — Astral Grimoire Panel
    ========================================= */
 .theme-arcanum .ib-sub-menu {
-	width: 412px;
+	width: 406px;
 	background: #140f26;
 	border: 1px solid var(--arc-gold-dim);
 	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
@@ -300,11 +295,26 @@
    3. QUICK SLOTS / FAVORITES
    ========================================= */
 .theme-arcanum .ib-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
 	gap: 8px;
 	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--arc-gold-dim) transparent;
 }
+.theme-arcanum .ib-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-arcanum .ib-quick-slot-container::-webkit-scrollbar-thumb { background: var(--arc-gold-dim); border-radius: 3px; }
+.theme-arcanum .ib-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
 
 .theme-arcanum .ib-quick-slot {
+	flex-shrink: 0;
 	width: 40px;
 	height: 40px;
 	background: #1a1332;

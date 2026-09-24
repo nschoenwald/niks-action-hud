@@ -46,10 +46,22 @@
 /* =========================================
    1. ACTION BUTTONS — Asymmetric Solid Chitin
    ========================================= */
+/* spacing comes from button margin-bottom, matching Rift */
+#ib-action-menu.theme-eldritch { gap: 0; }
+
+.theme-eldritch .ib-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--eld-cyan);
+}
+
+.theme-eldritch .ib-collapse-btn:hover { color: var(--eld-cyan-bright); }
+
 .theme-eldritch .ib-action-btn {
-	width: 236px;
-	height: 48px;
-	margin-bottom: 8px;
+	width: 232px;
+	height: 46px;
+	margin-bottom: 9px;
 	padding: 0 22px;
 	background: linear-gradient(135deg, #0e1824, #070c13);
 	border: 1px solid var(--eld-cyan-dim);
@@ -57,7 +69,7 @@
 	color: var(--eld-text-primary);
 	font-family: var(--eld-font-body);
 	font-weight: 700;
-	font-size: 1.25em;
+	font-size: 1.22em;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	box-shadow:
@@ -96,28 +108,12 @@
 	transform: scale(1.15);
 }
 
-.theme-eldritch .ib-action-btn.btn-attack,
-.theme-eldritch .ib-action-btn.ib-action-btn-first {
-	height: 52px;
-	font-size: 1.35em;
-	background: linear-gradient(135deg, #320f44, #12071a);
-	border-color: var(--eld-magenta);
-	box-shadow:
-		inset 0 1px 0 #571775,
-		0 6px 20px var(--eld-shadow),
-		0 0 18px rgba(217, 70, 239, 0.35);
-}
-
-.theme-eldritch .ib-action-btn.btn-attack .glyph,
-.theme-eldritch .ib-action-btn.btn-attack i {
-	color: #f0abfc;
-}
 
 /* =========================================
    2. SUBMENU — Abyssal Chitin Panel
    ========================================= */
 .theme-eldritch .ib-sub-menu {
-	width: 412px;
+	width: 406px;
 	background: #080d14;
 	border: 1px solid var(--eld-cyan-dim);
 	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
@@ -295,11 +291,26 @@
    3. QUICK SLOTS / FAVORITES
    ========================================= */
 .theme-eldritch .ib-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
 	gap: 8px;
 	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--eld-cyan-dim) transparent;
 }
+.theme-eldritch .ib-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-eldritch .ib-quick-slot-container::-webkit-scrollbar-thumb { background: var(--eld-cyan-dim); border-radius: 3px; }
+.theme-eldritch .ib-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
 
 .theme-eldritch .ib-quick-slot {
+	flex-shrink: 0;
 	width: 40px;
 	height: 40px;
 	background: #0b131e;
