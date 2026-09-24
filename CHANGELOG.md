@@ -2,6 +2,14 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.1.5] - 2026-09-24
+
+### User-Scoped "Disable Action HUD" Setting
+- **Turned `disableHUD` into a User Setting (`scope: "user"`)**: Converted the "Disable Action HUD" setting from a client-scoped setting stored only in browser `localStorage` to a native Foundry user-scoped setting (`scope: "user"`) stored in the World database per user account (`game.userId`).
+  - **Cross-Device Persistence**: A player's choice to disable or enable the Action HUD now persists across different browsers, private windows, and machines automatically.
+  - **Configure Settings Integration**: The setting is visible and editable by all players in Foundry's standard Configure Settings -> Module Settings interface (`game.settings.sheet`).
+  - **Graceful Migration**: Added an automatic migration on `ready` that imports any existing preference from browser `localStorage` into the user setting in the database and cleans up the legacy key.
+
 ## [14.1.4] - 2026-09-24
 
 ### Client "Disable Action HUD" Setting Fix

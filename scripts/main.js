@@ -86,6 +86,18 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", async () => {
+	// Migrate legacy client-scoped localStorage disableHUD to user-scoped setting
+	try {
+		const legacyVal = window.localStorage.getItem(`${MODULE_ID}.disableHUD`);
+		if (legacyVal !== null) {
+			const parsed = JSON.parse(legacyVal);
+			if (parsed === true && !game.settings.get(MODULE_ID, "disableHUD")) {
+				await game.settings.set(MODULE_ID, "disableHUD", true);
+			}
+			window.localStorage.removeItem(`${MODULE_ID}.disableHUD`);
+		}
+	} catch (_e) {}
+
 	const config = game.settings.get(MODULE_ID, "configuration") || {};
 
 	if (game.user.isGM) {

@@ -145,7 +145,7 @@ export class SettingsManager {
 		game.settings.register(MODULE_ID, "disableHUD", {
 			name: "NIKS_ACTION_HUD.Settings.DisableHUDName",
 			hint: "NIKS_ACTION_HUD.Settings.DisableHUDHint",
-			scope: "client",
+			scope: "user",
 			config: true,
 			type: Boolean,
 			default: false,

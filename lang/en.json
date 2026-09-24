@@ -782,7 +782,7 @@
     "Title": "Nik's Action HUD",
     "Settings": {
       "DisableHUDName": "Disable Action HUD",
-      "DisableHUDHint": "Completely disables and hides the Action HUD for your client.",
+      "DisableHUDHint": "Completely disables and hides the Action HUD for your user account.",
       "HideTokenControlsName": "Hide Toolbar Token Control Buttons",
       "HideTokenControlsHint": "Removes the Action HUD toggle buttons from the left-side token controls toolbar, keeping it tidy.",
       "WheelResizeName": "Enable Mouse Wheel HUD Resizing",
