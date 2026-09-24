@@ -13,6 +13,7 @@ Nik's Action HUD is the standalone consolidation of `stylish-action-hud` and the
 - **Hide Empty Submenus**: Automatically hides action buttons and submenus with no entries for the active actor (e.g. hiding the Spells button for non-spellcasters). Default enabled and fully configurable in settings.
 - **Direct Sheet Navigation**: Right-click any action or item on the HUD to immediately open the actor sheet to that specific item (built-in).
 - **Outside-Click Dismissal**: Clicking anywhere outside the Action HUD dismisses active sub-menus immediately (built-in).
+- **Instant Search & Deduplication**: Quick search filtering across submenus with guaranteed item deduplication across all category and level tabs (built-in).
 - **Player Character & Token Fallback**: If no token is selected on the canvas, the HUD automatically resolves to your assigned player character or owned character actor on the scene without requiring manual token selection (built-in).
 - **Unlinked NPC Favorites Sync**: Native synchronization of favorite slots for unlinked tokens without flag collisions or data corruption (built-in).
 - **Multi-Row Favorites**: Favorite quick-slots wrap onto multiple lines cleanly without horizontal clipping (built-in).

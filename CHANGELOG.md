@@ -2,6 +2,14 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.1.3] - 2026-09-24
+
+### Search Function Deduplication Fix
+- **Eliminated Duplicate Search Results**: Fixed an issue where typing into the submenu search input displayed duplicate results for every matching item across spells, inventory items, features, and utility rolls.
+  - **Aggregate "All" Tab Conflict**: System submenus (such as Spells, Inventory, Features, and Abilities) define an aggregate `"all"` tab that already includes items from every specific tab/level. The search item collector previously traversed every key of `data.items` recursively, collecting all items from `"all"` and then collecting them again from each individual category tab.
+  - **Keyed Deduplication**: Implemented unique identity tracking (`getItemKey`) utilizing document IDs, macro UUIDs, and synthetic roll keys with a `Set` registry to ensure every unique action appears exactly once in the search list.
+  - **Safe Name Parsing**: Added HTML tag stripping and null-safe name checks to prevent any matching failures or exceptions when searching actions with rich icon labels or formatted text.
+
 ## [14.1.2] - 2026-09-24
 
 ### Player HUD Rendering & Unregistered Setting Fix

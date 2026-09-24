@@ -47,11 +47,11 @@ export const filterList = async (ActionMenu, query) => {
 
 	tabsContainer.hide();
 
-	let allItems = [];
+	const allItems = [];
 
 	const collectItems = (node) => {
 		if (Array.isArray(node)) {
-			allItems = allItems.concat(node);
+			allItems.push(...node);
 		} else if (typeof node === "object" && node !== null) {
 			for (const child of Object.values(node)) {
 				collectItems(child);
@@ -59,17 +59,39 @@ export const filterList = async (ActionMenu, query) => {
 		}
 	};
 
-	if (data.items) {
+	if (data?.items) {
 		collectItems(data.items);
 	}
 
-	const filtered = allItems.filter((item) => {
-		if (item.isHeader) return false;
-		return item.name.toLowerCase().includes(term);
-	});
+	const getItemKey = (item) => {
+		if (item.id !== undefined && item.id !== null && item.id !== "") {
+			return `id:${item.id}`;
+		}
+		if (item.uuid) {
+			return `uuid:${item.uuid}`;
+		}
+		return `name:${item.name || ""}:${item.type || ""}`;
+	};
+
+	const seen = new Set();
+	const filtered = [];
+
+	for (const item of allItems) {
+		if (!item || item.isHeader) continue;
+
+		const rawName = String(item.name || "").toLowerCase();
+		const cleanName = rawName.replace(/<[^>]*>/g, "").trim();
+		if (!rawName.includes(term) && !cleanName.includes(term)) continue;
+
+		const key = getItemKey(item);
+		if (seen.has(key)) continue;
+		seen.add(key);
+
+		filtered.push(item);
+	}
 
 	if (filtered.length === 0) {
-		const noResults = game.i18n.localize("IBHUD.UI.NoSearchResults");
+		const noResults = game.i18n.localize("IBHUD.UI.NoSearchResults") || "No results found";
 		scrollArea.html(
 			`<div class="ib-list-item" style="justify-content:center; color:#888;">${noResults}</div>`,
 		);
