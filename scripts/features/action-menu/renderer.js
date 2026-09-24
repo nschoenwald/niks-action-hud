@@ -255,9 +255,10 @@ export const buildHeaderHtml = (ActionMenu) => {
 	const isImageTheme = (config.theme || "rift") === "image";
 	const useTokenImg = config.actionMenuUseTokenImg ?? false;
 	const actor = ActionMenu.currentActor;
+	const activeTokens = actor.getActiveTokens ? actor.getActiveTokens() : [];
 	const token = canvas.tokens?.controlled?.[0]
-		|| actor.getActiveTokens?.(true, true)?.[0]
-		|| canvas.tokens?.placeables?.find((t) => t.actor?.id === actor.id);
+		|| activeTokens[0]
+		|| canvas.tokens?.placeables?.find((t) => t.actor?.id === actor.id || t.document?.actorId === actor.id);
 
 	const tokenName = token?.name || token?.document?.name || actor.prototypeToken?.name || actor.name;
 
@@ -267,11 +268,9 @@ export const buildHeaderHtml = (ActionMenu) => {
 
 	let img = ActionMenu.currentActor.img;
 	if (useTokenImg) {
-		const token = canvas.tokens.controlled[0];
-		if (token?.document?.texture?.src) {
-			img = token.document.texture.src;
-		} else if (ActionMenu.currentActor.prototypeToken?.texture?.src) {
-			img = ActionMenu.currentActor.prototypeToken.texture.src;
+		const imgSrc = token?.document?.texture?.src || token?.texture?.src || actor.prototypeToken?.texture?.src;
+		if (imgSrc) {
+			img = imgSrc;
 		}
 	}
 

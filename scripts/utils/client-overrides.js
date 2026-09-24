@@ -1,5 +1,14 @@
 import { MODULE_ID } from "../constants.js";
 
+function getClientActorOverrides(actorId) {
+	if (!actorId) return null;
+	try {
+		return game.settings.get(MODULE_ID, "clientActorOverrides")?.[actorId] ?? null;
+	} catch {
+		return null;
+	}
+}
+
 export function resolveDisplayName(config, actor, actorId) {
 	const override = getEffectiveActorSettings(config, actorId).displayName?.trim();
 	if (override) return override;
@@ -13,7 +22,7 @@ export function resolveDisplayName(config, actor, actorId) {
 export function getEffectiveActorSettings(config, actorId) {
 	const worldSettings = config?.actorSettings?.[actorId] || {};
 	if (game.user.isGM) return worldSettings;
-	const clientData = game.settings.get(MODULE_ID, "clientActorOverrides")?.[actorId];
+	const clientData = getClientActorOverrides(actorId);
 	return clientData?.actorSettings
 		? { ...worldSettings, ...clientData.actorSettings }
 		: worldSettings;
@@ -22,13 +31,13 @@ export function getEffectiveActorSettings(config, actorId) {
 export function getEffectiveActorAttributes(config, actorId) {
 	const worldAttrs = config?.actorAttributes?.[actorId] || [];
 	if (game.user.isGM) return worldAttrs;
-	const clientData = game.settings.get(MODULE_ID, "clientActorOverrides")?.[actorId];
+	const clientData = getClientActorOverrides(actorId);
 	return clientData?.actorAttributes ?? worldAttrs;
 }
 
 export function getEffectiveImageRules(config, actorId) {
 	const worldRules = config?.imageRules?.[actorId] || [];
 	if (game.user.isGM) return worldRules;
-	const clientData = game.settings.get(MODULE_ID, "clientActorOverrides")?.[actorId];
+	const clientData = getClientActorOverrides(actorId);
 	return clientData?.imageRules ?? worldRules;
 }

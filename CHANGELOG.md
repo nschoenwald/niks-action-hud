@@ -2,6 +2,18 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.1.2] - 2026-09-24
+
+### Player HUD Rendering & Unregistered Setting Fix
+- **Registered `clientActorOverrides` Setting**: Registered the internal client-scoped setting `clientActorOverrides` in `SettingsManager`. Previously, this setting was omitted during registration, causing `game.settings.get(MODULE_ID, "clientActorOverrides")` to throw an uncaught exception (`This is not a registered game setting`) whenever non-GM players loaded the canvas, controlled a token, or refreshed the HUD.
+- **Fail-Safe Client Overrides Retrieval**: Added a safe helper function `getClientActorOverrides(actorId)` with `try...catch` in `client-overrides.js` to ensure actor display names, attributes, and image rules can never crash HUD rendering for players even during early initialization cycles.
+- **Enhanced Player Character & Token Resolution**: Improved active actor and token resolution for players in `ActionMenu.refresh()`:
+  - Added seamless fallback to any character actor owned by the user (`game.actors.find(a => a.isOwner && a.type === "character")`) if `game.user.character` is unassigned in User Configuration.
+  - Standardized token discovery via `userActor.getActiveTokens()` to correctly capture rendered canvas placeables for linked or unlinked tokens alike without requiring prior manual token selection.
+  - Hardened header token and texture lookups across placeables, token documents, and prototype tokens in `buildHeaderHtml`.
+- **Non-GM Configuration Saving**: Updated `ActionHUDConfig.onSave` so player users saving settings persist their client-level overrides (`clientPositions`, `clientActorOverrides`) without triggering world-level permission errors (`You do not have permission to modify world-level settings`).
+- **World Preset Guarding**: Added permissions validation to world preset creation and deletion actions in `ActionHUDConfig`, preventing unhandled promise rejections for non-GM users.
+
 ## [14.1.1] - 2026-09-23
 
 ### New Themes Button Sizing & Spacing Alignment (Rift Proportions)

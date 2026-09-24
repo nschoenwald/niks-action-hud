@@ -83,6 +83,17 @@ export class SettingsManager {
 			},
 		});
 
+		game.settings.register(MODULE_ID, "clientActorOverrides", {
+			name: "Client Actor Overrides",
+			scope: "client",
+			config: false,
+			type: Object,
+			default: {},
+			onChange: () => {
+				ActionMenu.refresh();
+			},
+		});
+
 		game.settings.register(MODULE_ID, "clientVisibility", {
 			name: "Client Visibility Overrides",
 			scope: "client",

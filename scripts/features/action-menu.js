@@ -253,21 +253,25 @@ export class ActionMenu {
 		let token = controlled[0];
 		if (
 			canvas.tokens &&
-			(hasNoControlled || onlyGroupTokens) &&
-			game.user?.character
+			(hasNoControlled || onlyGroupTokens)
 		) {
-			const userActor = game.user.character;
-			const activeToken = userActor.getActiveTokens?.(true, true)?.[0]
-				|| canvas.tokens.placeables?.find((t) => t.actor?.id === userActor.id);
+			const userActor = game.user?.character
+				|| (!game.user?.isGM ? (game.actors?.find((a) => a.isOwner && a.type === "character") || game.actors?.find((a) => a.isOwner)) : null);
 
-			token = activeToken || {
-				actor: userActor,
-				name: userActor.prototypeToken?.name || userActor.name,
-				document: {
+			if (userActor) {
+				const activeTokens = userActor.getActiveTokens ? userActor.getActiveTokens() : [];
+				const activeToken = activeTokens[0]
+					|| canvas.tokens.placeables?.find((t) => t.actor?.id === userActor.id || t.document?.actorId === userActor.id);
+
+				token = activeToken || {
+					actor: userActor,
 					name: userActor.prototypeToken?.name || userActor.name,
-					texture: { src: userActor.prototypeToken?.texture?.src || userActor.img },
-				},
-			};
+					document: {
+						name: userActor.prototypeToken?.name || userActor.name,
+						texture: { src: userActor.prototypeToken?.texture?.src || userActor.img },
+					},
+				};
+			}
 		}
 
 		const isEditMode = window.ActionHUD?.isEditMode ?? false;

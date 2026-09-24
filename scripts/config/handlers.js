@@ -20,7 +20,36 @@ export const onSave = async (app, event, target) => {
 		captureInputData(app, app.element);
 		const cleanConfig = exportHudConfig(app.tempData);
 
-		await game.settings.set(MODULE_ID, "configuration", cleanConfig);
+		if (game.user.isGM) {
+			await game.settings.set(MODULE_ID, "configuration", cleanConfig);
+		} else {
+			// Non-GMs cannot save world-level settings; save client-level overrides instead
+			const clientPos = foundry.utils.deepClone(
+				game.settings.get(MODULE_ID, "clientPositions") || {},
+			);
+			if (cleanConfig.actionMenuPos) {
+				clientPos.actionMenuPos = cleanConfig.actionMenuPos;
+			}
+			if (cleanConfig.actionMenuScale !== undefined) {
+				clientPos.actionMenuScale = cleanConfig.actionMenuScale;
+			}
+			await game.settings.set(MODULE_ID, "clientPositions", clientPos);
+
+			if (cleanConfig.actorSettings) {
+				try {
+					const clientOverrides = foundry.utils.deepClone(
+						game.settings.get(MODULE_ID, "clientActorOverrides") || {},
+					);
+					for (const [actorId, actorCfg] of Object.entries(cleanConfig.actorSettings)) {
+						if (!clientOverrides[actorId]) clientOverrides[actorId] = {};
+						clientOverrides[actorId].actorSettings = actorCfg;
+					}
+					await game.settings.set(MODULE_ID, "clientActorOverrides", clientOverrides);
+				} catch (e) {
+					console.warn("Nik's Action HUD | Could not save clientActorOverrides:", e);
+				}
+			}
+		}
 
 		const savedMsg = game.i18n.has("NIKS_ACTION_HUD.Config.Saved")
 			? game.i18n.localize("NIKS_ACTION_HUD.Config.Saved")
@@ -314,6 +343,11 @@ export const onRemoveBtnFrameLayer = async (app, event, target) => {
 // ── Presets Handlers ─────────────────────────────────────
 
 export const onSaveConfigPreset = async (app, event, target) => {
+	if (!game.user.isGM) {
+		ui.notifications.warn("Only the GM can save world configuration presets.");
+		return;
+	}
+
 	const input = app.element.querySelector('input[name="newConfigPresetName"]');
 	const name = input?.value?.trim();
 	if (!name) {
@@ -348,6 +382,11 @@ export const onLoadConfigPreset = async (app, event, target) => {
 };
 
 export const onDeleteConfigPreset = async (app, event, target) => {
+	if (!game.user.isGM) {
+		ui.notifications.warn("Only the GM can delete world configuration presets.");
+		return;
+	}
+
 	const select = app.element.querySelector('select[name="loadConfigPresetSelect"]');
 	const name = select?.value;
 	if (!name) return;
@@ -367,6 +406,11 @@ export const onDeleteConfigPreset = async (app, event, target) => {
 };
 
 export const onSaveActionMenuPreset = async (app, event, target) => {
+	if (!game.user.isGM) {
+		ui.notifications.warn("Only the GM can save world action menu presets.");
+		return;
+	}
+
 	const input = app.element.querySelector('input[name="newActionMenuPresetName"]');
 	const name = input?.value?.trim();
 	if (!name) return;
@@ -398,6 +442,11 @@ export const onLoadActionMenuPreset = async (app, event, target) => {
 };
 
 export const onDeleteActionMenuPreset = async (app, event, target) => {
+	if (!game.user.isGM) {
+		ui.notifications.warn("Only the GM can delete world action menu presets.");
+		return;
+	}
+
 	const select = app.element.querySelector('select[name="loadActionMenuPresetSelect"]');
 	const name = select?.value;
 	if (!name) return;
