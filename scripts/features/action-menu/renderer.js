@@ -794,7 +794,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		renderGeneration !== ActionMenu.subMenuRenderGeneration
 	) return false;
 	if (!data) {
-		console.warn("StylishHUD | No submenu data available for:", categoryId);
+		console.warn("Nik's Action HUD | No submenu data available for:", categoryId);
 		container.removeClass("active");
 		container.removeData("active-cat");
 		return false;

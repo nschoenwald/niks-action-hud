@@ -223,7 +223,7 @@ export class ActionMenu {
 					await filterListModule(ActionMenu, lastSearchQuery);
 				})
 				.catch((error) => {
-					console.warn("StylishHUD | Could not restore sub-menu:", error);
+					console.warn("Nik's Action HUD | Could not restore sub-menu:", error);
 				});
 		};
 
@@ -327,7 +327,7 @@ export class ActionMenu {
 			try {
 				ActionMenu.renderMain();
 			} catch (err) {
-				console.error("StylishHUD | Action Menu Render Error:", err);
+				console.error("Nik's Action HUD | Action Menu Render Error:", err);
 			}
 			if (lastActiveCat) {
 				restoreSubMenu();
@@ -340,7 +340,7 @@ export class ActionMenu {
 		try {
 			ActionMenu.renderMain();
 		} catch (err) {
-			console.error("StylishHUD | Action Menu Render Error:", err);
+			console.error("Nik's Action HUD | Action Menu Render Error:", err);
 		}
 
 		if (lastActiveCat) {

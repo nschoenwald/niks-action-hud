@@ -101,7 +101,7 @@ const importPreset = async (presetData, options = {}) => {
 				presetSystem: presetData.meta.systemTitle || presetData.meta.systemId,
 				currentSystem: game.system.title,
 			})}</p>`,
-			classes: ["stylish-hud-dialog"],
+			classes: ["niks-hud-dialog"],
 		});
 		if (!confirmed) {
 			return { success: false, error: "Import cancelled due to system mismatch" };

@@ -21,7 +21,7 @@ const createAdapterInstance = (adapter) => {
 	if (typeof adapter === "object") return adapter;
 
 	console.warn(
-		"Stylish Action HUD | Invalid adapter registration. Falling back to BaseSystemAdapter.",
+		"Nik's Action HUD | Invalid adapter registration. Falling back to BaseSystemAdapter.",
 	);
 	return new BaseSystemAdapter();
 };
@@ -39,7 +39,7 @@ const resolveAdapterEntry = (systemId, context = {}) => {
 			return entry.isCompatible(context) !== false;
 		} catch (error) {
 			console.warn(
-				"Stylish Action HUD | Adapter compatibility check failed:",
+				"Nik's Action HUD | Adapter compatibility check failed:",
 				error,
 			);
 			return false;
@@ -57,9 +57,9 @@ const resolveAdapterEntry = (systemId, context = {}) => {
 const registerSystemAdapter = (systemId, adapter, options = {}) => {
 	const resolvedId = normalizeSystemId(systemId);
 	if (!resolvedId)
-		throw new Error("Stylish Action HUD | systemId is required.");
+		throw new Error("Nik's Action HUD | systemId is required.");
 	if (!adapter)
-		throw new Error("Stylish Action HUD | adapter is required.");
+		throw new Error("Nik's Action HUD | adapter is required.");
 
 	const entry = {
 		systemId: resolvedId,

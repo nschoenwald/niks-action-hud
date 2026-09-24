@@ -18,9 +18,9 @@ const normalizeMode = (mode) => {
 const registerDefault = (type, systemId, data, options = {}) => {
 	const resolvedId = normalizeSystemId(systemId);
 	if (!resolvedId)
-		throw new Error("Stylish Action HUD | systemId is required.");
+		throw new Error("Nik's Action HUD | systemId is required.");
 	if (!data)
-		throw new Error("Stylish Action HUD | default data is required.");
+		throw new Error("Nik's Action HUD | default data is required.");
 
 	const entry = {
 		systemId: resolvedId,
@@ -52,7 +52,7 @@ const resolveEntry = (type, systemId, context = {}) => {
 			return entry.isCompatible(context) !== false;
 		} catch (error) {
 			console.warn(
-				"Stylish Action HUD | Default compatibility check failed:",
+				"Nik's Action HUD | Default compatibility check failed:",
 				error,
 			);
 			return false;

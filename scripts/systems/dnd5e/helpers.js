@@ -507,7 +507,7 @@ export async function _handleDnd5eAmmoAction(actor, weaponId, command, event) {
 				const selectedStyle = isSelected ? "border-left: 3px solid #5a5; padding-left: 5px;" : "padding-left: 8px;";
 				const isDepleted = qty === 0;
 				listHtml += `
-					<div class="stylish-ammo-option" data-ammo-id="${a.id}" style="
+					<div class="niks-ammo-option" data-ammo-id="${a.id}" style="
 						display:flex; align-items:center; padding:4px 8px; cursor:pointer;
 						${selectedStyle}
 						border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -522,7 +522,7 @@ export async function _handleDnd5eAmmoAction(actor, weaponId, command, event) {
 		}
 
 		const dropdown = document.createElement("div");
-		dropdown.className = "stylish-ammo-dropdown";
+		dropdown.className = "niks-ammo-dropdown";
 		dropdown.style.cssText = `
 			position: fixed; z-index: 99999;
 			background: rgba(20, 20, 20, 0.95);
@@ -551,7 +551,7 @@ export async function _handleDnd5eAmmoAction(actor, weaponId, command, event) {
 		if (rect.right > window.innerWidth) dropdown.style.left = `${window.innerWidth - rect.width - 8}px`;
 		if (rect.bottom > window.innerHeight) dropdown.style.top = `${window.innerHeight - rect.height - 8}px`;
 
-		dropdown.querySelectorAll(".stylish-ammo-option").forEach(optEl => {
+		dropdown.querySelectorAll(".niks-ammo-option").forEach(optEl => {
 			optEl.addEventListener("click", async (ev) => {
 				ev.stopPropagation();
 				const ammoId = optEl.dataset.ammoId;
@@ -562,7 +562,7 @@ export async function _handleDnd5eAmmoAction(actor, weaponId, command, event) {
 						await weapon.setFlag("dnd5e", `last.${attackActivity.id}.ammunition`, ammoId);
 					}
 				} catch (err) {
-					console.warn("StylishHUD | DnD5e ammo selection failed:", err);
+					console.warn("Nik's Action HUD | DnD5e ammo selection failed:", err);
 				}
 				dropdown.remove();
 			});

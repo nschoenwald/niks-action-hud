@@ -33,10 +33,10 @@ export const registerActionMenuSubMenu = (
 	options = {},
 ) => {
 	if (!categoryId) {
-		throw new Error("StylishHUD | categoryId is required for submenu.");
+		throw new Error("Nik's Action HUD | categoryId is required for submenu.");
 	}
 	if (typeof provider !== "function") {
-		throw new Error("StylishHUD | submenu provider must be a function.");
+		throw new Error("Nik's Action HUD | submenu provider must be a function.");
 	}
 	const entry = {
 		categoryId: String(categoryId),
@@ -68,7 +68,7 @@ const resolveCategoryEntries = (ActionMenu, actor) => {
 			return entry.isCompatible({ actor }) !== false;
 		} catch (error) {
 			console.warn(
-				"StylishHUD | Action menu category compatibility failed:",
+				"Nik's Action HUD | Action menu category compatibility failed:",
 				error,
 			);
 			return false;

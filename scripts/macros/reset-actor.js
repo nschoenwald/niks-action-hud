@@ -1,5 +1,5 @@
-// Stylish Action HUD — Full Actor Reset
-// Completely removes all Stylish Action HUD data for the selected actor.
+// Nik's Action HUD — Full Actor Reset
+// Completely removes all Action HUD data for the selected actor.
 // Usage: Select a token, then run this macro.
 
 (async () => {
@@ -17,8 +17,8 @@
   // 2) Confirm
   const { DialogV2 } = foundry.applications.api;
   const yes = await DialogV2.confirm({
-    window: { title: "Reset Stylish HUD Data" },
-    content: `<p>This will <strong>permanently delete</strong> all Stylish Action HUD settings for <strong>${actor.name}</strong>.</p>
+    window: { title: "Reset Action HUD Data" },
+    content: `<p>This will <strong>permanently delete</strong> all Action HUD settings for <strong>${actor.name}</strong>.</p>
               <p>This includes: style, portrait, card format, attributes, image rules, position, and actor flags.</p>
               <p style="color:#e44;">This cannot be undone. Continue?</p>`,
     modal: true,
@@ -61,6 +61,6 @@
   }
 
   ui.notifications.info(
-    `Stylish Action HUD — All data for "${actor.name}" has been reset. Reload to apply.`
+    `Nik's Action HUD — All data for "${actor.name}" has been reset. Reload to apply.`
   );
 })();

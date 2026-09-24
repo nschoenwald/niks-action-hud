@@ -1,8 +1,8 @@
 # Nik's Action HUD (`niks-action-hud`)
 
-A modern, fast, and stylish canvas-docked Action HUD for **Foundry VTT (v14)** with dedicated first-class support for **DnD5e 6.0+**.
+A modern, fast, and responsive canvas-docked Action HUD for **Foundry VTT (v14)** with dedicated first-class support for **DnD5e 6.0+**.
 
-Nik's Action HUD is the standalone consolidation of `stylish-action-hud` and the `niks-stylish-action-hud` enhancement patch into a single, unified module. The legacy party HUD features have been completely removed, leaving an ultra-focused, high-performance Action HUD.
+Nik's Action HUD is an ultra-focused, high-performance Action HUD designed to streamline combat and action management for Foundry VTT.
 
 ---
 

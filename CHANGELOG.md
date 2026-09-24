@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.2.0] - 2026-09-24
+
+### Cleaned up Documentation
+
 ## [14.1.5] - 2026-09-24
 
 ### User-Scoped "Disable Action HUD" Setting
@@ -129,7 +133,7 @@ All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be document
 
 ### Fixed
 - **Config Dialog ReferenceError (`adapter is not defined`)**: Resolved an issue in `scripts/config/context.js` where `adapter` was passed to `prepareExternalAdapterMenu` without being declared in `prepareContext`. `adapter` is now safely resolved via `window.ActionHUD?.adapter || adapterRegistry.createSystemAdapter(game.system.id)`.
-- **Global API Alias & Handlers Consistency**: Added `window.stylishActionHUD = ActionHUD` backwards-compatibility alias in `scripts/main.js` and updated config handlers in `scripts/config/handlers.js` to reference `(window.ActionHUD || window.stylishActionHUD)` cleanly.
+- **Global API Alias & Handlers Consistency**: Standardized `window.ActionHUD` across the module and updated config handlers in `scripts/config/handlers.js` to reference `window.ActionHUD` cleanly.
 
 ---
 
@@ -230,17 +234,17 @@ Permanently baked 12 previously configurable settings into the core module runti
 ### Highlights & Bug Fixes
 - **SyntaxError Fix ('ActionHUDConfig' already declared)**: Removed redundant duplicate `export const ActionHUDConfig` statement from the end of `scripts/config.js` that caused a fatal module compilation error and prevented the HUD from rendering.
 - **Actor Sidebar Removal**: Completely removed the legacy actor sidebar, PC/NPC filter tabs, search input, and roster checkboxes from `templates/config.hbs`. The configuration menu is now a clean, full-width, single-panel dialog dedicated solely to the Action HUD.
-- **Complete Decoupling from Legacy Module**: Completely removed `MigrationManager`, `LEGACY_MODULE_ID`, and all runtime references to `stylish-action-hud`, `window.StylishAction`, and `window.stylishActionHUD`. The module is now 100% standalone and clean.
+- **Complete Decoupling from Legacy Code**: Completely removed `MigrationManager`, `LEGACY_MODULE_ID`, and all legacy runtime references. The module is now 100% standalone and clean.
 - **Config Menu Visual Fix & Portrait Blowout Prevention**: Fixed CSS scoping mismatch in `styles/config.css` where rules targeted `#iron-blood-config` instead of the ApplicationV2 window ID `#niks-action-config`.
 - **Action Menu Positioning & Canvas Load Refresh**: Fixed default unanchored coordinates (`top: 800, left: 1200`) that caused the HUD to render offscreen on many displays; defaulted to docked bottom-right anchor (`anchorX: "right", anchorY: "bottom", offsetX: 40, offsetY: 40`) with viewport clamping. Registered `canvasReady` and `updateUser` hooks to ensure HUD displays immediately on scene load and actor assignment.
-- **Settings Deduplication & Localization Cleanups**: Removed duplicate `enableWheelResize` setting registration and removed redundant legacy `NIKS_STYLISH_ACTION_HUD` namespace from `lang/en.json`. All settings now cleanly show their localized names and hints.
+- **Settings Deduplication & Localization Cleanups**: Removed duplicate `enableWheelResize` setting registration and removed redundant legacy setting namespaces from `lang/en.json`. All settings now cleanly show their localized names and hints.
 
 ---
 
 ## [1.0.1] - 2026-09-22
 
 ### Bug Fixes
-- **Action Menu Opening & Flag Scopes**: Fixed an error where `actor.getFlag("stylish-action-hud", ...)` threw `Flag scope "stylish-action-hud" is not valid or not currently active` during token selection (`controlToken`). Replaced all legacy flag queries across the codebase with safe property access (`actor.flags?.[LEGACY_MODULE_ID]?.[key]`).
+- **Action Menu Opening & Flag Scopes**: Fixed an error where legacy flag lookups threw `Flag scope is not valid or not currently active` during token selection (`controlToken`). Replaced all legacy flag queries across the codebase with safe property access.
 - **Config Menu Button & Missing Settings**: Fixed a promise rejection when clicking the "Configure Action HUD" button caused by unregistered settings (`trackingConfigRole`, `configurationPresets`, `actorPresets`, `personalActorPresets`, `clientActorOverrides`). All internal settings are now properly registered.
 - **Settings Registration & Missing Names**: Registered all module settings (`rightClickOpenSheet`, `closeOnOutsideClick`, `useTokenNameTitle`, `wheelResize`) and provided complete, human-friendly localization strings for all settings, sound profile choices, and modifier keys in `lang/en.json`.
 - **Role Dropdown Localization**: Updated role choices in `menuConfigRole` and `styleConfigRole` to use standard Foundry localization keys (`USER.RolePlayer`, `USER.RoleTrusted`, `USER.RoleAssistant`, `USER.RoleGamemaster`).
@@ -250,7 +254,7 @@ Permanently baked 12 previously configurable settings into the core module runti
 ## [1.0.0] - 2026-09-22
 
 ### Highlights
-- **Module Consolidation**: Consolidated `stylish-action-hud` and the `niks-stylish-action-hud` patch into a single, standalone module: `niks-action-hud`.
+- **Module Consolidation**: Consolidated previous enhancements into a single, standalone module: `niks-action-hud`.
 - **Party HUD Removal**: Purged all party HUD features (card tracking layers, OBS streaming overlays, voice indicators, portrait gallery, card navigation, party attributes) to focus entirely on a high-performance Action HUD.
 - **DnD5e 6.0+ Focus & Modernization**: Focused built-in system support exclusively on DnD5e 6.0+ activities and data models, dropping backwards compatibility to v5.
 - **Modular System Architecture**: Retained the modular system adapter infrastructure (`BaseSystemAdapter`, `adapterRegistry`, `defaultRegistry`, and lifecycle hooks) intact, enabling external modules and systems to register custom adapters seamlessly.
@@ -280,7 +284,7 @@ Permanently baked 12 previously configurable settings into the core module runti
 
 ### Technical Improvements
 - Removed legacy `pf2e` adapter files and settings while preserving the extensible `BaseSystemAdapter` and `adapterRegistry` interfaces.
-- Migrated module ID namespace to `niks-action-hud` while retaining backwards-compatible flag reads for `stylish-action-hud`.
+- Migrated module ID namespace to `niks-action-hud` while retaining backwards-compatible flag reads for legacy actor data.
 - Registered scene controls inside `Hooks.once("init")` supporting both V13 Array and V14 Record representations.
 - Streamlined configuration template (`templates/config.hbs`) to present only `actionmenu`, `menu`, and `common` settings.
 - Validated all JavaScript source files with zero syntax errors.
