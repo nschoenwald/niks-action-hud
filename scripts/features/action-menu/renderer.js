@@ -637,6 +637,9 @@ const adjustSubMenuPosition = (ActionMenu) => {
 };
 
 export const renderPlaceholder = (ActionMenu) => {
+	try {
+		if (game.settings.get(MODULE_ID, "disableHUD")) return;
+	} catch (_e) {}
 	$(`#${ActionMenu.ROOT_ID}`).remove();
 
 	const cfg = getRenderConfig(ActionMenu);
@@ -689,6 +692,12 @@ export const renderPlaceholder = (ActionMenu) => {
 };
 
 export const renderMain = (ActionMenu) => {
+	try {
+		if (game.settings.get(MODULE_ID, "disableHUD")) {
+			$(`#${ActionMenu.ROOT_ID}`).remove();
+			return;
+		}
+	} catch (_e) {}
 	const cfg = getRenderConfig(ActionMenu);
 	setupTooltip(cfg.theme, cfg.actionMenuFont);
 

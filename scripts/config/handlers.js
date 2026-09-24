@@ -24,6 +24,10 @@ export const onSave = async (app, event, target) => {
 			await game.settings.set(MODULE_ID, "configuration", cleanConfig);
 		} else {
 			// Non-GMs cannot save world-level settings; save client-level overrides instead
+			if (cleanConfig.enableActionMenu !== undefined) {
+				await game.settings.set(MODULE_ID, "disableHUD", !cleanConfig.enableActionMenu);
+			}
+
 			const clientPos = foundry.utils.deepClone(
 				game.settings.get(MODULE_ID, "clientPositions") || {},
 			);

@@ -36,10 +36,21 @@ class ActionHUD {
 	}
 
 	static refresh() {
+		try {
+			if (game.settings.get(MODULE_ID, "disableHUD")) {
+				ActionMenu.hideMenu();
+				const root = document.getElementById(ActionMenu.ROOT_ID);
+				if (root) root.remove();
+				return;
+			}
+		} catch (_e) {}
 		ActionMenu.refresh();
 	}
 
 	static showHUD() {
+		try {
+			if (game.settings.get(MODULE_ID, "disableHUD")) return;
+		} catch (_e) {}
 		ActionMenu.refresh();
 	}
 
@@ -103,6 +114,9 @@ Hooks.once("ready", async () => {
 
 	// Combat state monitoring
 	const onCombatChange = () => {
+		try {
+			if (game.settings.get(MODULE_ID, "disableHUD")) return;
+		} catch (_e) {}
 		const config = game.settings.get(MODULE_ID, "configuration") || {};
 		const visibility = config.actionMenuVisibility || "always";
 
@@ -122,6 +136,9 @@ Hooks.once("ready", async () => {
 	Hooks.on("updateCombat", onCombatChange);
 	Hooks.on("deleteCombat", onCombatChange);
 	Hooks.on("canvasReady", () => {
+		try {
+			if (game.settings.get(MODULE_ID, "disableHUD")) return;
+		} catch (_e) {}
 		ActionMenu.refresh();
 	});
 	Hooks.on("updateUser", (user) => {

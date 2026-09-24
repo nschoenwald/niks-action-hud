@@ -153,7 +153,7 @@ export class SettingsManager {
 				if (val) {
 					window.ActionHUD?.actionMenu?.hideMenu?.();
 					const root = document.getElementById(ActionMenu.ROOT_ID);
-					if (root) root.style.display = "none";
+					if (root) root.remove();
 				} else {
 					ActionMenu.refresh();
 				}
@@ -331,6 +331,9 @@ export class SettingsManager {
 				},
 			],
 			onDown: () => {
+				const isHudDisabled = game.settings.get(MODULE_ID, "disableHUD");
+				if (isHudDisabled) return;
+
 				const root = document.getElementById(ActionMenu.ROOT_ID);
 				const isHidden = root?.classList.contains("collapsed") || root?.style.display === "none";
 				if (isHidden) {
@@ -371,6 +374,10 @@ export class SettingsManager {
 				toggle: true,
 				active: true,
 				onChange: (_event, active) => {
+					if (game.settings.get(MODULE_ID, "disableHUD")) {
+						ui.notifications.info(game.i18n.localize("NIKS_ACTION_HUD.Settings.DisableHUDHint") || "Action HUD is disabled in settings.");
+						return;
+					}
 					const root = document.getElementById(ActionMenu.ROOT_ID);
 					if (active) {
 						ActionMenu.refresh();

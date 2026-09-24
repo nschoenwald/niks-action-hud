@@ -230,11 +230,18 @@ export class ActionMenu {
 		const shouldHide = () => { root.addClass("am-hidden"); container.removeClass("active"); };
 		const shouldDestroy = () => { root.remove(); };
 
+		try {
+			if (game.settings.get(MODULE_ID, "disableHUD")) {
+				shouldDestroy();
+				return;
+			}
+		} catch (_e) {}
+
 		const config =
 			game.settings.get(MODULE_ID, "configuration") || {};
 
 		if (config.enableActionMenu === false) { shouldDestroy(); return; }
-		if (config.gmHudHidden) { shouldDestroy(); return; }
+		if (config.gmHudHidden && game.user.isGM) { shouldDestroy(); return; }
 
 		const visibilityOverrides =
 			game.settings.get(MODULE_ID, "clientVisibility") || {};
@@ -642,6 +649,9 @@ export class ActionMenu {
 	}
 
 	static showMenu() {
+		try {
+			if (game.settings.get(MODULE_ID, "disableHUD")) return;
+		} catch (_e) {}
 		const root = $(`#${ActionMenu.ROOT_ID}`);
 		if (root.length) {
 			root.show();

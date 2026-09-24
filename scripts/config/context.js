@@ -246,6 +246,12 @@ export const prepareUiOptions = () => ({
 export const initializeTempData = (app, globalConfig) => {
 	app.tempData = {};
 	loadHudConfig(app.tempData, globalConfig);
+	if (!game.user.isGM) {
+		try {
+			const isHudDisabled = Boolean(game.settings.get(MODULE_ID, "disableHUD"));
+			app.tempData.enableActionMenu = !isHudDisabled;
+		} catch (_e) {}
+	}
 	app.isInitialized = true;
 };
 

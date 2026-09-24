@@ -2,6 +2,15 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.1.4] - 2026-09-24
+
+### Client "Disable Action HUD" Setting Fix
+- **Enforced `disableHUD` in ActionMenu.refresh()**: Previously, `ActionMenu.refresh()` never checked the client-scoped `disableHUD` setting. As a result, whenever a player who had disabled the Action HUD selected a token (`controlToken`), switched scenes (`canvasReady`), or triggered combat/actor updates, the HUD was automatically re-created and rendered back onto their screen.
+- **Immediate DOM Removal on Disable**: Changed `disableHUD` setting `onChange` callback and `ActionMenu.refresh()` to remove the `#ib-action-root` element from the DOM completely instead of relying solely on `style.display = "none"`, which was overridden by subsequent renders.
+- **Prevented Hook and Lifecycle Rerenders**: Added `disableHUD` early-exit checks across all lifecycle hooks (`canvasReady`, `onCombatChange`, `ActionHUD.refresh`, `ActionHUD.showHUD`, `ActionMenu.renderMain`, `ActionMenu.renderPlaceholder`, and keybindings).
+- **Fixed "Hide HUD for GM" Player Interference**: Fixed a bug where `config.gmHudHidden` was evaluated globally in `ActionMenu.refresh()`, unintentionally hiding the HUD for players if the GM had toggled "Hide HUD for GM". It now strictly checks `config.gmHudHidden && game.user.isGM`.
+- **Config Dialog Sync for Non-GM Users**: When a player opens the Action HUD Configuration dialog, the "Enable Action HUD" switch now initializes to their client-level `disableHUD` state, and saving toggles `disableHUD` for their client rather than failing on world-level setting permissions.
+
 ## [14.1.3] - 2026-09-24
 
 ### Search Function Deduplication Fix

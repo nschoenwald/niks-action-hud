@@ -15,6 +15,7 @@ Nik's Action HUD is the standalone consolidation of `stylish-action-hud` and the
 - **Outside-Click Dismissal**: Clicking anywhere outside the Action HUD dismisses active sub-menus immediately (built-in).
 - **Instant Search & Deduplication**: Quick search filtering across submenus with guaranteed item deduplication across all category and level tabs (built-in).
 - **Player Character & Token Fallback**: If no token is selected on the canvas, the HUD automatically resolves to your assigned player character or owned character actor on the scene without requiring manual token selection (built-in).
+- **Client HUD Toggle**: Per-user client setting to cleanly enable or disable the Action HUD independently of the GM or other players, with full synchronization in the Action HUD configuration menu.
 - **Unlinked NPC Favorites Sync**: Native synchronization of favorite slots for unlinked tokens without flag collisions or data corruption (built-in).
 - **Multi-Row Favorites**: Favorite quick-slots wrap onto multiple lines cleanly without horizontal clipping (built-in).
 - **Live Scaling & Wheel Resizing**:
