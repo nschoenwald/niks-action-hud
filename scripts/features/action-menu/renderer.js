@@ -314,15 +314,12 @@ export const buildQuickSlotsHtml = (ActionMenu) => {
 		}
 
 		if (item) {
-			const reorderHint = game.i18n.localize("IBHUD.UI.DragFavoriteToReorder");
-			const removeHint = game.i18n.localize("IBHUD.UI.RightClickRemoveFavorite");
-			const slotTitle = `${name} · ${reorderHint} · ${removeHint}`;
 			slots += `
                 <div class="ib-quick-slot" draggable="true"
 					 data-favorite-id="${escapeHtml(itemId)}"
-					 data-tooltip="${escapeHtml(slotTitle)}"
-					 data-tooltip-direction="UP"
-					 aria-label="${escapeHtml(slotTitle)}">
+					 aria-label="${escapeHtml(name)}"
+					 onmouseenter="ActionHUD.actionMenu.showTooltip('${escapeHtml(itemId)}', event)"
+					 onmouseleave="ActionHUD.actionMenu.hideTooltip()">
                     <img src="${escapeHtml(img)}" alt="${escapeHtml(name)}" draggable="false">
                 </div>
             `;

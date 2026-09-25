@@ -463,28 +463,34 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 			const key = itemId.replace("save-", "");
 			const label = CONFIG.DND5E?.abilities?.[key]?.label || key.toUpperCase();
 			const img = CONFIG.DND5E?.abilities?.[key]?.icon || "icons/svg/d20-highlight.svg";
-			return { img, name: `${label} Save` };
+			const desc = this.getDnd5eTooltip ? this.getDnd5eTooltip("save", key, label) : "";
+			return { img, name: `${label} Save`, type: "Saving Throw", description: desc };
 		}
 		if (itemId === "check-initiative") {
-			return { img: "icons/svg/clockwork.svg", name: "Initiative" };
+			const desc = this.getDnd5eTooltip ? this.getDnd5eTooltip("initiative") : "";
+			return { img: "icons/svg/clockwork.svg", name: "Initiative", type: "Initiative", description: desc };
 		}
 		if (itemId.startsWith("check-")) {
 			const key = itemId.replace("check-", "");
 			const label = CONFIG.DND5E?.abilities?.[key]?.label || key.toUpperCase();
 			const img = CONFIG.DND5E?.abilities?.[key]?.icon || "icons/svg/d20-grey.svg";
-			return { img, name: `${label} Check` };
+			const desc = this.getDnd5eTooltip ? this.getDnd5eTooltip("check", key, label) : "";
+			return { img, name: `${label} Check`, type: "Ability Check", description: desc };
 		}
 		if (itemId.startsWith("skill-")) {
 			const key = itemId.replace("skill-", "");
 			const label = CONFIG.DND5E?.skills?.[key]?.label || actor?.system?.skills?.[key]?.label || key;
 			const img = CONFIG.DND5E?.skills?.[key]?.icon || "icons/svg/book.svg";
-			return { img, name: label };
+			const ablKey = actor?.system?.skills?.[key]?.ability || CONFIG.DND5E?.skills?.[key]?.ability || "str";
+			const ablLabel = CONFIG.DND5E?.abilities?.[ablKey]?.label || ablKey.toUpperCase();
+			const desc = this.getDnd5eTooltip ? this.getDnd5eTooltip("skill", key, label, ablLabel) : "";
+			return { img, name: label, type: "Skill Check", description: desc };
 		}
 		if (itemId === "rest-short") {
-			return { img: "icons/svg/regen.svg", name: "Short Rest" };
+			return { img: "icons/svg/regen.svg", name: "Short Rest", type: "Rest", description: game.i18n.localize("IBHUD.Dnd5e.ShortRest") || "Take a Short Rest." };
 		}
 		if (itemId === "rest-long") {
-			return { img: "icons/svg/sleep.svg", name: "Long Rest" };
+			return { img: "icons/svg/sleep.svg", name: "Long Rest", type: "Rest", description: game.i18n.localize("IBHUD.Dnd5e.LongRest") || "Take a Long Rest." };
 		}
 		return null;
 	}

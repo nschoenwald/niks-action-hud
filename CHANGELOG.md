@@ -2,6 +2,15 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.3.1] - 2026-09-25
+
+### Full Rich Tooltips for Favorites / Quick Buttons
+- **Full Side-Docked Rich Tooltips on Quick Slots (`.ib-quick-slot`)**: Implemented the full Action HUD rich tooltip (`#ib-rich-tooltip`) for all favorites / quick buttons in the HUD header, matching the side-docked rich tooltips shown when hovering over action rows in the submenus.
+- **Side Position & Screen Bounds Awareness**: Enhanced `_positionTooltip` in `scripts/features/action-menu/tooltip.js` so quick slot hover anchors intelligently project tooltips to the side of the Action HUD container (`#ib-action-menu`) based on available screen space without overlapping neighboring quick buttons or clipping beyond the viewport edge.
+- **Complete Item & Synthetic Action Resolution**: Enhanced `_resolveAndRender` in `scripts/features/action-menu/tooltip.js` and `resolveQuickSlotData` in `scripts/systems/dnd5e.js` to seamlessly resolve full descriptions, headers, and action types for actor items, macros, and synthetic rolls (ability checks, saving throws, initiative, skills, and rests) even when submenus are closed.
+- **Embedded Favorite Interaction Hints**: Rendered a dedicated `.ib-tooltip-footer` inside the rich tooltip containing localized drag-to-reorder and right-click-to-remove instructions for quick slot items.
+- **Interactive Tooltip Cleanup**: Added instant tooltip dismissal (`ActionMenu.hideTooltip(true)`) when activating, right-click removing, or initiating drag reordering on quick slots in `scripts/features/action-menu/events.js`.
+
 ## [14.3.0] - 2026-09-25
 
 ### Tooltips for Favorites and Quick Buttons

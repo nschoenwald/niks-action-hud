@@ -130,7 +130,7 @@ function shouldShowInitiative(actor) {
 	return !hasInitiativeValue;
 }
 
-function getDnd5eTooltip(type, key, label, abilityLabel) {
+export function getDnd5eTooltip(type, key, label, abilityLabel) {
 	if (type === "initiative") {
 		return (
 			game.i18n.localize("NIKS_ACTION_HUD.Tooltips.Initiative") || "Determine turn order in combat."

@@ -119,6 +119,7 @@ export const bindRootEvents = (ActionMenu) => {
 		event.stopPropagation();
 		if (performance.now() < suppressQuickSlotClickUntil) return;
 
+		ActionMenu.hideTooltip(true);
 		const favoriteId = slot.dataset.favoriteId;
 		if (favoriteId) ActionMenu.useItem(favoriteId, event);
 	});
@@ -129,6 +130,7 @@ export const bindRootEvents = (ActionMenu) => {
 
 		event.preventDefault();
 		event.stopPropagation();
+		ActionMenu.hideTooltip(true);
 		const favoriteId = slot.dataset.favoriteId;
 		if (favoriteId) void ActionMenu.removeFavorite(favoriteId);
 	});
@@ -140,6 +142,7 @@ export const bindRootEvents = (ActionMenu) => {
 		const favoriteId = slot.dataset.favoriteId;
 		if (!favoriteId || !ActionMenu.currentActor) return;
 
+		ActionMenu.hideTooltip(true);
 		game.tooltip?.deactivate?.();
 
 		favoriteDrag = {

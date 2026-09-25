@@ -80,9 +80,9 @@ const extractUuidFromMacro = (command) => {
 export const resolveTooltipName = (tooltipItem, item) =>
 	tooltipItem?.tooltipName || tooltipItem?.name || item?.name || "";
 
-export const renderTooltip = async (ActionMenu, tooltipItem, item, desc) => {
+export const renderTooltip = async (ActionMenu, tooltipItem, item, desc = "", options = {}) => {
 	let enriched = "";
-	if (desc.trim()) {
+	if (desc && typeof desc === "string" && desc.trim()) {
 		enriched = await foundry.applications.ux.TextEditor.implementation.enrichHTML(desc, {
 			async: true,
 			relativeTo: item || ActionMenu.currentActor,
@@ -100,6 +100,20 @@ export const renderTooltip = async (ActionMenu, tooltipItem, item, desc) => {
 
 	const typeLabel = tooltipType ? tooltipType.toUpperCase() : "";
 	const sysClass = game.system?.id === "dnd5e" ? " dnd5e dnd5e2" : (game.system?.id ? ` ${game.system.id}` : "");
+
+	let footerHtml = "";
+	if (options?.isFavorite) {
+		const reorderHint = game.i18n.localize("IBHUD.UI.DragFavoriteToReorder");
+		const removeHint = game.i18n.localize("IBHUD.UI.RightClickRemoveFavorite");
+		footerHtml = `
+            <div class="ib-tooltip-footer">
+                <i class="fas fa-arrows-alt" style="opacity:0.7;"></i> <span>${reorderHint}</span>
+                <span style="opacity:0.4;">·</span>
+                <i class="fas fa-times-circle" style="opacity:0.7;"></i> <span>${removeHint}</span>
+            </div>
+        `;
+	}
+
 	const tooltipHtml = `
             <div class="ib-tooltip-header">
                 ${tooltipImg ? `<img src="${tooltipImg}" width="32" height="32" style="border:1px solid #555;">` : ""}
@@ -109,6 +123,7 @@ export const renderTooltip = async (ActionMenu, tooltipItem, item, desc) => {
                 </div>
             </div>
             ${enriched ? `<div class="editor-content${sysClass}">${enriched}</div>` : ""}
+            ${footerHtml}
         `;
 
 	const tooltip = $("#ib-rich-tooltip");
@@ -122,7 +137,7 @@ export const renderTooltip = async (ActionMenu, tooltipItem, item, desc) => {
 	tooltip.addClass("active");
 };
 
-const _resolveAndRender = async (ActionMenu, itemId) => {
+const _resolveAndRender = async (ActionMenu, itemId, options = {}) => {
 	if (itemId.startsWith("macro-")) {
 		const macroId = itemId.replace("macro-", "");
 		const normalizedId = macroId.startsWith("macro-")
@@ -158,29 +173,37 @@ const _resolveAndRender = async (ActionMenu, itemId) => {
 						|| item.system?.details?.description
 						|| "";
 					if (typeof desc !== "string") desc = "";
-					if (desc.trim()) {
-						return renderTooltip(ActionMenu, item, item, desc);
-					}
+					return renderTooltip(ActionMenu, item, item, desc, options);
 				}
 			} catch (e) { }
 		}
 		
 		const fallbackMacro = { name: macro.name, img: macro.img, type: "Macro" };
-		return renderTooltip(ActionMenu, fallbackMacro, null, overrideFlavor || globalFlavor || "");
+		return renderTooltip(ActionMenu, fallbackMacro, null, overrideFlavor || globalFlavor || "", options);
 	}
 
 	const realItemId = itemId.split("_")[0];
 
-	let item = ActionMenu.currentActor.items.get(realItemId);
+	let item = ActionMenu.currentActor.items.get(realItemId)
+		|| ActionMenu.currentActor.items.get(itemId);
 
-	if (!item && ActionMenu.adapter.findSyntheticItem) {
+	if (!item && ActionMenu.adapter?.findSyntheticItem) {
 		item = ActionMenu.adapter.findSyntheticItem(
 			ActionMenu.currentActor,
 			realItemId,
+		) || ActionMenu.adapter.findSyntheticItem(
+			ActionMenu.currentActor,
+			itemId,
 		);
 	}
 
-	let desc = item?.system?.description?.value || "";
+	let desc = item?.system?.description?.value 
+		|| item?.system?.description 
+		|| item?.system?.details?.description?.value 
+		|| item?.system?.details?.description 
+		|| item?.system?.description?.chat 
+		|| "";
+	if (typeof desc !== "string") desc = "";
 	let tooltipItem = item;
 
 	if (!desc.trim()) {
@@ -193,9 +216,22 @@ const _resolveAndRender = async (ActionMenu, itemId) => {
 		}
 	}
 
-	if (!desc.trim()) return;
+	if (!tooltipItem && ActionMenu.adapter?.resolveQuickSlotData) {
+		const resolved = ActionMenu.adapter.resolveQuickSlotData(ActionMenu.currentActor, itemId)
+			|| ActionMenu.adapter.resolveQuickSlotData(ActionMenu.currentActor, realItemId);
+		if (resolved) {
+			tooltipItem = {
+				name: resolved.name,
+				img: resolved.img,
+				type: resolved.type || "Action",
+			};
+			if (resolved.description) desc = resolved.description;
+		}
+	}
 
-	return renderTooltip(ActionMenu, tooltipItem, item, desc);
+	if (!tooltipItem && !item) return;
+
+	return renderTooltip(ActionMenu, tooltipItem || item, item, desc, options);
 };
 
 export const showTooltip = async (ActionMenu, itemId, event) => {
@@ -208,10 +244,11 @@ export const showTooltip = async (ActionMenu, itemId, event) => {
 
 	const anchorEl = event?.currentTarget || null;
 	_currentAnchorElement = anchorEl;
+	const isFavorite = Boolean(anchorEl?.classList?.contains("ib-quick-slot") || anchorEl?.dataset?.favoriteId);
 
 	_showTimeout = setTimeout(async () => {
 		if (_currentAnchorElement !== anchorEl) return;
-		await _resolveAndRender(ActionMenu, itemId);
+		await _resolveAndRender(ActionMenu, itemId, { isFavorite });
 	}, SHOW_DELAY);
 };
 
@@ -247,11 +284,27 @@ const _positionTooltip = (tooltip, anchorEl) => {
 	let left, top;
 
 	if (useAnchor) {
-		const rect = anchorEl.getBoundingClientRect();
-		left = rect.right + 10;
-		top = rect.top;
-		if (left + tipW > winW - 5) left = rect.left - tipW - 10;
+		const isQuickSlot = Boolean(anchorEl.closest?.(".ib-quick-slot"));
+		const refContainer = isQuickSlot
+			? (anchorEl.closest("#ib-action-menu") || anchorEl)
+			: anchorEl;
+		const containerRect = refContainer.getBoundingClientRect();
+		const anchorRect = anchorEl.getBoundingClientRect();
+
+		const spaceRight = winW - containerRect.right;
+		const spaceLeft = containerRect.left;
+
+		if (spaceRight >= tipW + 10 || spaceRight >= spaceLeft) {
+			left = containerRect.right + 10;
+			if (left + tipW > winW - 5) left = containerRect.left - tipW - 10;
+		} else {
+			left = containerRect.left - tipW - 10;
+			if (left < 5) left = containerRect.right + 10;
+		}
+
+		top = anchorRect.top;
 		if (left < 5) left = 5;
+		if (left + tipW > winW - 5) left = winW - tipW - 5;
 		if (top + tipH > winH - 5) top = winH - tipH - 5;
 		if (top < 5) top = 5;
 	} else {

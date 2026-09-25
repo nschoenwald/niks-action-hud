@@ -1367,6 +1367,17 @@
 	margin-left: auto;
 }
 
+.ib-tooltip-footer {
+	margin-top: 10px;
+	padding-top: 6px;
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	font-size: 0.8em;
+	color: #999;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
 /* 시스템별 본문 스타일 보정 (Foundry 기본 스타일 상속) */
 #ib-rich-tooltip .editor-content p {
 	margin: 0 0 0.5em 0;

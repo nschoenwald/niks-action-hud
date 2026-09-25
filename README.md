@@ -20,7 +20,7 @@ Nik's Action HUD is an ultra-focused, high-performance Action HUD designed to st
 - **Unlinked NPC Favorites Sync**: Native synchronization of favorite slots for unlinked tokens without flag collisions or data corruption (built-in).
 - **Multi-Row Favorites**: Favorite quick-slots wrap onto multiple lines cleanly without horizontal clipping (built-in).
 - **Drag-and-Drop Favorite Reordering**: Drag and drop quick-slot badges to rearrange favorites smoothly in real time.
-- **Tooltips on Favorites & Quick Buttons**: Native Foundry V14 tooltips across quick slot badges with drag-and-drop / right-click removal hints, favorite toggle stars ("Add/Remove from favorites"), and search bar favorite view filters.
+- **Full Rich Tooltips on Favorites & Quick Buttons**: Full side-docked rich tooltips for favorite quick buttons matching the submenu action cards with enriched descriptions, roll details, item artwork, and embedded reorder/removal hints, alongside tooltips for favorite toggle stars ("Add/Remove from favorites") and search bar favorite filters.
 - **Live Scaling & Interactive Resizing**:
   - Drag the bottom-right corner resize handle (permanently visible on HUD) to adjust scale live.
   - Visual scale toast indicator shows current zoom percentage.
