@@ -233,17 +233,15 @@ export class ActionMenu {
 		const shouldHide = () => {
 			root.addClass("am-hidden");
 			container.removeClass("active");
-			ActionMenu.currentActor = null;
-			ActionMenu.currentToken = null;
 		};
 		const shouldDestroy = () => {
 			root.remove();
-			ActionMenu.currentActor = null;
-			ActionMenu.currentToken = null;
 		};
 
 		try {
 			if (game.settings.get(MODULE_ID, "disableHUD")) {
+				ActionMenu.currentActor = null;
+				ActionMenu.currentToken = null;
 				shouldDestroy();
 				return;
 			}
@@ -252,8 +250,18 @@ export class ActionMenu {
 		const config =
 			game.settings.get(MODULE_ID, "configuration") || {};
 
-		if (config.enableActionMenu === false) { shouldDestroy(); return; }
-		if (config.gmHudHidden && game.user.isGM) { shouldDestroy(); return; }
+		if (config.enableActionMenu === false) {
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+			shouldDestroy();
+			return;
+		}
+		if (config.gmHudHidden && game.user.isGM) {
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+			shouldDestroy();
+			return;
+		}
 
 		const visibilityOverrides =
 			game.settings.get(MODULE_ID, "clientVisibility") || {};
@@ -262,8 +270,18 @@ export class ActionMenu {
 			? (visibilityOverrides.actionMenuVisibility || "always")
 			: actionGlobal;
 		const inCombat = game.combat?.started ?? false;
-		if (visibility === "never") { shouldDestroy(); return; }
-		if (visibility === "combatOnly" && !inCombat) { shouldDestroy(); return; }
+		if (visibility === "never") {
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+			shouldDestroy();
+			return;
+		}
+		if (visibility === "combatOnly" && !inCombat) {
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+			shouldDestroy();
+			return;
+		}
 
 		const controlled = canvas.tokens?.controlled || [];
 		const onlyGroupTokens = controlled.length > 0 && controlled.every((t) => t.actor?.type === "group");
@@ -278,7 +296,7 @@ export class ActionMenu {
 				|| (!game.user?.isGM ? (game.actors?.find((a) => a.isOwner && a.type === "character") || game.actors?.find((a) => a.isOwner)) : null);
 
 			if (userActor) {
-				const activeTokens = userActor.getActiveTokens ? userActor.getActiveTokens() : [];
+				const activeTokens = typeof userActor.getActiveTokens === "function" ? userActor.getActiveTokens() : [];
 				const activeToken = activeTokens[0]
 					|| canvas.tokens.placeables?.find((t) => t.actor?.id === userActor.id || t.document?.actorId === userActor.id);
 
@@ -299,6 +317,8 @@ export class ActionMenu {
 		const isEditMode = window.ActionHUD?.isEditMode ?? false;
 
 		if (!token || !token.actor) {
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
 			shouldHide();
 			if (isEditMode) {
 				try {
@@ -315,9 +335,19 @@ export class ActionMenu {
 			.map((t) => t.trim())
 			.filter((t) => t !== "");
 
-		if (excludedTypes.includes(token.actor.type)) { shouldHide(); return; }
+		if (excludedTypes.includes(token.actor.type)) {
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+			shouldHide();
+			return;
+		}
 
-		if (token.actor.getFlag(MODULE_ID, "hideActionMenu")) { shouldHide(); return; }
+		if (token.actor.getFlag(MODULE_ID, "hideActionMenu")) {
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+			shouldHide();
+			return;
+		}
 
 		ActionMenu.currentActor = token.actor;
 		ActionMenu.currentToken = token;

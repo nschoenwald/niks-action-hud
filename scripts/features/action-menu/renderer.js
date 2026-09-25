@@ -194,8 +194,9 @@ export const setupTooltip = (theme, actionMenuFont) => {
 export const buildHeaderHtml = (ActionMenu) => {
 	const config = game.settings.get(MODULE_ID, "configuration") || {};
 	const useTokenImg = config.actionMenuUseTokenImg ?? false;
-	const actor = ActionMenu.currentActor;
-	const activeTokens = actor.getActiveTokens ? actor.getActiveTokens() : [];
+	const actor = ActionMenu?.currentActor;
+	if (!actor) return "";
+	const activeTokens = typeof actor.getActiveTokens === "function" ? actor.getActiveTokens() : [];
 	const token = ActionMenu.currentToken
 		|| canvas.tokens?.controlled?.[0]
 		|| activeTokens[0]
@@ -207,7 +208,7 @@ export const buildHeaderHtml = (ActionMenu) => {
 		getEffectiveActorSettings(config, actor.id).displayName?.trim() ||
 		tokenName;
 
-	let img = ActionMenu.currentActor.img;
+	let img = actor.img;
 	let subjectScale = 1;
 	if (useTokenImg) {
 		const tokenDoc = token?.document || (token?.schema ? token : null);
@@ -242,7 +243,7 @@ export const buildHeaderHtml = (ActionMenu) => {
 	}
 
 	const selectedText = game.i18n.localize("IBHUD.UI.SelectedActor");
-	const actorId = ActionMenu.currentActor.id;
+	const actorId = actor.id;
 	const isMyTurn = game.combat?.started && game.combat.combatant?.actorId === actorId;
 	const endTurnBtn = isMyTurn
 		? `<div class="ib-am-end-turn-btn" onclick="event.stopPropagation(); (window.ActionHUD?.endTurn || window.ActionHUD?.endTurn)('${actorId}')" title="${game.i18n.localize("IBHUD.UI.EndTurn")}"><i class="fas fa-hourglass-end"></i></div>`
@@ -272,8 +273,10 @@ export const buildHeaderHtml = (ActionMenu) => {
 };
 
 export const buildQuickSlotsHtml = (ActionMenu) => {
+	const actor = ActionMenu?.currentActor;
+	if (!actor) return "";
 	const favorites = ActionMenu.getFavorites();
-	if (favorites.length === 0) return "";
+	if (!Array.isArray(favorites) || favorites.length === 0) return "";
 
 	let slots = "";
 	favorites.forEach((itemId) => {
@@ -296,12 +299,12 @@ export const buildQuickSlotsHtml = (ActionMenu) => {
 				name = "Macro";
 			}
 		} else {
-			item = ActionMenu.currentActor.items.get(itemId);
+			item = actor.items?.get(itemId);
 			if (item) {
 				img = item.img;
 				name = item.name;
 			} else if (ActionMenu.adapter?.resolveQuickSlotData) {
-				const resolved = ActionMenu.adapter.resolveQuickSlotData(ActionMenu.currentActor, itemId);
+				const resolved = ActionMenu.adapter.resolveQuickSlotData(actor, itemId);
 				if (resolved) {
 					item = { id: itemId, name: resolved.name };
 					img = resolved.img;
@@ -410,7 +413,9 @@ export const buildCategoryButtonHtml = (
 };
 
 export const buildCategoryButtonsHtml = (ActionMenu) => {
-	const categories = getActionCategories(ActionMenu, ActionMenu.currentActor);
+	const actor = ActionMenu?.currentActor;
+	if (!actor) return "";
+	const categories = getActionCategories(ActionMenu, actor);
 	const btnConfig = game.settings.get(MODULE_ID, "configuration") || {};
 	const inCombat = game.combat?.started ?? false;
 	const customMenu = btnConfig.customMenu || [];
@@ -418,7 +423,7 @@ export const buildCategoryButtonsHtml = (ActionMenu) => {
 	return categories
 		.filter((cat) => isActionMenuCategoryVisible(cat, customMenu, inCombat, {
 			ActionMenu,
-			actor: ActionMenu.currentActor,
+			actor,
 		}))
 		.map((cat, actionIndex) => buildCategoryButtonHtml(cat, actionIndex, btnConfig))
 		.join("");
@@ -629,6 +634,7 @@ export const renderMain = (ActionMenu) => {
 			return;
 		}
 	} catch (_e) {}
+	if (!ActionMenu?.currentActor) return;
 	const cfg = getRenderConfig(ActionMenu);
 	const config = game.settings.get(MODULE_ID, "configuration") || {};
 	setupTooltip(cfg.theme, cfg.actionMenuFont);

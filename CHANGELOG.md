@@ -2,6 +2,13 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.2.5] - 2026-09-25
+
+### Fixed Action Menu Render Error on getActiveTokens
+- **Resolved `TypeError: Cannot read properties of null (reading 'getActiveTokens')` in `buildHeaderHtml`**: Fixed a regression where placeholder teardown and initial root setup in `ActionMenu.refresh()` cleared `ActionMenu.currentActor = null` immediately before invoking `ActionMenu.renderMain()`.
+- **Actor State Preservation Across DOM Re-renders**: Refactored `shouldDestroy()` and `shouldHide()` helpers in `scripts/features/action-menu.js` so clearing DOM nodes does not unintentionally wipe active actor state. Nullifying `ActionMenu.currentActor` and `ActionMenu.currentToken` is now explicitly restricted to early-exit conditions when the HUD is disabled or no valid actor/token is selected.
+- **Robust Null-Guards Across Action Menu Renderer**: Added defensive checks and safe method lookups (`typeof actor.getActiveTokens === "function"`) in `buildHeaderHtml`, `buildQuickSlotsHtml`, `buildCategoryButtonsHtml`, `renderMain`, and live drag preview updates in `scripts/features/action-menu/renderer.js` and `scripts/features/action-menu/drag.js`.
+
 ## [14.2.4] - 2026-09-25
 
 ### Token Ring Subject Scale Correction Support

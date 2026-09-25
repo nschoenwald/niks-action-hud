@@ -505,13 +505,14 @@ export const previewUpdate = (ActionMenu, data) => {
 	if (data.useTokenImg !== undefined) {
 		const imgBox = root.querySelector(".ib-identity-img-box");
 		if (imgBox) {
-			const actor = ActionMenu.currentActor;
-			const activeTokens = actor?.getActiveTokens ? actor.getActiveTokens() : [];
+			const actor = ActionMenu?.currentActor;
+			if (!actor) return;
+			const activeTokens = typeof actor.getActiveTokens === "function" ? actor.getActiveTokens() : [];
 			const token = ActionMenu.currentToken
 				|| canvas.tokens?.controlled?.[0]
 				|| activeTokens[0]
-				|| canvas.tokens?.placeables?.find((t) => t.actor?.id === actor?.id || t.document?.actorId === actor?.id);
-			let img = actor?.img || "";
+				|| canvas.tokens?.placeables?.find((t) => t.actor?.id === actor.id || t.document?.actorId === actor.id);
+			let img = actor.img || "";
 			let subjectScale = 1;
 			if (data.useTokenImg && actor) {
 				const tokenDoc = token?.document || (token?.schema ? token : null);
