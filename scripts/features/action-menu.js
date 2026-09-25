@@ -130,16 +130,9 @@ export class ActionMenu {
 
 	static initialize() {
 		Hooks.on("controlToken", () => ActionMenu.refresh());
-		Hooks.on("updateCombat", () => ActionMenu.refresh());
-		Hooks.on("createCombat", () => ActionMenu.refresh());
-		Hooks.on("deleteCombat", () => ActionMenu.refresh());
 		Hooks.on("createCombatant", () => ActionMenu.refresh());
 		Hooks.on("updateCombatant", () => ActionMenu.refresh());
 		Hooks.on("deleteCombatant", () => ActionMenu.refresh());
-		Hooks.on("canvasReady", () => ActionMenu.refresh());
-		Hooks.on("updateUser", (user) => {
-			if (user.id === game.user.id) ActionMenu.refresh();
-		});
 
 		// 액터 정보 변경 시 갱신 (HP, AC, Spell Slot 등)
 		Hooks.on("updateActor", (actor) => {

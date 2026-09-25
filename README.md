@@ -21,7 +21,7 @@ Nik's Action HUD is an ultra-focused, high-performance Action HUD designed to st
 - **Live Scaling & Interactive Resizing**:
   - Drag the bottom-right corner resize handle (permanently visible on HUD) to adjust scale live.
   - Visual scale toast indicator shows current zoom percentage.
-- **Redesigned Configuration Suite (v14.1+)**:
+- **Redesigned Configuration Suite (v14.2+)**:
   - **Modern Dark-Glass UI/UX**: Completely overhauled configuration dialog featuring split sidebar navigation, luminous accents, and frosted glass surfaces.
   - **Visual Theme Selector**: Clickable cards with color swatches and active glow indicators for 12 themes, including 5 brand-new 100% solid, non-transparent clean-room designs (**Arcanum**, **Obsidian**, **Grimoire**, **Eldritch**, **Valiant**) featuring Rift-proportional button dimensions (232x46px), uniform button color styling, and tight 9px inter-button spacing, alongside existing classics (**Rift**, **Iron**, **Glass**, **Fantasy**, **Cyberpunk**, **Medieval**, and **Zenith**).
   - **Interactive Live Preview Sandbox**: Embedded HUD preview strip that immediately reflects your theme, typography, and button emphasis choices in real time.

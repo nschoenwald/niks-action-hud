@@ -2,6 +2,12 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.2.2] - 2026-09-25
+
+### Fixed List Items Rendering & Syntax Error
+- **Resolved Unexpected Token `)` SyntaxError in `renderer.js`**: Fixed a syntax error in `buildListItems` in `scripts/features/action-menu/renderer.js` where the item mapping expression was accidentally truncated during cleanup. Restored `preparedItems.map((item) => { ... })` and complete action card metadata rendering (headers, tooltips, favorite toggles, exhaustion styling, right-click actions, and resource costs).
+- **Deduplicated Lifecycle Hooks**: Cleaned up duplicate hook listener registrations (`canvasReady`, `updateCombat`, `createCombat`, `deleteCombat`, and `updateUser`) in `ActionMenu.initialize()`, deferring to the single, managed implementations with combat visibility and disable checks in `scripts/main.js`.
+
 ## [14.2.1] - 2026-09-24
 
 ### Removed Image Studio

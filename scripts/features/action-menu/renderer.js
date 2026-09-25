@@ -404,6 +404,74 @@ export const buildListItems = (ActionMenu, items) => {
 		return `<div class="ib-list-item"><div class="ib-item-content" style="justify-content:center; color:#666; font-style:italic;">${emptyText}</div></div>`;
 	}
 
+	return preparedItems
+		.map((item) => {
+			if (item.isHeader) {
+				return `
+                    <div class="ib-list-header" style="
+                        background: rgba(255, 255, 255, 0.1); 
+                        color: #4ecdc4; 
+                        font-size: 1.1em; 
+                        padding: 4px 10px; 
+                        margin-top: 5px; 
+                        border-left: 3px solid #4ecdc4;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        pointer-events: none;
+                    ">
+                        ${item.name}
+                    </div>
+                `;
+			}
+
+			let tooltipAttr = "";
+			if (item.description) {
+				const safeDesc = item.description.replace(/"/g, "&quot;");
+				tooltipAttr = `data-tooltip="${safeDesc}" data-tooltip-direction="LEFT"`;
+			}
+
+			const showFavorite = item.favoritable !== false;
+			const isFav = showFavorite && favs.includes(item.id);
+			const starClass = isFav ? "fas fa-star" : "far fa-star";
+			const activeClass = isFav ? "active" : "";
+			const favBtnHtml = showFavorite
+				? `<div class="ib-fav-btn ${activeClass}" onclick="event.stopPropagation(); ActionHUD.actionMenu.toggleFavorite('${item.id}')"><i class="${starClass}"></i></div>`
+				: "";
+
+			let rowStyle = "";
+			let nameStyle = "";
+
+			if (item.isExhausted) {
+				rowStyle = `opacity: 0.5; filter: grayscale(100%); cursor: not-allowed;`;
+				nameStyle = `text-decoration: line-through; color: #888;`;
+			} else if (item.isVirtual) {
+				rowStyle = `opacity: 0.7; border-left: 2px solid #9966ff; padding-left: 6px;`;
+			}
+
+			let rightClickAttr = "";
+
+			if (item.id.startsWith("macro-") && item.isPersonal) {
+				const realId = item.id.replace("macro-", "");
+				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.editCustomMacro('${realId}', ${item.customCatIndex}, ${item.customTabIndex}, ${item.customItemIndex})"`;
+			} else if (item.isPersonal) {
+				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.removePersonalItem(${item.customCatIndex}, ${item.customTabIndex}, ${item.customItemIndex})"`;
+			} else if (item.id.startsWith("macro-") && item.customCatIndex !== undefined) {
+				const realId = item.id.replace("macro-", "");
+				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.editGlobalMacro('${realId}', ${item.customCatIndex}, ${item.customTabIndex}, ${item.customItemIndex})"`;
+			} else {
+				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.openItem('${item.id}')"`;
+			}
+
+			const costHtml = item.cost
+				? item.hasInlineControls
+					? `<div class="ib-item-inline-controls" style="display:flex; align-items:flex-start;">${item.cost}</div>`
+					: `<span class="text-sm font-bold" style="color: #666; font-size: 0.8em;">${item.cost}</span>`
+				: "";
+
+			const rightMetaAlign = item.hasInlineControls
+				? "display:flex; align-items:flex-start; gap:10px;"
+				: "display:flex; align-items:center; gap:10px;";
+
 			return `
             <div class="ib-list-item" 
                  style="${rowStyle}" 
