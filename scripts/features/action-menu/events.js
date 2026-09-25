@@ -146,7 +146,6 @@ export const bindRootEvents = (ActionMenu) => {
 		};
 		event.dataTransfer.effectAllowed = "move";
 		event.dataTransfer.setData(PRIMARY_FAVORITE_DRAG_TYPE, favoriteId);
-		event.dataTransfer.setData(LEGACY_FAVORITE_DRAG_TYPE, favoriteId);
 		event.dataTransfer.setData("text/plain", favoriteId);
 		slot.classList.add("is-dragging");
 		rootElement.classList.remove("drag-hover");
@@ -169,8 +168,7 @@ export const bindRootEvents = (ActionMenu) => {
 		const targetSlot = closestElement(event.target, ".ib-quick-slot[data-favorite-id]");
 		const sourceId =
 			favoriteDrag?.favoriteId ||
-			event.dataTransfer?.getData(PRIMARY_FAVORITE_DRAG_TYPE) ||
-			event.dataTransfer?.getData(LEGACY_FAVORITE_DRAG_TYPE);
+			event.dataTransfer?.getData(PRIMARY_FAVORITE_DRAG_TYPE);
 		const actor = favoriteDrag?.actor || ActionMenu.currentActor;
 		const targetId = targetSlot?.dataset.favoriteId || null;
 		const insertAfter = targetSlot

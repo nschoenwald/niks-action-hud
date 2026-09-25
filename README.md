@@ -18,6 +18,7 @@ Nik's Action HUD is an ultra-focused, high-performance Action HUD designed to st
 - **User HUD Toggle**: Per-user setting (`scope: "user"`) to cleanly enable or disable the Action HUD independently of the GM or other players, persisted in the world database across devices and fully synchronized in the Action HUD configuration menu.
 - **Unlinked NPC Favorites Sync**: Native synchronization of favorite slots for unlinked tokens without flag collisions or data corruption (built-in).
 - **Multi-Row Favorites**: Favorite quick-slots wrap onto multiple lines cleanly without horizontal clipping (built-in).
+- **Drag-and-Drop Favorite Reordering**: Drag and drop quick-slot badges to rearrange favorites smoothly in real time.
 - **Live Scaling & Interactive Resizing**:
   - Drag the bottom-right corner resize handle (permanently visible on HUD) to adjust scale live.
   - Visual scale toast indicator shows current zoom percentage.

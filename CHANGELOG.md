@@ -2,6 +2,12 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.2.3] - 2026-09-25
+
+### Fixed Action Menu Render ReferenceError
+- **Resolved `ReferenceError: config is not defined` in `renderMain`**: Fixed an undefined variable error when evaluating first button emphasis styling in `scripts/features/action-menu/renderer.js`. Added `actionMenuEmphasizeFirstButton` to `getRenderConfig` and properly defined `config` within `renderMain`.
+- **Cleaned Up Undeclared Identifier in Favorite Drag Events**: Removed legacy undefined identifier references (`LEGACY_FAVORITE_DRAG_TYPE`) in `scripts/features/action-menu/events.js`.
+
 ## [14.2.2] - 2026-09-25
 
 ### Fixed List Items Rendering & Syntax Error

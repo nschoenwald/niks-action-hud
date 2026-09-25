@@ -160,6 +160,7 @@ export const getRenderConfig = (ActionMenu) => {
 		baseScale: baseScale || 1.0,
 		autoScale,
 		actionMenuFont,
+		actionMenuEmphasizeFirstButton: config.actionMenuEmphasizeFirstButton ?? true,
 	};
 };
 
@@ -597,6 +598,7 @@ export const renderMain = (ActionMenu) => {
 		}
 	} catch (_e) {}
 	const cfg = getRenderConfig(ActionMenu);
+	const config = game.settings.get(MODULE_ID, "configuration") || {};
 	setupTooltip(cfg.theme, cfg.actionMenuFont);
 
 	const headerHtml = buildHeaderHtml(ActionMenu);
@@ -646,7 +648,7 @@ export const renderMain = (ActionMenu) => {
 	sub.attr("class", `theme-${cfg.theme}`);
 
 	const menu = root.find(`#${ActionMenu.ID}`);
-	const firstButtonEmphasisClass = config.actionMenuEmphasizeFirstButton === false
+	const firstButtonEmphasisClass = (cfg.actionMenuEmphasizeFirstButton ?? config.actionMenuEmphasizeFirstButton) === false
 		? "no-first-button-emphasis"
 		: "";
 	menu.attr(
