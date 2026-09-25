@@ -320,7 +320,8 @@ export const buildQuickSlotsHtml = (ActionMenu) => {
 			slots += `
                 <div class="ib-quick-slot" draggable="true"
 					 data-favorite-id="${escapeHtml(itemId)}"
-					 title="${escapeHtml(slotTitle)}"
+					 data-tooltip="${escapeHtml(slotTitle)}"
+					 data-tooltip-direction="UP"
 					 aria-label="${escapeHtml(slotTitle)}">
                     <img src="${escapeHtml(img)}" alt="${escapeHtml(name)}" draggable="false">
                 </div>
@@ -472,8 +473,11 @@ export const buildListItems = (ActionMenu, items) => {
 			const isFav = showFavorite && favs.includes(item.id);
 			const starClass = isFav ? "fas fa-star" : "far fa-star";
 			const activeClass = isFav ? "active" : "";
+			const favTooltip = isFav
+				? (game.i18n.localize("IBHUD.UI.RemoveFavorite") || "Remove from favorites")
+				: (game.i18n.localize("IBHUD.UI.AddFavorite") || "Add to favorites");
 			const favBtnHtml = showFavorite
-				? `<div class="ib-fav-btn ${activeClass}" onclick="event.stopPropagation(); ActionHUD.actionMenu.toggleFavorite('${item.id}')"><i class="${starClass}"></i></div>`
+				? `<div class="ib-fav-btn ${activeClass}" onclick="event.stopPropagation(); ActionHUD.actionMenu.toggleFavorite('${item.id}')" data-tooltip="${escapeHtml(favTooltip)}" data-tooltip-direction="UP" aria-label="${escapeHtml(favTooltip)}"><i class="${starClass}"></i></div>`
 				: "";
 
 			let rowStyle = "";
@@ -790,7 +794,8 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 						class="ib-favorite-view-btn ${sortFavoritesActive}"
 						aria-pressed="${favoriteViewOptions.sortFirst === true}"
 						aria-label="${sortFavoritesTitle}"
-						title="${sortFavoritesTitle}"
+						data-tooltip="${sortFavoritesTitle}"
+						data-tooltip-direction="UP"
 						onclick="event.stopPropagation(); ActionHUD.actionMenu.toggleFavoriteView('sortFirst')">
 						<i class="fas fa-sort-amount-up"></i>
 					</button>
@@ -798,7 +803,8 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 						class="ib-favorite-view-btn ${favoritesOnlyActive}"
 						aria-pressed="${favoriteViewOptions.only === true}"
 						aria-label="${favoritesOnlyTitle}"
-						title="${favoritesOnlyTitle}"
+						data-tooltip="${favoritesOnlyTitle}"
+						data-tooltip-direction="UP"
 						onclick="event.stopPropagation(); ActionHUD.actionMenu.toggleFavoriteView('only')">
 						<i class="fas fa-star"></i>
 					</button>

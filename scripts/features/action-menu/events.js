@@ -140,6 +140,8 @@ export const bindRootEvents = (ActionMenu) => {
 		const favoriteId = slot.dataset.favoriteId;
 		if (!favoriteId || !ActionMenu.currentActor) return;
 
+		game.tooltip?.deactivate?.();
+
 		favoriteDrag = {
 			favoriteId,
 			actor: ActionMenu.currentActor,

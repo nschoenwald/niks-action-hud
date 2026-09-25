@@ -2,6 +2,15 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.3.0] - 2026-09-25
+
+### Tooltips for Favorites and Quick Buttons
+- **Foundry V14 Native Tooltips on Quick Slots (`.ib-quick-slot`)**: Replaced browser-native `title` attribute with Foundry V14's native tooltip attributes (`data-tooltip`, `data-tooltip-direction="UP"`), displaying the item/action name along with localized interaction hints ("Drag to reorder · Right-click to remove from favorites") when hovering over favorite quick buttons in the HUD header.
+- **Tooltips on Favorite Toggle Buttons (`.ib-fav-btn`)**: Added dynamic Foundry tooltips (`data-tooltip`, `data-tooltip-direction="UP"`) to the favorite star buttons in submenu list items, displaying localized "Add to favorites" or "Remove from favorites" depending on the item's current favorite state.
+- **Tooltips on Favorite View Controls (`.ib-favorite-view-btn`)**: Added Foundry tooltip integration (`data-tooltip`, `data-tooltip-direction="UP"`) to the favorite sort and filter buttons in the submenu search bar ("Sort favorites first" and "Show favorites only").
+- **Drag Interaction Tooltip Dismissal**: Integrated `game.tooltip?.deactivate?.()` on favorite slot drag initiation (`dragstart`) in `scripts/features/action-menu/events.js` to ensure tooltips dismiss cleanly without lingering on screen during reordering.
+- **Added Localization Strings**: Added `AddFavorite` and `RemoveFavorite` to `lang/en.json` under `IBHUD.UI`.
+
 ## [14.2.5] - 2026-09-25
 
 ### Fixed Action Menu Render Error on getActiveTokens

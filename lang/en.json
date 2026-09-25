@@ -550,6 +550,8 @@
       "Empty": "Empty",
       "RightClickRemove": "Right-click to remove",
       "RightClickRemoveFavorite": "Right-click to remove from favorites",
+      "AddFavorite": "Add to favorites",
+      "RemoveFavorite": "Remove from favorites",
       "DragFavoriteToReorder": "Drag to reorder",
       "SortFavoritesFirst": "Sort favorites first",
       "ShowFavoritesOnly": "Show favorites only",
