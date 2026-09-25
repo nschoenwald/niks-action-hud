@@ -2,6 +2,13 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.2.4] - 2026-09-25
+
+### Token Ring Subject Scale Correction Support
+- **Support Token Subject Scale Correction with "Use Token Image"**: When "Use Token Image Instead of Portrait" is enabled, the Action HUD now inspects the token's Dynamic Token Ring subject scale (`token.document.ring.subject.scale` / `ring.scaleCorrection` / prototype token ring settings) and scales the image in the HUD header accordingly (e.g. 2x subject scale correction displays the image scaled by 2).
+- **Explicit Subject Texture Priority**: When dynamic token ring has a designated subject texture (`ring.subject.texture`), the HUD prioritizes this subject artwork cutout over the base texture.
+- **Dynamic Token Update Hook**: Registered an `updateToken` hook listener so changes to token appearance or subject scale correction in Token Configuration immediately update the HUD in real time.
+
 ## [14.2.3] - 2026-09-25
 
 ### Fixed Action Menu Render ReferenceError

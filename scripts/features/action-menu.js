@@ -81,6 +81,7 @@ export class ActionMenu {
 	static SUB_ID = "ib-sub-menu-container";
 
 	static currentActor = null;
+	static currentToken = null;
 	static subMenuRenderGeneration = 0;
 	static activeTab = null; // 상위 탭 (Entry ID)
 	static activeSubTab = null; // 하위 탭 (Spell Rank)
@@ -133,6 +134,16 @@ export class ActionMenu {
 		Hooks.on("createCombatant", () => ActionMenu.refresh());
 		Hooks.on("updateCombatant", () => ActionMenu.refresh());
 		Hooks.on("deleteCombatant", () => ActionMenu.refresh());
+		Hooks.on("updateToken", (tokenDoc) => {
+			if (
+				ActionMenu.currentActor &&
+				(tokenDoc.actorId === ActionMenu.currentActor.id ||
+					tokenDoc.id === ActionMenu.currentToken?.id ||
+					tokenDoc.id === ActionMenu.currentToken?.document?.id)
+			) {
+				ActionMenu.refresh();
+			}
+		});
 
 		// 액터 정보 변경 시 갱신 (HP, AC, Spell Slot 등)
 		Hooks.on("updateActor", (actor) => {
@@ -219,8 +230,17 @@ export class ActionMenu {
 				});
 		};
 
-		const shouldHide = () => { root.addClass("am-hidden"); container.removeClass("active"); };
-		const shouldDestroy = () => { root.remove(); };
+		const shouldHide = () => {
+			root.addClass("am-hidden");
+			container.removeClass("active");
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+		};
+		const shouldDestroy = () => {
+			root.remove();
+			ActionMenu.currentActor = null;
+			ActionMenu.currentToken = null;
+		};
 
 		try {
 			if (game.settings.get(MODULE_ID, "disableHUD")) {
@@ -268,7 +288,10 @@ export class ActionMenu {
 					document: {
 						name: userActor.prototypeToken?.name || userActor.name,
 						texture: { src: userActor.prototypeToken?.texture?.src || userActor.img },
+						ring: userActor.prototypeToken?.ring,
+						flags: userActor.prototypeToken?.flags,
 					},
+					ring: userActor.prototypeToken?.ring,
 				};
 			}
 		}
@@ -297,6 +320,7 @@ export class ActionMenu {
 		if (token.actor.getFlag(MODULE_ID, "hideActionMenu")) { shouldHide(); return; }
 
 		ActionMenu.currentActor = token.actor;
+		ActionMenu.currentToken = token;
 		if (!ActionMenu.currentActor) return;
 		if (lastActiveCat) {
 			const categories = getActionCategories(ActionMenu, ActionMenu.currentActor);

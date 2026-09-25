@@ -196,7 +196,8 @@ export const buildHeaderHtml = (ActionMenu) => {
 	const useTokenImg = config.actionMenuUseTokenImg ?? false;
 	const actor = ActionMenu.currentActor;
 	const activeTokens = actor.getActiveTokens ? actor.getActiveTokens() : [];
-	const token = canvas.tokens?.controlled?.[0]
+	const token = ActionMenu.currentToken
+		|| canvas.tokens?.controlled?.[0]
 		|| activeTokens[0]
 		|| canvas.tokens?.placeables?.find((t) => t.actor?.id === actor.id || t.document?.actorId === actor.id);
 
@@ -207,10 +208,36 @@ export const buildHeaderHtml = (ActionMenu) => {
 		tokenName;
 
 	let img = ActionMenu.currentActor.img;
+	let subjectScale = 1;
 	if (useTokenImg) {
-		const imgSrc = token?.document?.texture?.src || token?.texture?.src || actor.prototypeToken?.texture?.src;
-		if (imgSrc) {
-			img = imgSrc;
+		const tokenDoc = token?.document || (token?.schema ? token : null);
+		const subjectTexture =
+			tokenDoc?.ring?.subject?.texture ||
+			token?.ring?.subject?.texture ||
+			actor?.prototypeToken?.ring?.subject?.texture;
+		const tokenTexture =
+			tokenDoc?.texture?.src ||
+			token?.texture?.src ||
+			actor?.prototypeToken?.texture?.src;
+
+		if (subjectTexture && typeof subjectTexture === "string" && subjectTexture.trim()) {
+			img = subjectTexture.trim();
+		} else if (tokenTexture && typeof tokenTexture === "string" && tokenTexture.trim()) {
+			img = tokenTexture.trim();
+		}
+
+		const rawScale =
+			tokenDoc?.ring?.subject?.scale ??
+			token?.ring?.subject?.scale ??
+			token?.ring?.scaleCorrection ??
+			actor?.prototypeToken?.ring?.subject?.scale ??
+			tokenDoc?.flags?.dnd5e?.tokenRing?.scaleCorrection ??
+			token?.flags?.dnd5e?.tokenRing?.scaleCorrection ??
+			actor?.prototypeToken?.flags?.dnd5e?.tokenRing?.scaleCorrection;
+
+		const num = Number(rawScale);
+		if (Number.isFinite(num) && num > 0) {
+			subjectScale = num;
 		}
 	}
 
@@ -220,6 +247,11 @@ export const buildHeaderHtml = (ActionMenu) => {
 	const endTurnBtn = isMyTurn
 		? `<div class="ib-am-end-turn-btn" onclick="event.stopPropagation(); (window.ActionHUD?.endTurn || window.ActionHUD?.endTurn)('${actorId}')" title="${game.i18n.localize("IBHUD.UI.EndTurn")}"><i class="fas fa-hourglass-end"></i></div>`
 		: "";
+
+	const imgStyle = subjectScale !== 1
+		? `style="--token-subject-scale: ${subjectScale}; scale: ${subjectScale}; transform-origin: center center;"`
+		: "";
+
 	return `
             <div class="ib-identity-header">
                 <div class="ib-identity-text">
@@ -232,8 +264,8 @@ export const buildHeaderHtml = (ActionMenu) => {
                     </div>
                     <span class="ib-identity-sub">${selectedText}</span>
                 </div>
-                <div class="ib-identity-img-box" onclick="ActionHUD.actionMenu.openSheet()">
-                    <img src="${img}">
+                <div class="ib-identity-img-box" onclick="ActionHUD.actionMenu.openSheet()" style="--token-subject-scale: ${subjectScale};">
+                    <img src="${img}" ${imgStyle}>
                 </div>
             </div>
         `;

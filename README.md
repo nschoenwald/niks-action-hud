@@ -16,6 +16,7 @@ Nik's Action HUD is an ultra-focused, high-performance Action HUD designed to st
 - **Instant Search & Deduplication**: Quick search filtering across submenus with guaranteed item deduplication across all category and level tabs (built-in).
 - **Player Character & Token Fallback**: If no token is selected on the canvas, the HUD automatically resolves to your assigned player character or owned character actor on the scene without requiring manual token selection (built-in).
 - **User HUD Toggle**: Per-user setting (`scope: "user"`) to cleanly enable or disable the Action HUD independently of the GM or other players, persisted in the world database across devices and fully synchronized in the Action HUD configuration menu.
+- **Token Image & Dynamic Ring Scaling**: Option to display active token texture art instead of the actor portrait, automatically respecting the token's Dynamic Token Ring subject scale correction and custom subject textures.
 - **Unlinked NPC Favorites Sync**: Native synchronization of favorite slots for unlinked tokens without flag collisions or data corruption (built-in).
 - **Multi-Row Favorites**: Favorite quick-slots wrap onto multiple lines cleanly without horizontal clipping (built-in).
 - **Drag-and-Drop Favorite Reordering**: Drag and drop quick-slot badges to rearrange favorites smoothly in real time.

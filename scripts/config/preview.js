@@ -66,6 +66,7 @@ export const triggerPreview = (app) => {
 			theme: theme,
 			font: font,
 			emphasizeFirst: emphasizeFirst,
+			useTokenImg: app.tempData.actionMenuUseTokenImg ?? false,
 		});
 	}
 };

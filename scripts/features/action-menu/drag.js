@@ -502,5 +502,55 @@ export const previewUpdate = (ActionMenu, data) => {
 		const menu = document.getElementById(ActionMenu.ID);
 		if (menu) menu.classList.toggle("no-first-button-emphasis", !data.emphasizeFirst);
 	}
+	if (data.useTokenImg !== undefined) {
+		const imgBox = root.querySelector(".ib-identity-img-box");
+		if (imgBox) {
+			const actor = ActionMenu.currentActor;
+			const activeTokens = actor?.getActiveTokens ? actor.getActiveTokens() : [];
+			const token = ActionMenu.currentToken
+				|| canvas.tokens?.controlled?.[0]
+				|| activeTokens[0]
+				|| canvas.tokens?.placeables?.find((t) => t.actor?.id === actor?.id || t.document?.actorId === actor?.id);
+			let img = actor?.img || "";
+			let subjectScale = 1;
+			if (data.useTokenImg && actor) {
+				const tokenDoc = token?.document || (token?.schema ? token : null);
+				const subjectTexture =
+					tokenDoc?.ring?.subject?.texture ||
+					token?.ring?.subject?.texture ||
+					actor?.prototypeToken?.ring?.subject?.texture;
+				const tokenTexture =
+					tokenDoc?.texture?.src ||
+					token?.texture?.src ||
+					actor?.prototypeToken?.texture?.src;
+
+				if (subjectTexture && typeof subjectTexture === "string" && subjectTexture.trim()) {
+					img = subjectTexture.trim();
+				} else if (tokenTexture && typeof tokenTexture === "string" && tokenTexture.trim()) {
+					img = tokenTexture.trim();
+				}
+
+				const rawScale =
+					tokenDoc?.ring?.subject?.scale ??
+					token?.ring?.subject?.scale ??
+					token?.ring?.scaleCorrection ??
+					actor?.prototypeToken?.ring?.subject?.scale ??
+					tokenDoc?.flags?.dnd5e?.tokenRing?.scaleCorrection ??
+					token?.flags?.dnd5e?.tokenRing?.scaleCorrection ??
+					actor?.prototypeToken?.flags?.dnd5e?.tokenRing?.scaleCorrection;
+
+				const num = Number(rawScale);
+				if (Number.isFinite(num) && num > 0) {
+					subjectScale = num;
+				}
+			}
+			imgBox.style.setProperty("--token-subject-scale", subjectScale);
+			const imgEl = imgBox.querySelector("img");
+			if (imgEl) {
+				imgEl.src = img;
+				imgEl.style.scale = subjectScale !== 1 ? subjectScale : "";
+			}
+		}
+	}
 };
 

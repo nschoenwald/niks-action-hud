@@ -1219,6 +1219,8 @@
 	height: 100%;
 	object-fit: cover;
 	transform: none;
+	scale: var(--token-subject-scale, 1);
+	transform-origin: center center;
 }
 
 /* =========================================
