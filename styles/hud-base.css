@@ -1758,61 +1758,6 @@
 }
 
 /* =========================================
-   AM IMAGE LAYERS & ELEMENT IMAGES
-   ========================================= */
-
-.ib-am-layers {
-	position: absolute;
-	inset: 0;
-	overflow: hidden;
-	pointer-events: none;
-}
-
-.ib-am-layers img {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	pointer-events: none;
-}
-
-.ib-am-btn-frame,
-.ib-am-element-img {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	pointer-events: none;
-	z-index: 0;
-}
-
-.theme-image .ib-sub-menu {
-	position: relative;
-}
-
-.theme-image .ib-menu-header {
-	position: relative;
-}
-
-.theme-image .ib-sidebar-panel {
-	position: relative;
-}
-
-.theme-image .ib-magic-tabs {
-	position: relative;
-}
-
-.theme-image .ib-quick-slot-container {
-	position: relative;
-}
-
-.theme-image .ib-identity-header {
-	position: relative;
-}
-
-.theme-image .ib-list-item {
-	position: relative;
-}
-
-/* =========================================
    CUSTOM IMAGE BUTTON (Background Fill Mode)
    Retains Theme Borders & Shape
    ========================================= */
@@ -3870,19 +3815,14 @@
 /* ========================================================
    Hide Action HUD Toolbar Token Controls
    ======================================================== */
-body.niks-hide-token-controls [data-tool="niks-action-toggle"],
 body.niks-hide-token-controls [data-tool="niks-action-broadcast"],
 body.niks-hide-token-controls [data-tool="niks-action-config"],
-body.niks-hide-token-controls [data-action="niks-action-toggle"],
 body.niks-hide-token-controls [data-action="niks-action-broadcast"],
 body.niks-hide-token-controls [data-action="niks-action-config"],
-body.niks-hide-token-controls .control-tool[data-tool="niks-action-toggle"],
 body.niks-hide-token-controls .control-tool[data-tool="niks-action-broadcast"],
 body.niks-hide-token-controls .control-tool[data-tool="niks-action-config"],
-body.niks-hide-token-controls li[data-tool="niks-action-toggle"],
 body.niks-hide-token-controls li[data-tool="niks-action-broadcast"],
 body.niks-hide-token-controls li[data-tool="niks-action-config"],
-body.niks-hide-token-controls button[data-tool="niks-action-toggle"],
 body.niks-hide-token-controls button[data-tool="niks-action-broadcast"],
 body.niks-hide-token-controls button[data-tool="niks-action-config"] {
   display: none !important;

@@ -54,7 +54,6 @@ import {
 	enableDrag as enableDragModule,
 	enableLongPressDrag as enableLongPressDragModule,
 	previewUpdate as previewUpdateModule,
-	previewAMImages as previewAMImagesModule,
 } from "./action-menu/drag.js";
 import {
 	editSpellSlots as editSpellSlotsModule,
@@ -574,10 +573,6 @@ export class ActionMenu {
 
 	static previewUpdate(data) {
 		previewUpdateModule(ActionMenu, data);
-	}
-
-	static previewAMImages(data) {
-		previewAMImagesModule(ActionMenu, data);
 	}
 
 	static _findMenuItemData(itemId) {

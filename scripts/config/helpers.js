@@ -9,7 +9,7 @@ export const switchTab = (app, tabName, render = false) => {
 	const canEditStyle = game.user.role >= styleRole;
 	const canEditMenu = game.user.role >= menuRole;
 
-	if ((tabName === "appearance" || tabName === "imageStudio") && !canEditStyle) {
+	if (tabName === "appearance" && !canEditStyle) {
 		ui.notifications.warn(game.i18n.localize("IBHUD.UI.NoPermission"));
 		return;
 	}

@@ -4,7 +4,7 @@
     <div class="hud-tab-intro">
         <div class="hud-intro-content">
             <h4><i class="fas fa-sitemap"></i> Action HUD Menu Builder</h4>
-            <p>Customize the order, appearance, visibility, and contents of category buttons on your Action HUD.</p>
+            <p>Customize the order, appearance, and contents of category buttons on your Action HUD.</p>
         </div>
         <div class="hud-intro-actions">
             <button type="button" class="hud-btn hud-btn-primary" data-action="addCategory">
@@ -117,29 +117,6 @@
                     </div>
                 </div>
                 {{/unless}}
-
-                <!-- Visibility Rules -->
-                <div class="hud-visibility-section">
-                    <h5>Visibility Permissions</h5>
-                    <div class="hud-field-group">
-                        <label>Visibility Mode</label>
-                        <select name="customMenu.{{@index}}.visibility.mode" class="hud-select">
-                            <option value="all" {{#if (eq this.visibility.mode "all")}}selected{{/if}}>Show for All Actors</option>
-                            <option value="types" {{#if (eq this.visibility.mode "types")}}selected{{/if}}>Filter by Actor Types</option>
-                        </select>
-                    </div>
-
-                    {{#if (eq this.visibility.mode "types")}}
-                    <div class="hud-chip-group" style="margin-top: 8px;">
-                        {{#each this.visibility._allActorTypes}}
-                        <label class="hud-chip {{#if this.checked}}active{{/if}}">
-                            <input type="checkbox" name="customMenu.{{@../index}}.visibility.actorTypes.{{this.value}}" {{#if this.checked}}checked{{/if}}>
-                            <span>{{this.label}}</span>
-                        </label>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-                </div>
 
             </div>
         </div>

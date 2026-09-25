@@ -1,11 +1,10 @@
 /**
- * Theme Export/Import — packs global custom-theme config + referenced
+ * Theme Export/Import — packs theme config + referenced
  * local images into a .zip. On import, images are uploaded to Foundry
  * user-data and paths in the JSON are updated.
  * Exclusively designed for Foundry V14.
  */
 
-import { AM_ELEMENTS } from "./schema.js";
 import { MODULE_ID } from "../constants.js";
 
 let _JSZip = null;
@@ -33,13 +32,6 @@ function collectImagePaths(config) {
 	const paths = new Set();
 	const add = (p) => { if (_isLocalPath(p)) paths.add(p); };
 
-	for (const l of (config.amMenuLayers || [])) add(l.src);
-	for (const l of (config.amSubMenuLayers || [])) add(l.src);
-
-	for (const el of AM_ELEMENTS) {
-		for (const l of (config[`${el.id}Layers`] || [])) add(l.src);
-	}
-
 	for (const cat of (config.customMenu || [])) {
 		add(cat.img);
 		add(cat.buttonImg);
@@ -59,19 +51,6 @@ function buildExportConfig(full) {
 	c.theme = full.theme || "rift";
 	c.actionMenuFont = full.actionMenuFont || "";
 	c.actionMenuEmphasizeFirstButton = full.actionMenuEmphasizeFirstButton ?? true;
-
-	c.amMenuLayers = full.amMenuLayers || [];
-	c.amSubMenuLayers = full.amSubMenuLayers || [];
-
-	for (const el of AM_ELEMENTS) {
-		c[`${el.id}Layers`] = full[`${el.id}Layers`] || [];
-		c[`${el.id}Scale`] = full[`${el.id}Scale`] ?? 1;
-		c[`${el.id}X`] = full[`${el.id}X`] ?? 0;
-		c[`${el.id}Y`] = full[`${el.id}Y`] ?? 0;
-		c[`${el.id}Color`] = full[`${el.id}Color`] || "";
-		c[`${el.id}FontFamily`] = full[`${el.id}FontFamily`] || "";
-		c[`${el.id}TextColor`] = full[`${el.id}TextColor`] || "";
-	}
 
 	c.customMenu = full.customMenu || [];
 	c.adapterCategoryOverrides = full.adapterCategoryOverrides || {};
@@ -124,11 +103,6 @@ export async function exportThemeZip(fullConfig, themeName = "custom-theme") {
 	const exportCfg = buildExportConfig(fullConfig);
 	const rewritePath = (p) => pathToLocalName.has(p) ? `images/${pathToLocalName.get(p)}` : p;
 
-	for (const l of (exportCfg.amMenuLayers || [])) l.src = rewritePath(l.src);
-	for (const l of (exportCfg.amSubMenuLayers || [])) l.src = rewritePath(l.src);
-	for (const el of AM_ELEMENTS) {
-		for (const l of (exportCfg[`${el.id}Layers`] || [])) l.src = rewritePath(l.src);
-	}
 	for (const cat of (exportCfg.customMenu || [])) {
 		if (cat.img) cat.img = rewritePath(cat.img);
 		if (cat.buttonImg) cat.buttonImg = rewritePath(cat.buttonImg);
@@ -192,11 +166,6 @@ export async function importThemeZip(file) {
 
 	const resolve = (p) => imgMap.has(p) ? imgMap.get(p) : p;
 
-	for (const l of (config.amMenuLayers || [])) l.src = resolve(l.src);
-	for (const l of (config.amSubMenuLayers || [])) l.src = resolve(l.src);
-	for (const el of AM_ELEMENTS) {
-		for (const l of (config[`${el.id}Layers`] || [])) l.src = resolve(l.src);
-	}
 	for (const cat of (config.customMenu || [])) {
 		if (cat.img) cat.img = resolve(cat.img);
 		if (cat.buttonImg) cat.buttonImg = resolve(cat.buttonImg);

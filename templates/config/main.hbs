@@ -9,7 +9,7 @@
             </div>
             <div class="hud-brand-text">
                 <h2>Nik's Action HUD</h2>
-                <span class="hud-version-tag">v14.1.6</span>
+                <span class="hud-version-tag">v14.2.0</span>
             </div>
         </div>
         <div class="hud-top-status">
@@ -48,15 +48,6 @@
                 </div>
             </button>
 
-            <button type="button" class="hud-nav-item {{#if isImageStudioTab}}active{{/if}}" data-tab="imageStudio">
-                <i class="fas fa-layer-group"></i>
-                <div class="hud-nav-label">
-                    <span>Image Studio</span>
-                    <small>Layer Compositor</small>
-                </div>
-                {{#if isImageTheme}}<span class="hud-nav-pill">Active</span>{{/if}}
-            </button>
-
             <button type="button" class="hud-nav-item {{#if isPresetsTab}}active{{/if}}" data-tab="presets">
                 <i class="fas fa-bookmark"></i>
                 <div class="hud-nav-label">
@@ -71,7 +62,6 @@
             {{> "modules/niks-action-hud/templates/config/tabs/general.hbs"}}
             {{> "modules/niks-action-hud/templates/config/tabs/appearance.hbs"}}
             {{> "modules/niks-action-hud/templates/config/tabs/menu-builder.hbs"}}
-            {{> "modules/niks-action-hud/templates/config/tabs/image-studio.hbs"}}
             {{> "modules/niks-action-hud/templates/config/tabs/presets.hbs"}}
         </main>
 

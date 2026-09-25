@@ -1,5 +1,3 @@
-import { AM_ELEMENTS } from "./schema.js";
-
 const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
 
 const cloneValue = (value) => {
@@ -17,17 +15,6 @@ export const ACTION_MENU_PRESET_KEYS = [
 	"closeMenuOnUse",
 	"hideEmptySubmenus",
 	"dnd5eGroupActionsByActivation",
-	"amMenuLayers",
-	"amSubMenuLayers",
-	...AM_ELEMENTS.flatMap((element) => [
-		`${element.id}Layers`,
-		`${element.id}Scale`,
-		`${element.id}X`,
-		`${element.id}Y`,
-		`${element.id}Color`,
-		`${element.id}FontFamily`,
-		`${element.id}TextColor`,
-	]),
 ];
 
 export const buildActionMenuPresetData = (configuration = {}) => {

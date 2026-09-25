@@ -2,9 +2,6 @@
  * Central schema and normalization definitions for Nik's Action HUD.
  * Exclusively designed for Foundry V14.
  */
-import { AM_ELEMENTS } from "./constants.js";
-
-export { AM_ELEMENTS };
 
 // ── Primitive Coercion Helpers ──────────────────────────
 
@@ -27,42 +24,6 @@ export function coerceBoolean(value, fallback = false) {
 
 export function coerceString(value, fallback = "") {
 	return typeof value === "string" ? value : (value ? String(value) : fallback);
-}
-
-// ── Layer Utilities ──────────────────────────────────────
-
-export function injectContentMarker(layers = [], contentZ = 50) {
-	const validLayers = Array.isArray(layers) ? [...layers] : [];
-	const sorted = validLayers.sort((a, b) => (b.zIndex ?? 10) - (a.zIndex ?? 10));
-
-	let markerPlaced = false;
-	const result = [];
-	const targets = Array.isArray(contentZ) ? contentZ : [contentZ];
-
-	for (const layer of sorted) {
-		const z = layer.zIndex ?? 10;
-		for (const target of targets) {
-			if (!markerPlaced && z < target) {
-				result.push({ _contentMarker: true, zIndex: target });
-				markerPlaced = true;
-			}
-		}
-		result.push(layer);
-	}
-
-	if (!markerPlaced) {
-		const fallbackZ = targets[0] ?? 50;
-		result.push({ _contentMarker: true, zIndex: fallbackZ });
-	}
-
-	return result;
-}
-
-export function resolveLayerContext(customLayers = [], defaultLayers = [], defaultZ = 10, contentZ = 50) {
-	const source = Array.isArray(customLayers) && customLayers.length > 0
-		? customLayers
-		: (Array.isArray(defaultLayers) ? defaultLayers : []);
-	return injectContentMarker([...source], contentZ);
 }
 
 // ── Field Schema Definitions ─────────────────────────────
@@ -124,20 +85,6 @@ export function loadHudConfig(tempData, source = {}) {
 	tempData.adapterCategoryOverrides = source.adapterCategoryOverrides && typeof source.adapterCategoryOverrides === "object"
 		? foundry.utils.deepClone(source.adapterCategoryOverrides)
 		: {};
-
-	// Image theme layers
-	tempData.amMenuLayers = Array.isArray(source.amMenuLayers) ? foundry.utils.deepClone(source.amMenuLayers) : [];
-	tempData.amSubMenuLayers = Array.isArray(source.amSubMenuLayers) ? foundry.utils.deepClone(source.amSubMenuLayers) : [];
-
-	for (const el of AM_ELEMENTS) {
-		tempData[`${el.id}Layers`] = Array.isArray(source[`${el.id}Layers`]) ? foundry.utils.deepClone(source[`${el.id}Layers`]) : [];
-		tempData[`${el.id}Scale`] = coerceNumber(source[`${el.id}Scale`], 1);
-		tempData[`${el.id}X`] = coerceNumber(source[`${el.id}X`], 0);
-		tempData[`${el.id}Y`] = coerceNumber(source[`${el.id}Y`], 0);
-		tempData[`${el.id}Color`] = coerceString(source[`${el.id}Color`], "");
-		tempData[`${el.id}FontFamily`] = coerceString(source[`${el.id}FontFamily`], "");
-		tempData[`${el.id}TextColor`] = coerceString(source[`${el.id}TextColor`], "");
-	}
 }
 
 export function exportHudConfig(tempData) {
@@ -157,34 +104,5 @@ export function exportHudConfig(tempData) {
 		? foundry.utils.deepClone(tempData.adapterCategoryOverrides)
 		: {};
 
-	out.amMenuLayers = Array.isArray(tempData.amMenuLayers) ? foundry.utils.deepClone(tempData.amMenuLayers) : [];
-	out.amSubMenuLayers = Array.isArray(tempData.amSubMenuLayers) ? foundry.utils.deepClone(tempData.amSubMenuLayers) : [];
-
-	for (const el of AM_ELEMENTS) {
-		out[`${el.id}Layers`] = Array.isArray(tempData[`${el.id}Layers`]) ? foundry.utils.deepClone(tempData[`${el.id}Layers`]) : [];
-		out[`${el.id}Scale`] = coerceNumber(tempData[`${el.id}Scale`], 1);
-		out[`${el.id}X`] = coerceNumber(tempData[`${el.id}X`], 0);
-		out[`${el.id}Y`] = coerceNumber(tempData[`${el.id}Y`], 0);
-		out[`${el.id}Color`] = coerceString(tempData[`${el.id}Color`], "");
-		out[`${el.id}FontFamily`] = coerceString(tempData[`${el.id}FontFamily`], "");
-		out[`${el.id}TextColor`] = coerceString(tempData[`${el.id}TextColor`], "");
-	}
-
 	return out;
-}
-
-export function getAMElementContext(tempData) {
-	return AM_ELEMENTS.map((el) => {
-		const layers = (tempData[`${el.id}Layers`] || []).slice().sort((a, b) => (b.zIndex || 0) - (a.zIndex || 0));
-		return {
-			...el,
-			layers: injectContentMarker(layers, 50),
-			scale: tempData[`${el.id}Scale`] ?? 1,
-			x: tempData[`${el.id}X`] ?? 0,
-			y: tempData[`${el.id}Y`] ?? 0,
-			color: tempData[`${el.id}Color`] || "",
-			fontFamily: tempData[`${el.id}FontFamily`] || "",
-			textColor: tempData[`${el.id}TextColor`] || "",
-		};
-	});
 }

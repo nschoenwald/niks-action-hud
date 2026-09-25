@@ -267,41 +267,6 @@ export const onRemoveItem = async (app, event, target) => {
 	await app.render();
 };
 
-// ── Image Studio Layer Handlers ──────────────────────────
-
-export const onAddAMLayer = async (app, event, target) => {
-	const layerKey = target.dataset.layerKey;
-	if (!layerKey) return;
-
-	captureInputData(app, app.element);
-	if (!Array.isArray(app.tempData[layerKey])) app.tempData[layerKey] = [];
-
-	app.tempData[layerKey].push({
-		src: "",
-		zIndex: 10,
-		opacity: 1.0,
-		blend: "normal",
-		scale: 1.0,
-		x: 0,
-		y: 0,
-		rotation: 0,
-	});
-
-	await app.render();
-};
-
-export const onRemoveAMLayer = async (app, event, target) => {
-	const layerKey = target.dataset.layerKey;
-	const index = Number(target.dataset.index);
-	if (!layerKey || Number.isNaN(index)) return;
-
-	captureInputData(app, app.element);
-	if (Array.isArray(app.tempData[layerKey])) {
-		app.tempData[layerKey].splice(index, 1);
-	}
-	await app.render();
-};
-
 export const onAddBtnFrameLayer = async (app, event, target) => {
 	const catRow = target.closest("[data-cat-index]");
 	const adapterId = target.dataset.adapterId;

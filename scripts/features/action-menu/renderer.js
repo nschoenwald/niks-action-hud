@@ -1,6 +1,6 @@
 
 import { MODULE_ID } from "../../constants.js";
-import { attachCornerResize, attachWheelResize, attachDragObserver } from "./drag.js";
+import { attachCornerResize, attachDragObserver } from "./drag.js";
 import { getEffectiveActorSettings } from "../../utils/client-overrides.js";
 import { getActionCategories, getSubMenuData } from "./registry.js";
 import { resolveSubMenuSide } from "./position.js";
@@ -112,66 +112,6 @@ export const updateHtmlMorph = (containerElement, newHtml) => {
 	}
 };
 
-const _layerSizeStyle = (layer) => {
-	const w = Number(layer.width) || 0;
-	const h = Number(layer.height) || 0;
-	if (w && h) return `width:${w}px; height:${h}px;`;
-	if (w) return `width:${w}px; height:auto;`;
-	if (h) return `width:auto; height:${h}px;`;
-	return "";
-};
-
-const buildAMLayersHtml = (layers) => {
-	if (!layers || layers.length === 0) return "";
-	const imgs = layers.map((layer) => {
-		if (!layer.src) return "";
-		const transform = `translate(-50%, -50%) scale(${layer.scale || 1}) translate(${layer.x || 0}px, ${layer.y || 0}px) rotate(${layer.rotation || 0}deg)`;
-		const size = _layerSizeStyle(layer);
-		return `<img src="${layer.src}" style="position:absolute; top:50%; left:50%; z-index:${layer.zIndex || 10}; ${size} transform:${transform}; opacity:${layer.opacity ?? 1}; mix-blend-mode:${layer.blend || "normal"}; pointer-events:none;">`;
-	}).join("");
-	return `<div class="ib-am-layers" style="position:absolute; inset:0; pointer-events:none;">${imgs}</div>`;
-};
-
-const getAMElementStyle = (config, elementId) => {
-	const parts = [];
-	const color = config[`${elementId}Color`];
-	let width = config[`${elementId}Width`];
-	let height = config[`${elementId}Height`];
-	const layers = config[`${elementId}Layers`];
-	if (layers && layers.length > 0) {
-		const ref = layers[0];
-		if (!width && ref.width) width = ref.width;
-		if (!height && ref.height) height = ref.height;
-	}
-	if (color) parts.push(`color: ${color}`);
-	if (width) parts.push(`width: ${width}px`);
-	if (height) parts.push(`height: ${height}px`);
-	return parts.join("; ");
-};
-
-const getAMTextStyle = (config, elementId) => {
-	const tx = Number(config[`${elementId}TextX`]) || 0;
-	const ty = Number(config[`${elementId}TextY`]) || 0;
-	const ts = Number(config[`${elementId}TextScale`]) || 1;
-	const tr = Number(config[`${elementId}TextRotation`]) || 0;
-	if (!tx && !ty && ts === 1 && !tr) return "";
-	return `transform: translate(${tx}px, ${ty}px) scale(${ts}) rotate(${tr}deg)`;
-};
-
-const buildAMElementLayersHtml = (config, elementId) => {
-	const layers = config[`${elementId}Layers`];
-	if (!layers || layers.length === 0) return "";
-	const imgs = layers.map((layer, index) => {
-		if (!layer.src) return "";
-		const lx = layer.x || 0;
-		const ly = layer.y || 0;
-		const transform = `translate(-50%, -50%) scale(${layer.scale || 1}) translate(${lx}px, ${ly}px) rotate(${layer.rotation || 0}deg)`;
-		const size = _layerSizeStyle(layer);
-		return `<img src="${layer.src}" style="position:absolute; top:50%; left:50%; z-index:${layer.zIndex || 10}; ${size} transform:${transform}; opacity:${layer.opacity ?? 1}; mix-blend-mode:${layer.blend || "normal"}; pointer-events:none;">`;
-	}).join("");
-	return `<div class="ib-am-layers" style="position:absolute; inset:0; pointer-events:none;">${imgs}</div>`;
-};
-
 export const getRenderConfig = (ActionMenu) => {
 	const config = game.settings.get(MODULE_ID, "configuration");
 	const clientPos =
@@ -252,7 +192,6 @@ export const setupTooltip = (theme, actionMenuFont) => {
 
 export const buildHeaderHtml = (ActionMenu) => {
 	const config = game.settings.get(MODULE_ID, "configuration") || {};
-	const isImageTheme = (config.theme || "rift") === "image";
 	const useTokenImg = config.actionMenuUseTokenImg ?? false;
 	const actor = ActionMenu.currentActor;
 	const activeTokens = actor.getActiveTokens ? actor.getActiveTokens() : [];
@@ -274,11 +213,6 @@ export const buildHeaderHtml = (ActionMenu) => {
 		}
 	}
 
-	const identityBgHtml = isImageTheme ? buildAMElementLayersHtml(config, "amIdentity") : "";
-	const identityStyle = isImageTheme ? getAMElementStyle(config, "amIdentity") : "";
-	const identityTextStyle = isImageTheme ? getAMTextStyle(config, "amIdentity") : "";
-	const portraitLayersHtml = isImageTheme ? buildAMElementLayersHtml(config, "amPortrait") : "";
-
 	const selectedText = game.i18n.localize("IBHUD.UI.SelectedActor");
 	const actorId = ActionMenu.currentActor.id;
 	const isMyTurn = game.combat?.started && game.combat.combatant?.actorId === actorId;
@@ -286,9 +220,8 @@ export const buildHeaderHtml = (ActionMenu) => {
 		? `<div class="ib-am-end-turn-btn" onclick="event.stopPropagation(); (window.ActionHUD?.endTurn || window.ActionHUD?.endTurn)('${actorId}')" title="${game.i18n.localize("IBHUD.UI.EndTurn")}"><i class="fas fa-hourglass-end"></i></div>`
 		: "";
 	return `
-            <div class="ib-identity-header" ${identityStyle ? `style="${identityStyle}"` : ""}>
-                ${identityBgHtml}
-                <div class="ib-identity-text" ${identityTextStyle ? `style="${identityTextStyle}"` : ""}>
+            <div class="ib-identity-header">
+                <div class="ib-identity-text">
                     <div style="position: relative; display: inline-block;">
                         <div class="ib-collapse-btn" onclick="ActionHUD.actionMenu.toggleCollapse()" style="position: absolute; right: 100%; top: 0.6em; transform: translateY(-50%); margin-right: 8px;">
                             <i class="fas ${ActionMenu.isCollapsed ? 'fa-caret-right' : 'fa-caret-down'}"></i>
@@ -299,7 +232,6 @@ export const buildHeaderHtml = (ActionMenu) => {
                     <span class="ib-identity-sub">${selectedText}</span>
                 </div>
                 <div class="ib-identity-img-box" onclick="ActionHUD.actionMenu.openSheet()">
-                    ${portraitLayersHtml}
                     <img src="${img}">
                 </div>
             </div>
@@ -361,11 +293,7 @@ export const buildQuickSlotsHtml = (ActionMenu) => {
 	});
 
 	if (!slots) return "";
-	const qsConfig = game.settings.get(MODULE_ID, "configuration") || {};
-	const isImageTheme = (qsConfig.theme || "rift") === "image";
-	const quickSlotFrameHtml = isImageTheme ? buildAMElementLayersHtml(qsConfig, "amQuickSlot") : "";
-	const qsStyle = isImageTheme ? getAMElementStyle(qsConfig, "amQuickSlot") : "";
-	return `<div class="ib-quick-slot-container" ${qsStyle ? `style="${qsStyle}"` : ""}>${quickSlotFrameHtml}${slots}</div>`;
+	return `<div class="ib-quick-slot-container">${slots}</div>`;
 };
 
 const _safeNumber = (value, fallback) => {
@@ -388,7 +316,6 @@ export const buildCategoryButtonHtml = (
 	btnConfig = {},
 	{ interactive = true } = {},
 ) => {
-	const isImageTheme = (btnConfig.theme || "rift") === "image";
 	let onClick = "";
 	if (interactive) {
 		const categoryId = JSON.stringify(String(cat.id || ""));
@@ -423,28 +350,7 @@ export const buildCategoryButtonHtml = (
 		bgHtml = `<img src="${escapeHtml(cat.buttonImg)}" class="ib-custom-bg" style="${escapeHtml(styleVars)}" alt="">`;
 	}
 
-	let frameHtml = "";
-	let btnElStyle = "";
-	let btnTextStyle = "";
-	if (isImageTheme) {
-		if (Array.isArray(cat.buttonFrameLayers) && cat.buttonFrameLayers.length > 0) {
-			const perBtnConfig = {
-				amButtonLayers: cat.buttonFrameLayers,
-				amButtonColor: cat.buttonFrameColor || "",
-			};
-			frameHtml = buildAMElementLayersHtml(perBtnConfig, "amButton");
-			btnElStyle = getAMElementStyle(perBtnConfig, "amButton");
-		} else {
-			frameHtml = buildAMElementLayersHtml(btnConfig, "amButton");
-			btnElStyle = getAMElementStyle(btnConfig, "amButton");
-		}
-		btnTextStyle = getAMTextStyle(btnConfig, "amButton");
-	}
-
-	const actionButtonStyle = [
-		btnElStyle,
-		`--ib-action-stagger: ${_safeNumber(actionIndex, 0) * 12}px`,
-	].filter(Boolean).join("; ");
+	const actionButtonStyle = `--ib-action-stagger: ${_safeNumber(actionIndex, 0) * 12}px`;
 	const labelStyle = [];
 	const fontFamily = _safeCategoryFont(cat.fontFamily);
 	const textColor = _safeCategoryColor(cat.textColor);
@@ -462,8 +368,7 @@ export const buildCategoryButtonHtml = (
 	return `
 		<button ${attributes.join(" ")}>
 			${bgHtml}
-			${frameHtml}
-			<div class="ib-btn-content" ${btnTextStyle ? `style="${escapeHtml(btnTextStyle)}"` : ""}>
+			<div class="ib-btn-content">
 				<span ${labelStyle.length ? `style="${escapeHtml(labelStyle.join("; "))}"` : ""}>${escapeHtml(game.i18n?.localize?.(cat.label) || cat.label)}</span>
 				${iconHtml}
 			</div>
@@ -499,89 +404,14 @@ export const buildListItems = (ActionMenu, items) => {
 		return `<div class="ib-list-item"><div class="ib-item-content" style="justify-content:center; color:#666; font-style:italic;">${emptyText}</div></div>`;
 	}
 
-	const liConfig = game.settings.get(MODULE_ID, "configuration") || {};
-	const isImageTheme = (liConfig.theme || "rift") === "image";
-	const listItemLayersHtml = isImageTheme ? buildAMElementLayersHtml(liConfig, "amListItem") : "";
-	const liElStyle = isImageTheme ? getAMElementStyle(liConfig, "amListItem") : "";
-	const liTextStyle = isImageTheme ? getAMTextStyle(liConfig, "amListItem") : "";
-
-	return preparedItems
-		.map((item) => {
-			if (item.isHeader) {
-			return `
-                    <div class="ib-list-header" style="
-                        background: rgba(255, 255, 255, 0.1); 
-                        color: #4ecdc4; 
-                        font-size: 1.1em; 
-                        padding: 4px 10px; 
-                        margin-top: 5px; 
-                        border-left: 3px solid #4ecdc4;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                        pointer-events: none;
-                    ">
-                        ${item.name}
-                    </div>
-                `;
-			}
-
-			let tooltipAttr = "";
-			if (item.description) {
-				const safeDesc = item.description.replace(/"/g, "&quot;");
-				tooltipAttr = `data-tooltip="${safeDesc}" data-tooltip-direction="LEFT"`;
-			}
-
-			const showFavorite = item.favoritable !== false;
-			const isFav = showFavorite && favs.includes(item.id);
-			const starClass = isFav ? "fas fa-star" : "far fa-star";
-			const activeClass = isFav ? "active" : "";
-			const favBtnHtml = showFavorite
-				? `<div class="ib-fav-btn ${activeClass}" onclick="event.stopPropagation(); ActionHUD.actionMenu.toggleFavorite('${item.id}')"><i class="${starClass}"></i></div>`
-				: "";
-
-			let rowStyle = "";
-			let nameStyle = "";
-
-		if (item.isExhausted) {
-				rowStyle = `opacity: 0.5; filter: grayscale(100%); cursor: not-allowed;`;
-				nameStyle = `text-decoration: line-through; color: #888;`;
-			} else if (item.isVirtual) {
-				rowStyle = `opacity: 0.7; border-left: 2px solid #9966ff; padding-left: 6px;`;
-			}
-
-			let rightClickAttr = "";
-
-			if (item.id.startsWith("macro-") && item.isPersonal) {
-				const realId = item.id.replace("macro-", "");
-				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.editCustomMacro('${realId}', ${item.customCatIndex}, ${item.customTabIndex}, ${item.customItemIndex})"`;
-			} else if (item.isPersonal) {
-				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.removePersonalItem(${item.customCatIndex}, ${item.customTabIndex}, ${item.customItemIndex})"`;
-			} else if (item.id.startsWith("macro-") && item.customCatIndex !== undefined) {
-				const realId = item.id.replace("macro-", "");
-				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.editGlobalMacro('${realId}', ${item.customCatIndex}, ${item.customTabIndex}, ${item.customItemIndex})"`;
-			} else {
-				rightClickAttr = `oncontextmenu="event.preventDefault(); event.stopPropagation(); ActionHUD.actionMenu.openItem('${item.id}')"`;
-			}
-
-			const costHtml = item.cost
-				? item.hasInlineControls
-					? `<div class="ib-item-inline-controls" style="display:flex; align-items:flex-start;">${item.cost}</div>`
-					: `<span class="text-sm font-bold" style="color: #666; font-size: 0.8em;">${item.cost}</span>`
-				: "";
-
-			const rightMetaAlign = item.hasInlineControls
-				? "display:flex; align-items:flex-start; gap:10px;"
-				: "display:flex; align-items:center; gap:10px;";
-
 			return `
             <div class="ib-list-item" 
-                 style="${rowStyle}${liElStyle ? ` ${liElStyle}` : ""}" 
+                 style="${rowStyle}" 
                  onclick="${item.isExhausted ? "" : `ActionHUD.actionMenu.useItem('${item.id}', event)`}"
                  ${rightClickAttr}
                  onmouseenter="ActionHUD.actionMenu.showTooltip('${item.id}', event)"
                  onmouseleave="ActionHUD.actionMenu.hideTooltip()">
-                ${listItemLayersHtml}
-                <div class="ib-item-content" ${liTextStyle ? `style="${liTextStyle}"` : ""}>
+                <div class="ib-item-content">
                     <div class="flex items-center gap-2" style="display:flex; align-items:center; gap:10px; min-width:0; overflow:hidden;">
                         ${item.img ? `<img src="${item.img}" width="24" height="24" style="border:1px solid #333; border-radius: 2px; flex-shrink:0;">` : ""}
                         <span class="ib-font-hero text-xl" style="font-size: 1.1em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; ${nameStyle}">
@@ -701,14 +531,9 @@ export const renderMain = (ActionMenu) => {
 	const cfg = getRenderConfig(ActionMenu);
 	setupTooltip(cfg.theme, cfg.actionMenuFont);
 
-	const config = game.settings.get(MODULE_ID, "configuration") || {};
-	const isImageTheme = cfg.theme === "image";
-
 	const headerHtml = buildHeaderHtml(ActionMenu);
 	const quickSlotsHtml = buildQuickSlotsHtml(ActionMenu);
 	const buttonsHtml = buildCategoryButtonsHtml(ActionMenu);
-
-	const menuLayersHtml = isImageTheme ? buildAMLayersHtml(config.amMenuLayers) : "";
 
 	const zoom = cfg.scale || 1;
 	let posStyle = "";
@@ -747,7 +572,6 @@ export const renderMain = (ActionMenu) => {
 	}
 
 	attachDragObserver(ActionMenu);
-	attachWheelResize(ActionMenu);
 	attachCornerResize(ActionMenu);
 
 	const sub = root.find(`#${ActionMenu.SUB_ID}`);
@@ -761,7 +585,7 @@ export const renderMain = (ActionMenu) => {
 		"class",
 		`theme-${cfg.theme} ${ActionMenu.isCollapsed ? "is-collapsed" : ""} ${firstButtonEmphasisClass}`.trim(),
 	);
-	const newMenuHtml = `${menuLayersHtml}
+	const newMenuHtml = `
                     <div class="ib-top-stack">
                         ${headerHtml}
                         ${quickSlotsHtml}
@@ -835,18 +659,6 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 	});
 
 	const subConfig = game.settings.get(MODULE_ID, "configuration") || {};
-	const isImageTheme = (subConfig.theme || "rift") === "image";
-	const subMenuLayersHtml = isImageTheme ? buildAMLayersHtml(subConfig.amSubMenuLayers) : "";
-	const menuHeaderBgHtml = isImageTheme ? buildAMElementLayersHtml(subConfig, "amMenuHeader") : "";
-	const sidebarBgHtml = isImageTheme ? buildAMElementLayersHtml(subConfig, "amSidebar") : "";
-	const tabBgHtml = isImageTheme ? buildAMElementLayersHtml(subConfig, "amTab") : "";
-	const menuHeaderStyle = isImageTheme ? getAMElementStyle(subConfig, "amMenuHeader") : "";
-	const menuHeaderTextStyle = isImageTheme ? getAMTextStyle(subConfig, "amMenuHeader") : "";
-	const sidebarStyle = isImageTheme ? getAMElementStyle(subConfig, "amSidebar") : "";
-	const tabStyle = isImageTheme ? getAMElementStyle(subConfig, "amTab") : "";
-	const tabTextStyle = isImageTheme ? getAMTextStyle(subConfig, "amTab") : "";
-	const sideTabStyle = isImageTheme ? getAMElementStyle(subConfig, "amSideTab") : "";
-	const sideTabTextStyle = isImageTheme ? getAMTextStyle(subConfig, "amSideTab") : "";
 
 	container.data("menu-data", data);
 	container.data("active-cat", categoryId);
@@ -900,7 +712,6 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		}
 
 		let sidebarHtml = "";
-		const sideTabLayersHtml = isImageTheme ? buildAMElementLayersHtml(subConfig, "amSideTab") : "";
 		primaryKeys.forEach((key) => {
 			const label = data.tabLabels[key] || key;
 			const tooltipText =
@@ -914,10 +725,8 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
                     <div class="ib-side-tab ${activeClass}" 
                          onclick="ActionHUD.actionMenu.switchTab('${categoryId}', '${key}')"
                          oncontextmenu="event.preventDefault(); ActionHUD.actionMenu.editSpellSlots('${categoryId}', '${key}')"
-                         data-tooltip="${tooltipText}" data-tooltip-direction="RIGHT"
-                         ${sideTabStyle ? `style="${sideTabStyle}"` : ""}>
-                        ${sideTabLayersHtml}
-                        <span ${sideTabTextStyle ? `style="${sideTabTextStyle}"` : ""}>${label}</span>
+                         data-tooltip="${tooltipText}" data-tooltip-direction="RIGHT">
+                        <span>${label}</span>
                     </div>`;
 		});
 
@@ -953,7 +762,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 							String(ActionMenu.activeSubTab) === String(subKey)
 								? "active"
 								: "";
-						levelTabsHtml += `<div class="ib-tab-btn sub-tab ${activeClass}" onclick="ActionHUD.actionMenu.switchSubTab('${categoryId}', '${subKey}')" ${tabStyle ? `style="${tabStyle}"` : ""}>${tabBgHtml}<span ${tabTextStyle ? `style="${tabTextStyle}"` : ""}>${label}</span></div>`;
+						levelTabsHtml += `<div class="ib-tab-btn sub-tab ${activeClass}" onclick="ActionHUD.actionMenu.switchSubTab('${categoryId}', '${subKey}')"><span>${label}</span></div>`;
 					});
 				}
 			}
@@ -967,13 +776,12 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		if (!isNewWrapper) {
 			const shell = wrapper.children(".ib-sub-menu.layout-sidebar").first();
 			if (shell.length) {
-				const newSidebarHtml = `${sidebarBgHtml}${sidebarHtml}`;
-				if (shell.data("last-sidebar-html") !== newSidebarHtml) {
-					shell.find(".ib-sidebar-panel").first().html(newSidebarHtml);
-					shell.data("last-sidebar-html", newSidebarHtml);
+				if (shell.data("last-sidebar-html") !== sidebarHtml) {
+					shell.find(".ib-sidebar-panel").first().html(sidebarHtml);
+					shell.data("last-sidebar-html", sidebarHtml);
 				}
 
-				const newMenuHeaderHtml = `${menuHeaderBgHtml}<span class="ib-font-hero text-xl" ${menuHeaderTextStyle ? `style="${menuHeaderTextStyle}"` : ""}>${game.i18n?.localize?.(data.title) || data.title}</span>`;
+				const newMenuHeaderHtml = `<span class="ib-font-hero text-xl">${game.i18n?.localize?.(data.title) || data.title}</span>`;
 				if (shell.data("last-header-html") !== newMenuHeaderHtml) {
 					shell.find(".ib-menu-header").first().html(newMenuHeaderHtml);
 					shell.data("last-header-html", newMenuHeaderHtml);
@@ -1002,15 +810,12 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 
 		const html = `
                 <div class="ib-sub-menu theme-${data.theme || subConfig?.theme || "rift"} layout-sidebar">
-                    ${subMenuLayersHtml}
-                    <div class="ib-sidebar-panel custom-scrollbar" ${sidebarStyle ? `style="${sidebarStyle}"` : ""}>
-                        ${sidebarBgHtml}
+                    <div class="ib-sidebar-panel custom-scrollbar">
                         ${sidebarHtml}
                     </div>
                     <div class="ib-main-panel">
-                        <div class="ib-menu-header" ${menuHeaderStyle ? `style="${menuHeaderStyle}"` : ""}>
-                            ${menuHeaderBgHtml}
-                            <span class="ib-font-hero text-xl" ${menuHeaderTextStyle ? `style="${menuHeaderTextStyle}"` : ""}>${game.i18n?.localize?.(data.title) || data.title}</span>
+                        <div class="ib-menu-header">
+                            <span class="ib-font-hero text-xl">${game.i18n?.localize?.(data.title) || data.title}</span>
                         </div>
                         ${searchHtml}
                         <div id="ib-tabs-container">${tabsContainer}</div>
@@ -1023,8 +828,8 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		wrapper.html(html);
 
 		const newShell = wrapper.children(".ib-sub-menu").first();
-		newShell.data("last-sidebar-html", `${sidebarBgHtml}${sidebarHtml}`);
-		newShell.data("last-header-html", `${menuHeaderBgHtml}<span class="ib-font-hero text-xl" ${menuHeaderTextStyle ? `style="${menuHeaderTextStyle}"` : ""}>${game.i18n?.localize?.(data.title) || data.title}</span>`);
+		newShell.data("last-sidebar-html", sidebarHtml);
+		newShell.data("last-header-html", `<span class="ib-font-hero text-xl">${game.i18n?.localize?.(data.title) || data.title}</span>`);
 		newShell.data("last-search-html", searchHtml);
 		newShell.data("last-tabs-html", tabsContainer);
 		newShell.data("last-list-html", listHtml);
@@ -1043,7 +848,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 				const label = data.tabLabels[key] || key;
 				const activeClass =
 					String(ActionMenu.activeTab) === String(key) ? "active" : "";
-				tabsHtml += `<div class="ib-tab-btn ${activeClass}" onclick="ActionHUD.actionMenu.switchTab('${categoryId}', '${key}')" ${tabStyle ? `style="${tabStyle}"` : ""}>${tabBgHtml}<span ${tabTextStyle ? `style="${tabTextStyle}"` : ""}>${label}</span></div>`;
+				tabsHtml += `<div class="ib-tab-btn ${activeClass}" onclick="ActionHUD.actionMenu.switchTab('${categoryId}', '${key}')"><span>${label}</span></div>`;
 			});
 			headerHtml += `<div class="ib-magic-tabs custom-scrollbar">${tabsHtml}</div>`;
 			listHtml = buildListItems(
@@ -1057,7 +862,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		if (!isNewWrapper) {
 			const shell = wrapper.children(".ib-sub-menu").not(".layout-sidebar").first();
 			if (shell.length) {
-				const newMenuHeaderHtml = `${menuHeaderBgHtml}<span class="ib-font-hero text-xl" ${menuHeaderTextStyle ? `style="${menuHeaderTextStyle}"` : ""}>${game.i18n?.localize?.(data.title) || data.title}</span>`;
+				const newMenuHeaderHtml = `<span class="ib-font-hero text-xl">${game.i18n?.localize?.(data.title) || data.title}</span>`;
 				if (shell.data("last-header-html") !== newMenuHeaderHtml) {
 					shell.find(".ib-menu-header").first().html(newMenuHeaderHtml);
 					shell.data("last-header-html", newMenuHeaderHtml);
@@ -1086,10 +891,8 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 
 		const html = `
                 <div class="ib-sub-menu theme-${data.theme || subConfig?.theme || "rift"}">
-                    ${subMenuLayersHtml}
-                    <div class="ib-menu-header" ${menuHeaderStyle ? `style="${menuHeaderStyle}"` : ""}>
-                        ${menuHeaderBgHtml}
-                        <span class="ib-font-hero text-xl" ${menuHeaderTextStyle ? `style="${menuHeaderTextStyle}"` : ""}>${game.i18n?.localize?.(data.title) || data.title}</span>
+                    <div class="ib-menu-header">
+                        <span class="ib-font-hero text-xl">${game.i18n?.localize?.(data.title) || data.title}</span>
                     </div>
                     ${searchHtml}
                     <div id="ib-tabs-container">${headerHtml}</div>
@@ -1101,7 +904,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		wrapper.html(html);
 
 		const newShell = wrapper.children(".ib-sub-menu").first();
-		newShell.data("last-header-html", `${menuHeaderBgHtml}<span class="ib-font-hero text-xl" ${menuHeaderTextStyle ? `style="${menuHeaderTextStyle}"` : ""}>${game.i18n?.localize?.(data.title) || data.title}</span>`);
+		newShell.data("last-header-html", `<span class="ib-font-hero text-xl">${game.i18n?.localize?.(data.title) || data.title}</span>`);
 		newShell.data("last-search-html", searchHtml);
 		newShell.data("last-tabs-html", headerHtml);
 		newShell.data("last-list-html", listHtml);

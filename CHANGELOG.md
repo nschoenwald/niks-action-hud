@@ -2,6 +2,31 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.2.1] - 2026-09-24
+
+### Removed Image Studio
+- **Clean and Complete Removal of Image Studio**:
+  - Removed the `image-studio.hbs` template partial and `Image Studio` navigation tab from the configuration application.
+  - Removed the `image` theme ("Custom Image Studio") and stylesheet `styles/themes/hud-theme-image.css` from the theme registry and module manifest.
+  - Removed `amMenuLayers`, `amSubMenuLayers`, and all `am*Layers` / `am*Style` / `am*Text` element fields from schema, config capture, and preset export/import.
+  - Cleaned up Action HUD renderer and drag preview logic, eliminating DOM layering overhead and inline style hooks across the HUD header, quick slots, category buttons, and submenus.
+  - Removed the "Reset Image Layers" option from the Presets & Backup tab.
+
+### Removed Mouse Wheel Resizing
+- **Removed Mouse Wheel HUD Resizing**: Completely removed the mouse wheel scaling event listener and modifier key handling from `scripts/features/action-menu/drag.js` and `scripts/features/action-menu/renderer.js`.
+- **Removed Wheel Resize Settings**: Removed the `wheelResize` and `scaleModifierKey` settings from `scripts/settings.js` and their corresponding localization entries in `lang/en.json`.
+- **Standalone Corner Drag Resizing**: Decoupled the interactive bottom-right corner resize handle from the wheel resize setting, allowing users to resize the HUD via the drag handle without needing mouse wheel settings.
+
+### Removed Toggle HUD Control Button
+- **Removed Toggle HUD Scene Control Tool**: Completely removed the "Toggle Action HUD" (`niks-action-toggle`) button from the token controls toolbar on the canvas. The HUD can be toggled via keyboard shortcuts (`Shift+H` / `Shift+M`) or configured/disabled via user settings and the settings button.
+
+### Removed Visibility Permissions from Menu Builder
+- **Clean Removal of Category Visibility Settings**:
+  - Removed the "Visibility Permissions" section, visibility mode selector, and actor type filter chips from category cards in `templates/config/tabs/menu-builder.hbs`.
+  - Removed unused `.hud-visibility-section` and `.hud-visibility-section h5` CSS definitions from `styles/config.css`.
+  - Removed visibility form capture logic and data enrichment from `scripts/config/capture.js` and `scripts/config/context.js`.
+  - Streamlined Menu Builder to focus purely on ordering, labeling, icons, custom backgrounds, and submenus/item trays.
+
 ## [14.2.0] - 2026-09-24
 
 ### Cleaned up Documentation

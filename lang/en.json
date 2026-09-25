@@ -785,14 +785,6 @@
       "DisableHUDHint": "Completely disables and hides the Action HUD for your user account.",
       "HideTokenControlsName": "Hide Toolbar Token Control Buttons",
       "HideTokenControlsHint": "Removes the Action HUD toggle buttons from the left-side token controls toolbar, keeping it tidy.",
-      "WheelResizeName": "Enable Mouse Wheel HUD Resizing",
-      "WheelResizeHint": "Hold the modifier key and scroll the mouse wheel over the HUD to scale it up or down.",
-      "ScaleModifierKeyName": "Wheel Resize Modifier Key",
-      "ScaleModifierKeyHint": "Modifier key required while scrolling over the HUD to adjust its scale.",
-      "ScaleModCtrl": "Ctrl / Cmd",
-      "ScaleModAlt": "Alt / Option",
-      "ScaleModShift": "Shift",
-      "ScaleModNone": "None (Scroll directly)",
       "ShowScaleIndicatorName": "Show Scale Toast on Resize",
       "ShowScaleIndicatorHint": "Displays a temporary toast indicator with current HUD zoom percentage during resizing.",
       "EnableResizeHandleName": "Enable Corner Resize Handle",
@@ -818,24 +810,14 @@
       "Obsidian": "Obsidian",
       "Grimoire": "Grimoire",
       "Eldritch": "Eldritch",
-      "Valiant": "Valiant",
-      "Image": "Custom Image Studio"
+      "Valiant": "Valiant"
     },
     "Config": {
       "Title": "Nik's Action HUD Configuration",
       "Saved": "Nik's Action HUD configuration saved.",
       "FontDefault": "Default Font",
       "ResetConfirmTitle": "Reset Configuration",
-      "ResetConfirmMessage": "Are you sure you want to reset {scope} settings to defaults?",
-      "Elements": {
-        "ButtonFrame": "Button Frame",
-        "MenuHeader": "Sub-Menu Header",
-        "SidebarPanel": "Sidebar Panel",
-        "TabButton": "Tab Button",
-        "QuickSlot": "Quick Slot",
-        "SideTab": "Side Tab",
-        "ListItem": "Item Box"
-      }
+      "ResetConfirmMessage": "Are you sure you want to reset {scope} settings to defaults?"
     },
     "UI": {
       "AllSpells": "All",

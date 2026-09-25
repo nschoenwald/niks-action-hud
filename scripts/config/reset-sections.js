@@ -3,13 +3,12 @@
  * Exclusively designed for Foundry V14.
  */
 import { defaultRegistry } from "../systems/defaults.js";
-import { APPEARANCE_FIELDS, BEHAVIOR_FIELDS, AM_ELEMENTS } from "./schema.js";
+import { APPEARANCE_FIELDS, BEHAVIOR_FIELDS } from "./schema.js";
 
 export const RESET_SCOPES = Object.freeze({
 	APPEARANCE: "appearance",
 	BEHAVIOR: "behavior",
 	MENU: "menu",
-	LAYERS: "layers",
 	ALL: "all",
 });
 
@@ -35,25 +34,10 @@ export function resetSection(tempData, scope) {
 			break;
 		}
 
-		case RESET_SCOPES.LAYERS:
-			tempData.amMenuLayers = [];
-			tempData.amSubMenuLayers = [];
-			for (const el of AM_ELEMENTS) {
-				tempData[`${el.id}Layers`] = [];
-				tempData[`${el.id}Scale`] = 1;
-				tempData[`${el.id}X`] = 0;
-				tempData[`${el.id}Y`] = 0;
-				tempData[`${el.id}Color`] = "";
-				tempData[`${el.id}FontFamily`] = "";
-				tempData[`${el.id}TextColor`] = "";
-			}
-			break;
-
 		case RESET_SCOPES.ALL:
 			resetSection(tempData, RESET_SCOPES.APPEARANCE);
 			resetSection(tempData, RESET_SCOPES.BEHAVIOR);
 			resetSection(tempData, RESET_SCOPES.MENU);
-			resetSection(tempData, RESET_SCOPES.LAYERS);
 			break;
 
 		default:

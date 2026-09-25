@@ -179,34 +179,9 @@ export const THEMES = Object.freeze({
 		},
 		icon: "fas fa-shield",
 	},
-	image: {
-		id: "image",
-		label: "NIKS_ACTION_HUD.Themes.Image",
-		defaultLabel: "Custom Image Studio",
-		badge: "Studio",
-		description: "Completely customizable multi-layered image textures and custom graphics",
-		colors: {
-			bg: "#130e20",
-			surface: "rgba(28, 18, 48, 0.85)",
-			border: "#a855f7",
-			accent: "#c084fc",
-			text: "#f3e8ff",
-		},
-		icon: "fas fa-image",
-	},
 });
 
 export const getThemes = () => THEMES;
-
-export const AM_ELEMENTS = Object.freeze([
-	{ id: "amButton", label: "NIKS_ACTION_HUD.Config.Elements.ButtonFrame", icon: "fas fa-square" },
-	{ id: "amMenuHeader", label: "NIKS_ACTION_HUD.Config.Elements.MenuHeader", icon: "fas fa-heading" },
-	{ id: "amSidebar", label: "NIKS_ACTION_HUD.Config.Elements.SidebarPanel", icon: "fas fa-columns" },
-	{ id: "amTab", label: "NIKS_ACTION_HUD.Config.Elements.TabButton", icon: "fas fa-folder" },
-	{ id: "amQuickSlot", label: "NIKS_ACTION_HUD.Config.Elements.QuickSlot", icon: "fas fa-bolt" },
-	{ id: "amSideTab", label: "NIKS_ACTION_HUD.Config.Elements.SideTab", icon: "fas fa-indent" },
-	{ id: "amListItem", label: "NIKS_ACTION_HUD.Config.Elements.ListItem", icon: "fas fa-list" },
-]);
 
 export const DEFAULT_ANCHOR_POSITIONS = Object.freeze({
 	bottomRight: { anchorX: "right", anchorY: "bottom", label: "Bottom Right" },

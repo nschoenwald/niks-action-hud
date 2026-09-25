@@ -12,10 +12,7 @@ import {
 import { adapterRegistry } from "../systems/registry.js";
 import { THEMES } from "./constants.js";
 import {
-	AM_ELEMENTS,
 	exportHudConfig,
-	getAMElementContext,
-	injectContentMarker,
 	loadHudConfig,
 } from "./schema.js";
 
@@ -118,9 +115,6 @@ const prepareExternalAdapterMenu = async (
 			category.id,
 		);
 		const appearance = mergeAdapterCategoryAppearance(baseAppearance, override);
-		const visibility = appearance.visibility || { mode: "all", actorTypes: [], actorIds: [] };
-		const actorIds = visibility.actorIds || [];
-		const actorTypeIds = visibility.actorTypes || [];
 		const buttonFrameLayers = (appearance.buttonFrameLayers || [])
 			.slice()
 			.sort((a, b) => (b.zIndex || 0) - (a.zIndex || 0));
@@ -132,20 +126,7 @@ const prepareExternalAdapterMenu = async (
 			_adapterIndex: index,
 			_collapsed: app._collapsedAdapterCategories?.has(category.id) || false,
 			...appearance,
-			_buttonFrameLayers: injectContentMarker(buttonFrameLayers, 50),
-			visibility: {
-				...visibility,
-				_resolvedActors: actorIds.map((id) => {
-					const actor = game.actors?.get(id);
-					return { id, name: actor?.name || id, img: actor?.img || "" };
-				}),
-				_allActorTypes: actorTypes.map((type) => ({
-					value: type,
-					label: type.charAt(0).toUpperCase() + type.slice(1),
-					checked: actorTypeIds.includes(type),
-				})),
-				_menuActors: menuActors,
-			},
+			_buttonFrameLayers: buttonFrameLayers,
 			_baseAppearance: baseAppearance,
 		};
 	});
@@ -301,60 +282,21 @@ export const prepareContext = async (app, options = {}) => {
 
 	// Enrich Custom Menu
 	const enrichedCustomMenu = (app.tempData.customMenu || []).map((cat, index) => {
-		const vis = cat.visibility || { mode: "all", actorTypes: [], actorIds: [] };
-		const catActorTypes = vis.actorTypes || [];
-		const resolvedActors = (vis.actorIds || []).map((id) => {
-			const actor = game.actors?.get(id);
-			return { id, name: actor?.name || id, img: actor?.img || "" };
-		});
-		const perCatActorTypes = actorTypes.map((type) => ({
-			value: type,
-			label: type.charAt(0).toUpperCase() + type.slice(1),
-			checked: catActorTypes.includes(type),
-		}));
 		const btnFrameSorted = (cat.buttonFrameLayers || [])
 			.slice()
 			.sort((a, b) => (b.zIndex || 0) - (a.zIndex || 0));
 
-		const enrichedTabs = (cat.tabs || []).map((tab) => {
-			const tVis = tab.visibility || { mode: "all", actorTypes: [], actorIds: [] };
-			const tActorTypes = tVis.actorTypes || [];
-			const tResolvedActors = (tVis.actorIds || []).map((id) => {
-				const actor = game.actors?.get(id);
-				return { id, name: actor?.name || id, img: actor?.img || "" };
-			});
-			return {
-				...tab,
-				visibility: {
-					...tVis,
-					actorTypes: tActorTypes,
-					actorIds: tVis.actorIds || [],
-					_resolvedActors: tResolvedActors,
-					_allActorTypes: actorTypes.map((type) => ({
-						value: type,
-						label: type.charAt(0).toUpperCase() + type.slice(1),
-						checked: tActorTypes.includes(type),
-					})),
-					_menuActors: menuActors,
-				},
-			};
-		});
+		const enrichedTabs = (cat.tabs || []).map((tab) => ({
+			...tab,
+		}));
 
 		return {
 			...cat,
 			_collapsed: app._collapsedMenuCategories?.has(cat) || false,
 			_adapterRowsBefore: adapterMenuPreview.adapterRowsBefore[index] || [],
 			tabs: enrichedTabs,
-			_buttonFrameLayers: injectContentMarker(btnFrameSorted, 50),
+			_buttonFrameLayers: btnFrameSorted,
 			buttonFrameColor: cat.buttonFrameColor || "",
-			visibility: {
-				...vis,
-				actorTypes: catActorTypes,
-				actorIds: vis.actorIds || [],
-				_resolvedActors: resolvedActors,
-				_allActorTypes: perCatActorTypes,
-				_menuActors: menuActors,
-			},
 		};
 	});
 
@@ -389,7 +331,6 @@ export const prepareContext = async (app, options = {}) => {
 		isGeneralTab: activeTab === "general",
 		isAppearanceTab: activeTab === "appearance",
 		isMenuTab: activeTab === "menu",
-		isImageStudioTab: activeTab === "imageStudio",
 		isPresetsTab: activeTab === "presets",
 
 		// Form field values from tempData
@@ -397,7 +338,6 @@ export const prepareContext = async (app, options = {}) => {
 
 		// Specific enriched values
 		theme: currentTheme,
-		isImageTheme: currentTheme === "image",
 		themeCards,
 		fontList: prepareFontList(),
 		...prepareUiOptions(),
@@ -422,11 +362,6 @@ export const prepareContext = async (app, options = {}) => {
 		menuPreviewActors: adapterMenuPreview.menuPreviewActors,
 		menuPreviewActorId: adapterMenuPreview.menuPreviewActorId,
 		adapterMenuTrailingRows: adapterMenuPreview.adapterMenuTrailingRows,
-
-		// Image theme studio context
-		amElements: getAMElementContext(app.tempData),
-		amMenuLayers: injectContentMarker([...(app.tempData.amMenuLayers || [])].sort((a, b) => (b.zIndex ?? 10) - (a.zIndex ?? 10)), [50, 1]),
-		amSubMenuLayers: injectContentMarker([...(app.tempData.amSubMenuLayers || [])].sort((a, b) => (b.zIndex ?? 10) - (a.zIndex ?? 10)), 50),
 
 		// Presets
 		configPresets: Object.keys(game.settings.get(MODULE_ID, "configurationPresets") || {}),

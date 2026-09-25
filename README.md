@@ -18,17 +18,15 @@ Nik's Action HUD is an ultra-focused, high-performance Action HUD designed to st
 - **User HUD Toggle**: Per-user setting (`scope: "user"`) to cleanly enable or disable the Action HUD independently of the GM or other players, persisted in the world database across devices and fully synchronized in the Action HUD configuration menu.
 - **Unlinked NPC Favorites Sync**: Native synchronization of favorite slots for unlinked tokens without flag collisions or data corruption (built-in).
 - **Multi-Row Favorites**: Favorite quick-slots wrap onto multiple lines cleanly without horizontal clipping (built-in).
-- **Live Scaling & Wheel Resizing**:
+- **Live Scaling & Interactive Resizing**:
   - Drag the bottom-right corner resize handle (permanently visible on HUD) to adjust scale live.
-  - Hold `Shift` (configurable to Ctrl/Alt/None) and scroll the mouse wheel over the HUD to adjust scale on the fly.
   - Visual scale toast indicator shows current zoom percentage.
 - **Redesigned Configuration Suite (v14.1+)**:
   - **Modern Dark-Glass UI/UX**: Completely overhauled configuration dialog featuring split sidebar navigation, luminous accents, and frosted glass surfaces.
-  - **Visual Theme Selector**: Clickable cards with color swatches and active glow indicators for 13 themes, including 5 brand-new 100% solid, non-transparent clean-room designs (**Arcanum**, **Obsidian**, **Grimoire**, **Eldritch**, **Valiant**) featuring Rift-proportional button dimensions (232x46px), uniform button color styling, and tight 9px inter-button spacing, alongside existing classics (**Rift**, **Iron**, **Glass**, **Fantasy**, **Cyberpunk**, **Medieval**, **Zenith**, and **Image Studio**).
+  - **Visual Theme Selector**: Clickable cards with color swatches and active glow indicators for 12 themes, including 5 brand-new 100% solid, non-transparent clean-room designs (**Arcanum**, **Obsidian**, **Grimoire**, **Eldritch**, **Valiant**) featuring Rift-proportional button dimensions (232x46px), uniform button color styling, and tight 9px inter-button spacing, alongside existing classics (**Rift**, **Iron**, **Glass**, **Fantasy**, **Cyberpunk**, **Medieval**, and **Zenith**).
   - **Interactive Live Preview Sandbox**: Embedded HUD preview strip that immediately reflects your theme, typography, and button emphasis choices in real time.
   - **Interactive 4-Quadrant Anchor Positioner**: Visual quadrant selector for instant placement to any screen corner with precision pixel offset margins.
-  - **Drag-and-Drop Menu Builder**: Easily reorder categories, customize labels and icons, configure visibility by actor type, and build custom submenus.
-  - **Image Theme Studio**: Dedicated multi-layer compositor to customize background graphics, button frames, and panel textures.
+  - **Drag-and-Drop Menu Builder**: Easily reorder categories, customize labels and icons, and build custom submenus.
   - **Presets & Backups**: World presets, JSON file export/import, theme ZIP packaging, and modular section resets.
 
 ### DnD5e 6.0+ Integration

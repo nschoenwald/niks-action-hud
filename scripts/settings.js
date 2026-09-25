@@ -181,30 +181,6 @@ export class SettingsManager {
 			requiresReload: true,
 		});
 
-		// 2.4 HUD Scaling & Sizing Suite
-		game.settings.register(MODULE_ID, "wheelResize", {
-			name: "NIKS_ACTION_HUD.Settings.WheelResizeName",
-			hint: "NIKS_ACTION_HUD.Settings.WheelResizeHint",
-			scope: "client",
-			config: true,
-			type: Boolean,
-			default: true,
-		});
-
-		game.settings.register(MODULE_ID, "scaleModifierKey", {
-			name: "NIKS_ACTION_HUD.Settings.ScaleModifierKeyName",
-			hint: "NIKS_ACTION_HUD.Settings.ScaleModifierKeyHint",
-			scope: "client",
-			config: true,
-			type: String,
-			choices: {
-				shift: "NIKS_ACTION_HUD.Settings.ScaleModShift",
-				ctrl: "NIKS_ACTION_HUD.Settings.ScaleModCtrl",
-				alt: "NIKS_ACTION_HUD.Settings.ScaleModAlt",
-				none: "NIKS_ACTION_HUD.Settings.ScaleModNone",
-			},
-			default: "shift",
-		});
 
 		// 2.5 Submenu & Tooltip Display
 		game.settings.register(MODULE_ID, "hideEmptySubmenus", {
@@ -303,19 +279,6 @@ export class SettingsManager {
 				} else {
 					ActionMenu.hideMenu();
 				}
-
-				// Reflect on live scene controls if present
-				// [V14 Compatible Only]: In Foundry V14, ui.controls.controls is a Map<string, SceneControl>
-				// and SceneControl.tools is a Record<string, SceneControlTool>.
-				const layer = ui.controls;
-				if (layer?.controls instanceof Map) {
-					const tokenControl = layer.controls.get("token") ?? layer.controls.get("tokens");
-					const tool = tokenControl?.tools?.["niks-action-toggle"];
-					if (tool) {
-						tool.active = isHidden;
-						layer.render();
-					}
-				}
 			},
 			restricted: false,
 			precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
@@ -366,26 +329,6 @@ export class SettingsManager {
 					tokenControls.tools[tool.name] = tool;
 				}
 			};
-
-			addTool({
-				name: "niks-action-toggle",
-				title: game.i18n.localize("NIKS_ACTION_HUD.UI.ToggleHUD") || game.i18n.localize("IBHUD.UI.ToggleHUD") || "Toggle Action HUD",
-				icon: "fas fa-eye",
-				toggle: true,
-				active: true,
-				onChange: (_event, active) => {
-					if (game.settings.get(MODULE_ID, "disableHUD")) {
-						ui.notifications.info(game.i18n.localize("NIKS_ACTION_HUD.Settings.DisableHUDHint") || "Action HUD is disabled in settings.");
-						return;
-					}
-					const root = document.getElementById(ActionMenu.ROOT_ID);
-					if (active) {
-						ActionMenu.refresh();
-					} else {
-						ActionMenu.hideMenu();
-					}
-				},
-			});
 
 			addTool({
 				name: "niks-action-config",

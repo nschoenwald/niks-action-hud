@@ -24,8 +24,6 @@ import {
 	onAddSubCategory,
 	onRemoveSubCategory,
 	onRemoveItem,
-	onAddAMLayer,
-	onRemoveAMLayer,
 	onAddBtnFrameLayer,
 	onRemoveBtnFrameLayer,
 	onSaveConfigPreset,
@@ -73,7 +71,6 @@ const CONFIG_TEMPLATES = [
 	`modules/${MODULE_ID}/templates/config/tabs/general.hbs`,
 	`modules/${MODULE_ID}/templates/config/tabs/appearance.hbs`,
 	`modules/${MODULE_ID}/templates/config/tabs/menu-builder.hbs`,
-	`modules/${MODULE_ID}/templates/config/tabs/image-studio.hbs`,
 	`modules/${MODULE_ID}/templates/config/tabs/presets.hbs`,
 ];
 
@@ -107,8 +104,6 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 				addSubCategory: ActionHUDConfig.prototype._onAddSubCategory,
 				removeSubCategory: ActionHUDConfig.prototype._onRemoveSubCategory,
 				removeItem: ActionHUDConfig.prototype._onRemoveItem,
-				addAMLayer: ActionHUDConfig.prototype._onAddAMLayer,
-				removeAMLayer: ActionHUDConfig.prototype._onRemoveAMLayer,
 				addBtnFrameLayer: ActionHUDConfig.prototype._onAddBtnFrameLayer,
 				removeBtnFrameLayer: ActionHUDConfig.prototype._onRemoveBtnFrameLayer,
 				saveConfigPreset: ActionHUDConfig.prototype._onSaveConfigPreset,
@@ -207,8 +202,6 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 	async _onAddSubCategory(event, target) { await onAddSubCategory(this, event, target); }
 	async _onRemoveSubCategory(event, target) { await onRemoveSubCategory(this, event, target); }
 	async _onRemoveItem(event, target) { await onRemoveItem(this, event, target); }
-	async _onAddAMLayer(event, target) { await onAddAMLayer(this, event, target); }
-	async _onRemoveAMLayer(event, target) { await onRemoveAMLayer(this, event, target); }
 	async _onAddBtnFrameLayer(event, target) { await onAddBtnFrameLayer(this, event, target); }
 	async _onRemoveBtnFrameLayer(event, target) { await onRemoveBtnFrameLayer(this, event, target); }
 	async _onSaveConfigPreset(event, target) { await onSaveConfigPreset(this, event, target); }
