@@ -257,6 +257,83 @@ export function _getWeaponData(actor) {
 /* -----------------------------------------
    2. MAGIC (Spells - DnD5e v6)
    ----------------------------------------- */
+export function isWizardActor(actor) {
+	if (!actor) return false;
+
+	// 1. Direct class mapping via Actor5e.classes getter (keyed by class identifier: "wizard")
+	if (actor.classes?.wizard) return true;
+
+	// 2. Class items in actor itemTypes
+	if (actor.itemTypes?.class?.some((cls) => {
+		const id = cls.identifier || cls.system?.identifier || "";
+		const name = cls.name?.toLowerCase() || "";
+		return id.toLowerCase() === "wizard" || name === "wizard";
+	})) {
+		return true;
+	}
+
+	// 3. 2024 Ritual Adept feature (feat identifier: "ritual-adept") or Spellcasting feature
+	if (actor.itemTypes?.feat?.some((feat) => {
+		const id = feat.identifier || feat.system?.identifier || "";
+		const name = feat.name?.toLowerCase() || "";
+		return id === "ritual-adept" || name === "ritual adept";
+	})) {
+		return true;
+	}
+
+	// 4. Details class string fallback (e.g. for simple NPCs or legacy imports)
+	const detailsClass = actor.system?.details?.class;
+	if (typeof detailsClass === "string" && detailsClass.toLowerCase().includes("wizard")) {
+		return true;
+	}
+
+	return false;
+}
+
+export function isSpellEligibleAsWizardRitual(spell, actor) {
+	if (!spell || spell.type !== "spell") return false;
+
+	// Must have the ritual property (DnD5e v6 system.properties Set)
+	const props = spell.system?.properties;
+	const isRitual = (props instanceof Set && props.has("ritual"))
+		|| (Array.isArray(props) && props.includes("ritual"))
+		|| (props && typeof props === "object" && props.ritual === true);
+	if (!isRitual) return false;
+
+	// Check if associated with the wizard class
+	const classId = (spell.system?.classIdentifier || spell.system?.sourceClass || "").toLowerCase();
+	if (classId) {
+		return classId === "wizard";
+	}
+
+	// Check if sourceItem contains wizard (e.g. "class:wizard" or matching class item)
+	const sourceItem = spell.system?.sourceItem;
+	if (typeof sourceItem === "string" && sourceItem.toLowerCase().includes("wizard")) {
+		return true;
+	}
+
+	// Check spellLists if available (DnD5e 6.x)
+	const spellLists = spell.system?.spellLists;
+	if (spellLists instanceof Set) {
+		if (spellLists.has("class:wizard") || spellLists.has("wizard")) return true;
+	}
+
+	// If no explicit class assignment exists on the spell:
+	// If the actor only has one spellcasting class (or single class wizard), it's part of their spellbook.
+	const spellcastingClasses = actor?.spellcastingClasses || {};
+	const castingKeys = Object.keys(spellcastingClasses);
+	if (castingKeys.length <= 1) {
+		return true;
+	}
+
+	// If multiclassed and the spell list does not contain wizard, exclude it
+	if (spellLists instanceof Set && spellLists.size > 0) {
+		return false;
+	}
+
+	return true;
+}
+
 export function _getSpellData(actor) {
 	if (!actor?.items) {
 		return { title: "SPELLBOOK", theme: "blue", hasTabs: true, hasSubTabs: true, items: {}, tabLabels: {}, tabTooltips: {}, subTabLabels: {} };
@@ -267,6 +344,22 @@ export function _getSpellData(actor) {
 	const subLabels = {};
 
 	const spellDC = actor.system.attributes?.spell?.dc ?? null;
+
+	const config = game.settings.get(MODULE_ID, "configuration") || {};
+	let showUnpreparedRituals = config.dnd5eShowUnpreparedRituals;
+	if (typeof showUnpreparedRituals !== "boolean") {
+		try {
+			if (game.settings.settings.has(`${MODULE_ID}.dnd5eShowUnpreparedRituals`)) {
+				showUnpreparedRituals = game.settings.get(MODULE_ID, "dnd5eShowUnpreparedRituals") ?? true;
+			} else {
+				showUnpreparedRituals = true;
+			}
+		} catch (e) {
+			showUnpreparedRituals = true;
+		}
+	}
+
+	const isWizard = isWizardActor(actor);
 
 	actor.items.forEach((i) => {
 		if (i.type !== "spell") return;
@@ -291,10 +384,18 @@ export function _getSpellData(actor) {
 			if (lvl === 0) key = "0";
 		}
 
-		// Filter out unprepared spells (except Cantrips and non-standard prep methods)
+		// Filter out unprepared spells (except Cantrips and non-standard prep methods,
+		// or unprepared ritual spells known by wizard characters)
+		let isUnpreparedRitual = false;
 		if (!isActivitySpell && lvl > 0 && !["pact", "innate", "atwill", "always"].includes(prepMode)) {
 			const isPrepared = Boolean(i.system.prepared);
-			if (!isPrepared) return;
+			if (!isPrepared) {
+				if (showUnpreparedRituals && isWizard && isSpellEligibleAsWizardRitual(i, actor)) {
+					isUnpreparedRitual = true;
+				} else {
+					return;
+				}
+			}
 		}
 
 		if (!items[key]) {
@@ -323,7 +424,13 @@ export function _getSpellData(actor) {
 		}
 
 		if (hasProp("ritual")) {
-			tags += `<span class="ib-tag ritual" title="Ritual">R</span>`;
+			if (isUnpreparedRitual) {
+				const ritualTagLabel = game.i18n.localize("NIKS_ACTION_HUD.Spells.RitualTag") || "Ritual";
+				const ritualTitle = game.i18n.localize("NIKS_ACTION_HUD.Spells.UnpreparedRitualTitle") || "Ritual Only (Unprepared)";
+				tags += `<span class="ib-tag ritual ib-tag-unprepared" title="${ritualTitle}">${ritualTagLabel}</span>`;
+			} else {
+				tags += `<span class="ib-tag ritual" title="Ritual">R</span>`;
+			}
 		}
 
 		const activation = i.system.activation?.type;
@@ -333,6 +440,7 @@ export function _getSpellData(actor) {
 			id: i.id,
 			name: i.name,
 			img: i.img,
+			isUnpreparedRitual,
 			cost: `
                     <div class="ib-cost-wrapper">
                         ${actIcon}

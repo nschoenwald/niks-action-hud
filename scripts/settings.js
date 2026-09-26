@@ -65,6 +65,7 @@ export class SettingsManager {
 				actionMenuEmphasizeFirstButton: true,
 				actionMenuSubmenuSide: "auto",
 				dnd5eGroupActionsByActivation: false,
+				dnd5eShowUnpreparedRituals: true,
 				hideEmptySubmenus: true,
 			},
 			onChange: () => {
@@ -192,6 +193,25 @@ export class SettingsManager {
 			default: true,
 			onChange: () => ActionMenu.refresh(),
 		});
+
+		if (game.system.id === "dnd5e") {
+			game.settings.register(MODULE_ID, "dnd5eShowUnpreparedRituals", {
+				name: "NIKS_ACTION_HUD.Settings.ShowUnpreparedRitualsName",
+				hint: "NIKS_ACTION_HUD.Settings.ShowUnpreparedRitualsHint",
+				scope: "client",
+				config: true,
+				type: Boolean,
+				default: true,
+				onChange: (val) => {
+					const config = game.settings.get(MODULE_ID, "configuration") || {};
+					if (config.dnd5eShowUnpreparedRituals !== val) {
+						config.dnd5eShowUnpreparedRituals = val;
+						game.settings.set(MODULE_ID, "configuration", config);
+					}
+					ActionMenu.refresh();
+				},
+			});
+		}
 
 		game.settings.register(MODULE_ID, "actionMenuSubmenuSide", {
 			name: "IBHUD.Settings.ActionMenuSubmenuSide.Name",

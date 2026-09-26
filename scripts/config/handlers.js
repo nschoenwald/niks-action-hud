@@ -22,6 +22,9 @@ export const onSave = async (app, event, target) => {
 
 		if (game.user.isGM) {
 			await game.settings.set(MODULE_ID, "configuration", cleanConfig);
+			if (game.settings.settings.has(`${MODULE_ID}.dnd5eShowUnpreparedRituals`) && cleanConfig.dnd5eShowUnpreparedRituals !== undefined) {
+				await game.settings.set(MODULE_ID, "dnd5eShowUnpreparedRituals", cleanConfig.dnd5eShowUnpreparedRituals);
+			}
 		} else {
 			// Non-GMs cannot save world-level settings; save client-level overrides instead
 			if (cleanConfig.enableActionMenu !== undefined) {

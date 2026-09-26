@@ -98,7 +98,11 @@ export const renderTooltip = async (ActionMenu, tooltipItem, item, desc = "", op
 	const tooltipType = tooltipItem?.type || item?.type || "";
 	const tooltipImg = tooltipItem?.img || item?.img || "";
 
-	const typeLabel = tooltipType ? tooltipType.toUpperCase() : "";
+	let typeLabel = tooltipType ? tooltipType.toUpperCase() : "";
+	if (options?.isUnpreparedRitual || tooltipItem?.isUnpreparedRitual) {
+		const ritualLabel = game.i18n.localize("NIKS_ACTION_HUD.Spells.UnpreparedRitualTitle") || "Ritual Only (Unprepared)";
+		typeLabel = `${typeLabel || "SPELL"} · ${ritualLabel.toUpperCase()}`;
+	}
 	const sysClass = game.system?.id === "dnd5e" ? " dnd5e dnd5e2" : (game.system?.id ? ` ${game.system.id}` : "");
 
 	let footerHtml = "";
@@ -206,10 +210,14 @@ const _resolveAndRender = async (ActionMenu, itemId, options = {}) => {
 	if (typeof desc !== "string") desc = "";
 	let tooltipItem = item;
 
+	const menuItem =
+		findMenuItemData(ActionMenu, itemId) ||
+		findMenuItemData(ActionMenu, realItemId);
+	if (menuItem?.isUnpreparedRitual) {
+		options = { ...options, isUnpreparedRitual: true };
+	}
+
 	if (!desc.trim()) {
-		const menuItem =
-			findMenuItemData(ActionMenu, itemId) ||
-			findMenuItemData(ActionMenu, realItemId);
 		if (menuItem?.description) {
 			desc = menuItem.description;
 			tooltipItem = menuItem;

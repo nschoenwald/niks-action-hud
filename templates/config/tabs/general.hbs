@@ -90,6 +90,19 @@
                     </label>
                 </div>
             </div>
+
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
+                    <label>Show Unprepared Wizard Rituals</label>
+                    <span class="hud-setting-hint">Display known but unprepared ritual spells in the Spellbook for wizard characters, allowing them to cast ritual spells from their spellbook.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <label class="hud-switch">
+                        <input type="checkbox" class="hud-switch-input" name="dnd5eShowUnpreparedRituals" {{#if dnd5eShowUnpreparedRituals}}checked{{/if}}>
+                        <span class="hud-switch-slider"></span>
+                    </label>
+                </div>
+            </div>
             {{/if}}
         </div>
     </div>

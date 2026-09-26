@@ -15,6 +15,7 @@ export const ACTION_MENU_PRESET_KEYS = [
 	"closeMenuOnUse",
 	"hideEmptySubmenus",
 	"dnd5eGroupActionsByActivation",
+	"dnd5eShowUnpreparedRituals",
 ];
 
 export const buildActionMenuPresetData = (configuration = {}) => {

@@ -2,6 +2,24 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.3.2] - 2026-09-26
+
+### Unprepared Wizard Ritual Spells Support
+- **Show Unprepared Wizard Rituals (Enabled by Default)**: Added a new setting `dnd5eShowUnpreparedRituals` (enabled by default) that displays known but unprepared ritual spells in the Spellbook for wizard characters, allowing wizards to cast ritual spells directly from their spellbook without preparation in accordance with D&D 5e rules.
+- **DnD5e 6.x / Foundry V14 System Integration**: Referenced the DnD5e 6.x system architecture to accurately identify wizard characters and ritual spells:
+  - Supports wizard class identification via `actor.classes.wizard`, class item identifiers (`identifier: "wizard"`), 2024 rules Ritual Adept features (`identifier: "ritual-adept"`), and details class fallbacks.
+  - Detects ritual spells via DnD5e v6 `system.properties` Set (`properties.has("ritual")`).
+  - Supports spell class identification via modern `system.classIdentifier`, `sourceItem` links (`"class:wizard"`), `system.spellLists`, and actor spellcasting class resolutions.
+- **Distinctive Unprepared Ritual Styling**:
+  - **Dashed Arcane Border**: Distinctive dashed blue border (`border-left: 3px dashed #5d9cec`) marking unprepared ritual spells across all themes.
+  - **Luminous Arcane Tint**: Soft transparent gradient background (`linear-gradient(90deg, rgba(80, 145, 255, 0.12) 0%, rgba(80, 145, 255, 0.02) 100%)`) with enhanced hover states.
+  - **Italic Arcane Typography**: Spell titles rendered in soft-glowing italic font styling with subtle opacity difference to distinguish from prepared spells.
+  - **Dashed Thumbnail Frame**: Dashed border styling applied to item artwork thumbnails.
+  - **Interactive Book Indicator & Tooltip**: Displays an open-book icon badge (`<i class="fas fa-book-open"></i>`) beside the spell name with a native tooltip indicating "Ritual Only (Unprepared)".
+  - **Full "RITUAL" Pill Tag**: Replaced the single "R" tag with a distinctive, framed `RITUAL` badge in the spell cost area.
+  - **Rich Tooltip Integration**: Rich tooltips display `SPELL · RITUAL ONLY (UNPREPARED)` in the header metadata when hovering over unprepared ritual spells.
+- **Configuration Suite & Presets Support**: Added the toggle to the general configuration tab (under DnD5e system settings) and integrated it into world presets, preset imports/exports, and client settings synchronization.
+
 ## [14.3.1] - 2026-09-25
 
 ### Full Rich Tooltips for Favorites / Quick Buttons

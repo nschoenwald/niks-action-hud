@@ -485,6 +485,9 @@ export const buildListItems = (ActionMenu, items) => {
 				nameStyle = `text-decoration: line-through; color: #888;`;
 			} else if (item.isVirtual) {
 				rowStyle = `opacity: 0.7; border-left: 2px solid #9966ff; padding-left: 6px;`;
+			} else if (item.isUnpreparedRitual) {
+				rowStyle = `border-left: 3px dashed #5d9cec;`;
+				nameStyle = `font-style: italic; opacity: 0.9;`;
 			}
 
 			let rightClickAttr = "";
@@ -511,8 +514,12 @@ export const buildListItems = (ActionMenu, items) => {
 				? "display:flex; align-items:flex-start; gap:10px;"
 				: "display:flex; align-items:center; gap:10px;";
 
+			const ritualBadge = item.isUnpreparedRitual
+				? `<span class="ib-unprepared-ritual-badge" data-tooltip="${escapeHtml(game.i18n.localize("NIKS_ACTION_HUD.Spells.UnpreparedRitualTitle") || "Ritual Only (Unprepared)")}" data-tooltip-direction="UP"><i class="fas fa-book-open"></i></span>`
+				: "";
+
 			return `
-            <div class="ib-list-item" 
+            <div class="ib-list-item ${item.isUnpreparedRitual ? "ib-unprepared-ritual" : ""}" 
                  style="${rowStyle}" 
                  onclick="${item.isExhausted ? "" : `ActionHUD.actionMenu.useItem('${item.id}', event)`}"
                  ${rightClickAttr}
@@ -522,7 +529,7 @@ export const buildListItems = (ActionMenu, items) => {
                     <div class="flex items-center gap-2" style="display:flex; align-items:center; gap:10px; min-width:0; overflow:hidden;">
                         ${item.img ? `<img src="${item.img}" width="24" height="24" style="border:1px solid #333; border-radius: 2px; flex-shrink:0;">` : ""}
                         <span class="ib-font-hero text-xl" style="font-size: 1.1em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; ${nameStyle}">
-                            ${item.isSignature ? `<i class="fas fa-star" style="color: #f1c40f; font-size: 0.7em; margin-right: 3px;" title="Signature Spell"></i>` : ""}${item.name}
+                            ${item.isSignature ? `<i class="fas fa-star" style="color: #f1c40f; font-size: 0.7em; margin-right: 3px;" title="Signature Spell"></i>` : ""}${ritualBadge}${item.name}
                         </span>
                     </div>
                     

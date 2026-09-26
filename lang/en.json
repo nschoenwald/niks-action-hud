@@ -798,7 +798,14 @@
         "Title": "Nik's Action HUD Configuration"
       },
       "HideEmptySubmenusName": "Hide Empty Submenus",
-      "HideEmptySubmenusHint": "Hides action buttons and submenus that have no entries for the active actor (e.g. hiding the Spells button for non-spellcasters)."
+      "HideEmptySubmenusHint": "Hides action buttons and submenus that have no entries for the active actor (e.g. hiding the Spells button for non-spellcasters).",
+      "ShowUnpreparedRitualsName": "Show Unprepared Wizard Rituals",
+      "ShowUnpreparedRitualsHint": "Displays unprepared spells that have the ritual tag in the Spellbook for wizard characters, allowing them to cast ritual spells directly from their spellbook."
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Ritual Only (Unprepared)",
+      "UnpreparedRitualHint": "Unprepared Ritual",
+      "RitualTag": "Ritual"
     },
     "Themes": {
       "Rift": "Rift",

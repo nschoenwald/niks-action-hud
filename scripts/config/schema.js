@@ -48,6 +48,7 @@ export const BEHAVIOR_FIELDS = Object.freeze([
 	{ key: "closeMenuOnUse", type: "boolean", fallback: false },
 	{ key: "hideEmptySubmenus", type: "boolean", fallback: true },
 	{ key: "dnd5eGroupActionsByActivation", type: "boolean", fallback: false },
+	{ key: "dnd5eShowUnpreparedRituals", type: "boolean", fallback: true },
 	{ key: "actionMenuSubmenuSide", type: "string", fallback: "auto" },
 	{ key: "tooltipPosition", type: "string", fallback: "anchor" },
 	{ key: "excludedActorTypes", type: "string", fallback: "" },

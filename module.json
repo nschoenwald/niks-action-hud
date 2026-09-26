@@ -2,7 +2,7 @@
   "id": "niks-action-hud",
   "title": "Nik's Action HUD",
   "description": "A sleek, canvas-docked Action HUD for Foundry VTT. Quick access to attacks, spells, features, inventory, and utility rolls.",
-  "version": "14.3.1",
+  "version": "14.3.2",
   "url": "https://github.com/nschoenwald/niks-action-hud",
   "manifest": "https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.json",
   "download": "https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.zip",
