@@ -42,6 +42,7 @@ Nik's Action HUD is an ultra-focused, high-performance Action HUD designed to st
   - Comprehensive PHB-style roll tooltips (Save DC, Check Bonus).
   - Dedicated **"All"** tab across all submenus (spells, features, items, and abilities).
   - **Unprepared Wizard Rituals**: Shows known but unprepared ritual spells in the Spellbook for wizard characters with dedicated arcane styling (dashed borders, soft radiant tint, italicized typography, book icon badges, and rich tooltip markers), enabled by default and fully configurable in settings.
+  - **Activity Uses Display for Actions**: Automatically falls back to displaying activity uses for actions without item uses when exactly one activity on the item has activity uses, including exhaustion states, recharge states, and activation routing.
   - Context-aware Initiative button (displays only during active combat when the token has not yet rolled initiative).
 - **Modular System Architecture**: Includes full `BaseSystemAdapter`, `adapterRegistry`, `defaultRegistry`, and lifecycle hooks so third-party modules or other systems can easily register their own adapters.
 

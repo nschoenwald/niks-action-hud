@@ -103,6 +103,67 @@ export function _getSpells(actor) {
 	return { items: spells, labels: labels };
 }
 
+/**
+ * Check if a DnD5e item has item-level uses configured
+ */
+export function _hasItemUses(item) {
+	if (!item) return false;
+	const uses = item.system?.uses;
+	return Boolean(
+		item.hasLimitedUses ||
+		(uses && (
+			(Number(uses.max) > 0) ||
+			(typeof uses.max === "string" && uses.max.trim() !== "" && uses.max !== "0") ||
+			(Number(uses.value) > 0)
+		))
+	);
+}
+
+/**
+ * Check if a DnD5e activity has its own activity uses configured
+ */
+export function _activityHasUses(activity) {
+	if (!activity) return false;
+	const actUses = activity.uses;
+	if (!actUses) return false;
+	const maxNum = Number(actUses.max);
+	const hasMax = (Number.isFinite(maxNum) && maxNum > 0) ||
+		(typeof actUses.max === "string" && actUses.max.trim() !== "" && actUses.max !== "0");
+	const hasSourceMax = Boolean(
+		activity._source?.uses?.max &&
+		activity._source.uses.max !== "0" &&
+		activity._source.uses.max !== 0
+	);
+	const hasValue = typeof actUses.value === "number" && actUses.value > 0;
+	const hasTarget = Boolean(activity.consumption?.targets?.some((t) => t.type === "activityUses"));
+	return Boolean(hasMax || hasSourceMax || hasValue || hasTarget);
+}
+
+/**
+ * Get all activities for an item safely across collections and arrays
+ */
+export function _getActivities(item) {
+	if (!item?.system?.activities) return [];
+	if (Array.isArray(item.system.activities)) return item.system.activities;
+	if (Array.isArray(item.system.activities.contents)) return item.system.activities.contents;
+	if (typeof item.system.activities.values === "function") return Array.from(item.system.activities.values());
+	return Object.values(item.system.activities);
+}
+
+/**
+ * Resolves the single activity with uses if an item has NO item uses, but exactly one activity with activity uses.
+ * Returns null if the item has item uses, or if there isn't exactly one activity with activity uses.
+ */
+export function _getSingleActivityUses(item) {
+	if (!item || _hasItemUses(item)) return null;
+	const activities = _getActivities(item);
+	const withUses = activities.filter(_activityHasUses);
+	if (withUses.length === 1) {
+		return withUses[0];
+	}
+	return null;
+}
+
 // 피처(Features) 및 리소스 목록
 export function _getFeatures(actor) {
 	const items = [];
@@ -124,13 +185,24 @@ export function _getFeatures(actor) {
 	actor.items.forEach((i) => {
 		if (i.type === "feat") {
 			const uses = i.system.uses;
-			if (uses && (uses.max > 0 || uses.value > 0)) {
+			const hasUses = _hasItemUses(i);
+			const singleActivity = _getSingleActivityUses(i);
+			let displayUses = null;
+
+			if (hasUses) {
+				displayUses = `${uses?.value ?? 0}/${uses?.max ?? 0}`;
+			} else if (singleActivity) {
+				const actUses = singleActivity.uses;
+				displayUses = `${actUses?.value ?? 0}/${actUses?.max ?? 0}`;
+			}
+
+			if (displayUses) {
 				items.push({
 					id: i.id,
 					name: i.name,
 					img: i.img,
-					cost: `${uses.value}/${uses.max}`,
-					description: i.system.description.value,
+					cost: displayUses,
+					description: i.system.description?.value || "",
 				});
 			}
 		}
@@ -180,6 +252,29 @@ export async function updateAttribute(actor, path, input) {
 			current = item.system.uses?.value ?? 0;
 			max = item.system.uses?.max ?? 0;
 			updatePath = isSpentLogic ? "system.uses.spent" : "system.uses.value";
+
+			if ((!max || max === 0) && typeof _getSingleActivityUses === "function") {
+				const singleAct = _getSingleActivityUses(item);
+				if (singleAct) {
+					const actSpentLogic = singleAct.uses?.spent !== undefined;
+					const actCurrent = singleAct.uses?.value ?? 0;
+					const actMax = Number(singleAct.uses?.max) || 0;
+					let newValue = actCurrent;
+					if (input.startsWith("+") || input.startsWith("-")) {
+						newValue += Number(input);
+					} else {
+						newValue = Number(input);
+					}
+					if (actMax > 0) newValue = Math.clamp(newValue, 0, actMax);
+					else newValue = Math.max(0, newValue);
+
+					const actUpdateVal = actSpentLogic ? Math.max(0, actMax - newValue) : newValue;
+					const actPath = actSpentLogic ? "uses.spent" : "uses.value";
+					if (typeof item.updateActivity === "function") {
+						return await item.updateActivity(singleAct.id, { [actPath]: actUpdateVal });
+					}
+				}
+			}
 		} else if (property === "quantity") {
 			current = item.system.quantity ?? 0;
 			max = 9999;

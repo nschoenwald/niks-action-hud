@@ -74,6 +74,13 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 					if (prop === "uses") {
 						val = item.system.uses?.value ?? 0;
 						max = item.system.uses?.max ?? 0;
+						if ((!max || max === 0) && typeof this._getSingleActivityUses === "function") {
+							const singleAct = this._getSingleActivityUses(item);
+							if (singleAct) {
+								val = singleAct.uses?.value ?? 0;
+								max = singleAct.uses?.max ?? 0;
+							}
+						}
 					} else if (prop === "quantity") {
 						val = item.system.quantity ?? 0;
 						max = 0;
@@ -295,7 +302,9 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 
 		if (actor.items) {
 			actor.items.forEach((item) => {
-				if (item.system.uses && item.system.uses.max > 0) {
+				const hasItemUses = Boolean(item.hasLimitedUses || (item.system.uses && Number(item.system.uses.max) > 0));
+				const singleAct = !hasItemUses && typeof this._getSingleActivityUses === "function" ? this._getSingleActivityUses(item) : null;
+				if (hasItemUses || singleAct) {
 					paths.push({
 						path: `items.${item.id}.uses`,
 						label: `ITEM: ${item.name} (Uses)`,

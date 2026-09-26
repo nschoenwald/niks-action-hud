@@ -2,6 +2,22 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.3.3] - 2026-09-26
+
+### Activity Uses Display for Actions
+- **Single Activity Uses Fallback for Actions**: When an action has no item uses configured, but possesses exactly one activity with activity uses, the Action HUD now displays those activity uses instead of displaying the item uses (or empty/dash state).
+- **Native DnD5e 6.x Activity Engine Integration**:
+  - Dynamically detects activity uses (`activity.uses.max`, `activity.uses.value`, `activity.consumption.targets` targeting `activityUses`) across DnD5e v6 activity collections.
+  - Formats remaining and maximum uses (`(current/max)`) matching the action item uses styling.
+  - Supports activity-level recharge recovery periods (`period === "recharge"`), dynamically displaying Ready (`Ready`) or Recharge states (`Recharge X+`).
+  - Correctly marks the action as exhausted (`isExhausted: true`) when activity uses reach 0, preventing accidental activations and applying dimmed/strikethrough styling.
+  - Resolves activation type and activation icon fallbacks directly from the single activity with uses when not configured on the parent item.
+  - Accurately routes items with single activity uses into the Actions tab (`items["actions"]`) and their respective activation group tabs (`Action`, `Bonus Action`, `Reaction`, etc.) when grouping by activation is enabled.
+- **Trackable Attributes & System Helpers**:
+  - Enhanced `_hasItemUses`, `_activityHasUses`, `_getActivities`, and `_getSingleActivityUses` in `scripts/systems/dnd5e/helpers.js`.
+  - Added support in `getStats` and `getTrackableAttributes` so HUD attribute badges/dots tracking `items.<itemId>.uses` accurately read and display uses from items relying on single activity uses.
+  - Added support in `updateAttribute` for updating activity uses via `item.updateActivity` when an item has no item-level uses configured.
+
 ## [14.3.2] - 2026-09-26
 
 ### Unprepared Wizard Ritual Spells Support

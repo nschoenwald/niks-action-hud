@@ -1,4 +1,5 @@
 import { MODULE_ID } from "../../constants.js";
+import { _hasItemUses, _getSingleActivityUses } from "./helpers.js";
 
 /**
  * 초기 설정값으로 들어갈 기본 레이아웃 정의
@@ -636,32 +637,75 @@ export function _getFeatureData(actor) {
 			const uses = i.system.uses;
 			const recharge = i.system.recharge;
 
-			const { activationType, activationIcon } = this._getItemActivityData(i);
+			let { activationType, activationIcon } = this._getItemActivityData(i);
 
-			const hasUses = uses && (uses.max > 0 || uses.value > 0);
-			const hasAction =
-				activationType && activationType !== "none" && activationType !== "";
-			const hasRecharge = recharge && recharge.value;
+			const hasUses = _hasItemUses(i);
+			const singleActivityWithUses = _getSingleActivityUses(i);
+			const hasSingleActivityUses = Boolean(singleActivityWithUses);
+
+			const hasItemRecharge = Boolean(
+				(recharge && recharge.value) ||
+				i.hasRecharge ||
+				(uses?.recovery?.[0]?.period === "recharge")
+			);
+			const isActRecharge = Boolean(
+				singleActivityWithUses &&
+				(singleActivityWithUses.uses?.recovery?.[0]?.period === "recharge" || singleActivityWithUses.hasRecharge)
+			);
+			const hasRecharge = hasItemRecharge || isActRecharge;
 
 			let costHtml = "";
 			let isExhausted = false;
 
-			if (hasRecharge) {
-				if (recharge.charged) {
+			if (hasItemRecharge) {
+				if (recharge?.charged ?? (!i.isOnCooldown)) {
 					costHtml = `<span style="color:#4ecdc4; font-size:0.8em; font-weight:bold;"><i class="fas fa-bolt"></i> ${game.i18n.localize("IBHUD.Dnd5e.Ready")}</span>`;
 				} else {
-					costHtml = `<span style="color:#ff6b6b; font-size:0.8em;"><i class="fas fa-dice-d6"></i> ${game.i18n.localize("IBHUD.Dnd5e.Recharge")} ${recharge.value}+</span>`;
+					const recVal = recharge?.value ?? (uses?.recovery?.[0]?.formula || "6");
+					costHtml = `<span style="color:#ff6b6b; font-size:0.8em;"><i class="fas fa-dice-d6"></i> ${game.i18n.localize("IBHUD.Dnd5e.Recharge")} ${recVal}+</span>`;
+					isExhausted = true;
 				}
 			} else if (hasUses) {
-				const remaining = uses.value || 0;
-				const max = uses.max || 0;
-				const maxStr = max > 0 ? `/${max}` : "";
+				const remaining = uses?.value || 0;
+				const rawMax = uses?.max || 0;
+				const maxNum = Number(rawMax);
+				const hasValidMax = Number.isFinite(maxNum) ? maxNum > 0 : Boolean(rawMax);
+				const maxStr = hasValidMax ? `/${rawMax}` : "";
 				costHtml = `<span style="font-size:0.8em; color:#aaa;">(${remaining}${maxStr})</span>`;
 
-				if (max > 0 && remaining === 0) isExhausted = true;
+				if (hasValidMax && remaining === 0) isExhausted = true;
+			} else if (hasSingleActivityUses) {
+				const actUses = singleActivityWithUses.uses;
+				if (isActRecharge) {
+					const isCharged = (actUses?.value ?? 0) >= 1 && !singleActivityWithUses.isOnCooldown;
+					const formula = actUses?.recovery?.[0]?.formula || "6";
+					if (isCharged) {
+						costHtml = `<span style="color:#4ecdc4; font-size:0.8em; font-weight:bold;"><i class="fas fa-bolt"></i> ${game.i18n.localize("IBHUD.Dnd5e.Ready")}</span>`;
+					} else {
+						costHtml = `<span style="color:#ff6b6b; font-size:0.8em;"><i class="fas fa-dice-d6"></i> ${game.i18n.localize("IBHUD.Dnd5e.Recharge")} ${formula}+</span>`;
+						isExhausted = true;
+					}
+				} else {
+					const remaining = actUses?.value ?? 0;
+					const rawMax = actUses?.max ?? 0;
+					const maxNum = Number(rawMax);
+					const hasValidMax = Number.isFinite(maxNum) ? maxNum > 0 : Boolean(rawMax);
+					const maxStr = hasValidMax ? `/${rawMax}` : "";
+					costHtml = `<span style="font-size:0.8em; color:#aaa;">(${remaining}${maxStr})</span>`;
+
+					if (hasValidMax && remaining === 0) isExhausted = true;
+				}
+
+				if (!activationType && singleActivityWithUses.activation?.type) {
+					activationType = singleActivityWithUses.activation.type;
+					activationIcon = this._getActivationIcon(activationType);
+				}
 			} else {
 				costHtml = `<span style="font-size:0.8em; color:#666;">-</span>`;
 			}
+
+			const hasAction =
+				activationType && activationType !== "none" && activationType !== "";
 
 			const itemData = {
 				id: i.id,
@@ -678,7 +722,7 @@ export function _getFeatureData(actor) {
 				_activationType: activationType,
 			};
 
-			if (hasAction || hasUses || hasRecharge) {
+			if (hasAction || hasUses || hasSingleActivityUses || hasRecharge) {
 				items["actions"]["all"].push(itemData);
 			} else {
 				items["traits"]["all"].push(itemData);
