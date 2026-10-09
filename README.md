@@ -14,6 +14,13 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 
 ---
 
+<img width="683" height="482" alt="image" src="https://github.com/user-attachments/assets/863588eb-ca50-4534-84b3-7a66885974dd" />
+
+<img width="678" height="383" alt="image" src="https://github.com/user-attachments/assets/9c7e0211-5374-46dd-8da5-9ccdb42f8406" />
+
+<img width="254" height="333" alt="image" src="https://github.com/user-attachments/assets/0a6c9714-e6f0-40fb-a2b2-ff4b38fd1a51" />
+
+
 ## ⚡ Quick Navigation
 
 - [✨ Key Features](#-key-features)
