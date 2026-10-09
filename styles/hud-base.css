@@ -1057,18 +1057,6 @@
 	user-select: none;
 }
 
-body.niks-hide-token-controls [data-tool="niks-action-broadcast"],
-body.niks-hide-token-controls [data-tool="niks-action-config"],
-body.niks-hide-token-controls [data-action="niks-action-broadcast"],
-body.niks-hide-token-controls [data-action="niks-action-config"],
-body.niks-hide-token-controls .control-tool[data-tool="niks-action-broadcast"],
-body.niks-hide-token-controls .control-tool[data-tool="niks-action-config"],
-body.niks-hide-token-controls li[data-tool="niks-action-broadcast"],
-body.niks-hide-token-controls li[data-tool="niks-action-config"],
-body.niks-hide-token-controls button[data-tool="niks-action-broadcast"],
-body.niks-hide-token-controls button[data-tool="niks-action-config"] {
-	display: none !important;
-}
 
 .niks-favorite-dialog {
 	display: flex;

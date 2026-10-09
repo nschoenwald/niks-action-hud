@@ -209,14 +209,6 @@
         "Label": "Configure Action HUD",
         "Hint": "Open the visual configuration panel for Action HUD themes, layout, rules, and categories."
       },
-      "HideTokenControls": {
-        "Name": "Hide Toolbar Token Control Buttons",
-        "Hint": "Removes the Action HUD toggle buttons from the left-side token controls toolbar, keeping it tidy."
-      },
-      "ConfigPermission": {
-        "Name": "Configuration Permission",
-        "Hint": "Minimum user role required to access Action HUD configuration settings."
-      },
       "SubmenuSide": {
         "Name": "Submenu Open Direction",
         "Hint": "Direction submenus open relative to the dock. Automatic dynamically detects screen edges.",
@@ -229,14 +221,6 @@
         "Hint": "Choose how rich tooltips are positioned.",
         "Anchor": "Anchored to Dock",
         "Cursor": "Follow Cursor"
-      },
-      "StyleConfigRole": {
-        "Name": "Style Config Role",
-        "Hint": "Minimum role to edit style."
-      },
-      "MenuConfigRole": {
-        "Name": "Menu Config Role",
-        "Hint": "Minimum role to edit menu."
       },
       "InterfaceFading": {
         "Name": "Fade when Idle (Interface Fading)",

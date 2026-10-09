@@ -1,19 +1,8 @@
-import { MODULE_ID } from "../constants.js";
-
 /**
  * Tab switching helper with permission checks for Nik's Action HUD.
  */
 export const switchTab = (app, tabName, render = false) => {
-	const styleRole = game.settings.get(MODULE_ID, "styleConfigRole") ?? 1;
-	const menuRole = game.settings.get(MODULE_ID, "menuConfigRole") ?? 4;
-	const canEditStyle = game.user.role >= styleRole;
-	const canEditMenu = game.user.role >= menuRole;
-
-	if (tabName === "appearance" && !canEditStyle) {
-		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
-		return;
-	}
-	if (tabName === "menu" && !canEditMenu) {
+	if (!game.user.can("SETTINGS_MODIFY")) {
 		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
 		return;
 	}

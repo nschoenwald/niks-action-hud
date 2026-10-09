@@ -246,12 +246,6 @@ export const initializeTempData = (app, globalConfig) => {
 	if (game.settings?.settings?.has(`${MODULE_ID}.tooltipPosition`)) {
 		app.tempData.tooltipPosition = game.settings.get(MODULE_ID, "tooltipPosition");
 	}
-	if (!game.user.isGM) {
-		try {
-			const isHudDisabled = Boolean(game.settings.get(MODULE_ID, "disableHUD"));
-			app.tempData.enableActionMenu = !isHudDisabled;
-		} catch (_e) {}
-	}
 	app.isInitialized = true;
 };
 
@@ -262,10 +256,9 @@ export const prepareContext = async (app, options = {}) => {
 	}
 
 	const isGM = game.user.isGM;
-	const styleRole = game.settings.get(MODULE_ID, "styleConfigRole") ?? 1;
-	const menuRole = game.settings.get(MODULE_ID, "menuConfigRole") ?? 4;
-	const canEditStyle = game.user.role >= styleRole;
-	const canEditMenu = game.user.role >= menuRole;
+	const canConfigure = game.user.can("SETTINGS_MODIFY");
+	const canEditStyle = canConfigure;
+	const canEditMenu = canConfigure;
 
 	// Determine actor types
 	let actorTypes = [];
@@ -373,8 +366,10 @@ export const prepareContext = async (app, options = {}) => {
 
 	return {
 		isGM,
+		canConfigure,
 		canEditStyle,
 		canEditMenu,
+		moduleVersion: game.modules.get(MODULE_ID)?.version || "14.8.1",
 		isDnd5eSystem: game.system.id === "dnd5e",
 		activeTab,
 		isGeneralTab: activeTab === "general",

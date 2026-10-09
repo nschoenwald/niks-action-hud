@@ -88,6 +88,7 @@ Organized, flyout drawers designed for fast combat decision-making:
 - **Visual Category Builder**: Reorder, rename, or customize menu icons, button scaling, and visibility conditions.
 - **Excluded Actor Types**: Simple toggle chips to prevent the HUD from showing on specific actor types (`encounter`, `group`, and `vehicle` excluded by default).
 - **Presets & Backups**: Export and import complete HUD setups as JSON presets with modular section resets.
+- **Core Foundry Permissions**: Access to the visual configuration app is governed directly by Foundry's core **Modify Configuration Settings** (`SETTINGS_MODIFY`) permission. Players without this permission can cleanly toggle the HUD off for their user account using the client setting.
 
 ---
 

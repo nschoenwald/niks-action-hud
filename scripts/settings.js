@@ -180,18 +180,7 @@ export class SettingsManager {
 			hint: "NAH.Settings.ConfigMenu.Hint",
 			icon: "fas fa-cogs",
 			type: ActionHUDConfig,
-			restricted: false,
-		});
-
-		// 2.3 Canvas & Scene Controls Integration
-		game.settings.register(MODULE_ID, "hideTokenControls", {
-			name: "NAH.Settings.HideTokenControls.Name",
-			hint: "NAH.Settings.HideTokenControls.Hint",
-			scope: "client",
-			config: true,
-			type: Boolean,
-			default: false,
-			requiresReload: true,
+			restricted: true,
 		});
 
 
@@ -328,36 +317,7 @@ export class SettingsManager {
 			},
 		});
 
-		// 2.6 Permissions & Roles (World Settings)
-		game.settings.register(MODULE_ID, "styleConfigRole", {
-			name: "NAH.Settings.StyleConfigRole.Name",
-			hint: "NAH.Settings.StyleConfigRole.Hint",
-			scope: "world",
-			config: true,
-			type: Number,
-			default: 1,
-			choices: {
-				1: "USER.RolePlayer",
-				2: "USER.RoleTrusted",
-				3: "USER.RoleAssistant",
-				4: "USER.RoleGamemaster",
-			},
-		});
 
-		game.settings.register(MODULE_ID, "menuConfigRole", {
-			name: "NAH.Settings.MenuConfigRole.Name",
-			hint: "NAH.Settings.MenuConfigRole.Hint",
-			scope: "world",
-			config: true,
-			type: Number,
-			default: 4,
-			choices: {
-				1: "USER.RolePlayer",
-				2: "USER.RoleTrusted",
-				3: "USER.RoleAssistant",
-				4: "USER.RoleGamemaster",
-			},
-		});
 
 		// Themes
 		Hooks.callAll(`${MODULE_ID}.registerThemes`, ActionHUDConfig.THEMES);
@@ -416,32 +376,6 @@ export class SettingsManager {
 			precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
 		});
 
-		// =========================================
-		// 4. SCENE CONTROLS (V14+ Record structure)
-		// =========================================
-		Hooks.on("getSceneControlButtons", (controls) => {
-			const hideControls = game.settings.get(MODULE_ID, "hideTokenControls");
-			if (hideControls) return;
-
-			const tokenControls = controls?.token ?? controls?.tokens ?? null;
-			if (!tokenControls?.tools) return;
-
-			const addTool = (tool) => {
-				if (!tokenControls.tools[tool.name]) {
-					tokenControls.tools[tool.name] = tool;
-				}
-			};
-
-			addTool({
-				name: "niks-action-config",
-				title: game.i18n.localize("NAH.UI.Settings"),
-				icon: "fas fa-cogs",
-				button: true,
-				onChange: () => {
-					new ActionHUDConfig().render(true);
-				},
-			});
-		});
 
 		// Initialize Action Menu feature
 		ActionMenu.initialize();

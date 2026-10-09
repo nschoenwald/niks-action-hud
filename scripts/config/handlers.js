@@ -16,47 +16,21 @@ import { isThemeAvailable } from "./constants.js";
 // ── Save Handler ─────────────────────────────────────────
 
 export const onSave = async (app, event, target) => {
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
+		return;
+	}
 	app.isSaving = true;
 	try {
 		captureInputData(app, app.element);
 		const cleanConfig = exportHudConfig(app.tempData);
 
-		if (game.user.isGM) {
-			await game.settings.set(MODULE_ID, "configuration", cleanConfig);
-			if (game.settings.settings.has(`${MODULE_ID}.dnd5eAutoFavoriteNpcActions`) && cleanConfig.dnd5eAutoFavoriteNpcActions !== undefined) {
-				await game.settings.set(MODULE_ID, "dnd5eAutoFavoriteNpcActions", cleanConfig.dnd5eAutoFavoriteNpcActions);
-			}
-			if (game.settings.settings.has(`${MODULE_ID}.dnd5eAutoFavoriteNpcMax`) && cleanConfig.dnd5eAutoFavoriteNpcMax !== undefined) {
-				await game.settings.set(MODULE_ID, "dnd5eAutoFavoriteNpcMax", cleanConfig.dnd5eAutoFavoriteNpcMax);
-			}
-		} else {
-			// Non-GMs cannot save world-level settings; save client-level overrides instead
-			if (cleanConfig.enableActionMenu !== undefined) {
-				await game.settings.set(MODULE_ID, "disableHUD", !cleanConfig.enableActionMenu);
-			}
-
-			const clientPos = foundry.utils.deepClone(
-				game.settings.get(MODULE_ID, "clientPositions") || {},
-			);
-			if (cleanConfig.actionMenuScale !== undefined) {
-				clientPos.actionMenuScale = cleanConfig.actionMenuScale;
-			}
-			await game.settings.set(MODULE_ID, "clientPositions", clientPos);
-
-			if (cleanConfig.actorSettings) {
-				try {
-					const clientOverrides = foundry.utils.deepClone(
-						game.settings.get(MODULE_ID, "clientActorOverrides") || {},
-					);
-					for (const [actorId, actorCfg] of Object.entries(cleanConfig.actorSettings)) {
-						if (!clientOverrides[actorId]) clientOverrides[actorId] = {};
-						clientOverrides[actorId].actorSettings = actorCfg;
-					}
-					await game.settings.set(MODULE_ID, "clientActorOverrides", clientOverrides);
-				} catch (e) {
-					console.warn("Nik's Action HUD | Could not save clientActorOverrides:", e);
-				}
-			}
+		await game.settings.set(MODULE_ID, "configuration", cleanConfig);
+		if (game.settings.settings.has(`${MODULE_ID}.dnd5eAutoFavoriteNpcActions`) && cleanConfig.dnd5eAutoFavoriteNpcActions !== undefined) {
+			await game.settings.set(MODULE_ID, "dnd5eAutoFavoriteNpcActions", cleanConfig.dnd5eAutoFavoriteNpcActions);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.dnd5eAutoFavoriteNpcMax`) && cleanConfig.dnd5eAutoFavoriteNpcMax !== undefined) {
+			await game.settings.set(MODULE_ID, "dnd5eAutoFavoriteNpcMax", cleanConfig.dnd5eAutoFavoriteNpcMax);
 		}
 
 		// Client-level settings sync (applicable to both GM and players)
@@ -119,6 +93,10 @@ export const onSelectTheme = (app, event, target) => {
 // ── Reset Handler ────────────────────────────────────────
 
 export const onReset = async (app, event, target) => {
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
+		return;
+	}
 	const scope = target.dataset.scope || RESET_SCOPES.ALL;
 
 	const confirm = await foundry.applications.api.DialogV2.confirm({
@@ -301,8 +279,8 @@ export const onRemoveBtnFrameLayer = async (app, event, target) => {
 // ── Presets Handlers ─────────────────────────────────────
 
 export const onSaveConfigPreset = async (app, event, target) => {
-	if (!game.user.isGM) {
-		ui.notifications.warn("Only the GM can save world configuration presets.");
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
 		return;
 	}
 
@@ -340,8 +318,8 @@ export const onLoadConfigPreset = async (app, event, target) => {
 };
 
 export const onDeleteConfigPreset = async (app, event, target) => {
-	if (!game.user.isGM) {
-		ui.notifications.warn("Only the GM can delete world configuration presets.");
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
 		return;
 	}
 
@@ -364,8 +342,8 @@ export const onDeleteConfigPreset = async (app, event, target) => {
 };
 
 export const onSaveActionMenuPreset = async (app, event, target) => {
-	if (!game.user.isGM) {
-		ui.notifications.warn("Only the GM can save world action menu presets.");
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
 		return;
 	}
 
@@ -400,8 +378,8 @@ export const onLoadActionMenuPreset = async (app, event, target) => {
 };
 
 export const onDeleteActionMenuPreset = async (app, event, target) => {
-	if (!game.user.isGM) {
-		ui.notifications.warn("Only the GM can delete world action menu presets.");
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
 		return;
 	}
 
@@ -431,6 +409,10 @@ export const onExportConfigPresetFile = (app, event, target) => {
 };
 
 export const onImportConfigPresetFile = async (app, event, target) => {
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
+		return;
+	}
 	const input = document.createElement("input");
 	input.type = "file";
 	input.accept = ".json";
@@ -459,6 +441,10 @@ export const onExportTheme = async (app) => {
 };
 
 export const onImportTheme = async (app) => {
+	if (!game.user.can("SETTINGS_MODIFY")) {
+		ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
+		return;
+	}
 	const input = document.createElement("input");
 	input.type = "file";
 	input.accept = ".zip";

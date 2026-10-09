@@ -5,6 +5,18 @@ All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be document
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [14.8.1] - 2026-10-09
+
+### Changed
+- **Core Foundry User Permissions Integration**: Replaced custom role dropdown settings with Foundry VTT's native permission system.
+  - Access to the Action HUD Configuration app is now tied directly to the core **Modify Configuration Settings** (`SETTINGS_MODIFY`) user permission.
+  - Users authorized to change module settings have full access to configure and save all HUD settings across all tabs via Configure Settings.
+  - Users without this permission cannot access or alter configuration app settings and can only toggle HUD visibility off for their account using the client setting.
+- **Removed Toolbar Button & Setting**:
+  - Completely removed the left token controls toolbar button (`niks-action-config`) and its associated setting (`hideTokenControls`), keeping the canvas controls clean. Configuration is accessed exclusively via Foundry's Configure Settings panel.
+- **Removed Master Controls from Configuration App**:
+  - Removed the redundant Master Controls section (global enable toggle and GM view override) from the General tab in the visual configuration panel, since individual users configure HUD visibility via their account setting.
+
 ## [14.8.0] - 2026-10-09
 
 ### Initial Release

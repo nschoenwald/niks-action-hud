@@ -146,7 +146,19 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 		this._collapsedAdapterCategories = new Set();
 	}
 
+	async render(options = {}) {
+		if (!game.user.can("SETTINGS_MODIFY")) {
+			ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
+			return this;
+		}
+		return super.render(options);
+	}
+
 	async _render(context, options) {
+		if (!game.user.can("SETTINGS_MODIFY")) {
+			ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
+			return;
+		}
 		await loadTemplates(CONFIG_TEMPLATES);
 		return super._render(context, options);
 	}

@@ -1,47 +1,7 @@
 <!-- General & Behavior Tab -->
 <div class="hud-tab-pane {{#if isGeneralTab}}active{{/if}}" data-tab="general">
 
-    <!-- Card 1: Master Control -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-power-off"></i></div>
-            <div class="hud-card-titles">
-                <h4>Master Controls</h4>
-                <p>Toggle the HUD on or off globally or adjust GM view overrides.</p>
-            </div>
-        </div>
-        <div class="hud-card-body">
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>Enable Action HUD</label>
-                    <span class="hud-setting-hint">Master toggle for the canvas-docked token action bar.</span>
-                </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="enableActionMenu" {{#if enableActionMenu}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
-                    </label>
-                </div>
-            </div>
-
-            {{#if isGM}}
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>Hide HUD for GM</label>
-                    <span class="hud-setting-hint">Hide the Action HUD on your GM client while keeping it active for players.</span>
-                </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="gmHudHidden" {{#if gmHudHidden}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
-                    </label>
-                </div>
-            </div>
-            {{/if}}
-        </div>
-    </div>
-
-    <!-- Card 2: Interaction & Automation -->
+    <!-- Card 1: Interaction & Automation -->
     <div class="hud-card">
         <div class="hud-card-header">
             <div class="hud-card-icon"><i class="fas fa-hand-pointer"></i></div>
@@ -130,7 +90,7 @@
         </div>
     </div>
 
-    <!-- Card 3: Display Rules & Positioning -->
+    <!-- Card 2: Display Rules & Positioning -->
     <div class="hud-card">
         <div class="hud-card-header">
             <div class="hud-card-icon"><i class="fas fa-eye"></i></div>
@@ -196,7 +156,7 @@
         </div>
     </div>
 
-    <!-- Card 4: Excluded Actor Types -->
+    <!-- Card 3: Excluded Actor Types -->
     <div class="hud-card">
         <div class="hud-card-header">
             <div class="hud-card-icon"><i class="fas fa-filter"></i></div>
