@@ -1,0 +1,365 @@
+/* =========================================
+   Nik's Action HUD - THEME: OBSIDIAN
+   Style: Tactical Minimalist, Solid Deep Onyx,
+          Hairline Specular Borders, Mint/Emerald Accents.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap");
+
+.theme-obsidian {
+	/* Solid Opaque Palette */
+	--obs-void: #05070a;
+	--obs-surface: #0d1117;
+	--obs-surface-solid: #0d1117;
+	--obs-surface-elevated: #161b22;
+	--obs-surface-sidebar: #090d14;
+	--obs-surface-header: #0b0f16;
+	--obs-surface-search: #080c12;
+	--obs-surface-hover: #1c222d;
+	--obs-border: #21262d;
+	--obs-border-hover: #34d399;
+	--obs-border-active: #10b981;
+	--obs-accent: #10b981;
+	--obs-accent-light: #34d399;
+	--obs-accent-cyan: #06b6d4;
+	--obs-text-primary: #ffffff;
+	--obs-text-muted: #94a3b8;
+	--obs-shadow: #020406;
+	--obs-glow: 0 4px 20px rgba(16, 185, 129, 0.35);
+
+	/* Typography */
+	--obs-font-header: "Outfit", sans-serif;
+	--obs-font-body: "Inter", sans-serif;
+	--hud-font-header: var(--obs-font-header);
+	--hud-font-body: var(--obs-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #0d1117;
+	--tooltip-border: #10b981;
+	--tooltip-text: #e2e8f0;
+	--tooltip-header: #ffffff;
+	--g-accent: var(--obs-accent-light);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Sleek Solid Onyx Slab
+   ========================================= */
+/* spacing comes from button margin-bottom, matching Rift */
+:is(#nah-action-menu, #nah-action-menu).theme-obsidian { gap: 0; }
+
+.theme-obsidian .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--obs-accent-light);
+}
+
+.theme-obsidian .nah-collapse-btn:hover { color: #fff; }
+
+.theme-obsidian .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 20px;
+	background: linear-gradient(135deg, #151c27, #0e141c);
+	border: 1px solid var(--obs-border);
+	border-radius: 8px;
+	color: var(--obs-text-primary);
+	font-family: var(--obs-font-header);
+	font-weight: 600;
+	font-size: 1.15em;
+	letter-spacing: 0.03em;
+	box-shadow:
+		inset 0 1px 0 #232d3d,
+		0 4px 12px var(--obs-shadow);
+	transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-obsidian .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.theme-obsidian .nah-action-btn .glyph,
+.theme-obsidian .nah-action-btn i {
+	color: var(--obs-accent-light);
+	font-size: 0.82em;
+	transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.theme-obsidian .nah-action-btn:hover {
+	background: linear-gradient(135deg, #1d2737, #131b26);
+	border-color: var(--obs-border-hover);
+	box-shadow:
+		inset 0 1px 0 #2d3b4e,
+		0 6px 20px var(--obs-shadow),
+		var(--obs-glow);
+	transform: translateY(-2px);
+}
+
+.theme-obsidian .nah-action-btn:hover .glyph,
+.theme-obsidian .nah-action-btn:hover i {
+	color: #fff;
+	transform: scale(1.1);
+}
+
+
+/* =========================================
+   2. SUBMENU — Floating Solid Onyx Slab
+   ========================================= */
+.theme-obsidian .nah-sub-menu {
+	width: 426px;
+	background: #0d1117;
+	border: 1px solid var(--obs-border);
+	border-radius: 12px;
+	box-shadow:
+		inset 0 1px 0 #21262d,
+		0 20px 40px var(--obs-shadow);
+	overflow: hidden;
+}
+
+.theme-obsidian .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 10px 6px;
+	gap: 6px;
+	background: #090d14;
+	border-right: 1px solid var(--obs-border);
+}
+
+.theme-obsidian .nah-side-tab {
+	padding: 9px 5px;
+	border-radius: 6px;
+	background: #090d14;
+	color: var(--obs-text-muted);
+	font-family: var(--obs-font-header);
+	font-size: 0.74em;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+	word-break: normal;
+	transition: all 0.16s ease;
+}
+
+.theme-obsidian .nah-side-tab .glyph,
+.theme-obsidian .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--obs-text-muted);
+	transition: color 0.16s ease;
+}
+
+.theme-obsidian .nah-side-tab:hover {
+	color: #fff;
+	background: #141c26;
+}
+
+.theme-obsidian .nah-side-tab.active {
+	background: #102a22;
+	color: #fff;
+	border-left: 3px solid var(--obs-accent);
+}
+
+.theme-obsidian .nah-side-tab.active .glyph,
+.theme-obsidian .nah-side-tab.active i {
+	color: var(--obs-accent-light);
+}
+
+.theme-obsidian .nah-main-panel {
+	max-height: 480px;
+	background: #0d1117;
+}
+
+.theme-obsidian .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px;
+	background: #0b0f16;
+	border-bottom: 1px solid var(--obs-border);
+	font-family: var(--obs-font-header);
+	font-weight: 700;
+	font-size: 1.15em;
+	color: #ffffff;
+}
+
+.theme-obsidian .nah-dc-badge {
+	font-family: var(--obs-font-header);
+	font-weight: 700;
+	font-size: 0.65em;
+	padding: 3px 8px;
+	border-radius: 6px;
+	background: #0d3829;
+	color: var(--obs-accent-light);
+	border: 1px solid #10b981;
+}
+
+/* Tabs */
+.theme-obsidian .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: #080c12;
+	border-bottom: 1px solid var(--obs-border);
+}
+
+.theme-obsidian .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	border-radius: 6px;
+	background: #121822;
+	border: 1px solid #21262d;
+	color: var(--obs-text-muted);
+	font-family: var(--obs-font-header);
+	font-size: 0.8em;
+	transition: all 0.16s ease;
+}
+
+.theme-obsidian .nah-tab-btn:hover {
+	color: #fff;
+	background: #192230;
+	border-color: #30363d;
+}
+
+.theme-obsidian .nah-tab-btn.active {
+	background: #0e382b;
+	color: #fff;
+	border-color: #34d399;
+	box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+}
+
+/* List Headers (Search Clusters & Categories) */
+.theme-obsidian .nah-list-header {
+	background: rgba(16, 185, 129, 0.12);
+	color: var(--obs-accent-light, #34d399);
+	border-left-color: var(--obs-accent, #10b981);
+}
+
+/* List Items */
+.theme-obsidian .nah-list-item {
+	padding: 8px 12px;
+	border-radius: 6px;
+	margin: 2px 4px;
+	background: #0d1117;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-obsidian .nah-list-item:hover {
+	background: #161e2b;
+	transform: translateX(2px);
+}
+
+.theme-obsidian .nah-list-item .nah-font-hero {
+	font-family: var(--obs-font-header);
+	font-size: 1.16em !important;
+	font-weight: 600;
+	color: var(--obs-text-primary);
+	letter-spacing: 0.01em;
+}
+
+.theme-obsidian .nah-list-item .text-sm,
+.theme-obsidian .nah-list-item .nah-item-uses {
+	font-size: 0.9em !important;
+	color: var(--obs-text-muted);
+}
+
+.theme-obsidian .nah-list-item .nah-roll-mod {
+	font-family: var(--obs-font-header);
+	font-size: 1.02em;
+	color: var(--obs-accent-light);
+}
+
+.theme-obsidian .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--obs-accent);
+}
+
+.theme-obsidian .nah-list-img {
+	width: 30px;
+	height: 30px;
+	border-radius: 6px;
+	border: 1px solid var(--obs-border);
+}
+
+.theme-obsidian .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	border-radius: 4px;
+	background: #0e3023;
+	color: var(--obs-accent-light);
+	border: 1px solid #10b981;
+	font-family: var(--obs-font-header);
+	font-size: 0.8em;
+	font-weight: 600;
+}
+
+.theme-obsidian .nah-cost-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-obsidian .nah-search-container {
+	background: #080c12;
+	border-bottom: 1px solid var(--obs-border);
+}
+
+.theme-obsidian .nah-search-input {
+	color: #ffffff;
+	background: #0d1117;
+	border: 1px solid #21262d;
+	border-radius: 6px;
+	padding: 4px 8px;
+	font-family: var(--obs-font-body);
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-obsidian .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--obs-border) transparent;
+}
+.theme-obsidian .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-obsidian .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--obs-border); border-radius: 3px; }
+.theme-obsidian .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-obsidian .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+	background: #111620;
+	border: 1px solid var(--obs-border);
+	box-shadow: 0 2px 8px var(--obs-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-obsidian .nah-quick-slot:hover {
+	background: #182230;
+	transform: translateY(-2px);
+	border-color: var(--obs-accent-light);
+	box-shadow: var(--obs-glow), 0 4px 12px var(--obs-shadow);
+}
+
+.theme-obsidian .nah-quick-slot.active {
+	border-color: var(--obs-accent);
+	box-shadow: 0 0 14px var(--obs-accent);
+}

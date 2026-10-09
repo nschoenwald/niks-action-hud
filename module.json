@@ -1,0 +1,50 @@
+{
+  "id": "niks-action-hud",
+  "title": "Nik's Action HUD",
+  "description": "A sleek, canvas-docked Action HUD for Foundry VTT. Quick access to attacks, spells, features, inventory, and utility rolls.",
+  "version": "14.8.0",
+  "url": "https://github.com/nschoenwald/niks-action-hud",
+  "manifest": "https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.json",
+  "download": "https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.zip",
+  "authors": [
+    {
+      "name": "nikolai.sw"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "6.0.0"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/vendor/rpg-awesome.min.css",
+    "styles/hud-base.css",
+    "styles/config.css",
+    "styles/themes/hud-theme-carolingian.css",
+    "styles/themes/hud-theme-arcanum.css",
+    "styles/themes/hud-theme-obsidian.css",
+    "styles/themes/hud-theme-grimoire.css",
+    "styles/themes/hud-theme-eldritch.css",
+    "styles/themes/hud-theme-valiant.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ]
+}

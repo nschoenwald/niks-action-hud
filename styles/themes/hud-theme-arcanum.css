@@ -1,0 +1,373 @@
+/* =========================================
+   Nik's Action HUD - THEME: ARCANUM
+   Style: Astral High Magic, Celestial Velvet,
+          Burnished Gold-Leaf Filigree, Starlight Glow.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap");
+
+.theme-arcanum {
+	/* Solid Opaque Palette */
+	--arc-void: #080914;
+	--arc-surface: #140f26;
+	--arc-surface-solid: #140f26;
+	--arc-surface-elevated: #1a1332;
+	--arc-surface-sidebar: #0e0a1c;
+	--arc-surface-header: #120d22;
+	--arc-surface-search: #0e0a1b;
+	--arc-gold: #d4af37;
+	--arc-gold-bright: #fbbf24;
+	--arc-gold-dim: #5c4a18;
+	--arc-gold-hairline: #3b2f10;
+	--arc-amber: #f59e0b;
+	--arc-amber-deep: #b45309;
+	--arc-lavender: #c084fc;
+	--arc-cyan: #38bdf8;
+	--arc-text-primary: #f8fafc;
+	--arc-text-cream: #fef3c7;
+	--arc-text-muted: #cbd5e1;
+	--arc-shadow: #04050c;
+	--arc-glow: 0 0 16px rgba(212, 175, 55, 0.4);
+
+	/* Typography */
+	--arc-font-header: "Cinzel", serif;
+	--arc-font-body: "Cormorant Garamond", serif;
+	--hud-font-header: var(--arc-font-header);
+	--hud-font-body: var(--arc-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #120d24;
+	--tooltip-border: #d4af37;
+	--tooltip-text: #e2e8f0;
+	--tooltip-header: #fef3c7;
+	--g-accent: var(--arc-gold);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Diamond-Chamfered Gold
+   ========================================= */
+/* spacing comes from button margin-bottom, matching Rift */
+:is(#nah-action-menu, #nah-action-menu).theme-arcanum { gap: 0; }
+
+.theme-arcanum .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--arc-gold);
+}
+
+.theme-arcanum .nah-collapse-btn:hover { color: var(--arc-gold-bright); }
+
+.theme-arcanum .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #1e163a, #130d26);
+	border: 1px solid var(--arc-gold-dim);
+	clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+	color: var(--arc-text-cream);
+	font-family: var(--arc-font-header);
+	font-weight: 600;
+	font-size: 1.18em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.12),
+		inset 0 0 10px #0a0715,
+		0 4px 14px var(--arc-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-arcanum .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-arcanum .nah-action-btn .glyph,
+.theme-arcanum .nah-action-btn i {
+	color: var(--arc-gold);
+	font-size: 0.82em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-arcanum .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--arc-gold);
+	background: linear-gradient(135deg, #2b1f52, #1a1236);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.2),
+		0 6px 18px var(--arc-shadow),
+		var(--arc-glow);
+	transform: translateX(4px);
+}
+
+.theme-arcanum .nah-action-btn:hover .glyph,
+.theme-arcanum .nah-action-btn:hover i {
+	color: var(--arc-gold-bright);
+	transform: scale(1.15);
+}
+
+
+/* =========================================
+   2. SUBMENU — Astral Grimoire Panel
+   ========================================= */
+.theme-arcanum .nah-sub-menu {
+	width: 426px;
+	background: #140f26;
+	border: 1px solid var(--arc-gold-dim);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px #2a1f4a,
+		0 16px 36px var(--arc-shadow);
+}
+
+.theme-arcanum .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--arc-surface-sidebar);
+	border-right: 1px solid var(--arc-gold-hairline);
+}
+
+.theme-arcanum .nah-side-tab {
+	padding: 10px 5px;
+	background: #140f26;
+	color: var(--arc-text-muted);
+	font-family: var(--arc-font-header);
+	font-size: 0.72em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-arcanum .nah-side-tab .glyph,
+.theme-arcanum .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.3em;
+	color: var(--arc-lavender);
+	transition: color 0.16s ease;
+}
+
+.theme-arcanum .nah-side-tab:hover {
+	color: #fff;
+	background: #1e1638;
+}
+
+.theme-arcanum .nah-side-tab.active {
+	background: #241a44;
+	color: #fff;
+	border-left-color: var(--arc-gold);
+}
+
+.theme-arcanum .nah-side-tab.active .glyph,
+.theme-arcanum .nah-side-tab.active i {
+	color: var(--arc-gold-bright);
+}
+
+.theme-arcanum .nah-main-panel {
+	max-height: 480px;
+	background: #140f26;
+}
+
+.theme-arcanum .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--arc-surface-header);
+	border-bottom: 1px solid var(--arc-gold-dim);
+	font-family: var(--arc-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--arc-text-cream);
+}
+
+.theme-arcanum .nah-menu-header .nah-font-hero {
+	font-family: var(--arc-font-header);
+	font-weight: 700;
+	color: var(--arc-text-cream);
+}
+
+.theme-arcanum .nah-dc-badge {
+	font-family: var(--arc-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, var(--arc-amber), var(--arc-amber-deep));
+	color: #fff;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-arcanum .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--arc-surface-sidebar);
+	border-bottom: 1px solid var(--arc-gold-hairline);
+}
+
+.theme-arcanum .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #1a1332;
+	border: 1px solid var(--arc-gold-hairline);
+	color: var(--arc-text-muted);
+	font-family: var(--arc-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-arcanum .nah-tab-btn:hover {
+	color: #fff;
+	border-color: var(--arc-gold-dim);
+	background: #251c46;
+}
+
+.theme-arcanum .nah-tab-btn.active {
+	background: #2f2258;
+	color: #fff;
+	border-color: var(--arc-gold);
+	box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+/* List Headers (Search Clusters & Categories) */
+.theme-arcanum .nah-list-header {
+	background: rgba(212, 175, 55, 0.12);
+	color: var(--arc-gold-bright, #fbbf24);
+	border-left-color: var(--arc-gold, #d4af37);
+	font-family: var(--arc-font-header, serif);
+}
+
+/* List Items */
+.theme-arcanum .nah-list-item {
+	padding: 8px 12px;
+	background: #140f26;
+	border-left: 2px solid transparent;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-arcanum .nah-list-item:hover {
+	background: #20173c;
+	border-left-color: var(--arc-gold);
+	transform: translateX(3px);
+}
+
+.theme-arcanum .nah-list-item .nah-font-hero {
+	font-family: var(--arc-font-body);
+	font-size: 1.22em !important;
+	font-weight: 600;
+	color: var(--arc-text-cream);
+	letter-spacing: 0.02em;
+}
+
+.theme-arcanum .nah-list-item .text-sm,
+.theme-arcanum .nah-list-item .nah-item-uses {
+	font-size: 0.9em !important;
+	color: var(--arc-text-muted);
+}
+
+.theme-arcanum .nah-list-item .nah-roll-mod {
+	font-family: var(--arc-font-body);
+	font-size: 1.05em;
+	color: var(--arc-gold-bright);
+}
+
+.theme-arcanum .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--arc-gold);
+}
+
+.theme-arcanum .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--arc-gold-dim);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-arcanum .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #2a1f4c;
+	color: var(--arc-gold-bright);
+	border: 1px solid var(--arc-gold-dim);
+	font-family: var(--arc-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.theme-arcanum .nah-search-container {
+	background: var(--arc-surface-search);
+	border-bottom: 1px solid var(--arc-gold-hairline);
+}
+
+.theme-arcanum .nah-search-input {
+	background: #140f26;
+	color: var(--arc-text-cream);
+	font-family: var(--arc-font-body);
+	font-size: 1.05em;
+}
+
+.theme-arcanum .nah-search-input::placeholder {
+	color: #64748b;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-arcanum .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--arc-gold-dim) transparent;
+}
+.theme-arcanum .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-arcanum .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--arc-gold-dim); border-radius: 3px; }
+.theme-arcanum .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-arcanum .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: #1a1332;
+	border: 1px solid var(--arc-gold-dim);
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	box-shadow: 0 2px 8px var(--arc-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-arcanum .nah-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--arc-gold);
+	background: #241a44;
+	box-shadow: var(--arc-glow), 0 4px 12px var(--arc-shadow);
+}
+
+.theme-arcanum .nah-quick-slot.active {
+	border-color: var(--arc-gold-bright);
+	box-shadow: 0 0 16px var(--arc-gold);
+}

@@ -1,0 +1,284 @@
+{
+  "NAH": {
+    "Title": "Nik's Action HUD",
+    "Categories": {
+      "Attacks": "Attacks",
+      "Attack": "Attacks",
+      "Spells": "Spells",
+      "Magic": "Spells",
+      "Features": "Features",
+      "Feature": "Features",
+      "Legendary": "Legendary",
+      "Abilities": "Abilities",
+      "Utility": "Abilities",
+      "Items": "Items",
+      "Inventory": "Items"
+    },
+    "Tabs": {
+      "All": "All",
+      "Cantrips": "Cantrips",
+      "Level": "Level {level}",
+      "Actions": "Actions",
+      "BonusActions": "Bonus Actions",
+      "Reactions": "Reactions",
+      "Legendary": "Legendary Actions",
+      "Other": "Other",
+      "Checks": "Ability Checks",
+      "Saves": "Saving Throws",
+      "Skills": "Skills",
+      "Rests": "Rests",
+      "Initiative": "Initiative",
+      "Spells": "Spells"
+    },
+    "Titles": {
+      "Attacks": "Attacks",
+      "Spells": "Spells",
+      "Features": "Features",
+      "Legendary": "Legendary",
+      "Utility": "Abilities",
+      "Abilities": "Abilities",
+      "Items": "Items"
+    },
+    "UI": {
+      "SelectedActor": "Active Actor",
+      "EndTurn": "End Turn",
+      "Settings": "Action HUD Settings",
+      "SearchPlaceholder": "Search actions, spells, items...",
+      "Collapse": "Collapse HUD",
+      "Expand": "Expand HUD",
+      "NoEntries": "No entries available.",
+      "Empty": "Empty",
+      "NoFavoritesInView": "No favorites in current view.",
+      "AddFavorite": "Add to favorites",
+      "RemoveFavorite": "Remove from favorites",
+      "SortFavoritesFirst": "Sort favorites first",
+      "ShowFavoritesOnly": "Show favorites only",
+      "NoPermission": "You do not have permission to perform this action.",
+      "OpenSheetHint": "Right-click to view item sheet",
+      "DragHint": "Drag to reorder favorite",
+      "LivePreview": "Live Preview Active",
+      "Save": "Save",
+      "Cancel": "Cancel",
+      "Delete": "Delete",
+      "Reset": "Reset to Defaults",
+      "Apply": "Apply",
+      "All": "All",
+      "AllSpells": "All",
+      "AllFeatures": "All",
+      "AllItems": "All",
+      "AllAbilities": "All",
+      "DragMacrosHere": "Drag & drop macros here",
+      "DropMacro": "Drop Macro",
+      "RightClickRemove": "Right-click to remove"
+    },
+    "Tooltips": {
+      "AddFavorite": "Add to favorites",
+      "RemoveFavorite": "Remove from favorites",
+      "FavoriteOptions": "Favorite options",
+      "OpenItemSheet": "Open item sheet",
+      "RitualSpell": "Known Ritual (Unprepared)",
+      "SpellDC": "Spell Save DC",
+      "SpellAttack": "Spell Attack Modifier",
+      "LegendaryResistance": "Legendary Resistance",
+      "ReorderFavorites": "Drag to rearrange favorites",
+      "Advantage": "Advantage",
+      "Disadvantage": "Disadvantage",
+      "Normal": "Normal",
+      "Initiative": "Determine turn order in combat.",
+      "SaveDescriptions": {
+        "str": "Physically resist direct force.",
+        "dex": "Dodge out of harm's way.",
+        "con": "Endure a toxic hazard, poison, or disease, or maintain spell concentration when taking damage.",
+        "int": "Recognize an illusion as fake, or resist psionic and psychic effects that assault your intellect and reason.",
+        "wis": "Resist a mental assault.",
+        "cha": "Assert your identity."
+      },
+      "CheckDescriptions": {
+        "str": "Lift, push, pull, or break something.",
+        "dex": "Move nimbly, quickly, or quietly.",
+        "con": "Push your body beyond normal limits.",
+        "int": "Reason or remember.",
+        "wis": "Notice things in the environment or in creatures' behavior.",
+        "cha": "Influence, entertain, or deceive."
+      },
+      "SkillDescriptions": {
+        "acr": "Stay on your feet in a tricky situation, or perform an acrobatic stunt.",
+        "ani": "Calm or train an animal, or get an animal to behave in a certain way.",
+        "arc": "Recall lore about spells, magic items, and the planes of existence.",
+        "ath": "Jump farther than normal, stay afloat in rough water, or break something.",
+        "dec": "Tell a convincing lie, or wear a disguise convincingly.",
+        "his": "Recall lore about historical events, people, nations, and cultures.",
+        "ins": "Discern a person's mood and intentions.",
+        "itm": "Awe or threaten someone into doing what you want.",
+        "inv": "Find obscure information in books, or deduce how something works.",
+        "med": "Diagnose an illness, or determine what killed the recently slain.",
+        "nat": "Recall lore about terrain, plants, animals, and weather.",
+        "prc": "Using a combination of senses, notice something that's easy to miss.",
+        "prf": "Act, tell a story, perform music, or dance.",
+        "per": "Honestly and graciously convince someone of something.",
+        "rel": "Recall lore about gods, religious rituals, and holy symbols.",
+        "slt": "Pick a pocket, conceal a handheld object, or perform legerdemain.",
+        "ste": "Escape notice by moving quietly and hiding behind things.",
+        "sur": "Follow tracks, forage, find a trail, or avoid natural hazards."
+      }
+    },
+    "Config": {
+      "Title": "Nik's Action HUD Configuration",
+      "Saved": "Nik's Action HUD configuration saved.",
+      "ResetConfirmTitle": "Reset Configuration",
+      "ResetConfirmMessage": "Are you sure you want to reset {scope} settings to defaults?",
+      "FontDefault": "Default Font"
+    },
+    "Presets": {
+      "SystemMismatchTitle": "System Mismatch",
+      "SystemMismatchContent": "This preset was designed for {presetSystem}, but current system is {currentSystem}. Continue importing?"
+    },
+    "Dnd5e": {
+      "Saves": "SAVES",
+      "Skills": "SKILLS",
+      "Checks": "CHECKS",
+      "Rest": "REST",
+      "Macros": "MACROS",
+      "ShortRest": "Short Rest",
+      "LongRest": "Long Rest",
+      "ShortRestDesc": "Recover resources & spend Hit Dice",
+      "LongRestDesc": "Recover all HP, spells, and resources",
+      "Initiative": "Initiative",
+      "RollInit": "Roll Initiative",
+      "InvWeapons": "WEAPONS",
+      "InvWeaponsDesc": "Weapons (Unequipped)",
+      "InvGear": "GEAR",
+      "InvGearDesc": "Equipment & Armor",
+      "InvConsum": "CONSUM.",
+      "InvConsumDesc": "Consumables",
+      "InvTools": "TOOLS",
+      "InvToolsDesc": "Tools",
+      "InvLoot": "LOOT",
+      "InvLootDesc": "Loot",
+      "InvContainer": "BAGS",
+      "InvContainerDesc": "Containers",
+      "ActionEquip": "Equip",
+      "ActionUnequip": "Unequip",
+      "ResourceValue": "Resource Value",
+      "ResourceTracked": "Resource Tracked",
+      "Ready": "Ready",
+      "Recharge": "Recharge {val}+",
+      "Cantrip": "CANTRIP",
+      "CantripsDesc": "Cantrips (At-Will)",
+      "Pact": "PACT",
+      "PactDesc": "Pact Magic (Level {level})",
+      "Innate": "INNATE",
+      "InnateDesc": "Innate Spellcasting",
+      "AtWill": "AT-WILL",
+      "AtWillDesc": "At-Will Spells",
+      "Level": "LV {level}",
+      "LevelDesc": "Level {level} Spells",
+      "ItemSpells": "ITEM",
+      "ItemSpellsDesc": "Spells from Items",
+      "Uses": "{current} / {max}"
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Ritual Only (Unprepared)",
+      "UnpreparedRitualHint": "Unprepared Ritual",
+      "RitualTag": "Ritual"
+    },
+    "Favorites": {
+      "OpenSheet": "Open Item Sheet",
+      "DeleteFavorite": "Delete Favorite",
+      "DialogSubtitle": "Favorite Action"
+    },
+    "Damage": {
+      "Any": "any"
+    },
+    "Notifications": {
+      "MacroPermissionFailed": "Could not obtain macro execution permissions from the GM.",
+      "MacroDeleted": "Macro removed from Action HUD.",
+      "UpdateFailed": "Unable to update actor data.",
+      "PresetExportSuccess": "Preset exported successfully.",
+      "PresetImportSuccess": "Preset imported successfully.",
+      "PresetImportError": "Failed to import preset: invalid JSON format.",
+      "SectionReset": "Section settings restored to defaults."
+    },
+    "Settings": {
+      "DisableHud": {
+        "Name": "Disable Action HUD",
+        "Hint": "Completely disables and hides the Action HUD for your user account."
+      },
+      "ConfigMenu": {
+        "Name": "Action HUD Configuration",
+        "Label": "Configure Action HUD",
+        "Hint": "Open the visual configuration panel for Action HUD themes, layout, rules, and categories."
+      },
+      "HideTokenControls": {
+        "Name": "Hide Toolbar Token Control Buttons",
+        "Hint": "Removes the Action HUD toggle buttons from the left-side token controls toolbar, keeping it tidy."
+      },
+      "ConfigPermission": {
+        "Name": "Configuration Permission",
+        "Hint": "Minimum user role required to access Action HUD configuration settings."
+      },
+      "SubmenuSide": {
+        "Name": "Submenu Open Direction",
+        "Hint": "Direction submenus open relative to the dock. Automatic dynamically detects screen edges.",
+        "Auto": "Automatic",
+        "Left": "Left",
+        "Right": "Right"
+      },
+      "TooltipPosition": {
+        "Name": "Tooltip Positioning",
+        "Hint": "Choose how rich tooltips are positioned.",
+        "Anchor": "Anchored to Dock",
+        "Cursor": "Follow Cursor"
+      },
+      "StyleConfigRole": {
+        "Name": "Style Config Role",
+        "Hint": "Minimum role to edit style."
+      },
+      "MenuConfigRole": {
+        "Name": "Menu Config Role",
+        "Hint": "Minimum role to edit menu."
+      },
+      "InterfaceFading": {
+        "Name": "Fade when Idle (Interface Fading)",
+        "Hint": "Dim the Action HUD when inactive, respecting core Foundry's Inactive Opacity and Fade Speed settings. Restores full opacity on hover, focus, or when a submenu is open."
+      },
+      "HideEmptySubmenus": {
+        "Name": "Hide Empty Submenus",
+        "Hint": "Hides action buttons and submenus that have no entries for the active actor (e.g. hiding the Spells button for non-spellcasters)."
+      },
+      "WizardRituals": {
+        "Name": "Show Unprepared Wizard Rituals",
+        "Hint": "Displays unprepared spells that have the ritual tag in the Spellbook for wizard characters, allowing them to cast ritual spells directly from their spellbook."
+      },
+      "AutoFavoriteNpc": {
+        "Name": "Auto-Favorite NPC Actions",
+        "Hint": "Automatically favorite attack, damage, and save activities (sorted by action time) when an NPC token with no existing favorites is placed on the canvas."
+      },
+      "AutoFavoriteNpcMax": {
+        "Name": "Auto-Favorite Max Features",
+        "Hint": "Maximum number of qualifying items or features (with attack, damage, or save activities) an NPC can have to trigger auto-favoriting (default 5)."
+      }
+    },
+    "Themes": {
+      "Carolingian": "Carolingian UI",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "ExportPartialWarning": "Export completed with {count} warnings.",
+      "ExportSuccess": "Theme exported successfully.",
+      "ImportNoJsonError": "Uploaded archive does not contain a valid theme configuration."
+    },
+    "Keybindings": {
+      "ToggleHUD": {
+        "Name": "Toggle Action HUD",
+        "Hint": "Toggle HUD visibility."
+      },
+      "ToggleActionMenuVisibility": {
+        "Name": "Toggle Menu Visibility",
+        "Hint": "Toggle action menu."
+      }
+    }
+  }
+}

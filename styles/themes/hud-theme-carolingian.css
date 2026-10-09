@@ -1,0 +1,537 @@
+/* =========================================
+   Nik's Action HUD - THEME: CAROLINGIAN UI
+   Style: Seamless harmony with Carolingian UI (crlngn-ui).
+          Frosted glass panels, dynamic palette variables,
+          Work Sans & Roboto Slab typography, refined rounded corners.
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap");
+
+.theme-carolingian {
+	/* Dynamic Carolingian UI Tokens with Built-in Fallbacks */
+	--cui-accent: var(--color-highlights, #4493ad);
+	--cui-accent-hover: var(--color-warm-1, #7ab6c4);
+	--cui-accent-deep: var(--color-warm-3, #3c7892);
+	--cui-accent-15: var(--color-highlights-15, rgba(68, 147, 173, 0.15));
+	--cui-accent-25: var(--color-highlights-25, rgba(68, 147, 173, 0.25));
+	--cui-accent-50: var(--color-highlights-50, rgba(68, 147, 173, 0.5));
+	--cui-accent-75: var(--color-highlights-75, rgba(68, 147, 173, 0.75));
+	--cui-accent-90: var(--color-highlights-90, rgba(68, 147, 173, 0.9));
+
+	/* Neutral Dark / Black Surface & Border Tokens (matches Live Preview, eliminates blue tint) */
+	--cui-border: var(--color-dark-bg-50, rgba(255, 255, 255, 0.12));
+	--cui-border-highlight: var(--color-border-highlight, var(--cui-accent));
+	--cui-shadow-highlight: var(--color-shadow-highlight, rgba(0, 0, 0, 0.5));
+
+	/* Deep Neutral Dark / Black Backgrounds */
+	--cui-bg: var(--color-dark-bg, #121518);
+	--cui-bg-95: var(--color-dark-bg-95, #16191d);
+	--cui-bg-90: var(--color-dark-bg-90, #1c1f24);
+	--cui-bg-85: var(--color-dark-bg-85, #22262c);
+	--cui-bg-75: var(--color-dark-bg-75, rgba(24, 27, 32, 0.85));
+	--cui-bg-50: var(--color-dark-bg-50, rgba(24, 27, 32, 0.5));
+	--cui-bg-25: var(--color-dark-bg-25, rgba(24, 27, 32, 0.25));
+
+	/* Button Surfaces — Neutral Dark Charcoal to Deep Black */
+	--cui-btn-bg-top: var(--color-dark-bg-85, #22262c);
+	--cui-btn-bg-bot: var(--color-dark-bg-95, #14171a);
+	--cui-btn-hover-top: var(--color-dark-bg-75, #2c3038);
+	--cui-btn-hover-bot: var(--color-dark-bg-90, #1a1d22);
+
+	--cui-surface: var(--cui-bg-90);
+	--cui-surface-sidebar: var(--color-dark-bg-90, #16191d);
+	--cui-surface-header: var(--color-dark-bg-75, #1c1f24);
+	--cui-surface-search: var(--color-dark-bg-50, rgba(16, 18, 22, 0.6));
+
+	--cui-radius: var(--crlngn-border-radius, 4px);
+	--cui-text: var(--color-light-1, #f7f4f8);
+	--cui-text-muted: var(--color-light-4, #bbbbca);
+	--cui-text-dim: var(--color-light-5, #8e8e9e);
+
+	--cui-font-header: var(--crlngn-font-titles, "Roboto Slab", Arial, sans-serif);
+	--cui-font-body: var(--crlngn-font-family, "Work Sans", Arial, sans-serif);
+
+	--hud-font-header: var(--cui-font-header);
+	--hud-font-body: var(--cui-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: var(--cui-bg-95);
+	--tooltip-border: var(--cui-accent);
+	--tooltip-text: var(--cui-text);
+	--tooltip-header: var(--cui-accent);
+	--g-accent: var(--cui-accent);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Carolingian Frosted Slabs
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-carolingian { gap: 0; }
+
+.theme-carolingian .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--cui-accent);
+	transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.theme-carolingian .nah-collapse-btn:hover {
+	color: var(--cui-accent-hover);
+	transform: scale(1.1);
+}
+
+.theme-carolingian .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 18px;
+	border-radius: var(--cui-radius);
+	background: linear-gradient(135deg, var(--cui-btn-bg-top), var(--cui-btn-bg-bot));
+	border: 1px solid var(--cui-border);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	color: var(--cui-text);
+	font-family: var(--cui-font-header);
+	font-weight: 600;
+	font-size: 1.15em;
+	letter-spacing: 0.03em;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.08),
+		0 3px 10px rgba(0, 0, 0, 0.4);
+	transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-carolingian .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-carolingian .nah-action-btn .glyph,
+.theme-carolingian .nah-action-btn i {
+	color: var(--cui-accent);
+	font-size: 0.85em;
+	transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.theme-carolingian .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--cui-border-highlight);
+	background: linear-gradient(135deg, var(--cui-btn-hover-top), var(--cui-btn-hover-bot));
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.15),
+		0 5px 16px rgba(0, 0, 0, 0.45),
+		0 0 14px var(--cui-accent-50);
+	transform: translateX(4px);
+}
+
+.theme-carolingian .nah-action-btn:hover .glyph,
+.theme-carolingian .nah-action-btn:hover i {
+	color: var(--cui-accent-hover);
+	transform: scale(1.15);
+}
+
+
+/* =========================================
+   2. SUBMENU — Carolingian Frosted Glass Panel
+   ========================================= */
+.theme-carolingian .nah-sub-menu {
+	width: 426px;
+	border-radius: calc(var(--cui-radius) * 1.5);
+	background: var(--cui-bg-95);
+	border: 1px solid var(--cui-border);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.08),
+		0 14px 36px rgba(0, 0, 0, 0.6),
+		0 0 1px var(--cui-accent);
+	overflow: hidden;
+}
+
+.theme-carolingian .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--cui-surface-sidebar);
+	border-right: 1px solid var(--cui-border);
+}
+
+.theme-carolingian .nah-side-tab {
+	padding: 9px 5px;
+	background: transparent;
+	color: var(--cui-text-muted);
+	font-family: var(--cui-font-body);
+	font-weight: 600;
+	font-size: 0.82em;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	border-radius: var(--cui-radius) 0 0 var(--cui-radius);
+	transition: all 0.16s ease;
+}
+
+.theme-carolingian .nah-side-tab .glyph,
+.theme-carolingian .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--cui-text-dim);
+	transition: color 0.16s ease, transform 0.16s ease;
+}
+
+.theme-carolingian .nah-side-tab:hover {
+	color: #ffffff;
+	background: var(--cui-bg-75);
+}
+
+.theme-carolingian .nah-side-tab:hover .glyph,
+.theme-carolingian .nah-side-tab:hover i {
+	color: var(--cui-accent-hover);
+	transform: scale(1.1);
+}
+
+.theme-carolingian .nah-side-tab.active {
+	background: var(--cui-accent-15);
+	color: #ffffff;
+	border-left-color: var(--cui-accent);
+}
+
+.theme-carolingian .nah-side-tab.active .glyph,
+.theme-carolingian .nah-side-tab.active i {
+	color: var(--cui-accent);
+}
+
+.theme-carolingian .nah-main-panel {
+	max-height: 480px;
+	background: transparent;
+}
+
+.theme-carolingian .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--cui-surface-header);
+	border-bottom: 1px solid var(--cui-border);
+	font-family: var(--cui-font-header);
+	font-size: 1.2em;
+	letter-spacing: 0.03em;
+	color: var(--cui-text);
+}
+
+.theme-carolingian .nah-menu-header .nah-font-hero {
+	font-family: var(--cui-font-header);
+	font-weight: 600;
+	color: var(--cui-text);
+}
+
+.theme-carolingian .nah-dc-badge {
+	font-family: var(--cui-font-body);
+	font-weight: 700;
+	font-size: 0.78em;
+	padding: 2px 8px;
+	border-radius: var(--cui-radius);
+	background: var(--cui-accent);
+	color: var(--color-light-1, #ffffff);
+	border: 1px solid var(--cui-accent-hover);
+	box-shadow: 0 0 8px var(--cui-accent-50);
+}
+
+/* Tabs */
+.theme-carolingian .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--cui-surface-search);
+	border-bottom: 1px solid var(--cui-border);
+}
+
+.theme-carolingian .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: var(--cui-bg-85);
+	border: 1px solid var(--cui-border);
+	color: var(--cui-text-muted);
+	font-family: var(--cui-font-body);
+	font-weight: 600;
+	font-size: 0.88em;
+	border-radius: var(--cui-radius);
+	transition: all 0.16s ease;
+}
+
+.theme-carolingian .nah-tab-btn:hover {
+	color: #ffffff;
+	background: var(--cui-bg-75);
+	border-color: var(--cui-accent);
+}
+
+.theme-carolingian .nah-tab-btn.active {
+	background: var(--cui-accent);
+	color: var(--color-light-1, #ffffff);
+	border-color: var(--cui-accent-hover);
+	box-shadow: 0 0 10px var(--cui-accent-50);
+}
+
+.theme-carolingian .nah-tab-btn .nah-slot-text {
+	font-size: 0.85em;
+	opacity: 0.8;
+}
+
+.theme-carolingian .nah-tab-btn .nah-slot-text.empty {
+	color: #f87171;
+	opacity: 1;
+}
+
+/* List Headers (Search Clusters & Categories) */
+.theme-carolingian .nah-list-header {
+	background: var(--cui-accent-15);
+	color: var(--cui-accent-hover, #7ab6c4);
+	border-left-color: var(--cui-accent);
+	font-family: var(--cui-font-header, inherit);
+}
+
+/* List Items */
+.theme-carolingian .nah-list-item {
+	padding: 8px 12px;
+	background: transparent;
+	border-left: 2px solid transparent;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-carolingian .nah-list-item:hover {
+	background: var(--cui-accent-15);
+	border-left-color: var(--cui-accent);
+	transform: translateX(3px);
+}
+
+.theme-carolingian .nah-list-item .nah-font-hero {
+	font-family: var(--cui-font-header);
+	font-size: 1.15em !important;
+	font-weight: 600;
+	color: var(--cui-text);
+	letter-spacing: 0.02em;
+}
+
+.theme-carolingian .nah-list-item .text-sm,
+.theme-carolingian .nah-list-item .nah-item-uses {
+	font-family: var(--cui-font-body);
+	font-size: 0.9em !important;
+	color: var(--cui-text-muted);
+}
+
+.theme-carolingian .nah-list-item .nah-roll-mod {
+	font-family: var(--cui-font-body);
+	font-size: 1.05em;
+	font-weight: 700;
+	color: var(--cui-accent);
+}
+
+.theme-carolingian .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--cui-accent);
+}
+
+.theme-carolingian .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: var(--cui-radius);
+	border: 1px solid var(--cui-border);
+}
+
+.theme-carolingian .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: var(--cui-accent-15);
+	color: var(--cui-accent);
+	border: 1px solid var(--cui-accent-50);
+	border-radius: var(--cui-radius);
+	font-family: var(--cui-font-body);
+	font-weight: 700;
+	font-size: 0.82em;
+}
+
+.theme-carolingian .nah-act-icon.reaction {
+	color: var(--cui-accent-hover);
+	border-color: var(--cui-accent);
+}
+
+.theme-carolingian .nah-list-item.is-unprepared-ritual {
+	border-left: 3px dashed var(--cui-accent) !important;
+}
+
+/* Search */
+.theme-carolingian .nah-search-container {
+	background: var(--cui-surface-search);
+	border-bottom: 1px solid var(--cui-border);
+}
+
+.theme-carolingian .nah-search-input {
+	color: var(--cui-text);
+	background: var(--cui-surface-search);
+	border: 1px solid var(--cui-border);
+	border-radius: var(--cui-radius);
+	padding: 4px 8px;
+	font-family: var(--cui-font-body);
+	font-size: 1.05em;
+	transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.theme-carolingian .nah-search-input:focus {
+	border-color: var(--cui-accent);
+	box-shadow: 0 0 6px var(--cui-shadow-highlight);
+	outline: none;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-carolingian .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--cui-accent-75) transparent;
+}
+.theme-carolingian .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-carolingian .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--cui-accent-75); border-radius: var(--cui-radius); }
+.theme-carolingian .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-carolingian .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: var(--cui-bg-85);
+	border: 1px solid var(--cui-border);
+	border-radius: var(--cui-radius);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	transition: all 0.16s ease;
+}
+
+.theme-carolingian .nah-quick-slot:hover {
+	background: var(--cui-bg-75);
+	transform: translateY(-2px);
+	border-color: var(--cui-accent);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 12px var(--cui-accent-50);
+}
+
+.theme-carolingian .nah-quick-slot.active {
+	border-color: var(--cui-accent);
+	box-shadow: 0 0 14px var(--cui-accent);
+}
+
+/* =========================================
+   4. SCROLLBARS
+   ========================================= */
+.theme-carolingian .nah-scroll-area,
+.theme-carolingian .nah-list-area {
+	scrollbar-width: thin;
+	scrollbar-color: var(--cui-accent-75) transparent;
+}
+.theme-carolingian .nah-scroll-area::-webkit-scrollbar,
+.theme-carolingian .nah-list-area::-webkit-scrollbar { width: 6px; }
+.theme-carolingian .nah-scroll-area::-webkit-scrollbar-thumb,
+.theme-carolingian .nah-list-area::-webkit-scrollbar-thumb { background: var(--cui-accent-75); border-radius: var(--cui-radius); }
+.theme-carolingian .nah-scroll-area::-webkit-scrollbar-track,
+.theme-carolingian .nah-list-area::-webkit-scrollbar-track { background: transparent; }
+
+/* =========================================
+   5. TOOLTIP
+   ========================================= */
+:is(#nah-tooltip, #nah-tooltip).theme-carolingian {
+	background: var(--cui-bg-95);
+	border: 1px solid var(--cui-accent);
+	border-radius: var(--cui-radius);
+	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65), 0 0 12px var(--cui-shadow-highlight);
+	color: var(--cui-text);
+	font-family: var(--cui-font-body);
+}
+
+:is(#nah-tooltip, #nah-tooltip).theme-carolingian :is(.nah-tooltip-header, .nah-tooltip-header),
+:is(#nah-tooltip, #nah-tooltip).theme-carolingian h3 {
+	color: var(--cui-accent);
+	font-family: var(--cui-font-header);
+	border-bottom: 1px solid var(--cui-border);
+}
+
+/* =========================================
+   6. LIGHT THEME HARMONY
+   ========================================= */
+body.crlngn-ui.theme-light .theme-carolingian .nah-action-btn,
+body.crlngn-ui.theme-light.theme-carolingian .nah-action-btn {
+	background: linear-gradient(135deg, rgba(245, 247, 248, 0.95), rgba(230, 235, 238, 0.95));
+	color: var(--color-dark-1, #111111);
+	border-color: var(--color-secondary, #ccbacc);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+body.crlngn-ui.theme-light .theme-carolingian .nah-sub-menu,
+body.crlngn-ui.theme-light.theme-carolingian .nah-sub-menu {
+	background: rgba(244, 246, 248, 0.98);
+	border-color: var(--color-secondary, #ccbacc);
+	box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25), 0 0 1px var(--cui-accent);
+}
+
+body.crlngn-ui.theme-light .theme-carolingian .nah-sidebar-panel,
+body.crlngn-ui.theme-light.theme-carolingian .nah-sidebar-panel {
+	background: rgba(232, 236, 238, 0.95);
+	border-right-color: rgba(0, 0, 0, 0.08);
+}
+
+body.crlngn-ui.theme-light .theme-carolingian .nah-menu-header,
+body.crlngn-ui.theme-light.theme-carolingian .nah-menu-header {
+	background: rgba(235, 239, 242, 0.9);
+	color: var(--color-dark-1, #111111);
+	border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+body.crlngn-ui.theme-light .theme-carolingian .nah-list-item .nah-font-hero,
+body.crlngn-ui.theme-light.theme-carolingian .nah-list-item .nah-font-hero {
+	color: var(--color-dark-1, #111111);
+}
+
+body.crlngn-ui.theme-light .theme-carolingian .nah-list-item .text-sm,
+body.crlngn-ui.theme-light.theme-carolingian .nah-list-item .text-sm {
+	color: var(--color-dark-4, #555555);
+}
+
+body.crlngn-ui.theme-light .theme-carolingian .nah-search-input,
+body.crlngn-ui.theme-light.theme-carolingian .nah-search-input {
+	background: rgba(255, 255, 255, 0.9);
+	color: var(--color-dark-1, #111111);
+	border-color: var(--color-secondary, #ccbacc);
+}
+
+/* =========================================
+   7. LEGACY ACTOR HUD CARD (OPTIONAL)
+   ========================================= */
+.theme-carolingian .nah-card {
+	background: var(--cui-bg-95);
+	border-radius: var(--cui-radius);
+	border: 1px solid var(--cui-border);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.theme-carolingian .nah-portrait-wrapper {
+	border-radius: var(--cui-radius);
+	border: 2px solid var(--cui-accent);
+}
+
+.theme-carolingian .nah-name {
+	font-family: var(--cui-font-header);
+	color: var(--cui-text);
+}
