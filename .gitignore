@@ -1,0 +1,8 @@
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Internal Changelog
+CHANGELOG_internal.md
+changelog_v1.md
+CHANGELOG_v1.md
