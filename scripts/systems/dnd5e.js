@@ -248,20 +248,28 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 			return;
 		}
 
+		// Consumable handling
+		if (item.type === "consumable" && typeof item.consume === "function") {
+			return item.consume();
+		}
+
 		// DnD5e 6.x Activity invocation
 		const activities = item.system?.activities;
 		if (activities && activities.size > 0) {
-			const attackActivity = activities.find((a) => a.type === "attack");
-			if (attackActivity && typeof attackActivity.rollAttack === "function") {
-				return attackActivity.rollAttack(dialogOptions);
+			const attackActivity = activities.find((a) => a.type === "attack" && a.canUse !== false)
+				|| activities.find((a) => a.type === "attack");
+			if (attackActivity && typeof attackActivity.use === "function") {
+				return attackActivity.use(config, dialogOptions);
 			}
 
-			const damageActivity = activities.find((a) => a.type === "damage");
-			if (damageActivity && typeof damageActivity.rollDamage === "function") {
-				return damageActivity.rollDamage(dialogOptions);
+			const damageActivity = activities.find((a) => a.type === "damage" && a.canUse !== false)
+				|| activities.find((a) => a.type === "damage");
+			if (damageActivity && typeof damageActivity.use === "function") {
+				return damageActivity.use(config, dialogOptions);
 			}
 
-			const firstActivity = activities.contents[0];
+			const firstActivity = activities.find((a) => a.canUse !== false)
+				|| (activities.contents ? activities.contents[0] : Array.from(activities.values())[0]);
 			if (firstActivity && typeof firstActivity.use === "function") {
 				return firstActivity.use(config, dialogOptions);
 			}

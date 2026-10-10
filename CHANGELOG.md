@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [14.8.2] - 2026-10-10
+
+### Fixed
+- **Attack Roll Item Chat Cards**: Fixed an issue where rolling attacks directly triggered the attack roll without posting the primary item card to chat. Rolling weapon or spell attacks now cleanly outputs the item usage card with Attack and Damage action buttons alongside the attack roll, matching native sheet behavior.
+
 ### Added
 - **Foundry Package Release Automation**: Added automated package publishing step to GitHub Actions release workflow for the official Foundry VTT package registry.
 - **Documentation & Cross-References**: Updated installation instructions with Foundry package browser details and added the "Other Modules by Nik" showcase section.
