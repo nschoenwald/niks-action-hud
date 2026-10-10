@@ -5,6 +5,12 @@ All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be document
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Foundry Package Release Automation**: Added automated package publishing step to GitHub Actions release workflow for the official Foundry VTT package registry.
+- **Documentation & Cross-References**: Updated installation instructions with Foundry package browser details and added the "Other Modules by Nik" showcase section.
+
 ## [14.8.1] - 2026-10-09
 
 ### Changed

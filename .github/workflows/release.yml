@@ -40,3 +40,10 @@ jobs:
             module.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to Foundry VTT
+        uses: cs96and/FoundryVTT-release-package@v1
+        with:
+          package-token: ${{ secrets.FOUNDRY_PACKAGE_TOKEN }}
+          manifest-url: https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.VERSION }}/module.json
+

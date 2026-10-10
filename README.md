@@ -104,7 +104,9 @@ Organized, flyout drawers designed for fast combat decision-making:
 
 ## 📦 Installation
 
-Install directly within Foundry VTT using the Manifest URL:
+Install directly within Foundry VTT:
+1. Search for **"Nik's Action HUD"** in the Foundry VTT Package Browser and click **Install**.
+2. Or install manually using the Manifest URL:
 ```
 https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.json
 ```
@@ -114,3 +116,26 @@ https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.j
 ## 📜 License
 
 MIT License. See [LICENSE.md](LICENSE.md) for details.
+
+---
+
+## Other Modules by Nik
+
+### 🎲 D&D 5e Specific
+* **[Nik's DnD5e Tweaks](https://github.com/nschoenwald/niks-dnd5e-tweaks)** – Consolidated collection of quality-of-life enhancements and combat automation tweaks for DnD5e.
+
+### ⚔️ Combat & Token Tools
+* **[Nik's Token Tags](https://github.com/nschoenwald/niks-token-tags)** – Automatically numbers duplicate combatant NPCs (A, B, C…) with color-coded letter overlays.
+* **[Nik's Shared NPC Initiative](https://github.com/nschoenwald/niks-shared-npc-initiative)** – Groups NPCs of the same type in combat so they share a single initiative roll.
+* **[Nik's Movement Control](https://github.com/nschoenwald/niks-movement-control)** – GM controls to toggle player movement and automatically restrict/allow movement on combat start and end.
+* **[Nik's Tiny Change Logs](https://github.com/nschoenwald/niks-tiny-changelogs)** – Compact, single-line chat messages logging token HP and Temp HP changes.
+
+### 🎲 Visuals & Display
+* **[Nik's Dynamic Roll Area](https://github.com/nschoenwald/niks-dynamic-roll-area)** – Dynamically restricts Dice So Nice 3D dice rolling area to exclude the sidebar / chat log across all screen resolutions and window sizes.
+
+### ⚙️ Utilities & System Management
+* **[Nik's Settings Locks](https://github.com/nschoenwald/niks-settings-locks)** – Soft-lock and hard-lock client settings and keybindings across all connected players.
+* **[Nik's Compendium Search Tweaks](https://github.com/nschoenwald/niks-compendium-search-tweaks)** – Configure which compendium packs are included or excluded from native sidebar search.
+* **[Nik's Show & Tell](https://github.com/nschoenwald/niks-show-and-tell)** – Share popout images to chat and paste image files directly into chat messages.
+* **[Nik's Zoom / Pan Options](https://github.com/nschoenwald/niks-zoom-pan-options)** – Touchpad and scroll wheel pan/zoom controls and canvas navigation enhancements.
+
