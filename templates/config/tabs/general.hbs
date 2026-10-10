@@ -66,6 +66,20 @@
 
             <div class="hud-setting-row">
                 <div class="hud-setting-info">
+                    <label>Damage Type Display</label>
+                    <span class="hud-setting-hint">Choose how damage types are displayed on action buttons: compact subtly colored icons, icons with text, or written text only.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <select class="hud-select" name="dnd5eDamageTypeDisplay" style="width: 140px;">
+                        <option value="icons" {{#if (eq dnd5eDamageTypeDisplay "icons")}}selected{{/if}}>Icons Only</option>
+                        <option value="both" {{#if (eq dnd5eDamageTypeDisplay "both")}}selected{{/if}}>Icons & Text</option>
+                        <option value="text" {{#if (eq dnd5eDamageTypeDisplay "text")}}selected{{/if}}>Text Only</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="hud-setting-row">
+                <div class="hud-setting-info">
                     <label>Auto-Favorite NPC Actions</label>
                     <span class="hud-setting-hint">Automatically favorite attack, damage, and save activities when an NPC token with no favorites is placed on the canvas.</span>
                 </div>

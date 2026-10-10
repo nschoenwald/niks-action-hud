@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [14.10.0] - 2026-10-10
+
+### Added
+- **Damage Type Display Icons & Color Tinting**: Action HUD badges now display subtle, beautifully tinted damage type icons alongside or in place of verbose damage type names (e.g. bludgeoning, radiant, necrotic, fire). Each damage type features a curated luminous hue tailored for high legibility on dark HUD surfaces and utilizes DnD5e's native SVG assets via CSS masking.
+- **Client Damage Type Display Setting**: Added a client-level configuration toggle (**Icons Only**, **Icons + Text**, or **Text Only**) accessible in both Foundry's module settings and the Action HUD Configuration panel under General Behavior. Each player can customize their preferred display mode without affecting others.
+
+## [14.9.1] - 2026-10-10
+
+### Fixed
+- **Active Effect Damage Bonuses & Damage Types**: Fixed an issue where damage bonuses granted by Active Effects with bracketed damage types (such as `1d8[radiant]`) were incorrectly merged into the weapon's base damage type (e.g. bludgeoning). Action HUD now parses term-level damage flavor annotations and aggregates damage through DnD5e's dice utilities (`aggregateDamageRolls`), accurately displaying distinct damage types in the HUD badges (e.g. `1d8+3 Bludgeoning, 1d8 Radiant`).
+- **Active Effect Real-Time Reactivity**: Registered lifecycle hooks for Active Effects (`createActiveEffect`, `updateActiveEffect`, and `deleteActiveEffect`) to instantly refresh Action HUD damage displays whenever buffs, conditions, or spells are toggled or modified on an actor.
+
 ## [14.9.0] - 2026-10-10
 
 ### Added

@@ -49,6 +49,9 @@ export const onSave = async (app, event, target) => {
 		if (game.settings.settings.has(`${MODULE_ID}.dnd5eShowUnpreparedRituals`) && cleanConfig.dnd5eShowUnpreparedRituals !== undefined) {
 			await game.settings.set(MODULE_ID, "dnd5eShowUnpreparedRituals", cleanConfig.dnd5eShowUnpreparedRituals);
 		}
+		if (game.settings.settings.has(`${MODULE_ID}.dnd5eDamageTypeDisplay`) && cleanConfig.dnd5eDamageTypeDisplay !== undefined) {
+			await game.settings.set(MODULE_ID, "dnd5eDamageTypeDisplay", cleanConfig.dnd5eDamageTypeDisplay);
+		}
 
 		const savedMsg = game.i18n.localize("NAH.Config.Saved") || "Nik's Action HUD configuration saved.";
 		ui.notifications.info(savedMsg);

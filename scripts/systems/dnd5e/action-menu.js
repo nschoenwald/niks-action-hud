@@ -237,7 +237,7 @@ export function _getWeaponData(actor) {
 			let displayHtml = "";
 			const text = damageText || damageFormula;
 			if (text) {
-				displayHtml = `<span class="nah-info-sub" title="${escapeHtml(text)}" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${text}${showRange ? ` · ${rangeText}` : ""}</span>`;
+				displayHtml = `<span class="nah-info-sub" title="${escapeHtml(text)}" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${damageHtml || text}${showRange ? ` · ${rangeText}` : ""}</span>`;
 			} else if (toHit) {
 				displayHtml = `<span style="color:#aaa; font-size:0.9em; display:inline-flex; align-items:center; white-space:nowrap;">Hit: ${toHit}${showRange ? ` · ${rangeText}` : ""}</span>`;
 			} else {
@@ -571,10 +571,10 @@ export function _getSpellData(actor) {
 		const actIcon = _getActivationIcon(activation);
 		const rangeText = _formatRange(i);
 		const showRange = rangeText && !rangeText.startsWith("5 ");
-		const { damageText } = _getItemDamage(i, actor);
+		const { damageText, damageHtml } = _getItemDamage(i, actor);
 
 		const subInfoHtml = damageText
-			? `<span class="nah-info-sub" title="${escapeHtml(damageText)}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;">${damageText}${showRange ? ` · ${rangeText}` : ""}</span>`
+			? `<span class="nah-info-sub" title="${escapeHtml(damageText)}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;">${damageHtml || damageText}${showRange ? ` · ${rangeText}` : ""}</span>`
 			: (rangeText ? `<span style="font-size:0.8em; color:#888; margin-left:4px;">${rangeText}</span>` : "");
 
 		items[key]["all"].push({
@@ -786,11 +786,11 @@ export function _getFeatureData(actor) {
 
 			const rangeText = _formatRange(i);
 			const showRange = rangeText && !rangeText.startsWith("5 ");
-			const { damageText } = _getItemDamage(i, actor);
+			const { damageText, damageHtml } = _getItemDamage(i, actor);
 
 			let displayHtml = "";
 			if (damageText) {
-				displayHtml = `<span class="nah-info-sub" title="${escapeHtml(damageText)}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;">${damageText}${showRange ? ` · ${rangeText}` : ""}</span>`;
+				displayHtml = `<span class="nah-info-sub" title="${escapeHtml(damageText)}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;">${damageHtml || damageText}${showRange ? ` · ${rangeText}` : ""}</span>`;
 			}
 
 			let costHtml = "";
@@ -995,12 +995,12 @@ export function _getLegendaryData(actor) {
 			}
 
 			let displayHtml = "";
-			const { damageFormula, damageType, damageText } = _getItemDamage(i, actor);
+			const { damageFormula, damageType, damageText, damageHtml } = _getItemDamage(i, actor);
 			const rangeText = _formatRange(i);
 			const showRange = rangeText && !rangeText.startsWith("5 ");
 			const text = damageText || damageFormula;
 			if (text) {
-				displayHtml = `<span class="nah-info-sub" title="${escapeHtml(text)}" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${text}${showRange ? ` · ${rangeText}` : ""}</span>`;
+				displayHtml = `<span class="nah-info-sub" title="${escapeHtml(text)}" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${damageHtml || text}${showRange ? ` · ${rangeText}` : ""}</span>`;
 			}
 
 			let costHtml = "";

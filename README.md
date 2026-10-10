@@ -40,6 +40,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 - **Smart Token & Character Fallback**: Select any token to view its actions instantly. When no token is selected, the HUD automatically displays your assigned player character.
 - **Global Clustered Action Search**: Type in the search box of any submenu to search across all action types, spells, features, inventory items, and utility checks at once, clustered under clear category headers. Clears instantly with <kbd>Esc</kbd>.
 - **Automatic Empty Menu Hiding**: Automatically hides category buttons that have no actions for the selected actor (e.g. hiding the Spells button for characters without magic).
+- **Subtly Tinted Damage Type Icons**: Renders intuitive, beautifully colored vector damage type icons (e.g. fire, radiant, bludgeoning) directly on action badges using DnD5e's native SVG assets, with client customization for **Icons Only**, **Both (Icon + Text)**, or **Text Only**.
 - **Core Interface Fading**: Seamlessly integrates with Foundry's core interface fading, dimming when idle and restoring full brightness on hover or interaction.
 - **Direct Sheet Navigation**: Right-click any action, spell, or item to jump directly to its sheet.
 
@@ -70,7 +71,7 @@ Twelve handcrafted visual themes with zero external dependencies:
 
 Organized, flyout drawers designed for fast combat decision-making:
 
-- **Attacks**: Equipped weapons with calculated attack bonuses, damage formulas, damage types, reach/range indicators, and ammunition tracking.
+- **Attacks**: Equipped weapons with calculated attack bonuses, split multi-type damage formulas and active effect bonuses (e.g. radiant, fire), reach/range indicators, and ammunition tracking.
 - **Spells**: Spellbook categorized by level with real-time spell slot counters (`LV 1 (4/4)`), cantrips, at-will spells, and ritual spell indicators for unprepared wizard rituals.
 - **Features**: Class features, species traits, and feats categorized by action type (Action, Bonus Action, Reaction, Passive) with limited use tracking and recharge dice states.
 - **Legendary**: Automatically surfaces for legendary creatures, grouping Legendary Resistance at the top and tracking legendary action points in real time.
@@ -94,6 +95,7 @@ Organized, flyout drawers designed for fast combat decision-making:
 - **Visual Category Builder**: Reorder, rename, or customize menu icons, button scaling, and visibility conditions.
 - **Excluded Actor Types**: Simple toggle chips to prevent the HUD from showing on specific actor types (`encounter`, `group`, and `vehicle` excluded by default).
 - **Presets & Backups**: Export and import complete HUD setups as JSON presets with modular section resets.
+- **Client Damage Display Preferences**: Choose between **Icons Only**, **Icons + Text**, or **Text Only** to tune visual density to your table's preference.
 - **Core Foundry Permissions**: Access to the visual configuration app is governed directly by Foundry's core **Modify Configuration Settings** (`SETTINGS_MODIFY`) permission. Players without this permission can cleanly toggle the HUD off for their user account using the client setting.
 
 ---

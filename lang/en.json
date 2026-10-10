@@ -234,6 +234,13 @@
         "Name": "Show Unprepared Wizard Rituals",
         "Hint": "Displays unprepared spells that have the ritual tag in the Spellbook for wizard characters, allowing them to cast ritual spells directly from their spellbook."
       },
+      "DamageTypeDisplay": {
+        "Name": "Damage Type Display",
+        "Hint": "Choose how damage types are displayed on action buttons: compact subtly colored icons, icons with text, or written text only.",
+        "Icons": "Icons Only",
+        "Both": "Icons & Text",
+        "Text": "Text Only"
+      },
       "AutoFavoriteNpc": {
         "Name": "Auto-Favorite NPC Actions",
         "Hint": "Automatically favorite attack, damage, and save activities (sorted by action time) when an NPC token with no existing favorites is placed on the canvas."

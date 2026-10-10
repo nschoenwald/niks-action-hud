@@ -176,8 +176,24 @@ export class ActionMenu {
 			if (actor) {
 				void removeFavoriteModule(ActionMenu, item.id, actor);
 			}
-			refreshItem(item);
 		});
+
+		// Refresh HUD on Active Effect changes (buffs, damage bonuses, conditions)
+		const refreshEffect = (effect) => {
+			const parent = effect.parent;
+			const actor = parent?.documentName === "Actor" ? parent : (parent?.documentName === "Item" ? parent.actor : null);
+			if (
+				ActionMenu.currentActor &&
+				actor &&
+				actor.id === ActionMenu.currentActor.id
+			) {
+				ActionMenu.refresh();
+			}
+		};
+
+		Hooks.on("createActiveEffect", refreshEffect);
+		Hooks.on("updateActiveEffect", refreshEffect);
+		Hooks.on("deleteActiveEffect", refreshEffect);
 
 		Hooks.on("deleteMacro", (macro) => {
 			const favoriteIds = [];

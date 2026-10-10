@@ -234,6 +234,9 @@ export const initializeTempData = (app, globalConfig) => {
 	if (game.settings?.settings?.has(`${MODULE_ID}.dnd5eShowUnpreparedRituals`)) {
 		app.tempData.dnd5eShowUnpreparedRituals = game.settings.get(MODULE_ID, "dnd5eShowUnpreparedRituals");
 	}
+	if (game.settings?.settings?.has(`${MODULE_ID}.dnd5eDamageTypeDisplay`)) {
+		app.tempData.dnd5eDamageTypeDisplay = game.settings.get(MODULE_ID, "dnd5eDamageTypeDisplay");
+	}
 	if (game.settings?.settings?.has(`${MODULE_ID}.hideEmptySubmenus`)) {
 		app.tempData.hideEmptySubmenus = game.settings.get(MODULE_ID, "hideEmptySubmenus");
 	}

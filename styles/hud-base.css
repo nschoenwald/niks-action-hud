@@ -1098,3 +1098,27 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 	background: rgba(255, 255, 255, 0.4);
 }
+
+/* ==========================================================================
+   Damage Type Icons
+   ========================================================================== */
+.nah-dmg-icon {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	vertical-align: -2px;
+	margin: 0 1px 0 2px;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	background-color: currentColor;
+	flex-shrink: 0;
+	transition: transform 0.12s ease;
+}
+
+.nah-dmg-icon:hover {
+	transform: scale(1.15);
+}

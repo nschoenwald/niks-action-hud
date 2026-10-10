@@ -52,6 +52,7 @@ export const BEHAVIOR_FIELDS = Object.freeze([
 	{ key: "fadeWhenIdle", type: "boolean", fallback: true },
 	{ key: "dnd5eGroupActionsByActivation", type: "boolean", fallback: false },
 	{ key: "dnd5eShowUnpreparedRituals", type: "boolean", fallback: true },
+	{ key: "dnd5eDamageTypeDisplay", type: "string", fallback: "icons" },
 	{ key: "dnd5eAutoFavoriteNpcActions", type: "boolean", fallback: true },
 	{ key: "dnd5eAutoFavoriteNpcMax", type: "number", fallback: 5 },
 	{ key: "actionMenuSubmenuSide", type: "string", fallback: "auto" },

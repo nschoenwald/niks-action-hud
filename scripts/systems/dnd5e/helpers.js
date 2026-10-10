@@ -138,9 +138,104 @@ export function isAllDamageTypes(typesOrString) {
 }
 
 /**
+ * Subtly tuned accent colors for DnD5e damage types optimized for dark HUD readability.
+ */
+export const DAMAGE_TYPE_COLORS = Object.freeze({
+	acid: "#9ecc4e",
+	bludgeoning: "#799fe0",
+	cold: "#8be0f7",
+	fire: "#ff6e42",
+	force: "#b86bfc",
+	lightning: "#4dc2ff",
+	necrotic: "#6bbe6b",
+	piercing: "#cbd5e1",
+	poison: "#b066f5",
+	psychic: "#ff54ad",
+	radiant: "#ffd154",
+	slashing: "#f05252",
+	thunder: "#63a4d8",
+	healing: "#48d689",
+	temphp: "#38bdf8",
+	all: "#e2e8f0",
+	any: "#e2e8f0",
+});
+
+/**
+ * Retrieve the active client damage type display mode ("icons", "both", or "text").
+ * @returns {"icons"|"both"|"text"}
+ */
+export function getDamageTypeDisplayMode() {
+	try {
+		const config = game.settings.get("niks-action-hud", "configuration");
+		if (config?.dnd5eDamageTypeDisplay) return config.dnd5eDamageTypeDisplay;
+	} catch {}
+	try {
+		if (game.settings.settings.has("niks-action-hud.dnd5eDamageTypeDisplay")) {
+			return game.settings.get("niks-action-hud", "dnd5eDamageTypeDisplay") ?? "icons";
+		}
+	} catch {}
+	return "icons";
+}
+
+/**
+ * Retrieve the SVG icon path for a given damage type key.
+ * @param {string} typeKey
+ * @returns {string}
+ */
+export function _getDamageTypeIcon(typeKey) {
+	if (!typeKey) return "";
+	if (isAllDamageTypes(typeKey)) return "systems/dnd5e/icons/svg/damage/all.svg";
+	return CONFIG.DND5E?.damageTypes?.[typeKey]?.icon ?? CONFIG.DND5E?.healingTypes?.[typeKey]?.icon ?? "";
+}
+
+/**
+ * Retrieve the subtle accent color for a given damage type key.
+ * @param {string} typeKey
+ * @returns {string}
+ */
+export function _getDamageTypeColor(typeKey) {
+	if (!typeKey) return "#ffffff";
+	if (isAllDamageTypes(typeKey)) return DAMAGE_TYPE_COLORS.all;
+	return DAMAGE_TYPE_COLORS[typeKey] ?? CONFIG.DND5E?.damageTypes?.[typeKey]?.color?.css ?? "#ffffff";
+}
+
+/**
+ * Format a single damage part into plain text and rich HTML based on the active display mode.
+ * @param {string} compact
+ * @param {string} typeKey
+ * @param {string} typeStr
+ * @param {"icons"|"both"|"text"} [displayMode="icons"]
+ * @returns {{ text: string, html: string }}
+ */
+export function _formatDamagePart(compact, typeKey, typeStr, displayMode = "icons") {
+	if (!compact) return { text: "", html: "" };
+	if (!typeStr && !typeKey) return { text: compact, html: compact };
+
+	const text = typeStr ? `${compact} ${typeStr}` : compact;
+	if (displayMode === "text") {
+		return { text, html: text };
+	}
+
+	const iconUrl = _getDamageTypeIcon(typeKey);
+	if (!iconUrl) {
+		return { text, html: text };
+	}
+
+	const color = _getDamageTypeColor(typeKey);
+	const iconHtml = `<span class="nah-dmg-icon nah-dmg-${escapeHtml(typeKey)}" style="background-color:${color}; -webkit-mask-image:url('${iconUrl}'); mask-image:url('${iconUrl}');" title="${escapeHtml(typeStr || typeKey)}" aria-label="${escapeHtml(typeStr || typeKey)}"></span>`;
+
+	if (displayMode === "both") {
+		return { text, html: `${compact} ${iconHtml} ${typeStr}` };
+	}
+
+	// Default: "icons"
+	return { text, html: `${compact} ${iconHtml}` };
+}
+
+/**
  * Calculate total damage with all calculated bonuses from the primary activity.
  * Supports weapons, spells, features, etc.
- * Damage parts are grouped by damage type and formatted into a single string (e.g. "4d6+5 Slashing, 3d6 Acid").
+ * Damage parts are grouped by damage type and formatted with plain text and rich SVG icons.
  * @param {Item} item
  * @param {Actor} [actor]
  * @returns {{ damageFormula: string, damageType: string, damageText: string, damageHtml: string, parts: string[] }}
@@ -151,6 +246,8 @@ export function _getItemDamage(item, actor = item?.actor) {
 	let damageText = "";
 	let damageHtml = "";
 	const partTexts = [];
+	const partHtmls = [];
+	const displayMode = getDamageTypeDisplayMode();
 
 	try {
 		const activity = _getPrimaryDamageActivity(item) || _getPrimaryAttackActivity(item);
@@ -158,59 +255,210 @@ export function _getItemDamage(item, actor = item?.actor) {
 			const ammo = item.type === "weapon" ? _getDnd5eCurrentAmmo(item) : null;
 			const damageConfig = activity.getDamageConfig(ammo ? { ammunition: ammo } : {});
 			if (damageConfig?.rolls?.length) {
-				const partsByType = new Map();
+				const aggregateDamageRolls = globalThis.dnd5e?.dice?.aggregateDamageRolls ?? game.dnd5e?.dice?.aggregateDamageRolls;
+				const DamageRollCls = CONFIG.Dice?.DamageRoll;
 
-				for (const roll of damageConfig.rolls) {
-					if (!roll?.parts?.length) continue;
-					const rawFormula = roll.parts.filter(Boolean).join(" + ");
-					const rollData = { ...(actor?.getRollData?.() ?? {}), ...(roll.data ?? {}) };
-					let replaced = rawFormula;
-					if (rawFormula.includes("@")) {
-						replaced = Roll.replaceFormulaData(rawFormula, rollData, { missing: "0" });
+				let aggregatedRolls = [];
+				if (typeof aggregateDamageRolls === "function" && DamageRollCls) {
+					const rawRolls = damageConfig.rolls.map(({ base, data, options, parts }) => {
+						if (!parts?.length) return null;
+						const cleanedParts = parts.filter(Boolean).map((p) => String(p).trim()).filter(Boolean);
+						if (!cleanedParts.length) return null;
+
+						let rawFormula = "";
+						for (const part of cleanedParts) {
+							if (!rawFormula) {
+								rawFormula = part;
+							} else if (part.startsWith("+") || part.startsWith("-")) {
+								rawFormula += ` ${part}`;
+							} else {
+								rawFormula += ` + ${part}`;
+							}
+						}
+						rawFormula = rawFormula.replace(/^\s*\+\s*/, "").trim();
+						if (!rawFormula) return null;
+
+						const rollData = { ...(actor?.getRollData?.() ?? {}), ...(data ?? {}) };
+						let formula = rawFormula;
+						if (formula.includes("@")) {
+							formula = Roll.replaceFormulaData(formula, rollData, { missing: "0" });
+						}
+						formula = formula.replace(/^\s*\+\s*/, "").trim();
+
+						try {
+							const rollOptions = { base, ...options };
+							if (isAllDamageTypes(rollOptions.types)) {
+								rollOptions.type = "any";
+							}
+							return new DamageRollCls(formula, rollData, rollOptions);
+						} catch (err) {
+							return null;
+						}
+					}).filter(Boolean);
+
+					try {
+						aggregatedRolls = aggregateDamageRolls(rawRolls);
+					} catch (err) {
+						aggregatedRolls = [];
 					}
-
-					const typeKeys = [];
-					if (roll.options?.types?.length) {
-						for (const t of roll.options.types) if (t) typeKeys.push(t);
-					} else if (roll.options?.type) {
-						typeKeys.push(roll.options.type);
-					}
-
-					let typeStr = "";
-					if (isAllDamageTypes(typeKeys)) {
-						typeStr = game.i18n ? game.i18n.localize("NAH.Damage.Any") : "any";
-					} else {
-						const typeLabels = typeKeys
-							.map((k) => CONFIG.DND5E?.damageTypes?.[k]?.label ?? CONFIG.DND5E?.healingTypes?.[k]?.label ?? k)
-							.map((label) => (game.i18n ? game.i18n.localize(label) : label))
-							.filter(Boolean);
-
-						typeStr = typeLabels.length > 0
-							? (game.i18n?.getListFormatter
-								? game.i18n.getListFormatter({ style: "narrow" }).format(typeLabels)
-								: typeLabels.join(", "))
-							: "";
-					}
-
-					if (!partsByType.has(typeStr)) {
-						partsByType.set(typeStr, []);
-					}
-					partsByType.get(typeStr).push(replaced);
 				}
 
-				for (const [typeStr, formulas] of partsByType.entries()) {
-					const combined = formulas.join(" + ");
-					const simplified = _simplifyRollFormula(combined) || combined;
-					const compact = _compactFormula(simplified);
-					if (!compact) continue;
-					partTexts.push(typeStr ? `${compact} ${typeStr}` : compact);
-				}
+				if (aggregatedRolls.length > 0) {
+					const collectedTypes = [];
+					for (const roll of aggregatedRolls) {
+						try {
+							roll.simplify?.();
+						} catch (err) {
+							// ignore
+						}
+						let formula = _simplifyRollFormula(roll.formula) || roll.formula;
+						formula = formula.replace(/^\s*\+\s*/, "").trim();
+						const compact = _compactFormula(formula);
+						if (!compact) continue;
 
-				if (partTexts.length > 0) {
-					damageText = partTexts.join(", ");
-					damageHtml = `<span class="nah-info-sub" style="font-size:0.78em; letter-spacing:0.5px;">${damageText}</span>`;
-					damageFormula = damageText;
-					damageType = Array.from(partsByType.keys()).filter(Boolean).join(", ");
+						const typeKey = roll.options?.type;
+						const typeKeys = roll.options?.types?.length ? roll.options.types : (typeKey ? [typeKey] : []);
+
+						let typeStr = "";
+						if (isAllDamageTypes(typeKey) || isAllDamageTypes(typeKeys)) {
+							typeStr = game.i18n ? game.i18n.localize("NAH.Damage.Any") : "any";
+						} else {
+							const typeLabels = typeKeys
+								.map((k) => CONFIG.DND5E?.damageTypes?.[k]?.label ?? CONFIG.DND5E?.healingTypes?.[k]?.label ?? k)
+								.map((label) => (game.i18n ? game.i18n.localize(label) : label))
+								.filter(Boolean);
+
+							typeStr = typeLabels.length > 0
+								? (game.i18n?.getListFormatter
+									? game.i18n.getListFormatter({ style: "narrow" }).format(typeLabels)
+									: typeLabels.join(", "))
+								: "";
+						}
+
+						if (typeStr) collectedTypes.push(typeStr);
+						const formatted = _formatDamagePart(compact, typeKey, typeStr, displayMode);
+						if (formatted.text) {
+							partTexts.push(formatted.text);
+							partHtmls.push(formatted.html);
+						}
+					}
+
+					if (partTexts.length > 0) {
+						damageText = partTexts.join(", ");
+						damageHtml = partHtmls.join(", ");
+						damageFormula = damageText;
+						damageType = Array.from(new Set(collectedTypes)).join(", ");
+					}
+				} else {
+					// Fallback term-level parser if aggregateDamageRolls is unavailable
+					const isValidType = (t) => Boolean(CONFIG.DND5E?.damageTypes?.[t] || CONFIG.DND5E?.healingTypes?.[t]);
+					const partsByType = new Map();
+
+					for (const roll of damageConfig.rolls) {
+						if (!roll?.parts?.length) continue;
+						const cleanedParts = roll.parts.filter(Boolean).map((p) => String(p).trim()).filter(Boolean);
+						if (!cleanedParts.length) continue;
+
+						let rawFormula = "";
+						for (const part of cleanedParts) {
+							if (!rawFormula) rawFormula = part;
+							else if (part.startsWith("+") || part.startsWith("-")) rawFormula += ` ${part}`;
+							else rawFormula += ` + ${part}`;
+						}
+						rawFormula = rawFormula.replace(/^\s*\+\s*/, "").trim();
+						if (!rawFormula) continue;
+
+						const rollData = { ...(actor?.getRollData?.() ?? {}), ...(roll.data ?? {}) };
+						let replaced = rawFormula;
+						if (rawFormula.includes("@")) {
+							replaced = Roll.replaceFormulaData(rawFormula, rollData, { missing: "0" });
+						}
+						replaced = replaced.replace(/^\s*\+\s*/, "").trim();
+
+						const defaultTypeKeys = [];
+						if (roll.options?.types?.length) {
+							for (const t of roll.options.types) if (t) defaultTypeKeys.push(t);
+						} else if (roll.options?.type) {
+							defaultTypeKeys.push(roll.options.type);
+						}
+
+						const defaultType = isAllDamageTypes(defaultTypeKeys) ? "any" : (defaultTypeKeys[0] || "");
+
+						let parsedTerms = null;
+						try {
+							parsedTerms = new Roll(replaced).terms;
+						} catch {
+							parsedTerms = null;
+						}
+
+						if (parsedTerms?.length) {
+							let currentTerms = [];
+							let currentType = null;
+							let isNegative = false;
+
+							const pushChunk = () => {
+								if (!currentTerms.length) return;
+								const typeKey = currentType || defaultType;
+								let chunkFormula = currentTerms.map((t) => t.formula).join("");
+								if (foundry?.dice?.terms?.RollTerm?.FLAVOR_REGEXP) {
+									chunkFormula = chunkFormula.replace(foundry.dice.terms.RollTerm.FLAVOR_REGEXP, "").trim();
+								}
+								if (chunkFormula) {
+									if (!partsByType.has(typeKey)) partsByType.set(typeKey, []);
+									partsByType.get(typeKey).push(isNegative ? `-(${chunkFormula})` : chunkFormula);
+								}
+								currentTerms = [];
+								currentType = null;
+								isNegative = false;
+							};
+
+							for (const term of parsedTerms) {
+								if (term instanceof (foundry?.dice?.terms?.OperatorTerm ?? Object) && ["+", "-"].includes(term.operator)) {
+									pushChunk();
+									if (term.operator === "-") isNegative = !isNegative;
+									continue;
+								}
+								currentTerms.push(term);
+								const flavor = term.flavor?.toLowerCase().trim();
+								if (flavor && isValidType(flavor)) {
+									currentType = flavor;
+								}
+							}
+							pushChunk();
+						} else {
+							const typeKey = defaultType || "";
+							if (!partsByType.has(typeKey)) partsByType.set(typeKey, []);
+							partsByType.get(typeKey).push(replaced);
+						}
+					}
+
+					for (const [typeKey, formulas] of partsByType.entries()) {
+						const combined = formulas.join(" + ").replace(/^\s*\+\s*/, "");
+						const simplified = _simplifyRollFormula(combined) || combined;
+						const compact = _compactFormula(simplified);
+						if (!compact) continue;
+
+						let typeStr = "";
+						if (isAllDamageTypes(typeKey)) {
+							typeStr = game.i18n ? game.i18n.localize("NAH.Damage.Any") : "any";
+						} else {
+							const raw = CONFIG.DND5E?.damageTypes?.[typeKey]?.label ?? CONFIG.DND5E?.healingTypes?.[typeKey]?.label ?? typeKey;
+							typeStr = raw ? (game.i18n ? game.i18n.localize(raw) : raw) : "";
+						}
+
+						const formatted = _formatDamagePart(compact, typeKey, typeStr, displayMode);
+						if (formatted.text) {
+							partTexts.push(formatted.text);
+							partHtmls.push(formatted.html);
+						}
+					}
+
+					if (partTexts.length > 0) {
+						damageText = partTexts.join(", ");
+						damageHtml = partHtmls.join(", ");
+						damageFormula = damageText;
+						damageType = Array.from(partsByType.keys()).map((k) => (isAllDamageTypes(k) ? (game.i18n ? game.i18n.localize("NAH.Damage.Any") : "any") : (CONFIG.DND5E?.damageTypes?.[k]?.label ?? CONFIG.DND5E?.healingTypes?.[k]?.label ?? k))).filter(Boolean).join(", ");
+					}
 				}
 			}
 		}
@@ -228,6 +476,7 @@ export function _getItemDamage(item, actor = item?.actor) {
 				const compact = _compactFormula(d.formula);
 				if (!compact) continue;
 				let typeLabel = "";
+				const rawType = d.damageType || "";
 				if (d.damageType) {
 					if (isAllDamageTypes(d.damageType)) {
 						typeLabel = game.i18n ? game.i18n.localize("NAH.Damage.Any") : "any";
@@ -240,11 +489,15 @@ export function _getItemDamage(item, actor = item?.actor) {
 				} else if (activity?.damage?.parts && Array.from(activity.damage.parts).some((p) => isAllDamageTypes(p.types))) {
 					typeLabel = game.i18n ? game.i18n.localize("NAH.Damage.Any") : "any";
 				}
-				partTexts.push(typeLabel ? `${compact} ${typeLabel}` : compact);
+				const formatted = _formatDamagePart(compact, rawType, typeLabel, displayMode);
+				if (formatted.text) {
+					partTexts.push(formatted.text);
+					partHtmls.push(formatted.html);
+				}
 			}
 			if (partTexts.length > 0) {
 				damageText = partTexts.join(", ");
-				damageHtml = `<span class="nah-info-sub" style="font-size:0.78em; letter-spacing:0.5px;">${damageText}</span>`;
+				damageHtml = partHtmls.join(", ");
 				damageFormula = damageText;
 			}
 		}
@@ -258,14 +511,18 @@ export function _getItemDamage(item, actor = item?.actor) {
 			}
 			const compact = _compactFormula(formula);
 			let type = item.labels?.damageTypes || "";
+			const rawType = type;
 			if (isAllDamageTypes(type) || isAllDamageTypes(item.system?.damage?.base?.types)) {
 				type = game.i18n ? game.i18n.localize("NAH.Damage.Any") : "any";
 			}
 			if (compact) {
-				damageText = type ? `${compact} ${type}` : compact;
-				damageHtml = `<span class="nah-info-sub" style="font-size:0.78em; letter-spacing:0.5px;">${damageText}</span>`;
+				const formatted = _formatDamagePart(compact, rawType, type, displayMode);
+				damageText = formatted.text;
+				damageHtml = formatted.html;
 				damageFormula = damageText;
 				damageType = type;
+				partTexts.push(damageText);
+				partHtmls.push(damageHtml);
 			}
 		}
 	}
@@ -286,7 +543,7 @@ export function _getWeapons(actor) {
 	return actor.items
 		.filter((i) => i.type === "weapon" && i.system.equipped)
 		.map((i) => {
-			const { damageFormula, damageType, damageText } = _getWeaponDamage(i, actor);
+			const { damageFormula, damageType, damageText, damageHtml } = _getWeaponDamage(i, actor);
 			const attackActivity = _getPrimaryAttackActivity(i);
 			const toHit = attackActivity?.labels?.toHit || i.labels?.toHit || "";
 
@@ -295,7 +552,7 @@ export function _getWeapons(actor) {
 			// 2. Weapons with damage components
 			const text = damageText || damageFormula;
 			if (text) {
-				displayHtml = `<span class="nah-info-sub" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap;">${text}</span>`;
+				displayHtml = `<span class="nah-info-sub" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap;">${damageHtml || text}</span>`;
 			}
 			// 3. Weapons with attack roll but no base damage (e.g. net)
 			else if (toHit) {

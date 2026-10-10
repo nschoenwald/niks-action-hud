@@ -17,6 +17,7 @@ export const ACTION_MENU_PRESET_KEYS = [
 	"fadeWhenIdle",
 	"dnd5eGroupActionsByActivation",
 	"dnd5eShowUnpreparedRituals",
+	"dnd5eDamageTypeDisplay",
 	"dnd5eAutoFavoriteNpcActions",
 	"dnd5eAutoFavoriteNpcMax",
 ];

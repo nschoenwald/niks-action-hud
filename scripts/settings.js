@@ -74,6 +74,7 @@ export class SettingsManager {
 				actionMenuSubmenuSide: "auto",
 				dnd5eGroupActionsByActivation: false,
 				dnd5eShowUnpreparedRituals: true,
+				dnd5eDamageTypeDisplay: "icons",
 				dnd5eAutoFavoriteNpcActions: true,
 				dnd5eAutoFavoriteNpcMax: 5,
 				hideEmptySubmenus: true,
@@ -220,6 +221,28 @@ export class SettingsManager {
 		});
 
 		if (game.system.id === "dnd5e") {
+			game.settings.register(MODULE_ID, "dnd5eDamageTypeDisplay", {
+				name: "NAH.Settings.DamageTypeDisplay.Name",
+				hint: "NAH.Settings.DamageTypeDisplay.Hint",
+				scope: "client",
+				config: false,
+				type: String,
+				default: "icons",
+				choices: {
+					icons: "NAH.Settings.DamageTypeDisplay.Icons",
+					both: "NAH.Settings.DamageTypeDisplay.Both",
+					text: "NAH.Settings.DamageTypeDisplay.Text",
+				},
+				onChange: (val) => {
+					const config = game.settings.get(MODULE_ID, "configuration") || {};
+					if (config.dnd5eDamageTypeDisplay !== val) {
+						config.dnd5eDamageTypeDisplay = val;
+						game.settings.set(MODULE_ID, "configuration", config);
+					}
+					ActionMenu.refresh();
+				},
+			});
+
 			game.settings.register(MODULE_ID, "dnd5eShowUnpreparedRituals", {
 				name: "NAH.Settings.WizardRituals.Name",
 				hint: "NAH.Settings.WizardRituals.Hint",
