@@ -1,0 +1,381 @@
+/* =========================================
+   Nik's Action HUD - THEME: CLOCKWORK
+   Style: Artificer Workshop, Burnished Brass & Riveted Copper,
+          Calibrated Blueprints & Vacuum-Tube Amber Filaments.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech&family=Fira+Code:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap");
+
+.theme-clockwork {
+	/* Solid Opaque Palette */
+	--clk-void: #0a0805;
+	--clk-surface: #16110a;
+	--clk-surface-solid: #16110a;
+	--clk-surface-elevated: #221a11;
+	--clk-surface-sidebar: #0e0b07;
+	--clk-surface-header: #120e09;
+	--clk-surface-search: #0b0906;
+	--clk-surface-hover: #302418;
+	--clk-border: #523a1d;
+	--clk-border-hover: #b45309;
+	--clk-border-active: #f59e0b;
+	--clk-accent: #d97706;
+	--clk-accent-bright: #f59e0b;
+	--clk-accent-dim: #78350f;
+	--clk-aether: #06b6d4;
+	--clk-copper: #c2410c;
+	--clk-text-primary: #fef3c7;
+	--clk-text-muted: #fde68a;
+	--clk-shadow: #040302;
+	--clk-glow: 0 0 18px rgba(217, 119, 6, 0.4);
+
+	/* Typography */
+	--clk-font-header: "Share Tech", sans-serif;
+	--clk-font-body: "Fira Code", monospace;
+	--hud-font-header: var(--clk-font-header);
+	--hud-font-body: var(--clk-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #140e08;
+	--tooltip-border: #d97706;
+	--tooltip-text: #fef3c7;
+	--tooltip-header: #f59e0b;
+	--g-accent: var(--clk-accent-bright);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Octagonal Notched Brass
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-clockwork { gap: 0; }
+
+.theme-clockwork .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--clk-accent-bright);
+}
+
+.theme-clockwork .nah-collapse-btn:hover { color: var(--clk-aether); }
+
+.theme-clockwork .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 20px;
+	background: linear-gradient(135deg, #261c12, #140e08);
+	border: 1px solid var(--clk-border);
+	clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px));
+	color: var(--clk-text-primary);
+	font-family: var(--clk-font-header);
+	font-weight: 600;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	box-shadow:
+		inset 0 1px 0 #42301f,
+		inset 0 0 10px #090704,
+		0 4px 14px var(--clk-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-clockwork .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-clockwork .nah-action-btn .glyph,
+.theme-clockwork .nah-action-btn i {
+	color: var(--clk-accent-bright);
+	font-size: 0.85em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-clockwork .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--clk-border-hover);
+	background: linear-gradient(135deg, #37291a, #1c140c);
+	box-shadow:
+		inset 0 1px 0 #5a422a,
+		0 6px 18px var(--clk-shadow),
+		var(--clk-glow);
+	transform: translateX(4px);
+}
+
+.theme-clockwork .nah-action-btn:hover .glyph,
+.theme-clockwork .nah-action-btn:hover i {
+	color: var(--clk-aether);
+	transform: scale(1.15);
+}
+
+/* =========================================
+   2. SUBMENU — Calibrated Artificer Housing
+   ========================================= */
+.theme-clockwork .nah-sub-menu {
+	width: 426px;
+	background: var(--clk-surface);
+	border: 1px solid var(--clk-border);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px #332412,
+		0 16px 36px var(--clk-shadow);
+}
+
+.theme-clockwork .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--clk-surface-sidebar);
+	border-right: 1px solid var(--clk-border);
+}
+
+.theme-clockwork .nah-side-tab {
+	padding: 10px 5px;
+	background: var(--clk-surface-sidebar);
+	color: var(--clk-text-muted);
+	font-family: var(--clk-font-header);
+	font-size: 0.74em;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-clockwork .nah-side-tab .glyph,
+.theme-clockwork .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--clk-accent);
+	transition: color 0.16s ease;
+}
+
+.theme-clockwork .nah-side-tab:hover {
+	color: #fff;
+	background: #20180f;
+}
+
+.theme-clockwork .nah-side-tab.active {
+	background: #2d2115;
+	color: #fff;
+	border-left-color: var(--clk-accent-bright);
+}
+
+.theme-clockwork .nah-side-tab.active .glyph,
+.theme-clockwork .nah-side-tab.active i {
+	color: var(--clk-aether);
+}
+
+.theme-clockwork .nah-main-panel {
+	max-height: 480px;
+	background: var(--clk-surface);
+}
+
+.theme-clockwork .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--clk-surface-header);
+	border-bottom: 1px solid var(--clk-border);
+	font-family: var(--clk-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	color: var(--clk-text-primary);
+}
+
+.theme-clockwork .nah-menu-header .nah-font-hero {
+	font-family: var(--clk-font-header);
+	font-weight: 700;
+	color: var(--clk-text-primary);
+}
+
+.theme-clockwork .nah-dc-badge {
+	font-family: var(--clk-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, #b45309, #78350f);
+	color: #fff;
+	border: 1px solid #f59e0b;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-clockwork .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--clk-surface-sidebar);
+	border-bottom: 1px solid var(--clk-border);
+}
+
+.theme-clockwork .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #1e170e;
+	border: 1px solid var(--clk-border);
+	color: var(--clk-text-muted);
+	font-family: var(--clk-font-header);
+	font-size: 0.8em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-clockwork .nah-tab-btn:hover {
+	color: #fff;
+	border-color: var(--clk-border-hover);
+	background: #2a2014;
+}
+
+.theme-clockwork .nah-tab-btn.active {
+	background: #382a1a;
+	color: #fff;
+	border-color: var(--clk-accent-bright);
+	box-shadow: 0 0 12px rgba(217, 119, 6, 0.3);
+}
+
+/* List Headers */
+.theme-clockwork .nah-list-header {
+	background: rgba(217, 119, 6, 0.12);
+	color: var(--clk-accent-bright, #f59e0b);
+	border-left-color: var(--clk-accent, #d97706);
+	font-family: var(--clk-font-header, sans-serif);
+}
+
+/* List Items */
+.theme-clockwork .nah-list-item {
+	padding: 8px 12px;
+	background: var(--clk-surface);
+	border-left: 2px solid transparent;
+	font-size: 14px;
+	transition: all 0.15s ease;
+}
+
+.theme-clockwork .nah-list-item:hover {
+	background: #221a10;
+	border-left-color: var(--clk-accent);
+	transform: translateX(3px);
+}
+
+.theme-clockwork .nah-list-item .nah-font-hero {
+	font-family: var(--clk-font-body);
+	font-size: 1.15em !important;
+	font-weight: 500;
+	color: var(--clk-text-primary);
+	letter-spacing: 0.01em;
+}
+
+.theme-clockwork .nah-list-item .text-sm,
+.theme-clockwork .nah-list-item .nah-item-uses {
+	font-size: 0.85em !important;
+	color: var(--clk-text-muted);
+}
+
+.theme-clockwork .nah-list-item .nah-roll-mod {
+	font-family: var(--clk-font-body);
+	font-size: 1em;
+	color: var(--clk-accent-bright);
+}
+
+.theme-clockwork .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--clk-accent);
+}
+
+.theme-clockwork .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--clk-border);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-clockwork .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #2a1f12;
+	color: var(--clk-accent-bright);
+	border: 1px solid var(--clk-border);
+	font-family: var(--clk-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+}
+
+.theme-clockwork .nah-cost-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-clockwork .nah-search-container {
+	background: var(--clk-surface-search);
+	border-bottom: 1px solid var(--clk-border);
+}
+
+.theme-clockwork .nah-search-input {
+	background: var(--clk-surface);
+	color: var(--clk-text-primary);
+	border: 1px solid var(--clk-border);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--clk-font-body);
+	font-size: 1em;
+}
+
+.theme-clockwork .nah-search-input::placeholder {
+	color: #6d5130;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-clockwork .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--clk-border) transparent;
+}
+.theme-clockwork .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-clockwork .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--clk-border); border-radius: 3px; }
+.theme-clockwork .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-clockwork .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: #1c150c;
+	border: 1px solid var(--clk-border);
+	clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+	box-shadow: 0 2px 8px var(--clk-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-clockwork .nah-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--clk-accent);
+	background: #2c2013;
+	box-shadow: var(--clk-glow), 0 4px 12px var(--clk-shadow);
+}
+
+.theme-clockwork .nah-quick-slot.active {
+	border-color: var(--clk-aether);
+	box-shadow: 0 0 16px var(--clk-accent);
+}

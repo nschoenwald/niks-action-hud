@@ -1,0 +1,381 @@
+/* =========================================
+   Nik's Action HUD - THEME: RADIANT
+   Style: Divine Solaris, Sanctified Alabaster & Sun-Templed Marble,
+          Pure Solar Gold & Corona Lens-Flares.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap");
+
+.theme-radiant {
+	/* Solid Opaque Palette */
+	--rad-void: #09070c;
+	--rad-surface: #14101a;
+	--rad-surface-solid: #14101a;
+	--rad-surface-elevated: #1e1726;
+	--rad-surface-sidebar: #0e0b12;
+	--rad-surface-header: #120e17;
+	--rad-surface-search: #0b090f;
+	--rad-surface-hover: #291f34;
+	--rad-border: #4a3820;
+	--rad-border-hover: #ca8a04;
+	--rad-border-active: #eab308;
+	--rad-accent: #eab308;
+	--rad-accent-bright: #facc15;
+	--rad-accent-dim: #854d0e;
+	--rad-sun: #fef08a;
+	--rad-alabaster: #ffffff;
+	--rad-text-primary: #fefce8;
+	--rad-text-muted: #fde047;
+	--rad-shadow: #040306;
+	--rad-glow: 0 0 20px rgba(234, 179, 8, 0.45);
+
+	/* Typography */
+	--rad-font-header: "Cinzel", serif;
+	--rad-font-body: "Cormorant Garamond", serif;
+	--hud-font-header: var(--rad-font-header);
+	--hud-font-body: var(--rad-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #14101a;
+	--tooltip-border: #eab308;
+	--tooltip-text: #fefce8;
+	--tooltip-header: #facc15;
+	--g-accent: var(--rad-accent-bright);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Sunburst Double-Tapered Gold
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-radiant { gap: 0; }
+
+.theme-radiant .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--rad-accent-bright);
+}
+
+.theme-radiant .nah-collapse-btn:hover { color: var(--rad-alabaster); }
+
+.theme-radiant .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #241c2d, #140f1a);
+	border: 1px solid var(--rad-border);
+	clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%);
+	color: var(--rad-text-primary);
+	font-family: var(--rad-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	box-shadow:
+		inset 0 1px 0 #463755,
+		inset 0 0 10px #09070c,
+		0 4px 14px var(--rad-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-radiant .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-radiant .nah-action-btn .glyph,
+.theme-radiant .nah-action-btn i {
+	color: var(--rad-accent-bright);
+	font-size: 0.85em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-radiant .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--rad-accent);
+	background: linear-gradient(135deg, #352942, #1c1524);
+	box-shadow:
+		inset 0 1px 0 #614c77,
+		0 6px 18px var(--rad-shadow),
+		var(--rad-glow);
+	transform: translateX(4px);
+}
+
+.theme-radiant .nah-action-btn:hover .glyph,
+.theme-radiant .nah-action-btn:hover i {
+	color: var(--rad-sun);
+	transform: scale(1.15);
+}
+
+/* =========================================
+   2. SUBMENU — Sanctified Sun-Temple Panel
+   ========================================= */
+.theme-radiant .nah-sub-menu {
+	width: 426px;
+	background: var(--rad-surface);
+	border: 1px solid var(--rad-border);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px #31243d,
+		0 16px 36px var(--rad-shadow);
+}
+
+.theme-radiant .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--rad-surface-sidebar);
+	border-right: 1px solid var(--rad-border);
+}
+
+.theme-radiant .nah-side-tab {
+	padding: 10px 5px;
+	background: var(--rad-surface-sidebar);
+	color: var(--rad-text-muted);
+	font-family: var(--rad-font-header);
+	font-size: 0.74em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-radiant .nah-side-tab .glyph,
+.theme-radiant .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--rad-accent);
+	transition: color 0.16s ease;
+}
+
+.theme-radiant .nah-side-tab:hover {
+	color: #fff;
+	background: #1c1524;
+}
+
+.theme-radiant .nah-side-tab.active {
+	background: #271d33;
+	color: #fff;
+	border-left-color: var(--rad-accent-bright);
+}
+
+.theme-radiant .nah-side-tab.active .glyph,
+.theme-radiant .nah-side-tab.active i {
+	color: var(--rad-sun);
+}
+
+.theme-radiant .nah-main-panel {
+	max-height: 480px;
+	background: var(--rad-surface);
+}
+
+.theme-radiant .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--rad-surface-header);
+	border-bottom: 1px solid var(--rad-border);
+	font-family: var(--rad-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	color: var(--rad-text-primary);
+}
+
+.theme-radiant .nah-menu-header .nah-font-hero {
+	font-family: var(--rad-font-header);
+	font-weight: 700;
+	color: var(--rad-text-primary);
+}
+
+.theme-radiant .nah-dc-badge {
+	font-family: var(--rad-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, #ca8a04, #854d0e);
+	color: #fff;
+	border: 1px solid #eab308;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-radiant .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--rad-surface-sidebar);
+	border-bottom: 1px solid var(--rad-border);
+}
+
+.theme-radiant .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #1b1424;
+	border: 1px solid var(--rad-border);
+	color: var(--rad-text-muted);
+	font-family: var(--rad-font-header);
+	font-size: 0.8em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-radiant .nah-tab-btn:hover {
+	color: #fff;
+	border-color: var(--rad-border-hover);
+	background: #281d36;
+}
+
+.theme-radiant .nah-tab-btn.active {
+	background: #352648;
+	color: #fff;
+	border-color: var(--rad-accent-bright);
+	box-shadow: 0 0 12px rgba(234, 179, 8, 0.3);
+}
+
+/* List Headers */
+.theme-radiant .nah-list-header {
+	background: rgba(234, 179, 8, 0.12);
+	color: var(--rad-accent-bright, #facc15);
+	border-left-color: var(--rad-accent, #eab308);
+	font-family: var(--rad-font-header, serif);
+}
+
+/* List Items */
+.theme-radiant .nah-list-item {
+	padding: 8px 12px;
+	background: var(--rad-surface);
+	border-left: 2px solid transparent;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-radiant .nah-list-item:hover {
+	background: #201729;
+	border-left-color: var(--rad-accent);
+	transform: translateX(3px);
+}
+
+.theme-radiant .nah-list-item .nah-font-hero {
+	font-family: var(--rad-font-body);
+	font-size: 1.22em !important;
+	font-weight: 600;
+	color: var(--rad-text-primary);
+	letter-spacing: 0.02em;
+}
+
+.theme-radiant .nah-list-item .text-sm,
+.theme-radiant .nah-list-item .nah-item-uses {
+	font-size: 0.9em !important;
+	color: var(--rad-text-muted);
+}
+
+.theme-radiant .nah-list-item .nah-roll-mod {
+	font-family: var(--rad-font-body);
+	font-size: 1.05em;
+	color: var(--rad-accent-bright);
+}
+
+.theme-radiant .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--rad-accent);
+}
+
+.theme-radiant .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--rad-border);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-radiant .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #291d35;
+	color: var(--rad-accent-bright);
+	border: 1px solid var(--rad-border);
+	font-family: var(--rad-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.theme-radiant .nah-cost-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-radiant .nah-search-container {
+	background: var(--rad-surface-search);
+	border-bottom: 1px solid var(--rad-border);
+}
+
+.theme-radiant .nah-search-input {
+	background: var(--rad-surface);
+	color: var(--rad-text-primary);
+	border: 1px solid var(--rad-border);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--rad-font-body);
+	font-size: 1.05em;
+}
+
+.theme-radiant .nah-search-input::placeholder {
+	color: #634b30;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-radiant .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--rad-border) transparent;
+}
+.theme-radiant .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-radiant .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--rad-border); border-radius: 3px; }
+.theme-radiant .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-radiant .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: #1b1424;
+	border: 1px solid var(--rad-border);
+	clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 6px 100%, 0 50%);
+	box-shadow: 0 2px 8px var(--rad-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-radiant .nah-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--rad-accent);
+	background: #2a1f38;
+	box-shadow: var(--rad-glow), 0 4px 12px var(--rad-shadow);
+}
+
+.theme-radiant .nah-quick-slot.active {
+	border-color: var(--rad-sun);
+	box-shadow: 0 0 16px var(--rad-accent);
+}

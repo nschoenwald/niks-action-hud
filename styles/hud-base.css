@@ -261,6 +261,15 @@
 	background: rgba(230, 28, 52, 1);
 }
 
+.nah-end-turn-btn:active {
+	transform: scale(0.92);
+}
+
+.nah-end-turn-btn:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 1px;
+}
+
 /* ==========================================================================
    5. Favorites Bar (Quick Slots)
    ========================================================================== */

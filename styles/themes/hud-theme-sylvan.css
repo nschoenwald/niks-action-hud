@@ -1,0 +1,380 @@
+/* =========================================
+   Nik's Action HUD - THEME: SYLVAN
+   Style: Ancient Druidic Wilds, Ironwood Bark,
+          Living Moss, Firefly Spores & Canopy Sunlight.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Alegreya:ital,wght@0,500;0,600;0,700;1,500&family=Cinzel:wght@600;700&display=swap");
+
+.theme-sylvan {
+	/* Solid Opaque Palette */
+	--syl-void: #050a06;
+	--syl-surface: #0e1810;
+	--syl-surface-solid: #0e1810;
+	--syl-surface-elevated: #16251b;
+	--syl-surface-sidebar: #0a120c;
+	--syl-surface-header: #0d160f;
+	--syl-surface-search: #09100a;
+	--syl-surface-hover: #1c3022;
+	--syl-border: #23482d;
+	--syl-border-hover: #3b7a4c;
+	--syl-border-active: #22c55e;
+	--syl-accent: #22c55e;
+	--syl-accent-bright: #4ade80;
+	--syl-accent-dim: #15803d;
+	--syl-gold: #eab308;
+	--syl-gold-bright: #fde047;
+	--syl-text-primary: #f0fdf4;
+	--syl-text-muted: #86efac;
+	--syl-shadow: #020503;
+	--syl-glow: 0 0 18px rgba(34, 197, 94, 0.4);
+
+	/* Typography */
+	--syl-font-header: "Marcellus", serif;
+	--syl-font-body: "Alegreya", serif;
+	--hud-font-header: var(--syl-font-header);
+	--hud-font-body: var(--syl-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #0c150e;
+	--tooltip-border: #22c55e;
+	--tooltip-text: #f0fdf4;
+	--tooltip-header: #86efac;
+	--g-accent: var(--syl-accent-bright);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Leaf-Chamfered Ironwood
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-sylvan { gap: 0; }
+
+.theme-sylvan .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--syl-accent-bright);
+}
+
+.theme-sylvan .nah-collapse-btn:hover { color: var(--syl-gold-bright); }
+
+.theme-sylvan .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #15271b, #0c150e);
+	border: 1px solid var(--syl-border);
+	clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+	color: var(--syl-text-primary);
+	font-family: var(--syl-font-header);
+	font-weight: 600;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	box-shadow:
+		inset 0 1px 0 #284c33,
+		inset 0 0 10px #080d09,
+		0 4px 14px var(--syl-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-sylvan .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-sylvan .nah-action-btn .glyph,
+.theme-sylvan .nah-action-btn i {
+	color: var(--syl-accent-bright);
+	font-size: 0.85em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-sylvan .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--syl-border-hover);
+	background: linear-gradient(135deg, #1f3b28, #112015);
+	box-shadow:
+		inset 0 1px 0 #3d6f4c,
+		0 6px 18px var(--syl-shadow),
+		var(--syl-glow);
+	transform: translateX(4px);
+}
+
+.theme-sylvan .nah-action-btn:hover .glyph,
+.theme-sylvan .nah-action-btn:hover i {
+	color: var(--syl-gold-bright);
+	transform: scale(1.15);
+}
+
+/* =========================================
+   2. SUBMENU — Moss-Grown Canopy Panel
+   ========================================= */
+.theme-sylvan .nah-sub-menu {
+	width: 426px;
+	background: var(--syl-surface);
+	border: 1px solid var(--syl-border);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px #1d3524,
+		0 16px 36px var(--syl-shadow);
+}
+
+.theme-sylvan .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--syl-surface-sidebar);
+	border-right: 1px solid var(--syl-border);
+}
+
+.theme-sylvan .nah-side-tab {
+	padding: 10px 5px;
+	background: var(--syl-surface-sidebar);
+	color: var(--syl-text-muted);
+	font-family: var(--syl-font-header);
+	font-size: 0.74em;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-sylvan .nah-side-tab .glyph,
+.theme-sylvan .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--syl-accent-bright);
+	transition: color 0.16s ease;
+}
+
+.theme-sylvan .nah-side-tab:hover {
+	color: #fff;
+	background: #17271c;
+}
+
+.theme-sylvan .nah-side-tab.active {
+	background: #1d3324;
+	color: #fff;
+	border-left-color: var(--syl-accent);
+}
+
+.theme-sylvan .nah-side-tab.active .glyph,
+.theme-sylvan .nah-side-tab.active i {
+	color: var(--syl-gold-bright);
+}
+
+.theme-sylvan .nah-main-panel {
+	max-height: 480px;
+	background: var(--syl-surface);
+}
+
+.theme-sylvan .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--syl-surface-header);
+	border-bottom: 1px solid var(--syl-border);
+	font-family: var(--syl-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.04em;
+	color: var(--syl-text-primary);
+}
+
+.theme-sylvan .nah-menu-header .nah-font-hero {
+	font-family: var(--syl-font-header);
+	font-weight: 700;
+	color: var(--syl-text-primary);
+}
+
+.theme-sylvan .nah-dc-badge {
+	font-family: var(--syl-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, #15803d, #14532d);
+	color: #fff;
+	border: 1px solid #22c55e;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-sylvan .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--syl-surface-sidebar);
+	border-bottom: 1px solid var(--syl-border);
+}
+
+.theme-sylvan .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #15251b;
+	border: 1px solid var(--syl-border);
+	color: var(--syl-text-muted);
+	font-family: var(--syl-font-header);
+	font-size: 0.8em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-sylvan .nah-tab-btn:hover {
+	color: #fff;
+	border-color: var(--syl-border-hover);
+	background: #1c3224;
+}
+
+.theme-sylvan .nah-tab-btn.active {
+	background: #23432f;
+	color: #fff;
+	border-color: var(--syl-accent);
+	box-shadow: 0 0 12px rgba(34, 197, 94, 0.25);
+}
+
+/* List Headers */
+.theme-sylvan .nah-list-header {
+	background: rgba(34, 197, 94, 0.12);
+	color: var(--syl-accent-bright, #4ade80);
+	border-left-color: var(--syl-accent, #22c55e);
+	font-family: var(--syl-font-header, serif);
+}
+
+/* List Items */
+.theme-sylvan .nah-list-item {
+	padding: 8px 12px;
+	background: var(--syl-surface);
+	border-left: 2px solid transparent;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-sylvan .nah-list-item:hover {
+	background: #182b1d;
+	border-left-color: var(--syl-accent);
+	transform: translateX(3px);
+}
+
+.theme-sylvan .nah-list-item .nah-font-hero {
+	font-family: var(--syl-font-body);
+	font-size: 1.22em !important;
+	font-weight: 600;
+	color: var(--syl-text-primary);
+	letter-spacing: 0.01em;
+}
+
+.theme-sylvan .nah-list-item .text-sm,
+.theme-sylvan .nah-list-item .nah-item-uses {
+	font-size: 0.9em !important;
+	color: var(--syl-text-muted);
+}
+
+.theme-sylvan .nah-list-item .nah-roll-mod {
+	font-family: var(--syl-font-body);
+	font-size: 1.05em;
+	color: var(--syl-gold-bright);
+}
+
+.theme-sylvan .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--syl-accent);
+}
+
+.theme-sylvan .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--syl-border);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-sylvan .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #172d1f;
+	color: var(--syl-accent-bright);
+	border: 1px solid var(--syl-border);
+	font-family: var(--syl-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.theme-sylvan .nah-cost-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-sylvan .nah-search-container {
+	background: var(--syl-surface-search);
+	border-bottom: 1px solid var(--syl-border);
+}
+
+.theme-sylvan .nah-search-input {
+	background: var(--syl-surface);
+	color: var(--syl-text-primary);
+	border: 1px solid var(--syl-border);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--syl-font-body);
+	font-size: 1.05em;
+}
+
+.theme-sylvan .nah-search-input::placeholder {
+	color: #4b6a53;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-sylvan .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--syl-border) transparent;
+}
+.theme-sylvan .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-sylvan .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--syl-border); border-radius: 3px; }
+.theme-sylvan .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-sylvan .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: #142318;
+	border: 1px solid var(--syl-border);
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	box-shadow: 0 2px 8px var(--syl-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-sylvan .nah-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--syl-accent-bright);
+	background: #1e3625;
+	box-shadow: var(--syl-glow), 0 4px 12px var(--syl-shadow);
+}
+
+.theme-sylvan .nah-quick-slot.active {
+	border-color: var(--syl-gold-bright);
+	box-shadow: 0 0 16px var(--syl-accent);
+}

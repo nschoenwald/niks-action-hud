@@ -250,6 +250,12 @@
       "Grimoire": "Grimoire",
       "Eldritch": "Eldritch",
       "Valiant": "Valiant",
+      "Sylvan": "Sylvan",
+      "Infernal": "Infernal",
+      "Frostborn": "Frostborn",
+      "Clockwork": "Clockwork",
+      "Radiant": "Radiant",
+      "Ossuary": "Ossuary",
       "ExportPartialWarning": "Export completed with {count} warnings.",
       "ExportSuccess": "Theme exported successfully.",
       "ImportNoJsonError": "Uploaded archive does not contain a valid theme configuration."

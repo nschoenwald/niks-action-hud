@@ -97,19 +97,31 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 		}
 		if (itemId === "rest-short") {
 			return {
-				img: "icons/svg/regen.svg",
-				name: "Short Rest",
+				img: "icons/svg/tankard.svg",
+				name: game.i18n?.localize?.("NAH.Dnd5e.ShortRest") || "Short Rest",
 				type: "Rest",
-				description: game.i18n.localize("NAH.Dnd5e.ShortRest") || "Take a Short Rest (1 hour).",
+				description: game.i18n?.localize?.("NAH.Dnd5e.ShortRestDesc") || "Take a Short Rest (1 hour).",
 			};
 		}
 		if (itemId === "rest-long") {
 			return {
 				img: "icons/svg/sleep.svg",
-				name: "Long Rest",
+				name: game.i18n?.localize?.("NAH.Dnd5e.LongRest") || "Long Rest",
 				type: "Rest",
-				description: game.i18n.localize("NAH.Dnd5e.LongRest") || "Take a Long Rest (8 hours).",
+				description: game.i18n?.localize?.("NAH.Dnd5e.LongRestDesc") || "Take a Long Rest (8 hours).",
 			};
+		}
+		if (itemId.startsWith("macro-")) {
+			const macroId = itemId.replace("macro-", "");
+			const macro = game.macros?.get(macroId);
+			if (macro) {
+				return {
+					img: macro.img,
+					name: macro.name,
+					type: "Macro",
+					description: macro.command || "",
+				};
+			}
 		}
 		return null;
 	}
@@ -119,6 +131,8 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 	   ========================================= */
 
 	async useItem(actor, itemId, event = null) {
+		if (!actor || !itemId) return;
+
 		if (itemId === "res-legres") {
 			const legres = actor.system?.resources?.legres;
 			const current = legres?.value ?? ((legres?.max ?? 0) - (legres?.spent ?? 0));
@@ -149,6 +163,25 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 				content: `<div class="dnd5e chat-card"><strong>${actor.name}</strong> spends a Legendary Action (${newValue}/${legact.max} remaining).</div>`,
 			});
 			return;
+		}
+
+		if (itemId.startsWith("res-")) {
+			const resKey = itemId.replace("res-", "");
+			const resource = actor.system?.resources?.[resKey];
+			if (resource) {
+				const current = resource.value ?? 0;
+				if (current <= 0) {
+					ui.notifications.warn(game.i18n.localize("NAH.Notifications.NoUsesLeft") || "No uses remaining.");
+					return;
+				}
+				const newValue = Math.max(0, current - 1);
+				await actor.update({ [`system.resources.${resKey}.value`]: newValue });
+				ChatMessage.create?.({
+					speaker: ChatMessage.getSpeaker({ actor }),
+					content: `<div class="dnd5e chat-card"><strong>${actor.name}</strong> uses ${resource.label || resKey} (${newValue}/${resource.max} remaining).</div>`,
+				});
+				return;
+			}
 		}
 
 		if (itemId.startsWith("equip:")) {
@@ -225,6 +258,7 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 
 		const dialogOptions = {
 			configure: !fastForward,
+			fastForward: fastForward,
 			event: ev,
 		};
 
@@ -239,6 +273,107 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 		if (disadvantage !== null) {
 			config.disadvantage = disadvantage;
 			dialogOptions.disadvantage = disadvantage;
+		}
+
+		// Initiative
+		if (itemId === "check-initiative" || itemId === "initiative") {
+			if (fastForward && typeof actor.rollInitiative === "function") {
+				return actor.rollInitiative({ createCombatants: true, event: ev });
+			}
+			if (typeof actor.rollInitiativeDialog === "function") {
+				return actor.rollInitiativeDialog({ event: ev, ...config }, dialogOptions);
+			}
+			if (typeof actor.rollInitiative === "function") {
+				return actor.rollInitiative({ createCombatants: true, event: ev });
+			}
+			return;
+		}
+
+		// Saving Throws
+		if (itemId.startsWith("save-")) {
+			const ability = itemId.replace("save-", "");
+			if (ability === "concentration" && typeof actor.rollConcentration === "function") {
+				return actor.rollConcentration({ event: ev, legacy: false, ...config }, dialogOptions);
+			}
+			if (ability === "death" && typeof actor.rollDeathSave === "function") {
+				return actor.rollDeathSave({ event: ev, legacy: false, ...config }, dialogOptions);
+			}
+			if (typeof actor.rollSavingThrow === "function") {
+				return actor.rollSavingThrow({ ability, event: ev, ...config }, dialogOptions);
+			}
+			if (typeof actor.rollAbilitySave === "function") {
+				return actor.rollAbilitySave(ability, dialogOptions);
+			}
+			return;
+		}
+
+		// Ability Checks
+		if (itemId.startsWith("check-")) {
+			const ability = itemId.replace("check-", "");
+			if (ability === "concentration" && typeof actor.rollConcentration === "function") {
+				return actor.rollConcentration({ event: ev, legacy: false, ...config }, dialogOptions);
+			}
+			if (ability === "death" && typeof actor.rollDeathSave === "function") {
+				return actor.rollDeathSave({ event: ev, legacy: false, ...config }, dialogOptions);
+			}
+			if (typeof actor.rollAbilityCheck === "function") {
+				return actor.rollAbilityCheck({ ability, event: ev, ...config }, dialogOptions);
+			}
+			if (typeof actor.rollAbilityTest === "function") {
+				return actor.rollAbilityTest(ability, dialogOptions);
+			}
+			return;
+		}
+
+		// Skill Checks
+		if (itemId.startsWith("skill-")) {
+			const skill = itemId.replace("skill-", "");
+			if (typeof actor.rollSkill === "function") {
+				return actor.rollSkill({ skill, event: ev, ...config }, dialogOptions);
+			}
+			return;
+		}
+
+		// Short & Long Rests
+		if (itemId === "rest-short") {
+			if (typeof actor.shortRest === "function") {
+				return actor.shortRest();
+			}
+			return;
+		}
+
+		if (itemId === "rest-long") {
+			if (typeof actor.longRest === "function") {
+				return actor.longRest();
+			}
+			return;
+		}
+
+		// Death Saves & Concentration
+		if (itemId === "deathSave") {
+			if (typeof actor.rollDeathSave === "function") {
+				return actor.rollDeathSave({ event: ev, legacy: false, ...config }, dialogOptions);
+			}
+			return;
+		}
+
+		if (itemId === "concentration") {
+			if (typeof actor.rollConcentration === "function") {
+				return actor.rollConcentration({ event: ev, legacy: false, ...config }, dialogOptions);
+			}
+			return;
+		}
+
+		// Custom Macros
+		if (itemId.startsWith("macro-")) {
+			const macroId = itemId.replace("macro-", "");
+			if (macroId === "help") return;
+			const macro = (await fromUuid(macroId)) || game.macros?.get(macroId);
+			if (macro) {
+				return macro.execute({ actor, token: actor.token });
+			}
+			ui.notifications.warn(`Macro not found: ${macroId}`);
+			return;
 		}
 
 		let item = actor.items.get(itemId);

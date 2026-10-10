@@ -403,6 +403,49 @@ export class SettingsManager {
 			}
 		});
 
+		socket.register("endCombatTurn", async (data, callerUserId) => {
+			if (!game.user.isGM) return { success: false, error: "Not GM" };
+
+			const combat = (data?.combatId ? game.combats.get(data.combatId) : null)
+				|| game.combat
+				|| game.combats?.active;
+			if (!combat || !combat.started) {
+				return { success: false, error: "Combat not active" };
+			}
+
+			const currentCombatant = combat.combatant;
+			if (!currentCombatant) {
+				return { success: false, error: "No active combatant in combat" };
+			}
+
+			// Validate that the turn hasn't already moved
+			if (data?.combatantId && currentCombatant.id !== data.combatantId) {
+				return { success: false, error: "Combat turn has already advanced" };
+			}
+			if (Number.isInteger(data?.round) && data.round !== combat.round) {
+				return { success: false, error: "Combat round has already changed" };
+			}
+			if (Number.isInteger(data?.turn) && data.turn !== combat.turn) {
+				return { success: false, error: "Combat turn has already changed" };
+			}
+
+			// Validate that requesting user owns the active combatant
+			const userId = data?.userId || callerUserId;
+			if (userId) {
+				const requestingUser = game.users.get(userId);
+				if (requestingUser && !requestingUser.isGM) {
+					const isOwner = currentCombatant.testUserPermission(requestingUser, "OWNER")
+						|| currentCombatant.actor?.testUserPermission(requestingUser, "OWNER");
+					if (!isOwner) {
+						return { success: false, error: "User does not own the active combatant" };
+					}
+				}
+			}
+
+			await combat.nextTurn();
+			return { success: true };
+		});
+
 		// Register API
 		registerModuleApi(window.ActionHUD, {
 			themes: ActionHUDConfig.THEMES,

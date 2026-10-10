@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [14.9.0] - 2026-10-10
+
+### Added
+- **Six New Handcrafted Visual Themes**: Expanded the HUD visual theme collection from 6 to 12 distinct styles, complete with bespoke geometry, typography, and color palettes:
+  - **Sylvan**: Ancient druidic wilds with moss-grown ironwood, leaf-chamfered action buttons, and firefly pollen glow.
+  - **Infernal**: Diabolic brimstone and scorched basalt with razor-angled slashes and smoldering hellfire magma.
+  - **Frostborn**: Arctic permafrost and crystalline glacial ice with hex-faceted diamond cuts and spectral aurora hues.
+  - **Clockwork**: Artificer workshop with burnished brass, octagonal notched tabs, and warm vacuum filament amber.
+  - **Radiant**: Divine Solaris with sanctified alabaster marble, sunburst double-tapered gold chamfers, and radiant corona halos.
+  - **Ossuary**: Crypt of souls with weathered tombstone slate, sarcophagus arches, and ectoplasmic banshee soulflame.
+
+### Fixed
+- **Combat Turn Passing (Red Hourglass Button)**: Fixed an issue where clicking the red hourglass icon on the active actor banner did not advance the turn. Implemented full turn-passing handling with native GM socket delegation for non-GM players, active combatant ownership validation, debounce protection, and immediate combat turn state reactivity.
+- **Ability Rolls & Utility Actions**: Fixed an issue where clicking ability checks, saving throws, skill checks, initiative, short rests, or long rests in the Abilities drawer or pinned Quick Slots failed with an `Item not found: save-*` warning. These actions are now natively dispatched through DnD5e 6.x actor methods (`rollSavingThrow`, `rollAbilityCheck`, `rollSkill`, `rollInitiativeDialog`, `shortRest`, and `longRest`) with full support for advantage/disadvantage shortcuts and skip-dialog keybindings.
+
 ## [14.8.2] - 2026-10-10
 
 ### Fixed

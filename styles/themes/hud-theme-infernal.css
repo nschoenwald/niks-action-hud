@@ -1,0 +1,380 @@
+/* =========================================
+   Nik's Action HUD - THEME: INFERNAL
+   Style: Diabolic Brimstone, Scorched Obsidian & Basalt,
+          Molten Lava Seams, Runed Brass & Smoldering Embers.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=MedievalSharp&family=Crimson+Text:ital,wght@0,600;0,700;1,600&family=Pirata+One&display=swap");
+
+.theme-infernal {
+	/* Solid Opaque Palette */
+	--inf-void: #080303;
+	--inf-surface: #140808;
+	--inf-surface-solid: #140808;
+	--inf-surface-elevated: #200d0d;
+	--inf-surface-sidebar: #0e0505;
+	--inf-surface-header: #120707;
+	--inf-surface-search: #0b0404;
+	--inf-surface-hover: #2c1212;
+	--inf-border: #4d1818;
+	--inf-border-hover: #991b1b;
+	--inf-border-active: #f97316;
+	--inf-accent: #f97316;
+	--inf-accent-bright: #fb923c;
+	--inf-accent-dim: #c2410c;
+	--inf-sulfur: #fbbf24;
+	--inf-blood: #dc2626;
+	--inf-text-primary: #fff1f2;
+	--inf-text-muted: #fca5a5;
+	--inf-shadow: #030101;
+	--inf-glow: 0 0 20px rgba(249, 115, 22, 0.45);
+
+	/* Typography */
+	--inf-font-header: "MedievalSharp", cursive;
+	--inf-font-body: "Crimson Text", serif;
+	--hud-font-header: var(--inf-font-header);
+	--hud-font-body: var(--inf-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #140707;
+	--tooltip-border: #f97316;
+	--tooltip-text: #fff1f2;
+	--tooltip-header: #fb923c;
+	--g-accent: var(--inf-accent-bright);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Asymmetric Scorched Basalt
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-infernal { gap: 0; }
+
+.theme-infernal .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--inf-accent);
+}
+
+.theme-infernal .nah-collapse-btn:hover { color: var(--inf-sulfur); }
+
+.theme-infernal .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #240e0e, #130606);
+	border: 1px solid var(--inf-border);
+	clip-path: polygon(14px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	color: var(--inf-text-primary);
+	font-family: var(--inf-font-header);
+	font-weight: 600;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	box-shadow:
+		inset 0 1px 0 #4a1c1c,
+		inset 0 0 10px #0c0303,
+		0 4px 14px var(--inf-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-infernal .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-infernal .nah-action-btn .glyph,
+.theme-infernal .nah-action-btn i {
+	color: var(--inf-accent);
+	font-size: 0.85em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-infernal .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--inf-accent);
+	background: linear-gradient(135deg, #361414, #1c0909);
+	box-shadow:
+		inset 0 1px 0 #6e2727,
+		0 6px 18px var(--inf-shadow),
+		var(--inf-glow);
+	transform: translateX(4px);
+}
+
+.theme-infernal .nah-action-btn:hover .glyph,
+.theme-infernal .nah-action-btn:hover i {
+	color: var(--inf-sulfur);
+	transform: scale(1.15);
+}
+
+/* =========================================
+   2. SUBMENU — Hellfire Brimstone Panel
+   ========================================= */
+.theme-infernal .nah-sub-menu {
+	width: 426px;
+	background: var(--inf-surface);
+	border: 1px solid var(--inf-border);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 8px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px #331010,
+		0 16px 36px var(--inf-shadow);
+}
+
+.theme-infernal .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--inf-surface-sidebar);
+	border-right: 1px solid var(--inf-border);
+}
+
+.theme-infernal .nah-side-tab {
+	padding: 10px 5px;
+	background: var(--inf-surface-sidebar);
+	color: var(--inf-text-muted);
+	font-family: var(--inf-font-header);
+	font-size: 0.74em;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-infernal .nah-side-tab .glyph,
+.theme-infernal .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--inf-accent);
+	transition: color 0.16s ease;
+}
+
+.theme-infernal .nah-side-tab:hover {
+	color: #fff;
+	background: #200c0c;
+}
+
+.theme-infernal .nah-side-tab.active {
+	background: #2b1010;
+	color: #fff;
+	border-left-color: var(--inf-accent);
+}
+
+.theme-infernal .nah-side-tab.active .glyph,
+.theme-infernal .nah-side-tab.active i {
+	color: var(--inf-sulfur);
+}
+
+.theme-infernal .nah-main-panel {
+	max-height: 480px;
+	background: var(--inf-surface);
+}
+
+.theme-infernal .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--inf-surface-header);
+	border-bottom: 1px solid var(--inf-border);
+	font-family: var(--inf-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.04em;
+	color: var(--inf-text-primary);
+}
+
+.theme-infernal .nah-menu-header .nah-font-hero {
+	font-family: var(--inf-font-header);
+	font-weight: 700;
+	color: var(--inf-text-primary);
+}
+
+.theme-infernal .nah-dc-badge {
+	font-family: var(--inf-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, #b91c1c, #7f1d1d);
+	color: #fff;
+	border: 1px solid #f97316;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-infernal .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--inf-surface-sidebar);
+	border-bottom: 1px solid var(--inf-border);
+}
+
+.theme-infernal .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #1c0a0a;
+	border: 1px solid var(--inf-border);
+	color: var(--inf-text-muted);
+	font-family: var(--inf-font-header);
+	font-size: 0.8em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-infernal .nah-tab-btn:hover {
+	color: #fff;
+	border-color: var(--inf-border-hover);
+	background: #290f0f;
+}
+
+.theme-infernal .nah-tab-btn.active {
+	background: #381414;
+	color: #fff;
+	border-color: var(--inf-accent);
+	box-shadow: 0 0 12px rgba(249, 115, 22, 0.3);
+}
+
+/* List Headers */
+.theme-infernal .nah-list-header {
+	background: rgba(249, 115, 22, 0.12);
+	color: var(--inf-accent-bright, #fb923c);
+	border-left-color: var(--inf-accent, #f97316);
+	font-family: var(--inf-font-header, cursive);
+}
+
+/* List Items */
+.theme-infernal .nah-list-item {
+	padding: 8px 12px;
+	background: var(--inf-surface);
+	border-left: 2px solid transparent;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-infernal .nah-list-item:hover {
+	background: #240e0e;
+	border-left-color: var(--inf-accent);
+	transform: translateX(3px);
+}
+
+.theme-infernal .nah-list-item .nah-font-hero {
+	font-family: var(--inf-font-body);
+	font-size: 1.22em !important;
+	font-weight: 600;
+	color: var(--inf-text-primary);
+	letter-spacing: 0.01em;
+}
+
+.theme-infernal .nah-list-item .text-sm,
+.theme-infernal .nah-list-item .nah-item-uses {
+	font-size: 0.9em !important;
+	color: var(--inf-text-muted);
+}
+
+.theme-infernal .nah-list-item .nah-roll-mod {
+	font-family: var(--inf-font-body);
+	font-size: 1.05em;
+	color: var(--inf-sulfur);
+}
+
+.theme-infernal .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--inf-accent);
+}
+
+.theme-infernal .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--inf-border);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-infernal .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #2b0e0e;
+	color: var(--inf-accent-bright);
+	border: 1px solid var(--inf-border);
+	font-family: var(--inf-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.theme-infernal .nah-cost-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-infernal .nah-search-container {
+	background: var(--inf-surface-search);
+	border-bottom: 1px solid var(--inf-border);
+}
+
+.theme-infernal .nah-search-input {
+	background: var(--inf-surface);
+	color: var(--inf-text-primary);
+	border: 1px solid var(--inf-border);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--inf-font-body);
+	font-size: 1.05em;
+}
+
+.theme-infernal .nah-search-input::placeholder {
+	color: #692d2d;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-infernal .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--inf-border) transparent;
+}
+.theme-infernal .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-infernal .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--inf-border); border-radius: 3px; }
+.theme-infernal .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-infernal .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: #1c0a0a;
+	border: 1px solid var(--inf-border);
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+	box-shadow: 0 2px 8px var(--inf-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-infernal .nah-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--inf-accent);
+	background: #2c1010;
+	box-shadow: var(--inf-glow), 0 4px 12px var(--inf-shadow);
+}
+
+.theme-infernal .nah-quick-slot.active {
+	border-color: var(--inf-sulfur);
+	box-shadow: 0 0 16px var(--inf-accent);
+}

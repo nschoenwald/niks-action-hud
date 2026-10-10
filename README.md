@@ -47,7 +47,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 
 ## 🎨 Visual Themes
 
-Six handcrafted visual themes with zero external dependencies:
+Twelve handcrafted visual themes with zero external dependencies:
 
 | Theme | Style & Aesthetic |
 |---|---|
@@ -57,6 +57,12 @@ Six handcrafted visual themes with zero external dependencies:
 | **Grimoire** | Dark fantasy styling with weathered parchment tones, hammered forged iron borders, and candlelight amber. |
 | **Eldritch** | Abyssal cosmic horror aesthetic with black chitin surfaces, bioluminescent cyan, and psychic magenta. |
 | **Valiant** | Chivalric plate steel, royal sapphire enamel banners, and tournament gold highlights. |
+| **Sylvan** | Ancient druidic wilds, moss-grown ironwood bark, living sprout emeralds, and sun-dappled pollen motes. |
+| **Infernal** | Diabolic brimstone and scorched basalt slabs with smoldering hellfire magma and liquid sulfur veins. |
+| **Frostborn** | Arctic permafrost, crystalline glacial ice facets, frosted silver edges, and spectral aurora borealis hues. |
+| **Clockwork** | Artificer mechanical workshop with burnished brass plating, riveted copper flanges, and vacuum filament amber. |
+| **Radiant** | Divine Solaris with sanctified alabaster marble, blinding corona halos, and tournament sun gold. |
+| **Ossuary** | Crypt of souls with weathered tombstone slate, carved bone inlays, and chilling ectoplasmic soulflame. |
 
 ---
 

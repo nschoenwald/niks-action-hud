@@ -24,7 +24,7 @@ class ActionHudSocket {
 		if (game.user.isGM) {
 			const handler = this._handlers.get(action);
 			if (!handler) throw new Error(`[${MODULE_ID}] No local GM handler registered for action "${action}"`);
-			return handler(...args);
+			return handler(...args, game.user.id);
 		}
 
 		if (!game.users.activeGM) {
@@ -60,7 +60,7 @@ class ActionHudSocket {
 
 			if (handler) {
 				try {
-					result = await handler(...(data.args || []));
+					result = await handler(...(data.args || []), data.userId);
 				} catch (err) {
 					error = err?.message || String(err);
 				}

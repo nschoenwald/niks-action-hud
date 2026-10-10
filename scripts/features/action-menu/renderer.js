@@ -234,10 +234,29 @@ export const buildHeaderHtml = (ActionMenu) => {
 
 	const selectedText = loc("UI.SelectedActor", "Active Actor");
 	const actorId = actor.id;
-	const isMyTurn = game.combat?.started && game.combat.combatant?.actorId === actorId;
+	const tokenId = actor.isToken ? actor.token?.id : (token?.id || "");
+	const combat = (tokenId && canvas.tokens?.get(tokenId)?.combatant?.combat)
+		|| (ActionMenu.currentToken?.combatant?.combat)
+		|| game.combat
+		|| game.combats?.active
+		|| null;
+	const currentCombatant = combat?.combatant;
+	const isCombatActive = Boolean(combat?.started);
+	const matchesCombatant = Boolean(currentCombatant && (
+		currentCombatant.actorId === actorId ||
+		currentCombatant.actor?.id === actorId ||
+		(tokenId && currentCombatant.tokenId === tokenId)
+	));
+	const isCombatantOwner = Boolean(
+		game.user.isGM ||
+		currentCombatant?.isOwner ||
+		currentCombatant?.actor?.isOwner ||
+		actor.isOwner
+	);
+	const isMyTurn = Boolean(isCombatActive && matchesCombatant && isCombatantOwner);
 	const endTurnTitle = loc("UI.EndTurn", "End Turn");
 	const endTurnBtn = isMyTurn
-		? `<div class="nah-end-turn-btn" onclick="event.stopPropagation(); window.ActionHUD?.endTurn?.('${actorId}')" title="${escapeHtml(endTurnTitle)}"><i class="fas fa-hourglass-end"></i></div>`
+		? `<div class="nah-end-turn-btn" role="button" tabindex="0" onclick="event.stopPropagation(); window.ActionHUD?.endTurn?.('${actorId}', '${tokenId}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.stopPropagation();event.preventDefault();window.ActionHUD?.endTurn?.('${actorId}', '${tokenId}');}" title="${escapeHtml(endTurnTitle)}"><i class="fas fa-hourglass-end"></i></div>`
 		: "";
 
 	const imgStyle = subjectScale !== 1

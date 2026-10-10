@@ -76,11 +76,93 @@ class ActionHUD {
 		}
 		return ActionMenu.useItem(itemId, event);
 	}
+
+	static _isEndingTurn = false;
+
+	static async endTurn(actorId = null, tokenId = null) {
+		if (ActionHUD._isEndingTurn) return;
+		ActionHUD._isEndingTurn = true;
+		try {
+			const combat = (tokenId && canvas.tokens?.get(tokenId)?.combatant?.combat)
+				|| ActionMenu.currentToken?.combatant?.combat
+				|| game.combat
+				|| game.combats?.active
+				|| null;
+
+			if (!combat || !combat.started) {
+				console.warn("Nik's Action HUD | No active combat encounter to end turn.");
+				return;
+			}
+
+			const currentCombatant = combat.combatant;
+			if (!currentCombatant) {
+				console.warn("Nik's Action HUD | No active combatant in combat.");
+				return;
+			}
+
+			// Verify that the active combatant matches target actor/token if specified
+			if (actorId || tokenId) {
+				const matchesActor = actorId && (currentCombatant.actorId === actorId || currentCombatant.actor?.id === actorId);
+				const matchesToken = tokenId && currentCombatant.tokenId === tokenId;
+				if (!matchesActor && !matchesToken) {
+					console.warn("Nik's Action HUD | Active combatant does not match specified actor/token.");
+					return;
+				}
+			}
+
+			// Validate ownership: must be GM or owner of the active combatant
+			if (!game.user.isGM && !currentCombatant.isOwner && !currentCombatant.actor?.isOwner) {
+				ui.notifications?.warn(game.i18n.localize("NAH.UI.NoPermission") || "You do not have permission to perform this action.");
+				return;
+			}
+
+			// If GM, advance turn directly
+			if (game.user.isGM) {
+				await combat.nextTurn();
+				return;
+			}
+
+			// Non-GM player: request turn advancement via native GM socket dispatcher
+			const socket = ActionHUD.socket;
+			if (socket && game.users.activeGM) {
+				try {
+					const res = await socket.executeAsGM("endCombatTurn", {
+						combatId: combat.id,
+						combatantId: currentCombatant.id,
+						actorId: currentCombatant.actorId,
+						round: combat.round,
+						turn: combat.turn,
+					});
+					if (res?.success) return;
+					if (res?.error) {
+						console.warn("Nik's Action HUD | Failed to end combat turn via GM socket:", res.error);
+					}
+				} catch (err) {
+					console.error("Nik's Action HUD | Error ending combat turn via socket:", err);
+				}
+			}
+
+			// Fallback: try direct call in case permissions permit it
+			try {
+				await combat.nextTurn();
+			} catch (err) {
+				console.error("Nik's Action HUD | Failed to advance combat turn directly:", err);
+				if (!game.users.activeGM) {
+					ui.notifications?.warn("Cannot pass turn: No active GM connected to update the combat tracker.");
+				}
+			}
+		} finally {
+			setTimeout(() => {
+				ActionHUD._isEndingTurn = false;
+			}, 400);
+		}
+	}
 }
 
 // Assign global reference for API
 window.ActionHUD = ActionHUD;
 window.ActionHUD.actionMenu = ActionMenu;
+ActionMenu.endTurn = ActionHUD.endTurn;
 
 Hooks.once("init", () => {
 	ActionHUD.initialize();
@@ -154,6 +236,8 @@ Hooks.once("ready", async () => {
 	Hooks.on("createCombat", onCombatChange);
 	Hooks.on("updateCombat", onCombatChange);
 	Hooks.on("deleteCombat", onCombatChange);
+	Hooks.on("combatTurn", onCombatChange);
+	Hooks.on("combatRound", onCombatChange);
 	Hooks.on("canvasReady", () => {
 		try {
 			if (game.settings.get(MODULE_ID, "disableHUD")) return;

@@ -298,6 +298,7 @@ export const registerModuleApi = (moduleClass, options = {}) => {
 		},
 		getRegisteredActionMenuCategories: ActionMenu.getRegisteredActionMenuCategories,
 		getRegisteredActionMenuSubMenus: ActionMenu.getRegisteredActionMenuSubMenus,
+		endTurn: (actorId, tokenId) => moduleClass.endTurn(actorId, tokenId),
 		exportPreset,
 		importPreset,
 		downloadPreset,
@@ -321,6 +322,7 @@ export const registerModuleApi = (moduleClass, options = {}) => {
 	moduleClass.importPreset = importPreset;
 	moduleClass.downloadPreset = downloadPreset;
 	moduleClass.importPresetFromFile = importPresetFromFile;
+	moduleClass.endTurn = moduleClass.endTurn;
 
 	return moduleApi;
 };

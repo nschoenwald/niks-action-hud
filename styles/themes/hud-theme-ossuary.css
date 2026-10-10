@@ -1,0 +1,380 @@
+/* =========================================
+   Nik's Action HUD - THEME: OSSUARY
+   Style: Crypt of Souls, Weathered Tombstone Slate,
+          Polished Carved Bone & Ectoplasmic Soulflame.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,700;1,700&family=Crimson+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Cinzel:wght@600;700&display=swap");
+
+.theme-ossuary {
+	/* Solid Opaque Palette */
+	--oss-void: #040706;
+	--oss-surface: #0a110e;
+	--oss-surface-solid: #0a110e;
+	--oss-surface-elevated: #111b17;
+	--oss-surface-sidebar: #060b09;
+	--oss-surface-header: #080e0c;
+	--oss-surface-search: #050807;
+	--oss-surface-hover: #172620;
+	--oss-border: #133a30;
+	--oss-border-hover: #0d9488;
+	--oss-border-active: #2dd4bf;
+	--oss-accent: #2dd4bf;
+	--oss-accent-bright: #5eead4;
+	--oss-accent-dim: #0f766e;
+	--oss-bone: #e2e8f0;
+	--oss-decay: #64748b;
+	--oss-text-primary: #f0fdfa;
+	--oss-text-muted: #99f6e4;
+	--oss-shadow: #010302;
+	--oss-glow: 0 0 20px rgba(45, 212, 191, 0.45);
+
+	/* Typography */
+	--oss-font-header: "Almendra", serif;
+	--oss-font-body: "Crimson Pro", serif;
+	--hud-font-header: var(--oss-font-header);
+	--hud-font-body: var(--oss-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #09100d;
+	--tooltip-border: #2dd4bf;
+	--tooltip-text: #f0fdfa;
+	--tooltip-header: #5eead4;
+	--g-accent: var(--oss-accent-bright);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Sarcophagus Tombstone Arch
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-ossuary { gap: 0; }
+
+.theme-ossuary .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--oss-accent-bright);
+}
+
+.theme-ossuary .nah-collapse-btn:hover { color: var(--oss-bone); }
+
+.theme-ossuary .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #13221c, #0a1310);
+	border: 1px solid var(--oss-border);
+	clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 12px, 100% 100%, 0 100%, 0 12px);
+	color: var(--oss-text-primary);
+	font-family: var(--oss-font-header);
+	font-weight: 700;
+	font-size: 1.2em;
+	letter-spacing: 0.05em;
+	box-shadow:
+		inset 0 1px 0 #20392f,
+		inset 0 0 10px #040706,
+		0 4px 14px var(--oss-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-ossuary .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-ossuary .nah-action-btn .glyph,
+.theme-ossuary .nah-action-btn i {
+	color: var(--oss-accent-bright);
+	font-size: 0.85em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-ossuary .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--oss-border-hover);
+	background: linear-gradient(135deg, #1c3229, #0f1c18);
+	box-shadow:
+		inset 0 1px 0 #2b4e40,
+		0 6px 18px var(--oss-shadow),
+		var(--oss-glow);
+	transform: translateX(4px);
+}
+
+.theme-ossuary .nah-action-btn:hover .glyph,
+.theme-ossuary .nah-action-btn:hover i {
+	color: var(--oss-bone);
+	transform: scale(1.15);
+}
+
+/* =========================================
+   2. SUBMENU — Mausoleum Crypt Slab
+   ========================================= */
+.theme-ossuary .nah-sub-menu {
+	width: 426px;
+	background: var(--oss-surface);
+	border: 1px solid var(--oss-border);
+	clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 12px, 100% 100%, 0 100%, 0 12px);
+	box-shadow:
+		inset 0 0 0 1px #152721,
+		0 16px 36px var(--oss-shadow);
+}
+
+.theme-ossuary .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--oss-surface-sidebar);
+	border-right: 1px solid var(--oss-border);
+}
+
+.theme-ossuary .nah-side-tab {
+	padding: 10px 5px;
+	background: var(--oss-surface-sidebar);
+	color: var(--oss-text-muted);
+	font-family: var(--oss-font-header);
+	font-size: 0.76em;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-ossuary .nah-side-tab .glyph,
+.theme-ossuary .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--oss-accent);
+	transition: color 0.16s ease;
+}
+
+.theme-ossuary .nah-side-tab:hover {
+	color: #fff;
+	background: #14211c;
+}
+
+.theme-ossuary .nah-side-tab.active {
+	background: #1b2d26;
+	color: #fff;
+	border-left-color: var(--oss-accent);
+}
+
+.theme-ossuary .nah-side-tab.active .glyph,
+.theme-ossuary .nah-side-tab.active i {
+	color: var(--oss-bone);
+}
+
+.theme-ossuary .nah-main-panel {
+	max-height: 480px;
+	background: var(--oss-surface);
+}
+
+.theme-ossuary .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--oss-surface-header);
+	border-bottom: 1px solid var(--oss-border);
+	font-family: var(--oss-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	color: var(--oss-text-primary);
+}
+
+.theme-ossuary .nah-menu-header .nah-font-hero {
+	font-family: var(--oss-font-header);
+	font-weight: 700;
+	color: var(--oss-text-primary);
+}
+
+.theme-ossuary .nah-dc-badge {
+	font-family: var(--oss-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, #0f766e, #115e59);
+	color: #fff;
+	border: 1px solid #2dd4bf;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-ossuary .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--oss-surface-sidebar);
+	border-bottom: 1px solid var(--oss-border);
+}
+
+.theme-ossuary .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #111e19;
+	border: 1px solid var(--oss-border);
+	color: var(--oss-text-muted);
+	font-family: var(--oss-font-header);
+	font-size: 0.8em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-ossuary .nah-tab-btn:hover {
+	color: #fff;
+	border-color: var(--oss-border-hover);
+	background: #192a23;
+}
+
+.theme-ossuary .nah-tab-btn.active {
+	background: #20362e;
+	color: #fff;
+	border-color: var(--oss-accent);
+	box-shadow: 0 0 12px rgba(45, 212, 191, 0.3);
+}
+
+/* List Headers */
+.theme-ossuary .nah-list-header {
+	background: rgba(45, 212, 191, 0.12);
+	color: var(--oss-accent-bright, #5eead4);
+	border-left-color: var(--oss-accent, #2dd4bf);
+	font-family: var(--oss-font-header, serif);
+}
+
+/* List Items */
+.theme-ossuary .nah-list-item {
+	padding: 8px 12px;
+	background: var(--oss-surface);
+	border-left: 2px solid transparent;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-ossuary .nah-list-item:hover {
+	background: #14221d;
+	border-left-color: var(--oss-accent);
+	transform: translateX(3px);
+}
+
+.theme-ossuary .nah-list-item .nah-font-hero {
+	font-family: var(--oss-font-body);
+	font-size: 1.22em !important;
+	font-weight: 600;
+	color: var(--oss-text-primary);
+	letter-spacing: 0.01em;
+}
+
+.theme-ossuary .nah-list-item .text-sm,
+.theme-ossuary .nah-list-item .nah-item-uses {
+	font-size: 0.9em !important;
+	color: var(--oss-text-muted);
+}
+
+.theme-ossuary .nah-list-item .nah-roll-mod {
+	font-family: var(--oss-font-body);
+	font-size: 1.05em;
+	color: var(--oss-accent-bright);
+}
+
+.theme-ossuary .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--oss-accent);
+}
+
+.theme-ossuary .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--oss-border);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-ossuary .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #152720;
+	color: var(--oss-accent-bright);
+	border: 1px solid var(--oss-border);
+	font-family: var(--oss-font-header);
+	font-size: 0.78em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.theme-ossuary .nah-cost-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-ossuary .nah-search-container {
+	background: var(--oss-surface-search);
+	border-bottom: 1px solid var(--oss-border);
+}
+
+.theme-ossuary .nah-search-input {
+	background: var(--oss-surface);
+	color: var(--oss-text-primary);
+	border: 1px solid var(--oss-border);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--oss-font-body);
+	font-size: 1.05em;
+}
+
+.theme-ossuary .nah-search-input::placeholder {
+	color: #38574c;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-ossuary .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--oss-border) transparent;
+}
+.theme-ossuary .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-ossuary .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--oss-border); border-radius: 3px; }
+.theme-ossuary .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-ossuary .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: #111e19;
+	border: 1px solid var(--oss-border);
+	clip-path: polygon(4px 0, calc(100% - 4px) 0, 100% 6px, 100% 100%, 0 100%, 0 6px);
+	box-shadow: 0 2px 8px var(--oss-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-ossuary .nah-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--oss-accent);
+	background: #1c3028;
+	box-shadow: var(--oss-glow), 0 4px 12px var(--oss-shadow);
+}
+
+.theme-ossuary .nah-quick-slot.active {
+	border-color: var(--oss-bone);
+	box-shadow: 0 0 16px var(--oss-accent);
+}

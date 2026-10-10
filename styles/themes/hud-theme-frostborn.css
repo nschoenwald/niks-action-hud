@@ -1,0 +1,381 @@
+/* =========================================
+   Nik's Action HUD - THEME: FROSTBORN
+   Style: Arctic Permafrost, Crystalline Glacial Ice,
+          Frosted Silver Filigree & Spectral Aurora Sheen.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Outfit:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@600;700&display=swap");
+
+.theme-frostborn {
+	/* Solid Opaque Palette */
+	--frs-void: #030710;
+	--frs-surface: #07101e;
+	--frs-surface-solid: #07101e;
+	--frs-surface-elevated: #0e1a2f;
+	--frs-surface-sidebar: #050b16;
+	--frs-surface-header: #060e1b;
+	--frs-surface-search: #040913;
+	--frs-surface-hover: #13243f;
+	--frs-border: #1e3a5f;
+	--frs-border-hover: #38bdf8;
+	--frs-border-active: #7dd3fc;
+	--frs-accent: #38bdf8;
+	--frs-accent-bright: #7dd3fc;
+	--frs-accent-dim: #0284c7;
+	--frs-aurora: #c084fc;
+	--frs-silver: #e0f2fe;
+	--frs-text-primary: #f0f9ff;
+	--frs-text-muted: #bae6fd;
+	--frs-shadow: #010307;
+	--frs-glow: 0 0 18px rgba(56, 189, 248, 0.4);
+
+	/* Typography */
+	--frs-font-header: "Rajdhani", sans-serif;
+	--frs-font-body: "Outfit", sans-serif;
+	--hud-font-header: var(--frs-font-header);
+	--hud-font-body: var(--frs-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #060e1b;
+	--tooltip-border: #38bdf8;
+	--tooltip-text: #f0f9ff;
+	--tooltip-header: #7dd3fc;
+	--g-accent: var(--frs-accent-bright);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Hex-Faceted Glacial Ice
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-frostborn { gap: 0; }
+
+.theme-frostborn .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--frs-accent);
+}
+
+.theme-frostborn .nah-collapse-btn:hover { color: var(--frs-silver); }
+
+.theme-frostborn .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4.5px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #0e2038, #071324);
+	border: 1px solid var(--frs-border);
+	clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+	color: var(--frs-text-primary);
+	font-family: var(--frs-font-header);
+	font-weight: 700;
+	font-size: 1.2em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	box-shadow:
+		inset 0 1px 0 #1e3f6a,
+		inset 0 0 10px #040b17,
+		0 4px 14px var(--frs-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-frostborn .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-frostborn .nah-action-btn .glyph,
+.theme-frostborn .nah-action-btn i {
+	color: var(--frs-accent);
+	font-size: 0.85em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-frostborn .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--frs-border-hover);
+	background: linear-gradient(135deg, #153154, #0b1c34);
+	box-shadow:
+		inset 0 1px 0 #2e5f9a,
+		0 6px 18px var(--frs-shadow),
+		var(--frs-glow);
+	transform: translateX(4px);
+}
+
+.theme-frostborn .nah-action-btn:hover .glyph,
+.theme-frostborn .nah-action-btn:hover i {
+	color: var(--frs-aurora);
+	transform: scale(1.15);
+}
+
+/* =========================================
+   2. SUBMENU — Glacial Crystalline Slab
+   ========================================= */
+.theme-frostborn .nah-sub-menu {
+	width: 426px;
+	background: var(--frs-surface);
+	border: 1px solid var(--frs-border);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+	box-shadow:
+		inset 0 0 0 1px #152b47,
+		0 16px 36px var(--frs-shadow);
+}
+
+.theme-frostborn .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--frs-surface-sidebar);
+	border-right: 1px solid var(--frs-border);
+}
+
+.theme-frostborn .nah-side-tab {
+	padding: 10px 5px;
+	background: var(--frs-surface-sidebar);
+	color: var(--frs-text-muted);
+	font-family: var(--frs-font-header);
+	font-size: 0.74em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	border-left: 2px solid transparent;
+	transition: all 0.16s ease;
+}
+
+.theme-frostborn .nah-side-tab .glyph,
+.theme-frostborn .nah-side-tab i {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--frs-accent);
+	transition: color 0.16s ease;
+}
+
+.theme-frostborn .nah-side-tab:hover {
+	color: #fff;
+	background: #0f2038;
+}
+
+.theme-frostborn .nah-side-tab.active {
+	background: #142a4a;
+	color: #fff;
+	border-left-color: var(--frs-accent);
+}
+
+.theme-frostborn .nah-side-tab.active .glyph,
+.theme-frostborn .nah-side-tab.active i {
+	color: var(--frs-aurora);
+}
+
+.theme-frostborn .nah-main-panel {
+	max-height: 480px;
+	background: var(--frs-surface);
+}
+
+.theme-frostborn .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--frs-surface-header);
+	border-bottom: 1px solid var(--frs-border);
+	font-family: var(--frs-font-header);
+	font-weight: 700;
+	font-size: 1.18em;
+	letter-spacing: 0.05em;
+	color: var(--frs-text-primary);
+}
+
+.theme-frostborn .nah-menu-header .nah-font-hero {
+	font-family: var(--frs-font-header);
+	font-weight: 700;
+	color: var(--frs-text-primary);
+}
+
+.theme-frostborn .nah-dc-badge {
+	font-family: var(--frs-font-header);
+	font-weight: 700;
+	font-size: 0.6em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: linear-gradient(135deg, #0369a1, #0c4a6e);
+	color: #fff;
+	border: 1px solid #38bdf8;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Submenu Tabs */
+.theme-frostborn .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--frs-surface-sidebar);
+	border-bottom: 1px solid var(--frs-border);
+}
+
+.theme-frostborn .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: #0f1c30;
+	border: 1px solid var(--frs-border);
+	color: var(--frs-text-muted);
+	font-family: var(--frs-font-header);
+	font-size: 0.8em;
+	clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+	transition: all 0.16s ease;
+}
+
+.theme-frostborn .nah-tab-btn:hover {
+	color: #fff;
+	border-color: var(--frs-border-hover);
+	background: #172a48;
+}
+
+.theme-frostborn .nah-tab-btn.active {
+	background: #1c365c;
+	color: #fff;
+	border-color: var(--frs-accent);
+	box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+/* List Headers */
+.theme-frostborn .nah-list-header {
+	background: rgba(56, 189, 248, 0.12);
+	color: var(--frs-accent-bright, #7dd3fc);
+	border-left-color: var(--frs-accent, #38bdf8);
+	font-family: var(--frs-font-header, sans-serif);
+}
+
+/* List Items */
+.theme-frostborn .nah-list-item {
+	padding: 8px 12px;
+	background: var(--frs-surface);
+	border-left: 2px solid transparent;
+	font-size: 15px;
+	transition: all 0.15s ease;
+}
+
+.theme-frostborn .nah-list-item:hover {
+	background: #0f2038;
+	border-left-color: var(--frs-accent);
+	transform: translateX(3px);
+}
+
+.theme-frostborn .nah-list-item .nah-font-hero {
+	font-family: var(--frs-font-body);
+	font-size: 1.18em !important;
+	font-weight: 600;
+	color: var(--frs-text-primary);
+	letter-spacing: 0.01em;
+}
+
+.theme-frostborn .nah-list-item .text-sm,
+.theme-frostborn .nah-list-item .nah-item-uses {
+	font-size: 0.9em !important;
+	color: var(--frs-text-muted);
+}
+
+.theme-frostborn .nah-list-item .nah-roll-mod {
+	font-family: var(--frs-font-body);
+	font-size: 1.05em;
+	color: var(--frs-accent-bright);
+}
+
+.theme-frostborn .nah-list-item .nah-roll-prof.proficient i {
+	color: var(--frs-accent);
+}
+
+.theme-frostborn .nah-list-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid var(--frs-border);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.theme-frostborn .nah-act-icon {
+	min-width: 22px;
+	height: 20px;
+	padding: 0 6px;
+	background: #112846;
+	color: var(--frs-accent-bright);
+	border: 1px solid var(--frs-border);
+	font-family: var(--frs-font-header);
+	font-size: 0.8em;
+	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+.theme-frostborn .nah-cost-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	white-space: nowrap;
+}
+
+.theme-frostborn .nah-search-container {
+	background: var(--frs-surface-search);
+	border-bottom: 1px solid var(--frs-border);
+}
+
+.theme-frostborn .nah-search-input {
+	background: var(--frs-surface);
+	color: var(--frs-text-primary);
+	border: 1px solid var(--frs-border);
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-family: var(--frs-font-body);
+	font-size: 1.05em;
+}
+
+.theme-frostborn .nah-search-input::placeholder {
+	color: #3b6088;
+}
+
+/* =========================================
+   3. QUICK SLOTS / FAVORITES
+   ========================================= */
+.theme-frostborn .nah-quick-slot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 10px;
+	max-height: 90px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 4px;
+	padding-top: 4px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--frs-border) transparent;
+}
+.theme-frostborn .nah-quick-slot-container::-webkit-scrollbar { width: 6px; }
+.theme-frostborn .nah-quick-slot-container::-webkit-scrollbar-thumb { background: var(--frs-border); border-radius: 3px; }
+.theme-frostborn .nah-quick-slot-container::-webkit-scrollbar-track { background: transparent; }
+
+.theme-frostborn .nah-quick-slot {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	background: #0f2038;
+	border: 1px solid var(--frs-border);
+	clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 6px 100%, 0 50%);
+	box-shadow: 0 2px 8px var(--frs-shadow);
+	transition: all 0.16s ease;
+}
+
+.theme-frostborn .nah-quick-slot:hover {
+	transform: translateY(-2px) scale(1.05);
+	border-color: var(--frs-accent);
+	background: #172d4c;
+	box-shadow: var(--frs-glow), 0 4px 12px var(--frs-shadow);
+}
+
+.theme-frostborn .nah-quick-slot.active {
+	border-color: var(--frs-aurora);
+	box-shadow: 0 0 16px var(--frs-accent);
+}
