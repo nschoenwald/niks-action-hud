@@ -285,39 +285,39 @@
       }
     },
     "IconPicker": {
-      "Title": "Icon picker",
-      "SearchPlaceholder": "Search icons by name",
-      "ClearSearch": "Clear search",
-      "ValuePlaceholder": "Font Awesome classes, an emoji or an image path",
-      "ValueLabel": "Icon value",
+      "Title": "Selettore Icone",
+      "SearchPlaceholder": "Cerca icone per nome",
+      "ClearSearch": "Cancella ricerca",
+      "ValuePlaceholder": "Classi Font Awesome, un'emoji o il percorso di un'immagine",
+      "ValueLabel": "Valore Icona",
       "Tab": {
         "FontAwesome": "Font Awesome",
         "RpgAwesome": "RPG Awesome",
         "Emoji": "Emoji",
-        "Image": "Image"
+        "Image": "Immagine"
       },
       "Family": {
-        "Solid": "Solid",
-        "Regular": "Regular",
-        "Brands": "Brands",
-        "Color": "Color",
+        "Solid": "Solido",
+        "Regular": "Regolare",
+        "Brands": "Marchi",
+        "Color": "Colore",
         "File": "File"
       },
-      "Count": "{family} · {count} icons",
-      "CountRpgAwesome": "RPG Awesome · {count} icons",
+      "Count": "{family} · {count} icone",
+      "CountRpgAwesome": "RPG Awesome · {count} icone",
       "CountEmoji": "Emoji · {count}",
-      "CountImage": "Image",
-      "Empty": "No icons match “{query}”.",
-      "EmptyAll": "No icons available.",
-      "Refine": "Showing the first results. Narrow the search to see the rest.",
-      "ImageHint": "Any image from this world works as an icon. It is drawn at the size of the text around it.",
-      "Browse": "Choose an image",
-      "Clear": "Clear",
-      "Use": "Use",
+      "CountImage": "Immagine",
+      "Empty": "Nessuna icona corrisponde a “{query}”.",
+      "EmptyAll": "Nessuna icona disponibile.",
+      "Refine": "Vengono mostrati i primi risultati. Restringi la ricerca per visualizzare gli altri.",
+      "ImageHint": "Qualsiasi immagine presente in questo mondo può essere utilizzata come icona. Verrà visualizzata con le stesse dimensioni del testo circostante.",
+      "Browse": "Scegli un'immagine",
+      "Clear": "Cancella",
+      "Use": "Usa",
       "Field": {
-        "Label": "Icon",
-        "Open": "Open icon picker",
-        "None": "No icon"
+        "Label": "Icona",
+        "Open": "Apri Selettore Icone",
+        "None": "Nessuna icona"
       }
     }
   }
