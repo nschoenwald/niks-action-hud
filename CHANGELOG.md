@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.13.2] - 2026-10-14
+
+### Fixed
+- **Italian Localization**: Translated all remaining strings for the Icon Picker modal dialog into Italian (contributed by [@GregoryWarn](https://github.com/GregoryWarn)), including search placeholders, family labels, tab titles, and dialog action buttons.
+
 ## [14.13.1] - 2026-10-14
 
 ### Added

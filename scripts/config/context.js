@@ -397,7 +397,7 @@ export const prepareContext = async (app, options = {}) => {
 		canConfigure,
 		canEditStyle,
 		canEditMenu,
-		moduleVersion: game.modules.get(MODULE_ID)?.version || "14.13.0",
+		moduleVersion: game.modules.get(MODULE_ID)?.version || "14.13.2",
 		isDnd5eSystem: game.system.id === "dnd5e",
 		activeTab,
 		isGeneralTab: activeTab === "general",

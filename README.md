@@ -102,7 +102,7 @@ Organized, flyout drawers designed for fast combat decision-making:
 
 - **Live Preview Sandbox**: See your theme, button styles, and layout changes in real time before saving.
 - **Category Button Shape Override**: Mix and match visual aesthetics by pairing any theme's button geometry (such as chamfered, hexagonal, slanted, or rounded) with any chosen color theme.
-- **Visual Category Builder**: Create custom categories and flyout trays, reorder, rename, or customize menu icons, button scaling, and visibility conditions.
+- **Visual Category Builder & Icon Picker**: Create custom categories and flyout trays, pick icons visually across Font Awesome, RPG Awesome, emojis, and local images, reorder, rename, or customize menu icons, button scaling, and visibility conditions.
 - **Excluded Actor Types**: Simple toggle chips to prevent the HUD from showing on specific actor types (`encounter`, `group`, and `vehicle` excluded by default).
 - **Presets & Backups**: Export and import complete HUD setups as JSON presets with modular section resets.
 - **Client Damage Display Preferences**: Choose between **Icons Only**, **Icons + Text**, or **Text Only** in the Action HUD Configuration panel to tune visual density to your table's preference.
