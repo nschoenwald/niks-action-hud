@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.13.3] - 2026-10-15
+
+### Fixed
+- **Player Combat Turn Ending**: Fixed an issue where non-GM players could not advance their combat turn using the red hourglass button on the HUD identity banner. Registered the module socket namespace with the Foundry server so player turn-passing requests reliably reach the GM, and expanded ownership checks to support unlinked (synthetic) tokens. Passing a turn no longer risks skipping a combatant if the GM responds slowly, and duplicate tokens of the same creature no longer show End Turn for each other.
+
 ## [14.13.2] - 2026-10-14
 
 ### Fixed

@@ -4,11 +4,13 @@ import { MODULE_ID } from "./constants.js";
 import { defaultRegistry } from "./systems/defaults.js";
 import { registerAutoFavoriteNpcHook } from "./systems/dnd5e/auto-favorite.js";
 import { isThemeAvailable, getDefaultTheme } from "./config/constants.js";
+import { socket } from "./utils/socket.js";
+import { combatantMatches, userOwnsCombatant } from "./utils/combat-ownership.js";
 
 class ActionHUD {
 	static ID = MODULE_ID;
 	static actionMenu = ActionMenu;
-	static socket = null;
+	static socket = socket;
 	static adapter = null;
 	static settingsManager = SettingsManager;
 	static _isSavingConfig = false;
@@ -85,6 +87,7 @@ class ActionHUD {
 		try {
 			const combat = (tokenId && canvas.tokens?.get(tokenId)?.combatant?.combat)
 				|| ActionMenu.currentToken?.combatant?.combat
+				|| ActionMenu.currentToken?.document?.combatant?.combat
 				|| game.combat
 				|| game.combats?.active
 				|| null;
@@ -101,17 +104,14 @@ class ActionHUD {
 			}
 
 			// Verify that the active combatant matches target actor/token if specified
-			if (actorId || tokenId) {
-				const matchesActor = actorId && (currentCombatant.actorId === actorId || currentCombatant.actor?.id === actorId);
-				const matchesToken = tokenId && currentCombatant.tokenId === tokenId;
-				if (!matchesActor && !matchesToken) {
-					console.warn("Nik's Action HUD | Active combatant does not match specified actor/token.");
-					return;
-				}
+			// (tokenId is authoritative so duplicate unlinked tokens don't match each other)
+			if ((actorId || tokenId) && !combatantMatches(currentCombatant, actorId, tokenId)) {
+				console.warn("Nik's Action HUD | Active combatant does not match specified actor/token.");
+				return;
 			}
 
 			// Validate ownership: must be GM or owner of the active combatant
-			if (!game.user.isGM && !currentCombatant.isOwner && !currentCombatant.actor?.isOwner) {
+			if (!userOwnsCombatant(game.user, currentCombatant)) {
 				ui.notifications?.warn(game.i18n.localize("NAH.UI.NoPermission") || "You do not have permission to perform this action.");
 				return;
 			}
@@ -125,24 +125,28 @@ class ActionHUD {
 			// Non-GM player: request turn advancement via native GM socket dispatcher
 			const socket = ActionHUD.socket;
 			if (socket && game.users.activeGM) {
+				// A GM is connected: never fall back to a direct call afterwards, since a
+				// timed-out or rejected request may still have been (or deliberately not
+				// been) processed, and a second nextTurn() could skip a combatant.
 				try {
 					const res = await socket.executeAsGM("endCombatTurn", {
 						combatId: combat.id,
 						combatantId: currentCombatant.id,
 						actorId: currentCombatant.actorId,
+						tokenId: currentCombatant.tokenId,
 						round: combat.round,
 						turn: combat.turn,
 					});
-					if (res?.success) return;
 					if (res?.error) {
 						console.warn("Nik's Action HUD | Failed to end combat turn via GM socket:", res.error);
 					}
 				} catch (err) {
 					console.error("Nik's Action HUD | Error ending combat turn via socket:", err);
 				}
+				return;
 			}
 
-			// Fallback: try direct call in case permissions permit it
+			// No GM connected: try a direct call in case permissions permit it
 			try {
 				await combat.nextTurn();
 			} catch (err) {

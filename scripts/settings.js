@@ -1,6 +1,7 @@
 import { ActionHUDConfig } from "./config.js";
 import { ActionMenu } from "./features/action-menu.js";
 import { socket } from "./utils/socket.js";
+import { combatantMatches, userOwnsCombatant } from "./utils/combat-ownership.js";
 import { BaseSystemAdapter } from "./systems/base.js";
 import { DnD5eAdapter } from "./systems/dnd5e.js";
 import { adapterRegistry } from "./systems/registry.js";
@@ -471,16 +472,16 @@ export class SettingsManager {
 			}
 
 			// Validate that requesting user owns the active combatant
-			const userId = data?.userId || callerUserId;
-			if (userId) {
-				const requestingUser = game.users.get(userId);
-				if (requestingUser && !requestingUser.isGM) {
-					const isOwner = currentCombatant.testUserPermission(requestingUser, "OWNER")
-						|| currentCombatant.actor?.testUserPermission(requestingUser, "OWNER");
-					if (!isOwner) {
-						return { success: false, error: "User does not own the active combatant" };
-					}
-				}
+			// (callerUserId is the server-verified socket sender)
+			const requestingUser = callerUserId ? game.users.get(callerUserId) : null;
+			if (!requestingUser) {
+				return { success: false, error: "Unknown requesting user" };
+			}
+			if (!userOwnsCombatant(requestingUser, currentCombatant)) {
+				return { success: false, error: "User does not own the active combatant" };
+			}
+			if (!combatantMatches(currentCombatant, data?.actorId, data?.tokenId)) {
+				return { success: false, error: "Active combatant does not match the request" };
 			}
 
 			await combat.nextTurn();

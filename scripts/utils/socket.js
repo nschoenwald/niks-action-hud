@@ -11,9 +11,17 @@ class ActionHudSocket {
 		this._pending = new Map();
 		this._sequence = 0;
 
-		Hooks.once("ready", () => {
-			game.socket.on(this._channel, this._onSocketMessage.bind(this));
-		});
+		const setupSocket = () => {
+			if (game.socket) {
+				game.socket.on(this._channel, this._onSocketMessage.bind(this));
+			}
+		};
+
+		if (game?.ready && game?.socket) {
+			setupSocket();
+		} else {
+			Hooks.once("ready", setupSocket);
+		}
 	}
 
 	register(action, handler) {
@@ -27,7 +35,8 @@ class ActionHudSocket {
 			return handler(...args, game.user.id);
 		}
 
-		if (!game.users.activeGM) {
+		const activeGM = game.users.activeGM;
+		if (!activeGM) {
 			console.warn(`[${MODULE_ID}] Cannot execute GM action "${action}": No active GM connected.`);
 			return null;
 		}
@@ -50,17 +59,23 @@ class ActionHudSocket {
 		});
 	}
 
-	async _onSocketMessage(data) {
+	async _onSocketMessage(data, senderUserId) {
 		if (!data || typeof data !== "object") return;
 
+		// Only the active primary GM handles GM requests to prevent multiple GMs racing
 		if (data.type === "request" && game.user.isGM) {
+			const isDesignatedGM = game.users.activeGM?.id === game.user.id;
+			if (!isDesignatedGM) return;
+
 			const handler = this._handlers.get(data.action);
 			let result = null;
 			let error = null;
+			// Foundry's server appends the verified sender ID; never trust client-supplied IDs
+			const callerUserId = senderUserId;
 
 			if (handler) {
 				try {
-					result = await handler(...(data.args || []), data.userId);
+					result = await handler(...(data.args || []), callerUserId);
 				} catch (err) {
 					error = err?.message || String(err);
 				}

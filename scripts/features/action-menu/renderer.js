@@ -10,6 +10,7 @@ import { resolveSafeTokenImage, handleImageError, DEFAULT_FALLBACK_TOKEN_IMG } f
 import { isThemeAvailable, getDefaultTheme } from "../../config/constants.js";
 import { localizeCategory } from "../../utils/localization.js";
 import { iconMarkup } from "../../utils/icon-source.js";
+import { combatantMatches, userOwnsCombatant } from "../../utils/combat-ownership.js";
 
 const escapeHtml = (value) => String(value ?? "")
 	.replace(/&/g, "&amp;")
@@ -239,21 +240,16 @@ export const buildHeaderHtml = (ActionMenu) => {
 	const tokenId = actor.isToken ? actor.token?.id : (token?.id || "");
 	const combat = (tokenId && canvas.tokens?.get(tokenId)?.combatant?.combat)
 		|| (ActionMenu.currentToken?.combatant?.combat)
+		|| (ActionMenu.currentToken?.document?.combatant?.combat)
 		|| game.combat
 		|| game.combats?.active
 		|| null;
 	const currentCombatant = combat?.combatant;
 	const isCombatActive = Boolean(combat?.started);
-	const matchesCombatant = Boolean(currentCombatant && (
-		currentCombatant.actorId === actorId ||
-		currentCombatant.actor?.id === actorId ||
-		(tokenId && currentCombatant.tokenId === tokenId)
-	));
+	const matchesCombatant = combatantMatches(currentCombatant, actorId, tokenId);
 	const isCombatantOwner = Boolean(
-		game.user.isGM ||
-		currentCombatant?.isOwner ||
-		currentCombatant?.actor?.isOwner ||
-		actor.isOwner
+		userOwnsCombatant(game.user, currentCombatant)
+		|| actor.isOwner
 	);
 	const isMyTurn = Boolean(isCombatActive && matchesCombatant && isCombatantOwner);
 	const endTurnTitle = loc("UI.EndTurn", "End Turn");

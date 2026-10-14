@@ -38,6 +38,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 
 - **Bottom Docking & Free Canvas Dragging**: Positioned cleanly along the bottom canvas edge. Drag from the actor header to place the HUD anywhere; your position is automatically saved per-client across sessions.
 - **Collapsible HUD Mode**: Click the triangle caret next to the token name to minimize the Action HUD into a compact token identity banner, freeing up canvas space while preserving portrait sheet navigation, turn management, and canvas dragging.
+- **Combat Turn Passing**: Click the red hourglass icon on the active actor banner to instantly end and pass your combat turn, with native socket delegation allowing both Game Masters and non-GM players to advance the combat tracker smoothly.
 - **Smooth 360° Resizing**: Drag the bottom-right resize handle to scale the HUD up or down with a live zoom percentage readout; double-click to instantly reset to 100%.
 - **Smart Token & Character Fallback**: Select any token to view its actions instantly. When no token is selected, the HUD automatically displays your assigned player character.
 - **Global Clustered Action Search**: Type in the search box of any submenu to search across all action types, spells, features, inventory items, and utility checks at once, clustered under clear category headers. Clears instantly with <kbd>Esc</kbd>.
