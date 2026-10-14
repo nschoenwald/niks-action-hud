@@ -285,39 +285,39 @@
       }
     },
     "IconPicker": {
-      "Title": "Icon picker",
-      "SearchPlaceholder": "Search icons by name",
-      "ClearSearch": "Clear search",
-      "ValuePlaceholder": "Font Awesome classes, an emoji or an image path",
-      "ValueLabel": "Icon value",
+      "Title": "Selector de iconos",
+      "SearchPlaceholder": "Buscar iconos por nombre",
+      "ClearSearch": "Borrar búsqueda",
+      "ValuePlaceholder": "Clases de Font Awesome, un emoji o una ruta de imagen",
+      "ValueLabel": "Valor del icono",
       "Tab": {
         "FontAwesome": "Font Awesome",
         "RpgAwesome": "RPG Awesome",
         "Emoji": "Emoji",
-        "Image": "Image"
+        "Image": "Imagen"
       },
       "Family": {
-        "Solid": "Solid",
+        "Solid": "Sólido",
         "Regular": "Regular",
-        "Brands": "Brands",
+        "Brands": "Marcas",
         "Color": "Color",
-        "File": "File"
+        "File": "Archivo"
       },
-      "Count": "{family} · {count} icons",
-      "CountRpgAwesome": "RPG Awesome · {count} icons",
+      "Count": "{family} · {count} iconos",
+      "CountRpgAwesome": "RPG Awesome · {count} iconos",
       "CountEmoji": "Emoji · {count}",
-      "CountImage": "Image",
-      "Empty": "No icons match “{query}”.",
-      "EmptyAll": "No icons available.",
-      "Refine": "Showing the first results. Narrow the search to see the rest.",
-      "ImageHint": "Any image from this world works as an icon. It is drawn at the size of the text around it.",
-      "Browse": "Choose an image",
-      "Clear": "Clear",
-      "Use": "Use",
+      "CountImage": "Imagen",
+      "Empty": "Ningún icono coincide con «{query}».",
+      "EmptyAll": "No hay iconos disponibles.",
+      "Refine": "Mostrando los primeros resultados. Acota la búsqueda para ver el resto.",
+      "ImageHint": "Cualquier imagen de este mundo funciona como icono. Se muestra al tamaño del texto circundante.",
+      "Browse": "Elegir una imagen",
+      "Clear": "Borrar",
+      "Use": "Usar",
       "Field": {
-        "Label": "Icon",
-        "Open": "Open icon picker",
-        "None": "No icon"
+        "Label": "Icono",
+        "Open": "Abrir selector de iconos",
+        "None": "Sin icono"
       }
     }
   }
