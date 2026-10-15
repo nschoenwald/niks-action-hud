@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.14.1] - 2026-10-16
+
+### Changed
+- **DnD5e Pact Magic Sorting**: Moved Pact Magic spells and sidebar tabs directly between Cantrips and 1st-level spells in the Spells drawer for quicker access.
+
 ## [14.14.0] - 2026-10-15
 
 ### Added

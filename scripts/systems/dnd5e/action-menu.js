@@ -674,6 +674,7 @@ export function _getSpellData(actor) {
 
 	const sortOrder = [
 		"0",
+		"pact",
 		"1",
 		"2",
 		"3",
@@ -683,13 +684,14 @@ export function _getSpellData(actor) {
 		"7",
 		"8",
 		"9",
-		"pact",
 		"innate",
 		"atwill",
 		"item",
 	];
 	const sortedKeys = Object.keys(items).sort((a, b) => {
-		return sortOrder.indexOf(a) - sortOrder.indexOf(b);
+		const idxA = sortOrder.indexOf(a);
+		const idxB = sortOrder.indexOf(b);
+		return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
 	});
 
 	const sortedItems = {};
