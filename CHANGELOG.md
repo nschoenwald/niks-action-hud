@@ -14,9 +14,9 @@ All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be document
   - **Checks, Initiative & Luck**: Direct rolls for the 6 core ability checks (STR, DEX, CON, INT, WIS, CHA) with distinct thematic icons, combat initiative with DEX bonuses, and Luck tokens presented in a sleek single-line layout with in-line roll modifiers.
   - **Modifier Shortcuts**: Fast-forward with <kbd>Shift</kbd>, roll with Advantage using <kbd>Alt</kbd>, or Disadvantage using <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>.
 - **Bundled Ability Check & Save Icons**: Added dedicated vector SVG icons for all six core abilities (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma), providing distinct thematic iconography across checks, saves, and quick slots for both Shadowdark and DnD5e adapters.
-- **DnD5e Item Spell Grouping & Sorting**: Spells granted by equipment, wands, scrolls, and cast activities in the "Item" tab of the Spells drawer are now grouped and sorted by their item source first with distinct source headers, and then sorted by spell level (Cantrips, 1st level, 2nd level, etc.) within each item source.
 - **Bespoke "Shadowdark" Theme**: A handcrafted visual theme capturing the stark, grim OSR pulp dungeon-crawler aesthetic. Built with solid void-black surfaces (`#060709`), stark bone typography, official Shadowdark eldritch purple specular borders (`#a546b6`), and candlelit torchlight amber highlights (`#f59e0b`). Automatically activates as the default theme when running on a Shadowdark world.
 - **Chiselled Dungeon Button Shape**: Added a custom `shadowdark` button shape option featuring angular chiselled stone chamfers, selectable for any visual theme in Appearance settings.
+- **DnD5e Item Spell Grouping & Sorting**: Spells granted by equipment, wands, scrolls, and cast activities in the "Item" tab of the Spells drawer are now grouped and sorted by their item source first with distinct source headers, and then sorted by spell level (Cantrips, 1st level, 2nd level, etc.) within each item source.
 
 ## [14.13.3] - 2026-10-15
 
