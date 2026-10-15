@@ -2,10 +2,11 @@
 
 [![Foundry VTT](https://img.shields.io/badge/Foundry%20VTT-V14-orange.svg)](https://foundryvtt.com)
 [![DnD5e System](https://img.shields.io/badge/DnD5e-6.0%2B-blue.svg)](https://github.com/foundryvtt/dnd5e)
+[![Shadowdark System](https://img.shields.io/badge/Shadowdark-4.0%2B-purple.svg)](https://github.com/Muttley/foundryvtt-shadowdark)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/nschoenwald/niks-action-hud?color=purple)](https://github.com/nschoenwald/niks-action-hud/releases/latest)
 
-A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**. Provides players and Game Masters with instant access to attacks, spells, features, inventory items, and utility rolls directly on screen without needing character sheets open.
+A sleek, canvas-docked Action HUD for **Foundry VTT (v14)**, **D&D 5e (6.x)**, and **Shadowdark RPG (4.x+)**. Provides players and Game Masters with instant access to attacks, spells, features, inventory items, and utility rolls directly on screen without needing character sheets open.
 
 ---
 
@@ -55,10 +56,11 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 
 ## 🎨 Visual Themes
 
-Twelve handcrafted visual themes with zero external dependencies:
+Thirteen handcrafted visual themes with zero external dependencies:
 
 | Theme | Style & Aesthetic |
 |---|---|
+| **Shadowdark** | Grim OSR pulp dungeon crawler with solid obsidian surfaces, eldritch purple borders, stark bone typography, and torchlight amber highlights. |
 | **Carolingian UI** | Frosted glass surfaces, dynamic color palette harmony, and refined typography matching `crlngn-ui`. |
 | **Arcanum** | Astral high magic with deep midnight velvet surfaces, starlight glows, and burnished gold filigree. |
 | **Obsidian** | Tactical dark minimalist aesthetic with deep onyx surfaces, specular borders, and mint/emerald accents. |
@@ -76,14 +78,14 @@ Twelve handcrafted visual themes with zero external dependencies:
 
 ## ⚔️ Action Submenus
 
-Organized, flyout drawers designed for fast combat decision-making:
+Organized, flyout drawers designed for fast combat decision-making that dynamically adapt to your active game system:
 
-- **Attacks**: Equipped weapons with calculated attack bonuses, split multi-type damage formulas and active effect bonuses (e.g. radiant, fire), reach/range indicators, and ammunition tracking.
-- **Spells**: Spellbook categorized by level with real-time spell slot counters (`LV 1 (4/4)`), cantrips, at-will spells, shortened duration indicators (`1m`, `10m`, `1h`, `8h`), and ritual spell indicators for unprepared wizard rituals.
-- **Features**: Class features, species traits, feats, and tracked resources presented in a sleek single-line layout (`[Action Type] [Icon] [Name] [Uses] [Favorite Star]`) with limited use tracking and recharge states.
+- **Attacks**: Equipped weapons with calculated attack bonuses, split multi-type damage formulas (including two-handed and finesse modifiers), reach/range indicators, ammunition tracking, and NPC attacks/special attacks.
+- **Spells**: Spells categorized by level or Tier (1–5) with real-time spell slot counters (`LV 1 (4/4)`), castable wands and scrolls, duration indicators, and one-click recovery for lost spells.
+- **Features & Talents**: Class features, ancestry/class talents, species traits, feats, and tracked resources presented in a sleek single-line layout (`[Action Type] [Icon] [Name] [Uses] [Favorite Star]`) with limited use tracking and recharge states.
+- **Checks & Abilities**: Single-line layout for ability checks, saving throws, skill proficiencies, initiative, rests, and Luck tokens with signed modifiers and advantage/disadvantage keyboard shortcuts.
+- **Inventory & Light Sources**: Inventory organized into Weapons, Gear, Consumables, Tools, and Containers with quick equip toggles, one-click potion drinking, and real-time torch/lantern burn tracking (`◆ ◆ ◆ ◇`) with interactive lighting toggles.
 - **Legendary**: Automatically surfaces for legendary creatures, grouping Legendary Resistance at the top and tracking legendary action points in real time.
-- **Abilities**: Single-line layout for ability checks, saving throws, skill proficiencies, initiative, and rests with signed modifiers and advantage shortcuts.
-- **Items**: Inventory organized into Weapons, Gear, Consumables, Tools, Loot, and Containers with quick equip toggles and quantity badges.
 
 ---
 
@@ -131,6 +133,7 @@ Nik's Action HUD provides out-of-the-box localizations for:
 |---|---|---|
 | **Foundry VTT** | **v14** | Built natively for Foundry V14. |
 | **DnD5e** | **6.0+** | Native support for 6.x activities and data models. |
+| **Shadowdark** | **4.0+** | Full native support for PC & NPC attacks, spells, wands, scrolls, light tracking, and luck. |
 | **Other Systems** | Modular API | Supported via custom system adapters. |
 
 ---

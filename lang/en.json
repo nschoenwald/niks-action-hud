@@ -270,9 +270,21 @@
       "Clockwork": "Clockwork",
       "Radiant": "Radiant",
       "Ossuary": "Ossuary",
+      "Shadowdark": "Shadowdark",
       "ExportPartialWarning": "Export completed with {count} warnings.",
       "ExportSuccess": "Theme exported successfully.",
       "ImportNoJsonError": "Uploaded archive does not contain a valid theme configuration."
+    },
+    "Shadowdark": {
+      "Checks": "Checks",
+      "Luck": "Luck",
+      "SpendLuck": "Spend Luck",
+      "LuckTooltip": "Spend Luck to reroll any roll you just made. You must take the new result.",
+      "SpendLuckConfirm": "Do you want to spend a Luck point to reroll your last check or test?",
+      "NoLuckLeft": "No Luck remaining.",
+      "LightBurning": "Burning",
+      "LightDark": "Extinguished",
+      "SpellLost": "Spell Lost"
     },
     "Keybindings": {
       "ToggleHUD": {

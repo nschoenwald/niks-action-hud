@@ -270,9 +270,21 @@
       "Clockwork": "Clockwork",
       "Radiant": "Radiant",
       "Ossuary": "Ossuary",
+      "Shadowdark": "Shadowdark",
       "ExportPartialWarning": "Exportation terminée avec {count} avertissements.",
       "ExportSuccess": "Thème exporté avec succès.",
       "ImportNoJsonError": "L'archive téléversée ne contient pas de configuration de thème valide."
+    },
+    "Shadowdark": {
+      "Checks": "Tests",
+      "Luck": "Chance",
+      "SpendLuck": "Dépenser de la Chance",
+      "LuckTooltip": "Dépensez de la Chance pour relancer n'importe quel jet venant d'être effectué. Vous devez accepter le nouveau résultat.",
+      "SpendLuckConfirm": "Voulez-vous dépenser un point de Chance pour relancer votre dernier jet ou test ?",
+      "NoLuckLeft": "Aucune Chance restante.",
+      "LightBurning": "Allumé",
+      "LightDark": "Éteint",
+      "SpellLost": "Sort perdu"
     },
     "Keybindings": {
       "ToggleHUD": {

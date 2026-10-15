@@ -270,9 +270,21 @@
       "Clockwork": "Clockwork",
       "Radiant": "Radiant",
       "Ossuary": "Ossuary",
+      "Shadowdark": "Shadowdark",
       "ExportPartialWarning": "Export mit {count} Warnungen abgeschlossen.",
       "ExportSuccess": "Design erfolgreich exportiert.",
       "ImportNoJsonError": "Das hochgeladene Archiv enthält keine gültige Design-Konfiguration."
+    },
+    "Shadowdark": {
+      "Checks": "Attributswürfe",
+      "Luck": "Glück",
+      "SpendLuck": "Glück einsetzen",
+      "LuckTooltip": "Setze Glück ein, um einen gerade getätigten Wurf zu wiederholen. Du musst das neue Ergebnis akzeptieren.",
+      "SpendLuckConfirm": "Möchtest du einen Glückspunkt einsetzen, um deinen letzten Wurf zu wiederholen?",
+      "NoLuckLeft": "Kein Glück mehr übrig.",
+      "LightBurning": "Brennt",
+      "LightDark": "Erloschen",
+      "SpellLost": "Zauber verloren"
     },
     "Keybindings": {
       "ToggleHUD": {

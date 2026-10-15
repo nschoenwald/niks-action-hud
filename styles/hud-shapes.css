@@ -98,3 +98,11 @@
 	border-radius: 0 !important;
 	padding: 0 22px 0 18px !important;
 }
+
+/* 13. Shadowdark: Chiselled Dungeon Chamfer */
+[data-button-shape="shadowdark"] .nah-action-btn,
+.nah-action-btn[data-button-shape="shadowdark"] {
+	clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}

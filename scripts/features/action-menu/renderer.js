@@ -547,12 +547,16 @@ export const buildListItems = (ActionMenu, items) => {
 			const isUtilityCategory =
 				ActionMenu?.activeCategory === "utility" ||
 				ActionMenu?.activeCategory === "abilities" ||
-				ActionMenu?.activeCategory === "ability";
+				ActionMenu?.activeCategory === "ability" ||
+				ActionMenu?.activeCategory === "check" ||
+				ActionMenu?.activeCategory === "checks";
 			const showFavorite =
 				item.favoritable !== false &&
 				!isUtilityCategory &&
 				item.category !== "utility" &&
-				item.category !== "abilities";
+				item.category !== "abilities" &&
+				item.category !== "check" &&
+				item.category !== "checks";
 			const isFav = showFavorite && favs.includes(item.id);
 			const starClass = isFav ? "fas fa-star" : "far fa-star";
 			const activeClass = isFav ? "active" : "";
@@ -1109,7 +1113,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 						? subData[ActionMenu.activeSubTab]
 						: [];
 
-				if (subKeys.length >= 1) {
+				if (subKeys.length > 1) {
 					subKeys.forEach((subKey) => {
 						let label = subKey;
 						if (

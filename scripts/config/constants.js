@@ -175,6 +175,20 @@ export const THEMES = Object.freeze({
 		},
 		icon: "fas fa-skull",
 	},
+	shadowdark: {
+		id: "shadowdark",
+		label: "NAH.Themes.Shadowdark",
+		defaultLabel: "Shadowdark",
+		description: "Grim OSR pulp dungeon crawler with stark monochrome inks, eldritch purple borders, and torchlight amber",
+		colors: {
+			bg: "#060709",
+			surface: "#0e0f14",
+			border: "#a546b6",
+			accent: "#f59e0b",
+			text: "#f8f8f6",
+		},
+		icon: "fas fa-dungeon",
+	},
 });
 
 /**
@@ -213,6 +227,7 @@ export function getAvailableThemes() {
  * @returns {string}
  */
 export function getDefaultTheme() {
+	if (game.system?.id === "shadowdark") return "shadowdark";
 	return isThemeAvailable("carolingian") ? "carolingian" : "arcanum";
 }
 
@@ -278,5 +293,9 @@ export const BUTTON_SHAPES = Object.freeze({
 	valiant: {
 		id: "valiant",
 		label: "Valiant (Chevron Banner)",
+	},
+	shadowdark: {
+		id: "shadowdark",
+		label: "Shadowdark (Chiselled Chamfer)",
 	},
 });

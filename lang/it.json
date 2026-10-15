@@ -270,9 +270,21 @@
       "Clockwork": "Clockwork",
       "Radiant": "Radiant",
       "Ossuary": "Ossuary",
+      "Shadowdark": "Shadowdark",
       "ExportPartialWarning": "Esportazione completata con {count} avvisi.",
       "ExportSuccess": "Tema esportato correttamente.",
       "ImportNoJsonError": "L'archivio caricato non contiene una configurazione del tema valida."
+    },
+    "Shadowdark": {
+      "Checks": "Prove",
+      "Luck": "Fortuna",
+      "SpendLuck": "Spendi Fortuna",
+      "LuckTooltip": "Spendi Fortuna per ripetere un tiro appena effettuato. Devi accettare il nuovo risultato.",
+      "SpendLuckConfirm": "Vuoi spendere un punto Fortuna per ripetere il tuo ultimo tiro o prova?",
+      "NoLuckLeft": "Nessuna Fortuna rimasta.",
+      "LightBurning": "Accesa",
+      "LightDark": "Spenta",
+      "SpellLost": "Incantesimo perso"
     },
     "Keybindings": {
       "ToggleHUD": {

@@ -1,3 +1,5 @@
+import { MODULE_ID } from "../../constants.js";
+
 /* =========================================
    INTERNAL HELPERS
    ========================================= */
@@ -1920,3 +1922,23 @@ export async function _handleDnd5eAmmoAction(actor, weaponId, command, event) {
 		return;
 	}
 }
+
+export const DND5E_ABILITY_ICONS = {
+	str: `modules/${MODULE_ID}/assets/icons/abilities/strength.svg`,
+	dex: `modules/${MODULE_ID}/assets/icons/abilities/dexterity.svg`,
+	con: `modules/${MODULE_ID}/assets/icons/abilities/constitution.svg`,
+	int: `modules/${MODULE_ID}/assets/icons/abilities/intelligence.svg`,
+	wis: `modules/${MODULE_ID}/assets/icons/abilities/wisdom.svg`,
+	cha: `modules/${MODULE_ID}/assets/icons/abilities/charisma.svg`,
+};
+
+/**
+ * Returns the ability icon path for a given ability key, falling back to bundled SVGs then d20.
+ * @param {string} abilityKey
+ * @param {string} [defaultIcon="icons/svg/d20-highlight.svg"]
+ * @returns {string}
+ */
+export function getAbilityIcon(abilityKey, defaultIcon = "icons/svg/d20-highlight.svg") {
+	return DND5E_ABILITY_ICONS[abilityKey?.toLowerCase()] || defaultIcon;
+}
+

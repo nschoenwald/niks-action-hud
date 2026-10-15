@@ -588,6 +588,15 @@
 	flex: 1;
 }
 
+.nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 16px;
+	flex-shrink: 0;
+	box-sizing: border-box;
+}
+
 .nah-menu-header-group {
 	display: inline-flex;
 	align-items: center;
@@ -1285,4 +1294,44 @@
 
 .nah-dmg-icon:hover {
 	transform: scale(1.15);
+}
+
+/* ==========================================================================
+   Shadowdark Controls Fallbacks
+   ========================================================================== */
+.nah-sd-equip-btn,
+.nah-sd-light-btn,
+.nah-sd-drink-btn,
+.nah-sd-restore-btn {
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 3px;
+	padding: 1px 6px;
+	font-size: 0.8em;
+	font-weight: 700;
+	cursor: pointer;
+	line-height: 1.4;
+	background: rgba(0, 0, 0, 0.4);
+	color: #eee;
+}
+
+.nah-sd-equip-btn.equipped {
+	background: rgba(45, 212, 191, 0.25);
+	border-color: #2dd4bf;
+	color: #5eead4;
+}
+
+.nah-sd-light-btn.burning {
+	background: rgba(245, 158, 11, 0.25);
+	border-color: #f59e0b;
+	color: #fbbf24;
+}
+
+.nah-sd-lost-badge {
+	font-size: 0.75em;
+	font-weight: 700;
+	color: #f87171;
+	background: rgba(185, 28, 28, 0.2);
+	border: 1px solid #b91c1c;
+	border-radius: 3px;
+	padding: 1px 4px;
 }

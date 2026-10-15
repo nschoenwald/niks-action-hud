@@ -2,6 +2,22 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.14.0] - 2026-10-15
+
+### Added
+- **Shadowdark RPG System Support**: Full native adapter integration for the Shadowdark RPG game system (`shadowdark` v4.x+), supporting both Player characters and NPCs with instantaneous access to attacks, spells, features, inventory items, and checks without opening character sheets.
+  - **Attacks**: One-click rolls for weapon attacks (Melee, Ranged, Thrown) and NPC attacks/special attacks with weapon damage, range, and ammunition tracking.
+  - **Spells**: Spells categorized by Tiers (1–5) for PCs and NPCs, plus castable Wands and Scrolls. Lost spells are clearly badged with instant one-click recovery.
+  - **Abilities & Features**: Class abilities with limited uses tracking (`available / max`), DC check resolution, Talents (Ancestry, Class, Level, Boons), and NPC Features.
+  - **Interactive Light Tracking**: Built-in real-time burn tracking for torches and lanterns with visual progress pips (`◆ ◆ ◆ ◇`), remaining time in minutes, and one-click ignition/extinguishing.
+  - **Potions & Inventory**: One-click potion drinking with confirmation prompts, quick equipment toggling (Equip/Unequip), and slot usage indicators.
+  - **Checks, Initiative & Luck**: Direct rolls for the 6 core ability checks (STR, DEX, CON, INT, WIS, CHA) with distinct thematic icons, combat initiative with DEX bonuses, and Luck tokens presented in a sleek single-line layout with in-line roll modifiers.
+  - **Modifier Shortcuts**: Fast-forward with <kbd>Shift</kbd>, roll with Advantage using <kbd>Alt</kbd>, or Disadvantage using <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>.
+- **Bundled Ability Check & Save Icons**: Added dedicated vector SVG icons for all six core abilities (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma), providing distinct thematic iconography across checks, saves, and quick slots for both Shadowdark and DnD5e adapters.
+- **DnD5e Item Spell Grouping & Sorting**: Spells granted by equipment, wands, scrolls, and cast activities in the "Item" tab of the Spells drawer are now grouped and sorted by their item source first with distinct source headers, and then sorted by spell level (Cantrips, 1st level, 2nd level, etc.) within each item source.
+- **Bespoke "Shadowdark" Theme**: A handcrafted visual theme capturing the stark, grim OSR pulp dungeon-crawler aesthetic. Built with solid void-black surfaces (`#060709`), stark bone typography, official Shadowdark eldritch purple specular borders (`#a546b6`), and candlelit torchlight amber highlights (`#f59e0b`). Automatically activates as the default theme when running on a Shadowdark world.
+- **Chiselled Dungeon Button Shape**: Added a custom `shadowdark` button shape option featuring angular chiselled stone chamfers, selectable for any visual theme in Appearance settings.
+
 ## [14.13.3] - 2026-10-15
 
 ### Fixed

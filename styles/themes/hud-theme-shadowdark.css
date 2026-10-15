@@ -1,0 +1,447 @@
+/* =========================================
+   Nik's Action HUD - THEME: SHADOWDARK
+   Style: Grim OSR Pulp Dungeon Crawler, Stark Inks,
+          Torchlight Amber & Eldritch Specular Violet.
+          100% Solid Opaque Surfaces (Zero Transparency).
+   ========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@600;700;800&family=Montserrat:ital,wght@0,500;0,600;0,700;1,500&display=swap");
+
+.theme-shadowdark {
+	/* Solid Opaque Palette */
+	--sd-void: #060709;
+	--sd-surface: #0e0f14;
+	--sd-surface-solid: #0e0f14;
+	--sd-surface-elevated: #161822;
+	--sd-surface-sidebar: #090a0e;
+	--sd-surface-header: #0b0c10;
+	--sd-surface-search: #07080b;
+	--sd-surface-hover: #1c1e2b;
+	--sd-border: #4a344f;
+	--sd-border-hover: #a546b6;
+	--sd-border-active: #c084fc;
+	--sd-purple: #a546b6;
+	--sd-purple-deep: #78557e;
+	--sd-purple-bright: #d8b4fe;
+	--sd-torch: #f59e0b;
+	--sd-torch-bright: #fbbf24;
+	--sd-torch-glow: rgba(245, 158, 11, 0.4);
+	--sd-bone: #f8f8f6;
+	--sd-bone-muted: #a6a6a0;
+	--sd-shadow: #020204;
+	--sd-glow: 0 0 16px rgba(165, 70, 182, 0.45);
+
+	/* Typography */
+	--sd-font-header: "JSL Blackletter", "Old Newspaper Font", "UnifrakturMaguntia", "Cinzel", serif;
+	--sd-font-body: "Montserrat", sans-serif;
+	--hud-font-header: var(--sd-font-header);
+	--hud-font-body: var(--sd-font-body);
+
+	/* Tooltip Tokens */
+	--tooltip-bg: #0a0b10;
+	--tooltip-border: #a546b6;
+	--tooltip-text: #f8f8f6;
+	--tooltip-header: #fbbf24;
+	--g-accent: var(--sd-torch-bright);
+}
+
+/* =========================================
+   1. ACTION BUTTONS — Chiselled Dungeon Stone
+   ========================================= */
+:is(#nah-action-menu, #nah-action-menu).theme-shadowdark { gap: 0; }
+
+.theme-shadowdark .nah-collapse-btn {
+	right: auto !important;
+	left: -28px;
+	margin-right: 0 !important;
+	color: var(--sd-torch-bright);
+}
+
+.theme-shadowdark .nah-collapse-btn:hover { color: var(--sd-bone); }
+
+.theme-shadowdark .nah-action-btn {
+	width: 232px;
+	height: 46px;
+	margin-bottom: 4px;
+	padding: 0 22px;
+	background: linear-gradient(135deg, #161722, #0d0e13);
+	border: 1px solid var(--sd-border);
+	clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+	color: var(--sd-bone);
+	font-family: var(--sd-font-header);
+	font-weight: 700;
+	font-size: 1.25em;
+	letter-spacing: 0.05em;
+	box-shadow:
+		inset 0 1px 0 #282a3a,
+		inset 0 0 10px #040406,
+		0 4px 14px var(--sd-shadow);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	position: relative;
+}
+
+.theme-shadowdark .nah-action-btn .nah-btn-content {
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.theme-shadowdark .nah-action-btn .glyph,
+.theme-shadowdark .nah-action-btn i {
+	color: var(--sd-torch);
+	font-size: 0.9em;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-shadowdark .nah-action-btn:hover {
+	color: #ffffff;
+	border-color: var(--sd-border-hover);
+	background: linear-gradient(135deg, #222436, #12131b);
+	box-shadow:
+		inset 0 1px 0 #3a3d54,
+		0 6px 18px var(--sd-shadow),
+		var(--sd-glow);
+	transform: translateX(4px);
+}
+
+.theme-shadowdark .nah-action-btn:hover .glyph,
+.theme-shadowdark .nah-action-btn:hover i {
+	color: var(--sd-torch-bright);
+	transform: scale(1.18);
+}
+
+/* =========================================
+   2. SUBMENU — Crypt Stone Slab
+   ========================================= */
+.theme-shadowdark .nah-sub-menu {
+	width: 426px;
+	background: var(--sd-surface);
+	border: 1px solid var(--sd-border);
+	clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+	box-shadow:
+		inset 0 0 0 1px #222533,
+		inset 0 1px 0 #35394e,
+		0 12px 36px var(--sd-shadow),
+		0 4px 14px rgba(0, 0, 0, 0.8);
+	overflow: hidden;
+}
+
+/* Header */
+.theme-shadowdark .nah-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: var(--sd-surface-header);
+	border-bottom: 1px solid var(--sd-border);
+	box-shadow: inset 0 -1px 0 #222533;
+}
+
+.theme-shadowdark .nah-menu-header .nah-font-hero {
+	font-family: var(--sd-font-header);
+	font-weight: 700;
+	font-size: 1.25em;
+	color: var(--sd-bone);
+	letter-spacing: 0.05em;
+	text-shadow: 0 2px 4px var(--sd-shadow);
+}
+
+.theme-shadowdark .nah-dc-badge {
+	font-family: var(--sd-font-header);
+	font-weight: 700;
+	font-size: 0.65em;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: #251630;
+	color: var(--sd-purple-bright);
+	border: 1px solid var(--sd-purple);
+}
+
+/* Search bar */
+.theme-shadowdark .nah-search-container {
+	padding: 8px 14px;
+	background: var(--sd-surface-header);
+	border-bottom: 1px solid var(--sd-border);
+}
+
+.theme-shadowdark .nah-search-input {
+	background: var(--sd-surface-search);
+	border: 1px solid var(--sd-border);
+	border-radius: 4px;
+	color: var(--sd-bone);
+	font-family: var(--sd-font-body);
+	font-size: 0.88em;
+	padding: 6px 12px;
+	transition: all 0.2s ease;
+}
+
+.theme-shadowdark .nah-search-input:focus {
+	border-color: var(--sd-border-hover);
+	box-shadow: 0 0 10px rgba(165, 70, 182, 0.35);
+	outline: none;
+}
+
+/* Sidebar navigation */
+.theme-shadowdark .nah-sidebar-panel {
+	width: 96px;
+	min-width: 96px;
+	padding: 10px 6px;
+	gap: 6px;
+	background: var(--sd-surface-sidebar);
+	border-right: 1px solid var(--sd-border);
+}
+
+.theme-shadowdark .nah-side-tab {
+	padding: 8px 6px;
+	border-radius: 4px;
+	background: transparent;
+	color: var(--sd-bone-muted);
+	font-family: var(--sd-font-header);
+	font-weight: 600;
+	font-size: 0.82em;
+	letter-spacing: 0.03em;
+	text-align: center;
+	white-space: nowrap;
+	word-break: normal;
+	transition: all 0.16s ease;
+	border-left: 3px solid transparent;
+}
+
+.theme-shadowdark .nah-side-tab:hover {
+	color: var(--sd-bone);
+	background: var(--sd-surface-hover);
+}
+
+.theme-shadowdark .nah-side-tab.active {
+	color: #ffffff;
+	background: var(--sd-surface-elevated);
+	border-left: 3px solid var(--sd-torch);
+	font-weight: 700;
+	box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.15);
+}
+
+/* Main Panel & Tabs */
+.theme-shadowdark .nah-main-panel {
+	background: var(--sd-surface);
+	max-height: 480px;
+}
+
+.theme-shadowdark .nah-magic-tabs {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--sd-surface-sidebar);
+	border-bottom: 1px solid var(--sd-border);
+}
+
+.theme-shadowdark .nah-tab-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	border-radius: 4px;
+	background: #14151e;
+	border: 1px solid var(--sd-border);
+	color: var(--sd-bone-muted);
+	font-family: var(--sd-font-header);
+	font-size: 0.82em;
+	transition: all 0.16s ease;
+}
+
+.theme-shadowdark .nah-tab-btn:hover {
+	color: #ffffff;
+	background: #1d1f2c;
+	border-color: var(--sd-border-hover);
+}
+
+.theme-shadowdark .nah-tab-btn.active {
+	background: #251630;
+	color: #ffffff;
+	border-color: var(--sd-purple);
+	box-shadow: 0 0 10px rgba(165, 70, 182, 0.35);
+}
+
+/* Scroll area */
+.theme-shadowdark .nah-scroll-area {
+	padding: 6px 8px;
+}
+
+/* List Headers (Search Clusters) */
+.theme-shadowdark .nah-list-header {
+	background: rgba(165, 70, 182, 0.15);
+	color: var(--sd-purple-bright, #e9d5ff);
+	border-left: 3px solid var(--sd-purple, #a546b6);
+	font-family: var(--sd-font-header);
+	font-size: 0.9em;
+	padding: 5px 10px;
+	margin: 6px 4px 4px 4px;
+	border-radius: 3px;
+}
+
+/* Submenu items list */
+.theme-shadowdark .nah-sub-menu-item,
+.theme-shadowdark .nah-list-item {
+	background: linear-gradient(135deg, #13141c, #0a0b0f);
+	border: 1px solid #232533;
+	border-radius: 4px;
+	padding: 6px 10px;
+	margin-bottom: 4px;
+	transition: all 0.18s ease;
+	color: var(--sd-bone);
+}
+
+.theme-shadowdark .nah-sub-menu-item:hover,
+.theme-shadowdark .nah-list-item:hover {
+	border-color: var(--sd-border-hover);
+	background: linear-gradient(135deg, #1f212f, #111218);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 10px rgba(165, 70, 182, 0.25);
+	transform: translateY(-1px);
+}
+
+.theme-shadowdark .nah-list-item.nah-one-line-item {
+	padding: 6px 10px;
+}
+
+.theme-shadowdark .nah-list-item .nah-font-hero {
+	font-family: var(--sd-font-header);
+	font-size: 1.08em;
+	color: var(--sd-bone);
+}
+
+.theme-shadowdark .nah-list-item .nah-roll-mod {
+	font-family: var(--sd-font-header);
+	font-size: 1.08em;
+	font-weight: 700;
+	color: var(--sd-torch);
+	min-width: 28px;
+	text-align: right;
+}
+
+.theme-shadowdark .nah-sub-menu-item.exhausted,
+.theme-shadowdark .nah-sub-menu-item.lost {
+	opacity: 0.55;
+	filter: grayscale(40%);
+	text-decoration: line-through;
+	border-color: #382436;
+}
+
+.theme-shadowdark .nah-item-name {
+	font-family: var(--sd-font-body);
+	font-weight: 600;
+	font-size: 0.95em;
+	color: var(--sd-bone);
+}
+
+.theme-shadowdark .nah-item-cost {
+	font-family: var(--sd-font-body);
+	font-size: 0.78em;
+	font-weight: 700;
+	color: var(--sd-torch-bright);
+	background: #1e1912;
+	border: 1px solid #4a3416;
+	border-radius: 3px;
+	padding: 1px 6px;
+}
+
+.theme-shadowdark .nah-item-desc {
+	font-family: var(--sd-font-body);
+	font-size: 0.8em;
+	color: var(--sd-bone-muted);
+}
+
+/* Inline Action Controls */
+.theme-shadowdark .nah-sd-equip-btn,
+.theme-shadowdark .nah-sd-light-btn,
+.theme-shadowdark .nah-sd-drink-btn,
+.theme-shadowdark .nah-sd-restore-btn {
+	border: 1px solid var(--sd-border);
+	border-radius: 3px;
+	padding: 1px 7px;
+	font-family: var(--sd-font-body);
+	font-size: 0.78em;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	cursor: pointer;
+	line-height: 1.5;
+	transition: all 0.15s ease;
+}
+
+.theme-shadowdark .nah-sd-equip-btn.equipped {
+	background: #2a1f10;
+	border-color: #8c5d18;
+	color: var(--sd-torch-bright);
+}
+.theme-shadowdark .nah-sd-equip-btn.unequipped {
+	background: #111219;
+	border-color: #33364a;
+	color: var(--sd-bone-muted);
+}
+.theme-shadowdark .nah-sd-equip-btn:hover {
+	border-color: var(--sd-torch);
+	color: #ffffff;
+	box-shadow: 0 0 8px var(--sd-torch-glow);
+}
+
+.theme-shadowdark .nah-sd-light-btn.burning {
+	background: #2b170c;
+	border-color: #b45309;
+	color: #fde68a;
+	box-shadow: 0 0 6px rgba(245, 158, 11, 0.35);
+}
+.theme-shadowdark .nah-sd-light-btn.extinguished {
+	background: #0f1017;
+	border-color: #33364d;
+	color: #94a3b8;
+}
+.theme-shadowdark .nah-sd-light-btn:hover {
+	border-color: #fbbf24;
+	color: #ffffff;
+	box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.theme-shadowdark .nah-sd-drink-btn {
+	background: #2a1215;
+	border-color: #881337;
+	color: #fecdd3;
+}
+.theme-shadowdark .nah-sd-drink-btn:hover {
+	border-color: #f43f5e;
+	color: #ffffff;
+	box-shadow: 0 0 8px rgba(244, 63, 94, 0.4);
+}
+
+.theme-shadowdark .nah-sd-restore-btn {
+	background: #261633;
+	border-color: var(--sd-purple);
+	color: var(--sd-purple-bright);
+}
+.theme-shadowdark .nah-sd-restore-btn:hover {
+	border-color: #e9d5ff;
+	color: #ffffff;
+	box-shadow: 0 0 8px rgba(165, 70, 182, 0.5);
+}
+
+.theme-shadowdark .nah-sd-lost-badge {
+	font-family: var(--sd-font-body);
+	font-size: 0.75em;
+	font-weight: 700;
+	color: #f87171;
+	background: #2b1113;
+	border: 1px solid #7f1d1d;
+	border-radius: 3px;
+	padding: 1px 5px;
+	letter-spacing: 0.05em;
+}
+
+/* Scrollbars */
+.theme-shadowdark ::-webkit-scrollbar {
+	width: 6px;
+}
+.theme-shadowdark ::-webkit-scrollbar-track {
+	background: #090a0e;
+}
+.theme-shadowdark ::-webkit-scrollbar-thumb {
+	background: #2b2e40;
+	border-radius: 3px;
+}
+.theme-shadowdark ::-webkit-scrollbar-thumb:hover {
+	background: var(--sd-purple-deep);
+}

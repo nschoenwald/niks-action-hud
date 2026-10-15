@@ -1,0 +1,17 @@
+Ability Check SVG Icons Attribution
+====================================
+
+The SVG icons located in `assets/icons/abilities/`:
+- `strength.svg`
+- `dexterity.svg`
+- `constitution.svg`
+- `intelligence.svg`
+- `wisdom.svg`
+- `charisma.svg`
+
+Original Creator: Maxim Kulikov
+Source: The Noun Project (https://thenounproject.com)
+License: Creative Commons Attribution 3.0 United States (CC BY 3.0 US)
+https://creativecommons.org/licenses/by/3.0/us/
+
+These vector icons are also distributed by Foundry Gaming LLC under the MIT License as part of the official DnD5e system repository (https://github.com/foundryvtt/dnd5e).

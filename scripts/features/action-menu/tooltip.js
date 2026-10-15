@@ -106,7 +106,7 @@ export async function renderTooltip(ActionMenu, tooltipItem, item, desc = "", op
 		const ritualLabel = game.i18n.localize("NAH.Tooltips.RitualSpell") || "Ritual (Unprepared)";
 		typeLabel = `${typeLabel || "SPELL"} · ${ritualLabel.toUpperCase()}`;
 	}
-	const sysClass = game.system?.id === "dnd5e" ? " dnd5e dnd5e2" : "";
+	const sysClass = game.system?.id === "dnd5e" ? " dnd5e dnd5e2" : game.system?.id === "shadowdark" ? " shadowdark" : "";
 
 	let footerHtml = "";
 	if (options?.isFavorite) {

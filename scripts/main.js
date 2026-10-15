@@ -187,13 +187,18 @@ Hooks.once("ready", async () => {
 			if (missingMenu) {
 				updatedConfig.customMenu = defaultRegistry.getDefaultLayout(game.system.id, adapter);
 			}
-			if (isThemeAvailable("carolingian") && (!updatedConfig.theme || updatedConfig.theme === "arcanum" || updatedConfig.theme === "rift" || !isThemeAvailable(updatedConfig.theme))) {
+			if (game.system.id === "shadowdark") {
+				updatedConfig.theme = "shadowdark";
+				updatedConfig._shadowdarkDefaultApplied = true;
+			} else if (isThemeAvailable("carolingian") && (!updatedConfig.theme || updatedConfig.theme === "arcanum" || updatedConfig.theme === "rift" || !isThemeAvailable(updatedConfig.theme))) {
 				updatedConfig.theme = "carolingian";
 			} else if (!isThemeAvailable(updatedConfig.theme)) {
 				updatedConfig.theme = getDefaultTheme();
 			}
 			updatedConfig._seededDefaults = true;
 			updatedConfig._carolingianDefaultApplied = isThemeAvailable("carolingian");
+		} else if (game.system.id === "shadowdark" && !currentConfig._shadowdarkDefaultApplied && (currentConfig.theme === "arcanum" || !isThemeAvailable(currentConfig.theme))) {
+			updatedConfig = { ...currentConfig, theme: "shadowdark", _shadowdarkDefaultApplied: true };
 		} else if (isThemeAvailable("carolingian") && !currentConfig._carolingianDefaultApplied && (currentConfig.theme === "arcanum" || currentConfig.theme === "rift" || !isThemeAvailable(currentConfig.theme))) {
 			// If Carolingian UI is newly available and world was on default theme or legacy theme, default to Carolingian on first load with crlngn-ui
 			updatedConfig = { ...currentConfig, theme: "carolingian", _carolingianDefaultApplied: true };

@@ -71,7 +71,8 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 		if (itemId.startsWith("save-")) {
 			const key = itemId.replace("save-", "");
 			const label = CONFIG.DND5E?.abilities?.[key]?.label || key.toUpperCase();
-			const img = CONFIG.DND5E?.abilities?.[key]?.icon || "icons/svg/d20-highlight.svg";
+			const fallback = Helpers.getAbilityIcon ? Helpers.getAbilityIcon(key, "icons/svg/d20-highlight.svg") : "icons/svg/d20-highlight.svg";
+			const img = CONFIG.DND5E?.abilities?.[key]?.icon || fallback;
 			const desc = this.getDnd5eTooltip ? this.getDnd5eTooltip("save", key, label) : "";
 			return { img, name: `${label} Save`, type: "Saving Throw", description: desc };
 		}
@@ -82,7 +83,8 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 		if (itemId.startsWith("check-")) {
 			const key = itemId.replace("check-", "");
 			const label = CONFIG.DND5E?.abilities?.[key]?.label || key.toUpperCase();
-			const img = CONFIG.DND5E?.abilities?.[key]?.icon || "icons/svg/d20-grey.svg";
+			const fallback = Helpers.getAbilityIcon ? Helpers.getAbilityIcon(key, "icons/svg/d20-grey.svg") : "icons/svg/d20-grey.svg";
+			const img = CONFIG.DND5E?.abilities?.[key]?.icon || fallback;
 			const desc = this.getDnd5eTooltip ? this.getDnd5eTooltip("check", key, label) : "";
 			return { img, name: `${label} Check`, type: "Ability Check", description: desc };
 		}

@@ -4,6 +4,7 @@ import { socket } from "./utils/socket.js";
 import { combatantMatches, userOwnsCombatant } from "./utils/combat-ownership.js";
 import { BaseSystemAdapter } from "./systems/base.js";
 import { DnD5eAdapter } from "./systems/dnd5e.js";
+import { ShadowdarkAdapter } from "./systems/shadowdark.js";
 import { adapterRegistry } from "./systems/registry.js";
 import { registerModuleApi } from "./api.js";
 import { MODULE_ID } from "./constants.js";
@@ -495,6 +496,10 @@ export class SettingsManager {
 
 		// Adapters
 		adapterRegistry.registerSystemAdapter("dnd5e", DnD5eAdapter, {
+			priority: 0,
+			source: MODULE_ID,
+		});
+		adapterRegistry.registerSystemAdapter("shadowdark", ShadowdarkAdapter, {
 			priority: 0,
 			source: MODULE_ID,
 		});

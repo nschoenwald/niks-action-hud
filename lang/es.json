@@ -270,9 +270,21 @@
       "Clockwork": "Clockwork",
       "Radiant": "Radiant",
       "Ossuary": "Ossuary",
+      "Shadowdark": "Shadowdark",
       "ExportPartialWarning": "Exportación completada con {count} advertencias.",
       "ExportSuccess": "Tema exportado con éxito.",
       "ImportNoJsonError": "El archivo cargado no contiene una configuración de tema válida."
+    },
+    "Shadowdark": {
+      "Checks": "Pruebas",
+      "Luck": "Suerte",
+      "SpendLuck": "Gastar Suerte",
+      "LuckTooltip": "Gasta Suerte para repetir cualquier tirada recién realizada. Debes aceptar el nuevo resultado.",
+      "SpendLuckConfirm": "¿Quieres gastar un punto de Suerte para repetir tu última tirada o prueba?",
+      "NoLuckLeft": "No queda Suerte.",
+      "LightBurning": "Encendida",
+      "LightDark": "Extinguida",
+      "SpellLost": "Hechizo perdido"
     },
     "Keybindings": {
       "ToggleHUD": {

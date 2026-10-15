@@ -20,6 +20,7 @@ import {
 	_getPrimaryDamageActivity,
 	actorHasAvailableSpellSlots,
 	escapeHtml,
+	getAbilityIcon,
 } from "./helpers.js";
 
 
@@ -414,7 +415,33 @@ export function _getSpellData(actor) {
 
 		const cachedFor = i.getFlag?.("dnd5e", "cachedFor") ?? i.flags?.dnd5e?.cachedFor;
 		let linkedActivity = i.system?.linkedActivity ?? null;
-		if (!linkedActivity && cachedFor && actor) {
+		let sourceItem = linkedActivity?.item ?? null;
+
+		if (!sourceItem && cachedFor && actor) {
+			if (typeof fromUuidSync === "function") {
+				try {
+					const act = fromUuidSync(cachedFor, { relative: actor, strict: false });
+					if (act?.item) sourceItem = act.item;
+					if (!linkedActivity && act) linkedActivity = act;
+				} catch (e) {
+					sourceItem = null;
+				}
+			}
+			if (!sourceItem) {
+				try {
+					const data = foundry.utils.parseUuid(cachedFor, { relative: actor });
+					const [itemId, , activityId] = (data?.embedded ?? []).slice(-3);
+					sourceItem = actor.items?.get(itemId) ?? null;
+					if (!linkedActivity && sourceItem) {
+						linkedActivity = sourceItem.system?.activities?.get(activityId) ?? null;
+					}
+				} catch (e) {
+					sourceItem = null;
+				}
+			}
+		}
+
+		if (!linkedActivity && cachedFor && actor && !sourceItem) {
 			try {
 				const data = foundry.utils.parseUuid(cachedFor, { relative: actor });
 				const [itemId, , activityId] = (data?.embedded ?? []).slice(-3);
@@ -428,6 +455,13 @@ export function _getSpellData(actor) {
 		if (isActivitySpell) {
 			if (linkedActivity && !linkedActivity.displayInSpellbook) return;
 		}
+
+		const sourceName = sourceItem?.name
+			|| (typeof i.system?.source === "string" ? i.system.source : (i.system?.source?.custom || i.system?.source?.name))
+			|| game.i18n?.localize?.("NAH.Dnd5e.ItemSpells")
+			|| "Item";
+		const sourceImg = sourceItem?.img || "icons/svg/item-bag.svg";
+		const sourceId = sourceItem?.id || sourceName;
 
 		const lvl = i.system.level ?? 0;
 		const prepMode = i.system.method ?? "prepared";
@@ -612,9 +646,15 @@ export function _getSpellData(actor) {
 			? `<span class="nah-info-sub" title="${escapeHtml(tooltipParts.join(" · "))}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;${damageText ? "" : " color:#888;"}">${infoParts.join(" · ")}</span>`
 			: "";
 
+		const effectiveLevel = Number(linkedActivity?.spell?.level ?? lvl ?? 0);
+
 		items[key]["all"].push({
 			id: i.id,
 			name: i.name,
+			level: effectiveLevel,
+			sourceName,
+			sourceImg,
+			sourceId,
 			uses: usesBracket,
 			img: i.img,
 			isUnpreparedRitual,
@@ -655,7 +695,49 @@ export function _getSpellData(actor) {
 	const sortedItems = {};
 	sortedKeys.forEach((key) => {
 		sortedItems[key] = items[key];
-		sortedItems[key]["all"].sort((a, b) => a.name.localeCompare(b.name));
+
+		if (key === "item") {
+			const rawList = sortedItems[key]["all"].filter((it) => !it.isHeader);
+			rawList.sort((a, b) => {
+				// 1. Item source first (alphabetical by source item name)
+				const srcA = String(a.sourceName || "");
+				const srcB = String(b.sourceName || "");
+				const srcDiff = srcA.localeCompare(srcB);
+				if (srcDiff !== 0) return srcDiff;
+
+				// 2. Spell level within item source (ascending)
+				const lvlA = Number(a.level) || 0;
+				const lvlB = Number(b.level) || 0;
+				if (lvlA !== lvlB) return lvlA - lvlB;
+
+				// 3. Spell name within same level (alphabetical)
+				return a.name.localeCompare(b.name);
+			});
+
+			const groupedList = [];
+			let lastSource = null;
+			for (const spellItem of rawList) {
+				const currentSource = spellItem.sourceName || game.i18n?.localize?.("NAH.Dnd5e.ItemSpells") || "Item";
+				if (currentSource !== lastSource) {
+					lastSource = currentSource;
+					groupedList.push({
+						isHeader: true,
+						name: currentSource,
+						img: spellItem.sourceImg || "icons/svg/item-bag.svg",
+						id: `header-src-${spellItem.sourceId || currentSource}`,
+					});
+				}
+				groupedList.push(spellItem);
+			}
+			sortedItems[key]["all"] = groupedList;
+		} else {
+			sortedItems[key]["all"].sort((a, b) => {
+				const lvlA = Number(a.level) || 0;
+				const lvlB = Number(b.level) || 0;
+				if (lvlA !== lvlB) return lvlA - lvlB;
+				return a.name.localeCompare(b.name);
+			});
+		}
 
 		if (key === "0") {
 			primaryLabels[key] = game.i18n.localize("NAH.Dnd5e.Cantrip");
@@ -1400,8 +1482,9 @@ export function _getUtilityData(actor) {
 		const saveModStr = `${saveVal >= 0 ? "+" : ""}${saveVal}`;
 		const saveAdvBadge = _formatAdvantageBadge(saveAdvMode);
 
-		const saveImg = ablConfig?.icon || "icons/svg/d20-highlight.svg";
-		const checkImg = ablConfig?.icon || "icons/svg/d20-grey.svg";
+		const abilityFallback = getAbilityIcon(key);
+		const saveImg = ablConfig?.icon || abilityFallback || "icons/svg/d20-highlight.svg";
+		const checkImg = ablConfig?.icon || abilityFallback || "icons/svg/d20-grey.svg";
 
 		items["save"]["all"].push({
 			id: `save-${key}`,
