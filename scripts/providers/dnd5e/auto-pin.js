@@ -1,9 +1,10 @@
 /**
  * NPC auto-favorite rules for dnd5e 6.x (see features/pins/auto-pin.js): items with an attack,
- * damage or save activity, sorted by action time.
+ * damage or save activity, sorted by action time. A feature whose one activity casts a spell
+ * ("Fiery Rays") qualifies through that spell and is pinned instead of the spell's cached copy.
  */
 
-import { _getActivities } from "./lib/activities.js";
+import { _getActivities, _getCastSpell, _isCastSpellOfFeature } from "./lib/activities.js";
 
 const TARGET_ACTIVITY_TYPES = new Set(["attack", "damage", "save"]);
 
@@ -13,12 +14,12 @@ const TARGET_ACTIVITY_TYPES = new Set(["attack", "damage", "save"]);
  * @returns {boolean}
  */
 function hasAttackDamageOrSaveActivity(item) {
-	return _getActivities(item).some((act) => TARGET_ACTIVITY_TYPES.has(act?.type));
+	return _getActivities(_getCastSpell(item) ?? item).some((act) => TARGET_ACTIVITY_TYPES.has(act?.type));
 }
 
-/** Whether an item has an attack activity. */
+/** Whether an item (or the spell it casts) has an attack activity. */
 function hasAttackActivity(item) {
-	return _getActivities(item).some((act) => act?.type === "attack");
+	return _getActivities(_getCastSpell(item) ?? item).some((act) => act?.type === "attack");
 }
 
 /**
@@ -63,7 +64,7 @@ function getActionTimeRank(activationType) {
 /** Qualifying items, sorted by action time: action -> bonus action -> reaction -> legendary action -> others. */
 function candidates(actor) {
 	return actor.items
-		.filter((item) => hasAttackDamageOrSaveActivity(item))
+		.filter((item) => hasAttackDamageOrSaveActivity(item) && !_isCastSpellOfFeature(item))
 		.sort((a, b) => {
 			const rankA = getActionTimeRank(getItemActivationType(a));
 			const rankB = getActionTimeRank(getItemActivationType(b));

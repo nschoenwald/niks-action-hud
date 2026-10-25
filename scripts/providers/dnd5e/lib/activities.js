@@ -62,6 +62,24 @@ export function _getActivities(item) {
 }
 
 /**
+ * The spell a feature casts when its one activity is a Cast activity ("Fiery Rays" casting Scorching Ray):
+ * the copy dnd5e caches on the actor, which carries the real damage, range and rolls. null otherwise
+ * (including features like Spellcasting that cast several spells).
+ */
+export function _getCastSpell(item) {
+	const activities = _getActivities(item);
+	if (activities.length !== 1 || activities[0].type !== "cast") return null;
+	return activities[0].cachedSpell ?? null;
+}
+
+/** Whether `spell` is the cached copy of a feature's only Cast activity, so the feature stands for it. */
+export function _isCastSpellOfFeature(spell) {
+	if (spell?.type !== "spell" || !spell.getFlag("dnd5e", "cachedFor")) return false;
+	const sourceItem = spell.system?.linkedActivity?.item;
+	return Boolean(sourceItem) && sourceItem !== spell && _getCastSpell(sourceItem) === spell;
+}
+
+/**
  * Resolves the single activity with uses if an item has NO item uses, but exactly one activity with activity uses.
  * Returns null if the item has item uses, or if there isn't exactly one activity with activity uses.
  */

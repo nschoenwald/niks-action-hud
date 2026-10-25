@@ -7,6 +7,7 @@ import { readProfile } from "../../../core/profile.js";
 import { createRow, segment } from "../../shared/row-model.js";
 import { emptyDrawer, singlePane, withOverview } from "../../shared/drawer-model.js";
 import { _describeActivation, _readActivationType } from "../lib/activation.js";
+import { _getCastSpell } from "../lib/activities.js";
 import { _getItemDamage } from "../lib/damage.js";
 import { _isLegendaryItem } from "../lib/legendary.js";
 import { _describeReach, _shouldShowReach } from "../lib/range.js";
@@ -50,11 +51,13 @@ function featureSegments(feat, actor, activationType) {
 	const badge = _describeActivation(activationType);
 	if (badge) segments.push(segment.activation(badge.classType, badge.label, badge.title));
 
-	const { damageParts, damageDisplay } = _getItemDamage(feat, actor);
+	// Damage and range come from the cast spell when the feature only casts one.
+	const source = _getCastSpell(feat) ?? feat;
+	const { damageParts, damageDisplay } = _getItemDamage(source, actor);
 	for (const part of damageParts) segments.push(segment.damage(part.formula, part.types, damageDisplay));
 
-	const reach = _describeReach(feat);
-	if (_shouldShowReach(feat, reach)) segments.push(segment.range(reach));
+	const reach = _describeReach(source);
+	if (_shouldShowReach(source, reach)) segments.push(segment.range(reach));
 	return { segments, hasDamage: damageParts.length > 0 };
 }
 
@@ -115,8 +118,21 @@ export function buildFeatures(actor) {
 	return { title: t("DND5E.Features", "FEATURES"), panes: withOverview(groups, overviewLabel) };
 }
 
+/**
+ * Whether `item` is a spell dnd5e cached for a Cast activity on a legendary feature ("Scorching Ray" for
+ * "Fiery Rays"). The enchantment copies the legendary activation onto the spell, but the feature is the
+ * action: using it casts the spell, so the spell stays in the spellbook only.
+ */
+function isCastByLegendaryFeature(item) {
+	if (item.type !== "spell" || !item.getFlag("dnd5e", "cachedFor")) return false;
+	const sourceItem = item.system?.linkedActivity?.item;
+	return Boolean(sourceItem) && sourceItem !== item && _isLegendaryItem(sourceItem);
+}
+
 /** Drawer payload for the legendary section (legendary actions and resistances). */
 export function buildLegendary(actor) {
-	const rows = actor?.items ? actor.items.filter((item) => _isLegendaryItem(item)).map((item) => featureEntry(item, actor).row) : [];
+	const rows = actor?.items
+		? actor.items.filter((item) => _isLegendaryItem(item) && !isCastByLegendaryFeature(item)).map((item) => featureEntry(item, actor).row)
+		: [];
 	return singlePane("LEGENDARY", rows);
 }
