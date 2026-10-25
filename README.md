@@ -10,7 +10,9 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
 
 <img width="1106" height="498" alt="image" src="https://github.com/user-attachments/assets/b4dc233b-0e22-4fea-b1f2-d0c907b91490" />
 
-<img width="1145" height="526" alt="image" src="https://github.com/user-attachments/assets/807d689b-9e12-4bb9-9834-e5eeff71296a" />
+<img width="697" height="365" alt="image" src="https://github.com/user-attachments/assets/5ffd1d35-3803-4f53-94b9-a1f8ceb67dfb" />
+
+<img width="2212" height="1186" alt="SCR-20261025-tujr" src="https://github.com/user-attachments/assets/0d616d2e-e3d8-4c0e-96d1-4043bee92948" />
 
 ---
 
