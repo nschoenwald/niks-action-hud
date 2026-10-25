@@ -9,13 +9,24 @@ import { emptyDrawer, singlePane, withOverview } from "../../shared/drawer-model
 import { _describeActivation, _readActivationType } from "../lib/activation.js";
 import { _getCastSpell } from "../lib/activities.js";
 import { _getItemDamage } from "../lib/damage.js";
-import { _isLegendaryItem } from "../lib/legendary.js";
+import { _isLegendaryItem, _isLegendaryResistanceItem, _monsterActivationType } from "../lib/legendary.js";
 import { _describeReach, _shouldShowReach } from "../lib/range.js";
 import { _resolveFeatureUses } from "../lib/uses.js";
 import { collatorFor } from "../../../core/text.js";
 
 const t = (key, fallback) => game.i18n?.localize?.(key) || fallback;
-const localizedIfPresent = (key, fallback) => (game.i18n?.has?.(key) ? game.i18n.localize(key) : "") || fallback;
+/** Matches an unlocalized translation key ("DND5E.ACTIVATION.Category.Monster"), not display text. */
+const I18N_KEY = /^[\w-]+(\.[\w-]+)+$/;
+
+/**
+ * The localized text for `key`; text dnd5e already localized (its `preLocalize` config labels, such as
+ * "Action") is used as is. `fallback` when `key` is empty or an unknown translation key.
+ */
+function localizedIfPresent(key, fallback) {
+	if (!key) return fallback;
+	if (game.i18n?.has?.(key)) return game.i18n.localize(key) || fallback;
+	return I18N_KEY.test(key) ? fallback : key;
+}
 
 // ── Tabs from the system's activation types ─────────────
 
@@ -109,7 +120,8 @@ export function buildFeatures(actor) {
 	if (!actor?.items) return emptyDrawer("Features");
 
 	// Class, subclass, background and species items are containers; their granted features are feat items.
-	const entries = actor.items.filter((item) => item.type === "feat").map((feat) => featureEntry(feat, actor));
+	// Legendary, mythic and lair actions and legendary resistance are listed in the Legendary menu instead.
+	const entries = actor.items.filter((item) => item.type === "feat" && !_isLegendaryItem(item)).map((feat) => featureEntry(feat, actor));
 	const groups = [
 		...usableTabs(entries.filter((entry) => entry.usable)),
 		{ id: "traits", label: t("NAH.Tabs.Passive", "Passive"), rows: entries.filter((entry) => !entry.usable).map((entry) => entry.row).sort(byName) },
@@ -129,10 +141,18 @@ function isCastByLegendaryFeature(item) {
 	return Boolean(sourceItem) && sourceItem !== item && _isLegendaryItem(sourceItem);
 }
 
-/** Drawer payload for the legendary section (legendary actions and resistances). */
+/** Listing order in the Legendary menu: legendary actions, mythic actions, lair actions, legendary resistance. */
+function legendaryRank(item) {
+	if (_isLegendaryResistanceItem(item)) return 3;
+	return ({ mythic: 1, lair: 2 })[_monsterActivationType(item)] ?? 0;
+}
+
+/** Drawer payload for the legendary section: legendary, mythic and lair actions, then legendary resistances. */
 export function buildLegendary(actor) {
-	const rows = actor?.items
-		? actor.items.filter((item) => _isLegendaryItem(item) && !isCastByLegendaryFeature(item)).map((item) => featureEntry(item, actor).row)
-		: [];
+	const items = actor?.items ? actor.items.filter((item) => _isLegendaryItem(item) && !isCastByLegendaryFeature(item)) : [];
+	const rows = items
+		.map((item, index) => ({ item, index, rank: legendaryRank(item) }))
+		.sort((a, b) => a.rank - b.rank || a.index - b.index)
+		.map(({ item }) => featureEntry(item, actor).row);
 	return singlePane("LEGENDARY", rows);
 }

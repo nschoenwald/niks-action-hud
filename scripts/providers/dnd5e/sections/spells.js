@@ -43,8 +43,8 @@ function spellGroups(actor) {
 }
 
 /** Id of the group a spell belongs to. */
-function groupIdFor(spell, level, linkedActivity, cachedFor, hasPact) {
-	if (cachedFor || linkedActivity) return "item";
+function groupIdFor(spell, level, { linkedActivity, cachedFor, sourceItem }, hasPact) {
+	if (cachedFor || linkedActivity) return isSpellcastingFeature(sourceItem) ? String(level) : "item";
 	const method = spell.system.method || "spell";
 	if (method === "pact" && hasPact) return "pact";
 	if (method === "innate" || method === "atwill") return "innate";
@@ -127,6 +127,17 @@ function resolveGrant(spell, actor) {
 	return { cachedFor, linkedActivity, sourceItem };
 }
 
+/**
+ * A monster's Spellcasting feature (2024 stat blocks cast all their spells through its Cast activities):
+ * identifier "spellcasting", or any item whose name contains "Spellcasting". Its spells are listed as
+ * regular spells by level instead of under the item.
+ */
+function isSpellcastingFeature(item) {
+	if (!item) return false;
+	if (item.identifier === "spellcasting") return true;
+	return /spellcasting/i.test(item.name ?? "");
+}
+
 function grantSourceOf(spell, sourceItem) {
 	const name = sourceItem?.name || spell.system.source?.custom || t("NAH.Tabs.Items", "") || "Items";
 	return { name, img: sourceItem?.img || "icons/svg/item-bag.svg", id: sourceItem?.id || name };
@@ -177,8 +188,12 @@ function infoSegments(spell, actor, linkedActivity) {
 }
 
 function spellRow(spell, actor, hasPact, listing) {
-	const level = spell.system.level;
-	const { cachedFor, linkedActivity, sourceItem } = resolveGrant(spell, actor);
+	const grant = resolveGrant(spell, actor);
+	const { cachedFor, linkedActivity, sourceItem } = grant;
+	// A spell cast through a Cast activity is cast at the activity's level ("level 2 version" of Command).
+	const level = linkedActivity?.type === "cast" && linkedActivity.spell?.level != null
+		? Math.max(spell.system.level, Number(linkedActivity.spell.level) || 0)
+		: spell.system.level;
 	if (cachedFor || linkedActivity) {
 		if (linkedActivity && linkedActivity.displayInSpellbook === false) return null;
 	}
@@ -209,7 +224,7 @@ function spellRow(spell, actor, hasPact, listing) {
 		isUnprepared: unprepared,
 		description: spell.system.description?.value ?? "",
 	});
-	return { row, groupId: groupIdFor(spell, level, linkedActivity, cachedFor, hasPact) };
+	return { row, groupId: groupIdFor(spell, level, grant, hasPact) };
 }
 
 /** Item-granted spells grouped under a header per source item. */

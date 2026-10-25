@@ -38,12 +38,26 @@ export function _isLegendaryActionItem(item) {
 	return false;
 }
 
+/** dnd5e's activation category for legendary, mythic and lair actions. */
+const MONSTER_CATEGORY = "DND5E.ACTIVATION.Category.Monster";
+
 /**
- * Checks if an item is any legendary item (resistance or action).
+ * The item's activation type when dnd5e files it under the Monster category ("legendary", "mythic",
+ * "lair"), from its activities or its own activation data. "" otherwise.
+ */
+export function _monsterActivationType(item) {
+	const types = [..._getActivities(item).map((a) => a.activation?.type), item?.system?.activation?.type];
+	const config = globalThis.CONFIG?.DND5E?.activityActivationTypes ?? {};
+	return types.find((type) => type && config[type]?.group === MONSTER_CATEGORY) ?? "";
+}
+
+/**
+ * Checks if an item is any legendary item: legendary resistance, a legendary action, or another
+ * Monster-category action (mythic, lair). These are listed in the Legendary menu only.
  */
 export function _isLegendaryItem(item) {
 	if (!item) return false;
-	return _isLegendaryResistanceItem(item) || _isLegendaryActionItem(item);
+	return _isLegendaryResistanceItem(item) || _isLegendaryActionItem(item) || Boolean(_monsterActivationType(item));
 }
 
 /**
@@ -57,8 +71,7 @@ export function _actorHasLegendary(actor) {
 
 	if (actor.items) {
 		for (const item of actor.items) {
-			if (_isLegendaryResistanceItem(item)) return true;
-			if (_isLegendaryActionItem(item)) return true;
+			if (_isLegendaryItem(item)) return true;
 		}
 	}
 	return false;
