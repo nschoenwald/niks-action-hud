@@ -8,7 +8,9 @@
 
 An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**. Your attacks, spells, features, items and rolls are one click away, with no character sheet needed.
 
-<img width="1103" height="468" alt="Nik's Action HUD" src="https://github.com/user-attachments/assets/17eba1ae-0bcc-442d-9341-28d48d90366d" />
+<img width="1106" height="498" alt="image" src="https://github.com/user-attachments/assets/b4dc233b-0e22-4fea-b1f2-d0c907b91490" />
+
+<img width="1145" height="526" alt="image" src="https://github.com/user-attachments/assets/807d689b-9e12-4bb9-9834-e5eeff71296a" />
 
 ---
 
