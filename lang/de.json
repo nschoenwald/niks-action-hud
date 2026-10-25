@@ -28,6 +28,8 @@
       "CloseDrawer": "Schließen",
       "EmptyDrawer": "Leer",
       "PassTurn": "Zug beenden",
+      "PassLegendary": "Legendär passen",
+      "PassLegendaryHint": "Zug für legendäre Aktionen – klicken, um zu passen und fortzufahren",
       "PermissionDenied": "Du hast keine Berechtigung, diese Aktion auszuführen.",
       "SearchNoMatch": "Keine passenden Aktionen gefunden.",
       "SearchActions": "Aktionen, Zauber, Gegenstände suchen..."

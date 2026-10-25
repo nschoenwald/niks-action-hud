@@ -9,6 +9,7 @@ import { listCategories } from "../registry/registry.js";
 import { localizeCategory } from "../../core/localization.js";
 import { iconMarkup } from "../../core/icon-source.js";
 import { combatantMatches, userOwnsCombatant } from "../../core/combat-ownership.js";
+import { isLegendaryPlaceholderTurn, legendaryCombatantOf } from "../../core/legendary-placeholders.js";
 import { PORTRAIT_OVERHANG_PX, RAIL_COLUMNS, TOP_RAIL_MIN_COLUMNS, loc } from "./constants.js";
 import { hud } from "./context.js";
 import { currentZoom } from "./layout.js";
@@ -45,6 +46,9 @@ export function buildHeaderModel(profile) {
 		&& combatantMatches(combatant, actor.id, tokenId)
 		&& (userOwnsCombatant(game.user, combatant) || actor.isOwner)
 	);
+	// On a legendary action placeholder turn (Nik's DnD5e Tweaks), creatures with legendary actions can pass it.
+	const legendaryCombatant = !isActiveTurn && isLegendaryPlaceholderTurn(combat) ? legendaryCombatantOf(combat, actor.id, tokenId) : null;
+	const isLegendaryTurn = Boolean(legendaryCombatant && (userOwnsCombatant(game.user, legendaryCombatant) || actor.isOwner));
 
 	return {
 		actorId: actor.id,
@@ -63,6 +67,7 @@ export function buildHeaderModel(profile) {
 			? `--token-subject-scale: ${subjectScale}; scale: ${subjectScale}; transform-origin: center center;`
 			: "",
 		isActiveTurn,
+		isLegendaryTurn,
 	};
 }
 

@@ -4,6 +4,7 @@ import { exportHudConfig } from "../features/settings-panel/option-schema.js";
 import { hud } from "./runtime.js";
 import { socket } from "./socket.js";
 import { combatantMatches, userOwnsCombatant } from "./combat-ownership.js";
+import { isLegendaryPlaceholderTurn, legendaryCombatantOf } from "./legendary-placeholders.js";
 import { dnd5eDefinition } from "../providers/dnd5e/provider.js";
 import { shadowdarkDefinition } from "../providers/shadowdark/provider.js";
 import { providerRegistry } from "../providers/registry.js";
@@ -121,21 +122,27 @@ function registerKeybindings() {
 
 // ── Remote actions ──────────────────────────────────────
 
-/** Validate a player's request to end the active turn, then advance the combat as GM. */
-async function endTurnForPlayer(data, callerUserId) {
-	if (!game.user.isGM) return { success: false, error: "Only a GM can end a turn for a player" };
-
+/** The requested combat, or an error when it is not running or the turn moved since the request. */
+function requestedCombat(data) {
 	const combat = (data?.combatId ? game.combats.get(data.combatId) : null) || game.combat || game.combats?.active;
-	if (!combat?.started) return { success: false, error: "Combat not active" };
+	if (!combat?.started) return { error: "Combat not active" };
 	const active = combat.combatant;
-	if (!active) return { success: false, error: "No active combatant in combat" };
+	if (!active) return { error: "No active combatant in combat" };
 
 	const stale = [
 		[data?.combatantId && active.id !== data.combatantId, "Combat turn has already advanced"],
 		[Number.isInteger(data?.round) && data.round !== combat.round, "Combat round has already changed"],
 		[Number.isInteger(data?.turn) && data.turn !== combat.turn, "Combat turn has already changed"],
 	].find(([isStale]) => isStale);
-	if (stale) return { success: false, error: stale[1] };
+	return stale ? { error: stale[1] } : { combat, active };
+}
+
+/** Validate a player's request to end the active turn, then advance the combat as GM. */
+async function endTurnForPlayer(data, callerUserId) {
+	if (!game.user.isGM) return { success: false, error: "Only a GM can end a turn for a player" };
+
+	const { combat, active, error } = requestedCombat(data);
+	if (error) return { success: false, error };
 
 	// callerUserId is the server-verified socket sender
 	const requester = callerUserId ? game.users.get(callerUserId) : null;
@@ -143,6 +150,28 @@ async function endTurnForPlayer(data, callerUserId) {
 	if (!userOwnsCombatant(requester, active)) return { success: false, error: "User does not own the active combatant" };
 	if (!combatantMatches(active, data?.actorId, data?.tokenId)) {
 		return { success: false, error: "Active combatant does not match the request" };
+	}
+
+	await combat.nextTurn();
+	return { success: true };
+}
+
+/**
+ * Validate a player's request to pass a legendary action placeholder turn (Nik's DnD5e Tweaks): the
+ * combat must be on a placeholder and the player must own a creature in it with legendary actions.
+ */
+async function passLegendaryTurnForPlayer(data, callerUserId) {
+	if (!game.user.isGM) return { success: false, error: "Only a GM can pass a turn for a player" };
+
+	const { combat, error } = requestedCombat(data);
+	if (error) return { success: false, error };
+	if (!isLegendaryPlaceholderTurn(combat)) return { success: false, error: "Not a legendary action placeholder turn" };
+
+	const requester = callerUserId ? game.users.get(callerUserId) : null;
+	if (!requester) return { success: false, error: "Unknown requesting user" };
+	const legendary = legendaryCombatantOf(combat, data?.actorId, data?.tokenId);
+	if (!legendary || !userOwnsCombatant(requester, legendary)) {
+		return { success: false, error: "User does not own a creature with legendary actions in this combat" };
 	}
 
 	await combat.nextTurn();
@@ -168,6 +197,7 @@ export class ModuleSettingsRegistrar {
 
 		window.NikHUD.socket = socket;
 		socket.register("endCombatTurn", endTurnForPlayer);
+		socket.register("passLegendaryTurn", passLegendaryTurnForPlayer);
 
 		registerProviders();
 	}

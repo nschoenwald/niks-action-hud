@@ -2,6 +2,18 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.3] - 2026-10-25
+### Added
+- **Nik's DnD5e Tweaks: Pass Legendary Action**:
+  - During a legendary action placeholder turn from Nik's DnD5e Tweaks, the HUD of a creature with legendary actions shows a **Pass Legendary** button. Click it to skip the legendary action and continue to the next turn.
+  - Shown to the GM and to players who own the creature. Players' clicks are handled by the GM's client, so a GM needs to be connected.
+
+### Changed
+- **Tooltip Text Size: Larger Default**:
+  - Hover card text is larger by default. The new 100% matches the old 120%. If you had raised the size before, you may want to lower it again.
+- **Turn Buttons: Title Case**:
+  - The HUD's turn buttons now read **End Turn** and **Pass Legendary** (English), matching the menu buttons and Foundry's combat tracker.
+
 ## [14.19.2] - 2026-10-25
 ### Changed
 - **Legendary Menu: All Monster Actions in One Place**:

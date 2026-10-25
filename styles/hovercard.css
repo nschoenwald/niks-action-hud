@@ -28,7 +28,7 @@
 	background: var(--nah-card-bg, rgba(18, 16, 24, 0.95));
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
 	color: var(--nah-card-text, #ccc);
-	font-size: calc(0.9em * (var(--nah-tooltip-scale, 100) / 100));
+	font-size: calc(1.08em * (var(--nah-tooltip-scale, 100) / 100));
 	line-height: 1.4;
 }
 

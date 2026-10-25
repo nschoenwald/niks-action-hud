@@ -7,6 +7,7 @@ import { registerAutoFavoriteNpcHook } from "./features/pins/auto-pin.js";
 import { isThemeAvailable, getDefaultTheme } from "./features/settings-panel/ui-constants.js";
 import { socket } from "./core/socket.js";
 import { combatantMatches, userOwnsCombatant } from "./core/combat-ownership.js";
+import { isLegendaryPlaceholderTurn, legendaryCombatantOf } from "./core/legendary-placeholders.js";
 import { onCombatTurnUpdate, clearTurnAlert } from "./features/dock/turn-alert.js";
 
 class NikHUD {
@@ -46,17 +47,75 @@ class NikHUD {
 
 	static _isEndingTurn = false;
 
-	static async endTurn(actorId = null, tokenId = null) {
+	/** The combat of the shown token, else the viewed or active combat. */
+	static _combatFor(tokenId) {
+		return (tokenId && canvas.tokens?.get(tokenId)?.combatant?.combat)
+			|| hud.currentToken?.combatant?.combat
+			|| hud.currentToken?.document?.combatant?.combat
+			|| game.combat
+			|| game.combats?.active
+			|| null;
+	}
+
+	/** Run one turn change at a time; repeat clicks within 400 ms of the last one are ignored. */
+	static async _guardTurnChange(run) {
 		if (NikHUD._isEndingTurn) return;
 		NikHUD._isEndingTurn = true;
 		try {
-			const combat = (tokenId && canvas.tokens?.get(tokenId)?.combatant?.combat)
-				|| hud.currentToken?.combatant?.combat
-				|| hud.currentToken?.document?.combatant?.combat
-				|| game.combat
-				|| game.combats?.active
-				|| null;
+			await run();
+		} finally {
+			setTimeout(() => {
+				NikHUD._isEndingTurn = false;
+			}, 400);
+		}
+	}
 
+	/**
+	 * Advance the combat past its current turn: directly as GM, else through the GM socket `action` with
+	 * `request`, else (no GM connected) directly in case permissions allow it.
+	 */
+	static async _advanceTurn(combat, action, request) {
+		if (game.user.isGM) {
+			await combat.nextTurn();
+			return;
+		}
+
+		const socket = NikHUD.socket;
+		if (socket && game.users.activeGM) {
+			// A GM is connected: never fall back to a direct call afterwards, since a
+			// timed-out or rejected request may still have been (or deliberately not
+			// been) processed, and a second nextTurn() could skip a combatant.
+			try {
+				const res = await socket.runAsGm(action, {
+					combatId: combat.id,
+					combatantId: combat.combatant.id,
+					round: combat.round,
+					turn: combat.turn,
+					...request,
+				});
+				if (res?.error) {
+					console.warn(`Nik's Action HUD | GM socket request "${action}" failed:`, res.error);
+				}
+			} catch (err) {
+				console.error(`Nik's Action HUD | Error in GM socket request "${action}":`, err);
+			}
+			return;
+		}
+
+		// No GM connected: try a direct call in case permissions permit it
+		try {
+			await combat.nextTurn();
+		} catch (err) {
+			console.error("Nik's Action HUD | Failed to advance combat turn directly:", err);
+			if (!game.users.activeGM) {
+				ui.notifications?.warn("Cannot pass turn: No active GM connected to update the combat tracker.");
+			}
+		}
+	}
+
+	static async endTurn(actorId = null, tokenId = null) {
+		return NikHUD._guardTurnChange(async () => {
+			const combat = NikHUD._combatFor(tokenId);
 			if (!combat || !combat.started) {
 				console.warn("Nik's Action HUD | No active combat encounter to end turn.");
 				return;
@@ -81,50 +140,36 @@ class NikHUD {
 				return;
 			}
 
-			// If GM, advance turn directly
-			if (game.user.isGM) {
-				await combat.nextTurn();
+			await NikHUD._advanceTurn(combat, "endCombatTurn", {
+				actorId: currentCombatant.actorId,
+				tokenId: currentCombatant.tokenId,
+			});
+		});
+	}
+
+	/**
+	 * Pass a legendary action placeholder turn (Nik's DnD5e Tweaks) on behalf of a creature with legendary
+	 * actions. The placeholder stands for every legendary creature, so this continues to the next turn.
+	 */
+	static async passLegendaryTurn(actorId = null, tokenId = null) {
+		return NikHUD._guardTurnChange(async () => {
+			const combat = NikHUD._combatFor(tokenId);
+			if (!isLegendaryPlaceholderTurn(combat)) {
+				console.warn("Nik's Action HUD | The combat is not on a legendary action placeholder turn.");
 				return;
 			}
 
-			// Non-GM player: request turn advancement via native GM socket dispatcher
-			const socket = NikHUD.socket;
-			if (socket && game.users.activeGM) {
-				// A GM is connected: never fall back to a direct call afterwards, since a
-				// timed-out or rejected request may still have been (or deliberately not
-				// been) processed, and a second nextTurn() could skip a combatant.
-				try {
-					const res = await socket.runAsGm("endCombatTurn", {
-						combatId: combat.id,
-						combatantId: currentCombatant.id,
-						actorId: currentCombatant.actorId,
-						tokenId: currentCombatant.tokenId,
-						round: combat.round,
-						turn: combat.turn,
-					});
-					if (res?.error) {
-						console.warn("Nik's Action HUD | Failed to end combat turn via GM socket:", res.error);
-					}
-				} catch (err) {
-					console.error("Nik's Action HUD | Error ending combat turn via socket:", err);
-				}
+			const legendary = legendaryCombatantOf(combat, actorId, tokenId);
+			if (!legendary || !userOwnsCombatant(game.user, legendary)) {
+				ui.notifications?.warn(game.i18n.localize("NAH.UI.PermissionDenied") || "You do not have permission to perform this action.");
 				return;
 			}
 
-			// No GM connected: try a direct call in case permissions permit it
-			try {
-				await combat.nextTurn();
-			} catch (err) {
-				console.error("Nik's Action HUD | Failed to advance combat turn directly:", err);
-				if (!game.users.activeGM) {
-					ui.notifications?.warn("Cannot pass turn: No active GM connected to update the combat tracker.");
-				}
-			}
-		} finally {
-			setTimeout(() => {
-				NikHUD._isEndingTurn = false;
-			}, 400);
-		}
+			await NikHUD._advanceTurn(combat, "passLegendaryTurn", {
+				actorId: legendary.actorId,
+				tokenId: legendary.tokenId,
+			});
+		});
 	}
 }
 

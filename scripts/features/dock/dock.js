@@ -192,6 +192,7 @@ const CLICK_ACTIONS = {
 	"add-favorite": (el) => openFavoritePicker(hud, el),
 	"open-sheet": (_el, event) => schedulePortraitClick(event),
 	"end-turn": (el) => window.NikHUD?.endTurn?.(el.dataset.actorId, el.dataset.tokenId),
+	"pass-legendary": (el) => window.NikHUD?.passLegendaryTurn?.(el.dataset.actorId, el.dataset.tokenId),
 };
 
 /** Press on the dock: Alt/Shift/header drag after travel, anywhere else after a hold. */

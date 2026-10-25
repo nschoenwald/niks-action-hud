@@ -27,7 +27,9 @@
       "AllGear": "All",
       "CloseDrawer": "Close",
       "EmptyDrawer": "Empty",
-      "PassTurn": "End turn",
+      "PassTurn": "End Turn",
+      "PassLegendary": "Pass Legendary",
+      "PassLegendaryHint": "Legendary action turn — click to pass and continue",
       "PermissionDenied": "You do not have permission to perform this action.",
       "SearchNoMatch": "No matching actions found.",
       "SearchActions": "Search actions, spells, items..."

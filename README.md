@@ -25,7 +25,8 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
   - Right-click an entry to open its sheet.
   - <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + right-click to use it right away.
   - Click the portrait to open the character sheet; double-click it to jump to the token.
-- **End your turn**: On your turn in combat, an **End turn** button appears on the HUD.
+- **End your turn**: On your turn in combat, an **End Turn** button appears on the HUD.
+  - With [Nik's DnD5e Tweaks](https://github.com/nschoenwald/niks-dnd5e-tweaks) legendary action placeholders, creatures with legendary actions get a **Pass Legendary** button during a placeholder turn.
 - **Show or hide**: Press <kbd>Shift</kbd>+<kbd>H</kbd> (you can change this in Configure Controls).
 - **Make it yours**:
   - 12 themes and different button shapes.

@@ -28,6 +28,8 @@
       "CloseDrawer": "Chiudi",
       "EmptyDrawer": "Vuoto",
       "PassTurn": "Fine turno",
+      "PassLegendary": "Passa leggendaria",
+      "PassLegendaryHint": "Turno di azione leggendaria: clicca per passare e continuare",
       "PermissionDenied": "Non disponi dell'autorizzazione necessaria per eseguire questa azione.",
       "SearchNoMatch": "Nessuna azione corrispondente trovata.",
       "SearchActions": "Cerca azioni, incantesimi, oggetti..."
