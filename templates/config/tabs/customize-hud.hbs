@@ -1,0 +1,66 @@
+<div class="hud-tab-pane {{#if isCustomizeTab}}active{{/if}}" data-tab="customize">
+    <h2 class="hud-pane-title">{{localize "NAH.Panel.Nav.CustomizeHud"}}</h2>
+
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-bar">
+            <div class="hud-cfg-group-head">
+                <span class="hud-cfg-group-title">{{localize "NAH.Panel.Menu.Categories"}}</span><span>· {{layoutCategories.length}}</span>
+            </div>
+        </div>
+        <span class="hud-cfg-group-desc">{{localize "NAH.Panel.Menu.Desc"}}</span>
+
+        <div class="hud-cfg-list hud-categories-list">
+            {{#each layoutCategories}}
+            <div class="hud-category-card {{#if this.isFolded}}collapsed{{/if}}" draggable="true" data-cat-index="{{@index}}">
+                <input type="hidden" name="layoutCategories.{{@index}}.id" value="{{this.id}}">
+                <input type="hidden" name="layoutCategories.{{@index}}.sectionId" value="{{this.sectionId}}">
+
+                <div class="hud-cat-header" data-action="toggleCollapseCategory">
+                    <i class="fas fa-grip-vertical hud-cat-grip" title="{{localize "NAH.Panel.Menu.DragReorder"}}" aria-hidden="true"></i>
+                    <span class="hud-cat-icon-badge">{{nahCategoryIcon this "fas fa-folder"}}</span>
+                    <span class="hud-cat-title">
+                        <span class="hud-cat-name">{{#if this.displayLabel}}{{this.displayLabel}}{{else if this.label}}{{this.label}}{{else}}{{localize "NAH.Panel.Menu.Unnamed"}}{{/if}}</span>
+                    </span>
+                    <span class="hud-cat-actions">
+                        <button type="button" class="hud-cat-action hud-cat-chevron" data-action="toggleCollapseCategory" title="{{localize "NAH.Panel.Menu.ExpandCollapse"}}" aria-label="{{localize "NAH.Panel.Menu.ExpandCollapse"}}">▾</button>
+                    </span>
+                </div>
+
+                <div class="hud-cat-body">
+                    <div class="hud-cat-fields">
+                        <label class="hud-cfg-field">
+                            <span class="hud-cfg-field-label">{{localize "NAH.Panel.Menu.CategoryLabel"}}</span>
+                            <input type="text" class="hud-cfg-text" name="layoutCategories.{{@index}}.label" value="{{this.label}}">
+                        </label>
+                        <div class="hud-cfg-field">
+                            <span class="hud-cfg-field-label">{{localize "NAH.IconPicker.Field.Label"}}</span>
+                            <button type="button" class="hud-icon-field" data-action="pickCategoryIcon" title="{{localize "NAH.IconPicker.Field.Open"}}" aria-label="{{localize "NAH.IconPicker.Field.Open"}}">
+                                <span class="hud-icon-field-preview">{{nahCategoryIcon this "fa-regular fa-square"}}</span>
+                                <span class="hud-icon-field-value">{{#if this.img}}{{this.img}}{{else if this.icon}}{{this.icon}}{{else}}{{localize "NAH.IconPicker.Field.None"}}{{/if}}</span>
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            </button>
+                            <input type="hidden" name="layoutCategories.{{@index}}.icon" value="{{this.icon}}">
+                            <input type="hidden" name="layoutCategories.{{@index}}.img" value="{{this.img}}">
+                        </div>
+                        <fieldset class="hud-cfg-field hud-nav-field">
+                            <legend class="hud-cfg-field-label">{{localize "NAH.Panel.Menu.Nav"}}</legend>
+                            <div class="hud-nav-toggle" role="radiogroup">
+                                {{#each this.navOptions}}
+                                <label class="hud-nav-option" title="{{#if (eq this.value "top")}}{{localize "NAH.Panel.Menu.NavTopHint"}}{{else}}{{localize "NAH.Panel.Menu.NavSideHint"}}{{/if}}">
+                                    <input type="radio" name="layoutCategories.{{@../index}}.nav" value="{{this.value}}" {{#if this.checked}}checked{{/if}}>
+                                    <i class="fa-solid {{#if (eq this.value "top")}}fa-window-maximize{{else}}fa-table-columns{{/if}}" aria-hidden="true"></i>
+                                    <span>{{#if (eq this.value "top")}}{{localize "NAH.Panel.Menu.NavTop"}}{{else}}{{localize "NAH.Panel.Menu.NavSide"}}{{/if}}</span>
+                                    {{#if this.isDefault}}<span class="hud-nav-default">{{localize "NAH.Panel.Menu.NavDefault"}}</span>{{/if}}
+                                </label>
+                                {{/each}}
+                            </div>
+                        </fieldset>
+                    </div>
+
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </section>
+
+</div>

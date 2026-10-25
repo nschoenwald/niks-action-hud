@@ -1,0 +1,69 @@
+<div class="nah-drawer-pane nah-drawer-shell{{#if sideNav}} has-sidebar{{/if}}" data-category="{{categoryId}}">
+	{{#if sideNav}}
+		<aside class="nah-rail-pane custom-scrollbar" aria-label="Category Navigation">
+			{{#each links}}
+				<div class="nah-rail-tab{{#if isActive}} active{{/if}}"
+					 role="button"
+					 tabindex="0"
+					 data-action="show-pane"
+					 data-pane-id="{{id}}"
+					 data-category="{{../categoryId}}"
+					 title="{{label}}">
+					<span>{{label}}</span>
+				</div>
+			{{/each}}
+		</aside>
+	{{/if}}
+
+	<div class="nah-primary-pane">
+		<div class="nah-drawer-heading">
+			<div class="nah-menu-header-group">
+				<span class="nah-drawer-title">{{categoryTitle}}</span>
+			</div>
+			<div class="nah-drawer-tools">
+				{{#each toggles}}
+				<button type="button" class="nah-drawer-toggle{{#if active}} active{{/if}}" data-action="drawer-toggle" data-toggle-id="{{id}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}" title="{{title}}" aria-label="{{title}}">
+					<i class="{{icon}}" aria-hidden="true"></i>
+				</button>
+				{{/each}}
+				<button type="button" class="nah-drawer-close" data-action="close-drawer" title="{{localize 'NAH.UI.CloseDrawer'}}">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+		</div>
+
+		<div class="nah-finder-wrap nah-search-box">
+			<i class="fas fa-search nah-search-icon"></i>
+			<input type="text"
+				   class="nah-finder-field"
+				   placeholder="{{localize 'NAH.UI.SearchActions'}}"
+				   value="{{searchQuery}}"
+				   data-action="filter-drawer">
+			{{#if searchQuery}}
+				<button type="button" class="nah-search-clear" data-action="clear-search" title="{{localize 'NAH.UI.ClearSearch'}}">
+					<i class="fas fa-times"></i>
+				</button>
+			{{/if}}
+		</div>
+
+		{{#unless sideNav}}
+			{{#if links.length}}
+				<div class="nah-spell-pages custom-scrollbar nah-tabs-nav" aria-label="Category Tabs">
+					{{#each links}}
+						<button type="button"
+								class="nah-page-btn{{#if isActive}} active{{/if}}"
+								data-action="show-pane"
+								data-pane-id="{{id}}"
+								data-category="{{../categoryId}}">
+							<span>{{label}}</span>
+						</button>
+					{{/each}}
+				</div>
+			{{/if}}
+		{{/unless}}
+
+		<div class="nah-scroller custom-scrollbar">
+			{{{itemsHtml}}}
+		</div>
+	</div>
+</div>

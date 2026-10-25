@@ -1,0 +1,20 @@
+<div class="nah-favorites-rail" data-layout="{{layout}}" data-side="{{railSide}}">
+	{{#each slots}}
+		<div class="nah-favorite{{#if isDepleted}} is-exhausted{{/if}}"
+			 data-action="use-favorite"
+			 data-favorite-id="{{id}}"
+			 aria-label="{{name}}">
+			<img src="{{img}}" alt="{{name}}" draggable="false"
+				 onerror="this.onerror=null; this.src='icons/svg/item-bag.svg';">
+			{{#if uses}}
+				<span class="nah-favorite-uses{{#if isDepleted}} is-exhausted{{/if}}" aria-label="{{uses}} uses">{{uses}}</span>
+			{{/if}}
+		</div>
+	{{/each}}
+	<div class="nah-fav-overflow" hidden>
+		<button type="button" class="nah-fav-more" data-action="toggle-overflow" aria-haspopup="true"></button>
+		<div class="nah-fav-popover" role="group"></div>
+	</div>
+	<button type="button" class="nah-fav-add" data-action="add-favorite"
+			title="{{addTitle}}" aria-label="{{addTitle}}"><i class="fas fa-plus" aria-hidden="true"></i></button>
+</div>

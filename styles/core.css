@@ -1,0 +1,131 @@
+/* ==========================================================================
+   Nik's Action HUD — foundation: fonts, theme-agnostic variables, dock frame
+   and the drawer slot. Feature styles live in dock.css, drawer.css,
+   hovercard.css and extras.css; skins live in themes/.
+   ========================================================================== */
+
+/* ── Variables ─────────────────────────────────────────────────────────── */
+
+:root {
+	--nah-action-gap: 0px;
+	--nah-dock-width: 240px;
+	--nah-text-primary: var(--color-text-primary, #f9fafb);
+	--nah-text-secondary: var(--color-text-secondary, #9ca3af);
+	--nah-surface-bg: var(--color-background-app, rgb(20 24 33 / 0.92));
+	--nah-surface-border: var(--color-border-dark, var(--nah-veil-line));
+	--nah-accent-secondary: #45c8c0;
+	--nah-rail-room: 56px;
+	--nah-tooltip-scale: 100;
+}
+
+/* Foundry's light interface setting */
+body.theme-light,
+.theme-light :is(#nah-dock, #nah-drawer-slot, #nah-tooltip) {
+	--nah-text-primary: var(--color-text-primary, #111827);
+	--nah-text-secondary: var(--color-text-secondary, #4b5563);
+	--nah-surface-bg: var(--color-background-app, rgb(255 255 255 / 0.94));
+	--nah-surface-border: var(--color-border-light, rgb(0 0 0 / 0.15));
+}
+
+/* ── Dock frame ────────────────────────────────────────────────────────── */
+
+#nah-dock {
+	position: fixed;
+	z-index: 100;
+	zoom: var(--nah-scale, 1);
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-end;
+	width: var(--nah-dock-width, 240px);
+	height: auto;
+	gap: 0;
+	pointer-events: none;
+}
+
+/* The category bar is the interactive part of the dock. */
+#nah-dock-root {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-end;
+	width: 100%;
+	gap: var(--nah-action-gap, 0px);
+	pointer-events: auto;
+	transition: transform var(--nah-dur-base) ease, box-shadow var(--nah-dur-base) ease;
+}
+
+/* ── Idle fade (Foundry core interface fading) ─────────────────────────── */
+
+#nah-dock.faded-ui {
+	opacity: var(--ui-fade-opacity, 0.4);
+	transition: opacity var(--ui-fade-duration, 500ms) ease var(--ui-fade-delay, 500ms);
+}
+
+#nah-dock.faded-ui:is(:hover, :focus-within, .has-open-drawer, .is-resizing, .is-moving),
+#nah-dock.faded-ui:has(#nah-drawer-slot.active),
+#nah-dock.faded-ui:has(.is-lifted) {
+	opacity: 1 !important;
+	transition: opacity var(--ui-fade-duration, 500ms) ease 0ms;
+}
+
+/* ── Dragging ──────────────────────────────────────────────────────────── */
+
+#nah-dock.is-moving {
+	transform-origin: center;
+	animation: nah-wiggle 0.22s ease-in-out infinite !important;
+}
+
+#nah-dock.is-moving #nah-dock-root {
+	animation: nah-wiggle 0.22s ease-in-out infinite !important;
+}
+
+#nah-dock.is-moving * {
+	pointer-events: none !important;
+	cursor: grabbing !important;
+}
+
+#nah-dock.is-moving #nah-drawer-slot {
+	opacity: 0.3;
+	pointer-events: none;
+	transition: opacity var(--nah-dur-base) ease;
+}
+
+/* ── Drawer slot: where the flyout opens relative to the dock ──────────── */
+/*
+ * drawer.js sets data-open-x (left|right) and data-open-y (down|up) on the slot.
+ * The slot is pushed off the dock edge by --nah-drawer-offset: the base gap, plus whatever
+ * the ribbon/portrait overhang on that side, plus the favorites rail when it shares the side.
+ */
+
+#nah-drawer-slot {
+	--nah-drawer-gap: 12px;
+	--nah-drawer-extra: 0px;
+	--nah-drawer-offset: calc(100% + var(--nah-drawer-gap) + var(--nah-drawer-extra) + var(--nah-overhang-left, 0px));
+	position: absolute;
+	inset: 0 var(--nah-drawer-offset) auto auto;
+	z-index: 1;
+	display: none;
+	flex-direction: column;
+	inline-size: var(--nah-drawer-width, 360px);
+	pointer-events: auto;
+}
+
+#nah-drawer-slot.active {
+	display: flex;
+}
+
+#nah-drawer-slot[data-open-y="up"] {
+	inset-block: auto 0;
+}
+
+#nah-drawer-slot[data-open-x="right"] {
+	--nah-drawer-offset: calc(100% + var(--nah-drawer-gap) + var(--nah-drawer-extra) + var(--nah-overhang-right, 0px));
+	inset-inline: var(--nah-drawer-offset) auto;
+}
+
+/* The favorites rail sits beside the dock; keep the drawer clear of it when both open on the same side. */
+#nah-dock[data-rail-side="left"] #nah-drawer-slot:not([data-open-x="right"]),
+#nah-dock[data-rail-side="right"] #nah-drawer-slot[data-open-x="right"] {
+	--nah-drawer-extra: var(--nah-rail-room);
+}

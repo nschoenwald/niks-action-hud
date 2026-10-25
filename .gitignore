@@ -1,0 +1,20 @@
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Internal Changelog
+CHANGELOG_internal.md
+changelog_v1.md
+CHANGELOG_v1.md
+Claude.md
+
+# Internal rewrite plan
+PLAN_REWRITE.md
+AUDIT_REPORT.md
+
+# Markdown is internal by default; only the published docs and license texts are kept
+*.md
+!README.md
+!CHANGELOG.md
+!LICENSE.md
+!licenses/*.md

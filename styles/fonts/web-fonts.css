@@ -1,0 +1,561 @@
+/* Bundled web fonts (Latin subset, WOFF2). Licenses: see licenses/Fonts-LICENSES.txt. */
+
+@font-face {
+	font-family: "Teko";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/teko-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Teko";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/teko-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Teko";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/teko-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Oswald";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/oswald-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Oswald";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/oswald-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Oswald";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/oswald-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Oswald";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/oswald-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Roboto Slab";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/roboto-slab-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Roboto Slab";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/roboto-slab-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Roboto Slab";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/roboto-slab-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Roboto Slab";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/roboto-slab-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Work Sans";
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/work-sans-latin-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Work Sans";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/work-sans-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Work Sans";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/work-sans-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Work Sans";
+	font-style: italic;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/work-sans-latin-600-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Work Sans";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/work-sans-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Work Sans";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/work-sans-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cinzel";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/cinzel-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cinzel";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/cinzel-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cinzel";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/cinzel-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cinzel";
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: url("web/cinzel-latin-800-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cormorant Garamond";
+	font-style: italic;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/cormorant-garamond-latin-500-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cormorant Garamond";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/cormorant-garamond-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cormorant Garamond";
+	font-style: italic;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/cormorant-garamond-latin-600-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cormorant Garamond";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/cormorant-garamond-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Cormorant Garamond";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/cormorant-garamond-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/inter-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/inter-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/inter-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/inter-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Outfit";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/outfit-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Outfit";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/outfit-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Outfit";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/outfit-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Outfit";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/outfit-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Outfit";
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: url("web/outfit-latin-800-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Barlow Semi Condensed";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/barlow-semi-condensed-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Barlow Semi Condensed";
+	font-style: italic;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/barlow-semi-condensed-latin-600-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Barlow Semi Condensed";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/barlow-semi-condensed-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Barlow Semi Condensed";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/barlow-semi-condensed-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Marcellus";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/marcellus-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Rajdhani";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/rajdhani-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Rajdhani";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/rajdhani-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Rajdhani";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/rajdhani-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Syne";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/syne-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Syne";
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: url("web/syne-latin-800-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Text";
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/crimson-text-latin-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Text";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/crimson-text-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Text";
+	font-style: italic;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/crimson-text-latin-600-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Text";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/crimson-text-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Text";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/crimson-text-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "MedievalSharp";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/medievalsharp-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Alegreya";
+	font-style: italic;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/alegreya-latin-500-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Alegreya";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/alegreya-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Alegreya";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/alegreya-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Alegreya";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/alegreya-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Share Tech";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/share-tech-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Fira Code";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/fira-code-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Fira Code";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/fira-code-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Fira Code";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/fira-code-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Almendra";
+	font-style: italic;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/almendra-latin-700-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Almendra";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/almendra-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Pro";
+	font-style: italic;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/crimson-pro-latin-500-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Pro";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/crimson-pro-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Pro";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/crimson-pro-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Crimson Pro";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/crimson-pro-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "UnifrakturMaguntia";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("web/unifrakturmaguntia-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Montserrat";
+	font-style: italic;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/montserrat-latin-500-italic.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("web/montserrat-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("web/montserrat-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("web/montserrat-latin-700-normal.woff2") format("woff2");
+}

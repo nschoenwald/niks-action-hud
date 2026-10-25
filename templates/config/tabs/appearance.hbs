@@ -1,0 +1,61 @@
+<div class="hud-tab-pane {{#if isAppearanceTab}}active{{/if}}" data-tab="appearance">
+    <h2 class="hud-pane-title">{{localize "NAH.Panel.Nav.Appearance"}}</h2>
+
+    <section class="hud-cfg-group{{#unless canConfigure}} is-blocked{{/unless}}" {{#unless canConfigure}}title="{{gmOnlyTitle}}" data-blocked-reason="{{gmOnlyTitle}}"{{/unless}}>
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">{{localize "NAH.Panel.Appearance.Theme"}}</span><span>· {{themeCards.length}}</span>
+            <span class="hud-cfg-scope world" title="{{localize "NAH.Panel.Scope.WorldTitle"}}">{{localize "NAH.Panel.Scope.World"}}</span>
+        </div>
+        <input type="hidden" name="theme" value="{{theme}}">
+        <div class="hud-theme-grid">
+            {{#each themeCards}}
+            <button type="button" class="hud-theme-card {{#if this.isActive}}active{{/if}}" data-action="selectTheme" data-theme-id="{{this.id}}" {{#unless @root.canConfigure}}disabled{{/unless}}>
+                <span class="hud-theme-swatch" style="background: {{this.colors.bg}}; border-color: {{this.colors.border}}; color: {{this.colors.accent}};">
+                    <i class="{{this.icon}}" aria-hidden="true"></i>
+                </span>
+                <span class="hud-theme-text">
+                    <span class="hud-theme-title">{{this.label}}{{#if this.badge}}<span class="hud-theme-badge">{{this.badge}}</span>{{/if}}</span>
+                    <span class="hud-theme-desc">{{this.description}}</span>
+                </span>
+                <span class="hud-theme-tick" aria-hidden="true"></span>
+            </button>
+            {{/each}}
+        </div>
+    </section>
+
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">{{localize "NAH.Panel.Appearance.Preview"}}</span><span>· <span data-active-theme-name>{{#each themeCards}}{{#if this.isActive}}{{this.label}}{{/if}}{{/each}}</span></span>
+        </div>
+        <div class="hud-preview-container">
+            <div class="hud-preview-sandbox theme-{{theme}} {{#if fontFamily}}nah-custom-font{{/if}}"
+                 {{#if buttonShape}}data-button-shape="{{buttonShape}}"{{/if}}
+                 style="{{#if fontFamily}}--nah-font-family: '{{fontFamily}}', sans-serif;{{/if}}">
+                <div class="nah-action-buttons-list">
+                    {{#each sampleButtons}}
+                    <button type="button" class="nah-hud-btn">
+                        <div class="nah-btn-inner">
+                            <span style="{{#if @root.fontFamily}}font-family: '{{@root.fontFamily}}', sans-serif;{{/if}}{{#if this.labelScale}} --nah-label-scale: {{this.labelScale}};{{/if}}">{{this.label}}</span>
+                            <i class="{{this.icon}}"></i>
+                        </div>
+                    </button>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{#each settingSections.appearance}}
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">{{title}}</span><span data-cfg-count="rows"></span>
+        </div>
+        <div class="hud-cfg-list">
+            {{#each rows}}
+            {{> "modules/niks-action-hud/templates/config/partials/setting-row.hbs"}}
+            {{/each}}
+        </div>
+    </section>
+    {{/each}}
+
+</div>

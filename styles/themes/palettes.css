@@ -1,0 +1,303 @@
+/*
+ * Nik's Action HUD — theme palettes. Each block feeds themes/engine.css; see the header there
+ * for what the tokens mean. Carolingian reads the Carolingian UI module's own variables.
+ */
+
+.theme-arcanum {
+	--ph-bg: #0a0b1c;
+	--ph-surface: #14152e;
+	--ph-raised: #1d1f3f;
+	--ph-hover: #29295c;
+	--ph-ink: #f3f1ff;
+	--ph-ink-2: #b9b6d9;
+	--ph-ink-3: #7d7aa3;
+	--ph-line: #3b3a6b;
+	--ph-accent: #e0b84e;
+	--ph-accent-2: #ffd97a;
+	--ph-glow: rgb(224 184 78 / 0.35);
+	--ph-head: "Cinzel", serif;
+	--ph-body: "Cormorant Garamond", serif;
+	--ph-r: 2px;
+	--ph-cut: 10px;
+	--ph-bw: 1px;
+	--ph-bar: 3px;
+	--ph-case: uppercase;
+	--ph-track: 0.06em;
+}
+
+.theme-obsidian {
+	--ph-bg: #06090b;
+	--ph-surface: #0f1518;
+	--ph-raised: #162024;
+	--ph-hover: #1f2d32;
+	--ph-ink: #f4fffb;
+	--ph-ink-2: #a7c4bc;
+	--ph-ink-3: #6c8a82;
+	--ph-line: #25383a;
+	--ph-accent: #2fd6a1;
+	--ph-accent-2: #7bf0cb;
+	--ph-glow: rgb(47 214 161 / 0.3);
+	--ph-head: "Outfit", sans-serif;
+	--ph-body: "Inter", sans-serif;
+	--ph-r: 8px;
+	--ph-cut: 0px;
+	--ph-bw: 1px;
+	--ph-bar: 3px;
+	--ph-case: none;
+	--ph-track: 0.02em;
+}
+
+.theme-valiant {
+	--ph-bg: #090d16;
+	--ph-surface: #121a2b;
+	--ph-raised: #1a2540;
+	--ph-hover: #243357;
+	--ph-ink: #eef3ff;
+	--ph-ink-2: #b0bddb;
+	--ph-ink-3: #7283aa;
+	--ph-line: #2e4270;
+	--ph-accent: #4f8cff;
+	--ph-accent-2: #9dc0ff;
+	--ph-glow: rgb(79 140 255 / 0.35);
+	--ph-head: "Marcellus", serif;
+	--ph-body: "Barlow Semi Condensed", sans-serif;
+	--ph-r: 4px;
+	--ph-cut: 6px;
+	--ph-bw: 2px;
+	--ph-bar: 4px;
+	--ph-case: uppercase;
+	--ph-track: 0.05em;
+}
+
+.theme-eldritch {
+	--ph-bg: #070812;
+	--ph-surface: #101226;
+	--ph-raised: #181a36;
+	--ph-hover: #22254a;
+	--ph-ink: #eafcff;
+	--ph-ink-2: #a3c7d6;
+	--ph-ink-3: #6c8ea0;
+	--ph-line: #2b3563;
+	--ph-accent: #19c6d8;
+	--ph-accent-2: #8af3ff;
+	--ph-glow: rgb(25 198 216 / 0.35);
+	--ph-head: "Syne", sans-serif;
+	--ph-body: "Rajdhani", sans-serif;
+	--ph-r: 0px;
+	--ph-cut: 14px;
+	--ph-bw: 1px;
+	--ph-bar: 2px;
+	--ph-case: uppercase;
+	--ph-track: 0.08em;
+}
+
+.theme-grimoire {
+	--ph-bg: #120d09;
+	--ph-surface: #20170f;
+	--ph-raised: #2c2016;
+	--ph-hover: #3a2b1c;
+	--ph-ink: #f6ead2;
+	--ph-ink-2: #cdb893;
+	--ph-ink-3: #8e7b5c;
+	--ph-line: #5a4228;
+	--ph-accent: #d98a1c;
+	--ph-accent-2: #f2b350;
+	--ph-glow: rgb(217 138 28 / 0.3);
+	--ph-head: "MedievalSharp", cursive, serif;
+	--ph-body: "Crimson Text", Georgia, serif;
+	--ph-r: 3px;
+	--ph-cut: 0px;
+	--ph-bw: 2px;
+	--ph-bar: 3px;
+	--ph-case: none;
+	--ph-track: 0.03em;
+}
+
+.theme-sylvan {
+	--ph-bg: #08110b;
+	--ph-surface: #112016;
+	--ph-raised: #19301f;
+	--ph-hover: #234029;
+	--ph-ink: #effbf1;
+	--ph-ink-2: #a8cfb0;
+	--ph-ink-3: #6e9877;
+	--ph-line: #2c5436;
+	--ph-accent: #52d27f;
+	--ph-accent-2: #b8f0a2;
+	--ph-glow: rgb(82 210 127 / 0.3);
+	--ph-head: "Marcellus", serif;
+	--ph-body: "Alegreya", serif;
+	--ph-r: 10px;
+	--ph-cut: 0px;
+	--ph-bw: 1px;
+	--ph-bar: 3px;
+	--ph-case: none;
+	--ph-track: 0.03em;
+}
+
+.theme-clockwork {
+	--ph-bg: #0d0b08;
+	--ph-surface: #1a1610;
+	--ph-raised: #261f15;
+	--ph-hover: #35291a;
+	--ph-ink: #f8efdc;
+	--ph-ink-2: #cdbd9d;
+	--ph-ink-3: #8f8061;
+	--ph-line: #4b3d26;
+	--ph-accent: #f0a020;
+	--ph-accent-2: #ffd27a;
+	--ph-glow: rgb(240 160 32 / 0.32);
+	--ph-head: "Share Tech", sans-serif;
+	--ph-body: "Fira Code", monospace;
+	--ph-r: 0px;
+	--ph-cut: 8px;
+	--ph-bw: 1px;
+	--ph-bar: 4px;
+	--ph-case: uppercase;
+	--ph-track: 0.1em;
+}
+
+.theme-frostborn {
+	--ph-bg: #07101a;
+	--ph-surface: #0f1c2c;
+	--ph-raised: #162a40;
+	--ph-hover: #1f3a58;
+	--ph-ink: #f0f9ff;
+	--ph-ink-2: #a9cbe2;
+	--ph-ink-3: #6f93ad;
+	--ph-line: #2a4b6b;
+	--ph-accent: #62c8f5;
+	--ph-accent-2: #bdeaff;
+	--ph-glow: rgb(98 200 245 / 0.35);
+	--ph-head: "Rajdhani", sans-serif;
+	--ph-body: "Outfit", sans-serif;
+	--ph-r: 6px;
+	--ph-cut: 10px;
+	--ph-bw: 1px;
+	--ph-bar: 2px;
+	--ph-case: uppercase;
+	--ph-track: 0.07em;
+}
+
+.theme-infernal {
+	--ph-bg: #12070a;
+	--ph-surface: #231012;
+	--ph-raised: #331819;
+	--ph-hover: #48221f;
+	--ph-ink: #fff1e8;
+	--ph-ink-2: #e0b3a0;
+	--ph-ink-3: #a1766a;
+	--ph-line: #6a2e26;
+	--ph-accent: #ff6a3d;
+	--ph-accent-2: #ffb066;
+	--ph-glow: rgb(255 106 61 / 0.35);
+	--ph-head: "MedievalSharp", cursive;
+	--ph-body: "Crimson Text", serif;
+	--ph-r: 2px;
+	--ph-cut: 6px;
+	--ph-bw: 2px;
+	--ph-bar: 4px;
+	--ph-case: none;
+	--ph-track: 0.04em;
+}
+
+.theme-ossuary {
+	--ph-bg: #0a100f;
+	--ph-surface: #151f1d;
+	--ph-raised: #1e2c29;
+	--ph-hover: #29403b;
+	--ph-ink: #f3f1e6;
+	--ph-ink-2: #c0c4b4;
+	--ph-ink-3: #818a7e;
+	--ph-line: #3b524c;
+	--ph-accent: #66d9c4;
+	--ph-accent-2: #bff3e6;
+	--ph-glow: rgb(102 217 196 / 0.28);
+	--ph-head: "Almendra", serif;
+	--ph-body: "Crimson Pro", serif;
+	--ph-r: 6px;
+	--ph-cut: 0px;
+	--ph-bw: 1px;
+	--ph-bar: 3px;
+	--ph-case: none;
+	--ph-track: 0.03em;
+}
+
+.theme-radiant {
+	--ph-bg: #130f06;
+	--ph-surface: #241b0a;
+	--ph-raised: #35280e;
+	--ph-hover: #4a3813;
+	--ph-ink: #fff9e3;
+	--ph-ink-2: #e6d49a;
+	--ph-ink-3: #a8975f;
+	--ph-line: #6e5619;
+	--ph-accent: #ffd23f;
+	--ph-accent-2: #fff0a1;
+	--ph-glow: rgb(255 210 63 / 0.38);
+	--ph-head: "Cinzel", serif;
+	--ph-body: "Cormorant Garamond", serif;
+	--ph-r: 2px;
+	--ph-cut: 12px;
+	--ph-bw: 1px;
+	--ph-bar: 3px;
+	--ph-case: uppercase;
+	--ph-track: 0.07em;
+}
+
+.theme-shadowdark {
+	--ph-bg: #07070a;
+	--ph-surface: #101016;
+	--ph-raised: #191a23;
+	--ph-hover: #242633;
+	--ph-ink: #f2efe6;
+	--ph-ink-2: #b5b0a0;
+	--ph-ink-3: #7c786c;
+	--ph-line: #3e3350;
+	--ph-accent: #b45fd1;
+	--ph-accent-2: #f4b03a;
+	--ph-glow: rgb(180 95 209 / 0.4);
+	--ph-head: "JSL Blackletter", "Old Newspaper Font", "UnifrakturMaguntia", "Cinzel", serif;
+	--ph-body: "Montserrat", sans-serif;
+	--ph-r: 0px;
+	--ph-cut: 6px;
+	--ph-bw: 2px;
+	--ph-bar: 3px;
+	--ph-case: none;
+	--ph-track: 0.02em;
+}
+
+/* Carolingian UI: follow the host module's palette, type and corner radius. */
+.theme-carolingian {
+	--ph-bg: var(--color-dark-bg-95, #15181c);
+	--ph-surface: var(--color-dark-bg-90, #1b1f24);
+	--ph-raised: var(--color-dark-bg-85, #23282e);
+	--ph-hover: var(--color-dark-bg-75, #2c3239);
+	--ph-ink: #f4f2f6;
+	--ph-ink-2: #c3c6cc;
+	--ph-ink-3: #8b9097;
+	--ph-line: var(--color-dark-bg-50, rgb(255 255 255 / 0.14));
+	--ph-accent: var(--color-highlights, #4493ad);
+	--ph-accent-2: var(--color-warm-1, #7ab6c4);
+	--ph-glow: var(--color-highlights-50, rgb(68 147 173 / 0.5));
+	--ph-head: var(--crlngn-font-titles, "Roboto Slab", sans-serif);
+	--ph-body: var(--crlngn-font-family, "Work Sans", sans-serif);
+	--ph-r: var(--crlngn-border-radius, 4px);
+	--ph-cut: 0px;
+	--ph-bw: 1px;
+	--ph-bar: 3px;
+	--ph-case: none;
+	--ph-track: 0.01em;
+}
+
+body.crlngn-ui.theme-light .theme-carolingian,
+body.crlngn-ui.theme-light.theme-carolingian {
+	--ph-bg: #e9edf1;
+	--ph-surface: #f4f6f8;
+	--ph-raised: #ffffff;
+	--ph-hover: #e2e8ed;
+	--ph-ink: #15181c;
+	--ph-ink-2: #3d444c;
+	--ph-ink-3: #66707a;
+	--ph-line: var(--color-secondary, #c9ced4);
+}

@@ -1,0 +1,18 @@
+<div class="hud-tab-pane {{#if isPresetsTab}}active{{/if}}" data-tab="presets">
+    <h2 class="hud-pane-title">{{localize "NAH.Panel.Nav.Backup"}}</h2>
+
+    {{#each backupSections}}
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">{{title}}</span>
+        </div>
+        {{#if description}}<span class="hud-cfg-group-desc">{{description}}</span>{{/if}}
+        <div class="hud-cfg-list">
+            {{#each rows}}
+            {{> "modules/niks-action-hud/templates/config/partials/action-row.hbs"}}
+            {{/each}}
+        </div>
+    </section>
+
+    {{/each}}
+</div>

@@ -1,0 +1,15 @@
+{{#each categories}}
+	<button type="button"
+			class="nah-hud-btn {{cssClass}}"
+			style="{{style}}"
+			data-action="category-action"
+			data-category="{{id}}"
+			data-category-id="{{id}}"
+			{{#if ../buttonShape}}data-button-shape="{{../buttonShape}}"{{/if}}
+			data-label-length="{{labelLength}}">
+		<div class="nah-btn-inner">
+			<span {{#if labelCss}}style="{{labelCss}}"{{/if}}>{{label}}</span>
+			{{{iconHtml}}}
+		</div>
+	</button>
+{{/each}}

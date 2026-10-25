@@ -1,0 +1,422 @@
+.application.niks-icon-picker {
+	box-shadow: 0 24px 60px var(--nah-shade-3);
+	overflow: hidden;
+	border: 1px solid #232a33;
+	border-radius: var(--nah-radius-md);
+	background: var(--nah-cfg-surface);
+	color: var(--nah-cfg-ink);
+	font-family: var(--hud-cfg-font-stack);
+	font-size: 12.5px;
+	line-height: 1.45;
+}
+
+.application.niks-icon-picker .window-content {
+	padding: 0;
+	overflow: hidden;
+	background: transparent;
+	color: inherit;
+}
+
+.niks-icon-picker .nah-ip {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	min-height: 0;
+}
+
+.niks-icon-picker .nah-ip-body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 14px;
+	min-height: 0;
+	padding: 18px;
+}
+
+.niks-icon-picker .nah-ip-toolbar {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-5);
+}
+
+.niks-icon-picker .nah-ip-search {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	gap: var(--nah-space-4);
+	min-width: 0;
+	height: 32px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	border: 1px solid var(--nah-cfg-line);
+	border-radius: var(--nah-radius-md);
+	background: var(--nah-cfg-well);
+	transition: border-color var(--nah-dur-base);
+}
+
+.niks-icon-picker .nah-ip-search:hover {
+	border-color: var(--nah-cfg-line-strong);
+}
+
+.niks-icon-picker .nah-ip-search > i {
+	font-size: 11px;
+	color: var(--nah-cfg-ink-faint);
+}
+
+.niks-icon-picker :is(.nah-ip-search-input, .nah-ip-value-input) {
+	flex: 1;
+	min-width: 0;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	box-shadow: none;
+	border: 0;
+	border-radius: 0;
+	outline: none;
+	background: transparent;
+	color: var(--nah-cfg-ink);
+}
+
+.niks-icon-picker .nah-ip-search-input {
+	font-family: var(--hud-cfg-font-stack);
+	font-size: 12.5px;
+}
+
+.niks-icon-picker :is(.nah-ip-search-input, .nah-ip-value-input)::placeholder {
+	color: var(--nah-cfg-ink-faint);
+}
+
+.niks-icon-picker .nah-ip-search-clear {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	min-width: 0;
+	height: auto;
+	margin: 0;
+	padding: var(--nah-space-1);
+	box-shadow: none;
+	border: 0;
+	outline: none;
+	background: transparent;
+	color: var(--nah-cfg-ink-faint);
+	font-size: 11px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.niks-icon-picker .nah-ip-search-clear:hover {
+	background: transparent;
+	color: var(--nah-cfg-ink);
+}
+
+.niks-icon-picker .nah-ip-segments {
+	display: flex;
+	flex-shrink: 0;
+	gap: var(--nah-space-1);
+	padding: var(--nah-space-1);
+	border: 1px solid var(--nah-cfg-line-soft);
+	border-radius: var(--nah-radius-md);
+	background: var(--nah-cfg-well);
+}
+
+.niks-icon-picker .nah-ip-segment {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	min-width: 0;
+	height: 26px;
+	margin: 0;
+	padding: 0 var(--nah-space-5);
+	box-shadow: none;
+	border: 0;
+	border-radius: var(--nah-radius-sm);
+	outline: none;
+	background: transparent;
+	color: var(--nah-cfg-ink-dim);
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	line-height: normal;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background var(--nah-dur-fast), color var(--nah-dur-base);
+}
+
+.niks-icon-picker .nah-ip-segment-sm {
+	height: 24px;
+	padding: 0 11px;
+}
+
+.niks-icon-picker .nah-ip-segment:hover {
+	background: transparent;
+	color: var(--nah-cfg-ink);
+}
+
+.niks-icon-picker .nah-ip-segment.is-active {
+	box-shadow: inset 0 0 0 1px rgba(0, 229, 255, 0.35);
+	background: rgba(0, 229, 255, 0.08);
+	color: var(--nah-cfg-accent);
+}
+
+.niks-icon-picker .nah-ip-subbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--nah-space-5);
+	min-height: 30px;
+}
+
+.niks-icon-picker .nah-ip-count {
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 10.5px;
+	letter-spacing: 0.14em;
+	color: var(--nah-cfg-ink-dim);
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.niks-icon-picker .nah-ip-results {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+	padding: 10px;
+	border: 1px solid var(--nah-cfg-line-soft);
+	border-radius: var(--nah-radius-md);
+	background: var(--nah-cfg-surface-raised);
+}
+
+.niks-icon-picker .nah-ip-results::-webkit-scrollbar {
+	width: 8px;
+}
+
+.niks-icon-picker .nah-ip-results::-webkit-scrollbar-thumb {
+	background: var(--nah-cfg-line);
+	border-radius: var(--nah-radius-sm);
+}
+
+.niks-icon-picker .nah-ip-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+	gap: var(--nah-space-3);
+}
+
+.niks-icon-picker .nah-ip-option {
+	display: grid;
+	place-items: center;
+	width: auto;
+	min-width: 0;
+	height: 44px;
+	margin: 0;
+	padding: 0;
+	box-shadow: none;
+	border: 1px solid var(--nah-cfg-line-faint);
+	border-radius: var(--nah-radius-sm);
+	outline: none;
+	background: var(--nah-cfg-surface);
+	color: var(--nah-cfg-ink-soft);
+	font-size: 17px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background var(--nah-dur-fast), border-color var(--nah-dur-base), color var(--nah-dur-base);
+}
+
+.niks-icon-picker .nah-ip-option:hover {
+	border-color: var(--nah-cfg-line);
+	background: var(--nah-cfg-line-faint);
+	color: var(--nah-cfg-ink-soft);
+}
+
+.niks-icon-picker .nah-ip-option.is-selected {
+	border-color: rgba(0, 229, 255, 0.45);
+	background: rgba(0, 229, 255, 0.08);
+	color: var(--nah-cfg-accent);
+}
+
+.niks-icon-picker .nah-ip-empty,
+.niks-icon-picker .nah-ip-refine {
+	margin: 0;
+	padding: var(--nah-space-7) 0;
+	font-size: 12px;
+	color: var(--nah-cfg-ink-dim);
+	text-align: center;
+}
+
+.niks-icon-picker .nah-ip-refine {
+	padding: var(--nah-space-5) 0 var(--nah-space-2);
+}
+
+.niks-icon-picker .nah-ip-image {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	height: 100%;
+	min-height: 220px;
+	box-sizing: border-box;
+	padding: var(--nah-space-7);
+}
+
+.niks-icon-picker .nah-ip-image-drop {
+	display: grid;
+	place-items: center;
+	width: 120px;
+	height: 120px;
+	border: 1px dashed var(--nah-cfg-line);
+	border-radius: var(--nah-radius-md);
+	background: var(--nah-cfg-well);
+	color: var(--nah-cfg-ink-faint);
+	font-size: 30px;
+}
+
+.niks-icon-picker .nah-ip-image-drop.has-image {
+	padding: 10px;
+	box-sizing: border-box;
+	border-style: solid;
+	border-color: rgba(0, 229, 255, 0.35);
+}
+
+.niks-icon-picker .nah-ip-image-drop img {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	object-fit: contain;
+}
+
+.niks-icon-picker .nah-ip-image p {
+	margin: 0;
+	max-width: 320px;
+	font-size: 12px;
+	color: var(--nah-cfg-ink-dim);
+	text-align: center;
+	text-wrap: pretty;
+}
+
+.niks-icon-picker .nah-ip-footer {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	gap: 10px;
+	height: 56px;
+	box-sizing: border-box;
+	padding: 0 var(--nah-space-6) 0 18px;
+	border-top: 1px solid #232a33;
+	background: #11161d;
+}
+
+.niks-icon-picker .nah-ip-preview {
+	display: grid;
+	place-items: center;
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	box-sizing: border-box;
+	overflow: hidden;
+	border-radius: var(--nah-radius-md);
+	border: 1px solid rgba(0, 229, 255, 0.35);
+	background: rgba(0, 229, 255, 0.08);
+	color: var(--nah-cfg-accent);
+	font-size: 15px;
+	line-height: 1;
+}
+
+.niks-icon-picker .nah-ip-preview.is-empty {
+	border-color: var(--nah-cfg-line);
+	background: var(--nah-cfg-well);
+	color: var(--nah-cfg-ink-faint);
+}
+
+.niks-icon-picker .nah-ip-preview img {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	object-fit: contain;
+}
+
+.niks-icon-picker .nah-ip-value {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	min-width: 0;
+	height: 30px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	border: 1px solid var(--nah-cfg-line);
+	border-radius: var(--nah-radius-md);
+	background: var(--nah-cfg-well);
+	transition: border-color var(--nah-dur-base);
+}
+
+.niks-icon-picker .nah-ip-value:hover {
+	border-color: var(--nah-cfg-line-strong);
+}
+
+.niks-icon-picker .nah-ip-value-input {
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 11.5px;
+}
+
+.niks-icon-picker .nah-ip-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: auto;
+	min-width: 0;
+	height: 30px;
+	margin: 0;
+	padding: 0 14px;
+	box-shadow: none;
+	border: 1px solid var(--nah-cfg-line);
+	border-radius: var(--nah-radius-md);
+	outline: none;
+	background: transparent;
+	color: var(--nah-cfg-ink-soft);
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	line-height: normal;
+	cursor: pointer;
+	transition: background var(--nah-dur-fast), border-color var(--nah-dur-base);
+}
+
+.niks-icon-picker .nah-ip-btn:hover {
+	border-color: var(--nah-cfg-line-strong);
+	background: var(--nah-cfg-line-faint);
+	color: var(--nah-cfg-ink-soft);
+}
+
+.niks-icon-picker .nah-ip-btn-primary {
+	padding: 0 18px;
+	border-color: var(--nah-cfg-accent);
+	background: var(--nah-cfg-accent);
+	color: #0b121e;
+	font-weight: 600;
+}
+
+.niks-icon-picker .nah-ip-btn-primary:hover {
+	border-color: #5cefff;
+	background: #5cefff;
+	color: #0b121e;
+}
+
+.niks-icon-picker .window-content button:focus-visible {
+	outline: 2px solid var(--nah-cfg-accent);
+	outline-offset: 2px;
+}
+
+.niks-icon-picker .window-content :is(.nah-ip-search-input, .nah-ip-value-input):is(:focus, :focus-visible) {
+	outline: none;
+	box-shadow: none;
+}
+
+.niks-icon-picker :is(.nah-ip-search, .nah-ip-value):focus-within {
+	border-color: rgba(0, 229, 255, 0.45);
+}

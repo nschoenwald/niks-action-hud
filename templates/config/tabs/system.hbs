@@ -1,0 +1,19 @@
+{{#if hasSystemTab}}
+<div class="hud-tab-pane {{#if isSystemTab}}active{{/if}}" data-tab="system">
+    <h2 class="hud-pane-title">{{systemTabLabel}}</h2>
+
+    {{#each settingSections.system}}
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">{{title}}</span><span data-cfg-count="rows"></span>
+        </div>
+        <div class="hud-cfg-list">
+            {{#each rows}}
+            {{> "modules/niks-action-hud/templates/config/partials/setting-row.hbs"}}
+            {{/each}}
+        </div>
+    </section>
+    {{/each}}
+
+</div>
+{{/if}}

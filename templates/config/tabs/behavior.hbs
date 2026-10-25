@@ -1,0 +1,35 @@
+<div class="hud-tab-pane {{#if isBehaviorTab}}active{{/if}}" data-tab="behavior">
+    <h2 class="hud-pane-title">{{localize "NAH.Panel.Nav.Behavior"}}</h2>
+
+    {{#each settingSections.behavior}}
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">{{title}}</span><span data-cfg-count="rows"></span>
+        </div>
+        <div class="hud-cfg-list">
+            {{#each rows}}
+            {{> "modules/niks-action-hud/templates/config/partials/setting-row.hbs"}}
+            {{/each}}
+        </div>
+    </section>
+
+    {{/each}}
+    <section class="hud-cfg-group{{#unless canConfigure}} is-blocked{{/unless}}" {{#unless canConfigure}}title="{{gmOnlyTitle}}" data-blocked-reason="{{gmOnlyTitle}}"{{/unless}}>
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">{{localize "NAH.Panel.Excluded.Title"}}</span><span data-cfg-count="checked"></span>
+            <span class="hud-cfg-scope world hud-cfg-group-scope" title="{{localize "NAH.Panel.Scope.WorldTitle"}}">{{localize "NAH.Panel.Scope.World"}}</span>
+        </div>
+        <div class="hud-cfg-list hud-cfg-chips-box">
+            <span class="hud-cfg-hint">{{localize "NAH.Panel.Excluded.Hint"}}</span>
+            <div class="hud-chip-group">
+                {{#each actorTypeChips}}
+                <label class="hud-chip {{#if this.checked}}active{{/if}}">
+                    <input type="checkbox" name="hiddenActorTypes.{{this.value}}" {{#if this.checked}}checked{{/if}} {{#unless @root.canConfigure}}disabled{{/unless}}>
+                    <span class="hud-chip-tick" aria-hidden="true"></span>{{this.value}}
+                </label>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+
+</div>

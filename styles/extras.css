@@ -1,0 +1,474 @@
+/* ==========================================================================
+   Custom Fonts
+   ========================================================================== */
+#nah-dock.nah-custom-font,
+#nah-dock.nah-custom-font *:not(i):not([class*="fa-"]):not([class*="ra-"]):not(.fa):not(.fas):not(.far):not(.fal):not(.fat):not(.fad):not(.fab):not(.ra) {
+	font-family: var(--nah-font-family), sans-serif !important;
+}
+
+#nah-tooltip.nah-custom-font,
+#nah-tooltip.nah-custom-font *:not(i):not([class*="fa-"]):not([class*="ra-"]):not(.fa):not(.fas):not(.far):not(.fal):not(.fat):not(.fad):not(.fab):not(.ra) {
+	font-family: var(--nah-font-family), sans-serif !important;
+}
+
+/* Explicit protection for icons inside HUD, Tooltip, and Live Preview */
+:is(#nah-dock, #nah-tooltip, .hud-preview-sandbox) :is(i, .fa, .fas, .far, .fal, .fat, .fad, .fab, [class*="fa-"]) {
+	font-family: var(--_fa-family, var(--font-awesome, "Font Awesome 7 Pro", "Font Awesome 6 Pro", "FontAwesome")) !important;
+}
+
+:is(#nah-dock, #nah-tooltip, .hud-preview-sandbox) :is(.ra, [class*="ra-"]) {
+	font-family: RPGAwesome !important;
+}
+
+/* ==========================================================================
+   Nik's Action HUD Extensions
+   ========================================================================== */
+@keyframes nah-wiggle {
+	0% { transform: rotate(-0.6deg); }
+	50% { transform: rotate(0.6deg); }
+	100% { transform: rotate(-0.6deg); }
+}
+
+:is(#nah-scale-indicator, .nah-scale-indicator) {
+	position: absolute;
+	top: -34px;
+	left: 50%;
+	z-index: 10000;
+	padding: 3px var(--nah-space-5);
+	box-shadow: 0 4px 14px var(--nah-shade-2);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	border-radius: 16px;
+	background: rgba(18, 22, 28, 0.95);
+	opacity: 0;
+	color: #f0f4f8;
+	font-family: inherit;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	white-space: nowrap;
+	transform: translateX(-50%) translateY(4px);
+	pointer-events: none;
+	transition: opacity var(--nah-dur-base) cubic-bezier(0.16, 1, 0.3, 1), transform var(--nah-dur-base) cubic-bezier(0.16, 1, 0.3, 1);
+	user-select: none;
+}
+
+:is(#nah-scale-indicator, .nah-scale-indicator).visible {
+	opacity: 1;
+	transform: translateX(-50%) translateY(0);
+}
+
+.nah-resize-handle {
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	bottom: auto;
+	left: auto;
+	display: flex;
+	z-index: 100;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	opacity: 0.65;
+	filter: drop-shadow(0 2px 4px var(--nah-shade-3));
+	color: rgba(255, 255, 255, 0.65);
+	cursor: nesw-resize;
+	transition: opacity var(--nah-dur-base) ease, transform var(--nah-dur-base) ease, color var(--nah-dur-base) ease;
+	pointer-events: auto;
+	user-select: none;
+}
+
+.nah-resize-handle svg {
+	transform: rotate(-90deg);
+	transition: transform var(--nah-dur-base) ease;
+}
+
+/* Adaptive inward-corner placement based on dock corner */
+/* bottom-left dock -> inward corner is top-right */
+#nah-dock[data-corner="bottom-left"] .nah-resize-handle {
+	top: -4px;
+	bottom: auto;
+	right: -4px;
+	left: auto;
+	cursor: nesw-resize;
+}
+#nah-dock[data-corner="bottom-left"] .nah-resize-handle svg {
+	transform: rotate(-90deg);
+}
+
+/* bottom-right dock -> inward corner is top-left (placed right of the portrait) */
+#nah-dock[data-corner="bottom-right"] .nah-resize-handle {
+	top: -4px;
+	bottom: auto;
+	left: 30px;
+	right: auto;
+	cursor: nwse-resize;
+}
+#nah-dock[data-corner="bottom-right"] .nah-resize-handle svg {
+	transform: rotate(180deg);
+}
+
+/* top-left dock -> inward corner is bottom-right */
+#nah-dock[data-corner="top-left"] .nah-resize-handle {
+	bottom: -4px;
+	top: auto;
+	right: -4px;
+	left: auto;
+	cursor: nwse-resize;
+}
+#nah-dock[data-corner="top-left"] .nah-resize-handle svg {
+	transform: rotate(0deg);
+}
+
+/* top-right dock -> inward corner is bottom-left */
+#nah-dock[data-corner="top-right"] .nah-resize-handle {
+	bottom: -4px;
+	top: auto;
+	left: -4px;
+	right: auto;
+	cursor: nesw-resize;
+}
+#nah-dock[data-corner="top-right"] .nah-resize-handle svg {
+	transform: rotate(90deg);
+}
+
+#nah-dock:hover .nah-resize-handle,
+.nah-resize-handle:hover,
+.nah-resize-handle.is-resizing {
+	opacity: 0.9;
+}
+
+.nah-resize-handle:hover,
+.nah-resize-handle.is-resizing {
+	opacity: 1;
+	color: var(--nah-accent-secondary);
+	transform: scale(1.25);
+}
+
+#nah-dock.is-resizing {
+	user-select: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background: var(--nah-veil-3);
+	border-radius: var(--nah-radius-sm);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.4);
+}
+
+/* ==========================================================================
+   Damage Type Icons
+   ========================================================================== */
+.nah-dmg-icon {
+	display: inline-block;
+	flex-shrink: 0;
+	width: 13px;
+	height: 13px;
+	margin: 0 1px 0 var(--nah-space-1);
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	background-color: var(--nah-dmg-color, currentColor);
+	mask-image: var(--nah-dmg-mask);
+	-webkit-mask-image: var(--nah-dmg-mask);
+	vertical-align: -2px;
+	-webkit-mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	transition: transform var(--nah-dur-fast) ease;
+}
+
+.nah-dmg-icon:hover {
+	transform: scale(1.15);
+}
+
+/* ==========================================================================
+   Shadowdark Controls Fallbacks
+   ========================================================================== */
+.nah-sd-stat {
+	font-size: 0.85em;
+	font-weight: 700;
+}
+
+.nah-sd-stat.is-torch {
+	color: var(--ph-accent-2, #fbbf24);
+}
+
+.nah-sd-stat.is-muted {
+	color: var(--ph-ink-3, #888);
+}
+
+.nah-sd-stat.is-quiet {
+	color: var(--ph-ink-3, #888);
+	font-weight: 400;
+}
+
+.nah-sd-equip-btn,
+.nah-sd-light-btn,
+.nah-sd-drink-btn,
+.nah-sd-restore-btn {
+	padding: 1px var(--nah-space-3);
+	border: 1px solid var(--nah-veil-line);
+	border-radius: var(--nah-radius-sm);
+	background: var(--nah-shade-2);
+	font-size: 0.8em;
+	font-weight: 700;
+	line-height: 1.4;
+	color: #eee;
+	cursor: pointer;
+}
+
+.nah-sd-equip-btn.equipped {
+	border-color: #2dd4bf;
+	background: rgba(45, 212, 191, 0.25);
+	color: #5eead4;
+}
+
+.nah-sd-light-btn.burning {
+	border-color: var(--nah-amber);
+	background: rgba(245, 158, 11, 0.25);
+	color: #fbbf24;
+}
+
+.nah-sd-lost-badge {
+	padding: 1px var(--nah-space-2);
+	border: 1px solid #b91c1c;
+	border-radius: var(--nah-radius-sm);
+	background: rgba(185, 28, 28, 0.2);
+	font-size: 0.75em;
+	font-weight: 700;
+	color: var(--nah-danger-soft);
+}
+
+/* ==========================================================================
+   Ammunition Controls & Selector Popover
+   ========================================================================== */
+.nah-ammo-bar {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--nah-space-2);
+	margin-top: 3px;
+}
+
+.nah-ammo-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--nah-space-2);
+	padding: var(--nah-space-1) 7px;
+	max-width: 140px;
+	overflow: hidden;
+	border-radius: var(--nah-radius-sm);
+	border: 1px solid rgba(148, 163, 184, 0.35);
+	background: rgba(15, 23, 42, 0.75);
+	font-size: 0.8em;
+	line-height: 1.2;
+	color: #e2e8f0;
+}
+
+.nah-ammo-badge.is-stocked {
+	border-color: rgba(34, 197, 94, 0.4);
+	color: #86efac;
+}
+
+.nah-ammo-badge.is-low {
+	border-color: rgba(245, 158, 11, 0.5);
+	background: rgba(45, 25, 10, 0.75);
+	color: #fde047;
+}
+
+.nah-ammo-badge.is-empty {
+	border-color: rgba(239, 68, 68, 0.6);
+	background: rgba(50, 15, 15, 0.8);
+	color: #fca5a5;
+}
+
+.nah-ammo-icon {
+	width: 14px;
+	height: 14px;
+	border-radius: 2px;
+	object-fit: contain;
+}
+
+.nah-ammo-name {
+	overflow: hidden;
+	max-width: 80px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.nah-ammo-count {
+	font-weight: 700;
+	margin-left: var(--nah-space-1);
+}
+
+.nah-ammo-btn {
+	padding: 1px var(--nah-space-3);
+	border: 1px solid rgba(148, 163, 184, 0.35);
+	border-radius: var(--nah-radius-sm);
+	background: rgba(30, 41, 59, 0.8);
+	color: #cbd5e1;
+	font-size: 0.75em;
+	font-weight: 700;
+	line-height: 1.3;
+	cursor: pointer;
+	transition: background var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease;
+}
+
+.nah-ammo-btn:hover {
+	border-color: rgba(203, 213, 225, 0.6);
+	background: rgba(51, 65, 85, 0.95);
+	color: #fff;
+}
+
+.nah-ammo-popover {
+	position: fixed;
+	z-index: 100000;
+	display: flex;
+	flex-direction: column;
+	min-width: 190px;
+	max-width: 320px;
+	max-height: 320px;
+	box-shadow: 0 8px 24px var(--nah-shade-3);
+	overflow: hidden;
+	border: 1px solid rgba(56, 189, 248, 0.4);
+	border-radius: var(--nah-radius-md);
+	background: rgba(15, 23, 42, 0.97);
+}
+
+.nah-ammo-popover-title {
+	padding: var(--nah-space-3) 10px;
+	border-bottom: 1px solid var(--nah-veil-line);
+	background: var(--nah-shade-1);
+	font-size: 0.85em;
+	font-weight: 700;
+	color: var(--nah-accent, var(--nah-sky));
+}
+
+.nah-ammo-popover-list {
+	overflow-y: auto;
+	max-height: 260px;
+}
+
+.nah-ammo-popover-item {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-3);
+	padding: 5px 10px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+	cursor: pointer;
+	transition: background 0.1s ease;
+}
+
+.nah-ammo-popover-item:hover {
+	background: rgba(56, 189, 248, 0.15);
+}
+
+.nah-ammo-popover-item.is-selected {
+	border-left: 3px solid var(--nah-accent, var(--nah-sky));
+	background: rgba(56, 189, 248, 0.1);
+}
+
+.nah-ammo-popover-img {
+	width: 18px;
+	height: 18px;
+	border-radius: 2px;
+	object-fit: contain;
+}
+
+.nah-ammo-popover-name {
+	flex: 1;
+	overflow: hidden;
+	font-size: 0.88em;
+	color: #f1f5f9;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.nah-ammo-popover-qty {
+	font-size: 0.88em;
+	font-weight: 700;
+	color: #94a3b8;
+}
+
+.nah-ammo-popover-empty {
+	padding: var(--nah-space-5);
+	text-align: center;
+	color: #64748b;
+	font-style: italic;
+	font-size: 0.85em;
+}
+
+/* Equip pill: equipped reads as a lit, tinted chip; unequipped as an empty dashed outline. */
+.nah-inventory-equip-toggle {
+	--nah-equip-ink: var(--nah-text-secondary, #9ca3af);
+	padding: 1px var(--nah-space-4);
+	min-height: 22px;
+	border: 1px dashed color-mix(in srgb, var(--nah-equip-ink) 60%, transparent);
+	border-radius: var(--nah-radius-sm);
+	background: transparent;
+	font-size: 0.82em;
+	font-weight: 700;
+	line-height: 1.5;
+	color: var(--nah-equip-ink);
+	cursor: pointer;
+	transition: background-color var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease;
+}
+
+.nah-inventory-equip-toggle.is-active {
+	--nah-equip-ink: var(--nah-accent-secondary);
+	border-style: solid;
+	background: color-mix(in srgb, var(--nah-accent-secondary) 22%, transparent);
+}
+
+.nah-inventory-equip-toggle:hover {
+	border-style: solid;
+	background: color-mix(in srgb, var(--nah-equip-ink) 14%, transparent);
+}
+
+.nah-inventory-equip-toggle.is-active:hover {
+	background: color-mix(in srgb, var(--nah-accent-secondary) 32%, transparent);
+}
+
+/* Entry dialogs (favorite options, personal actions, macro notes). */
+.nah-prompt-identity {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-5);
+	padding: var(--nah-space-4) var(--nah-space-1);
+}
+
+.nah-prompt-icon {
+	flex-shrink: 0;
+	border: 1px solid var(--nah-veil-line-strong);
+	border-radius: var(--nah-radius-md);
+}
+
+.nah-prompt-text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.nah-prompt-title {
+	overflow: hidden;
+	font-size: 1.05em;
+	font-weight: 700;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.nah-prompt-subtitle {
+	font-size: 0.8em;
+	opacity: 0.65;
+}

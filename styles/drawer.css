@@ -1,0 +1,562 @@
+/* ==========================================================================
+   Submenu Panels, Sidebars & Scroll Areas
+   ========================================================================== */
+.nah-drawer-pane {
+	display: flex;
+	flex-flow: column nowrap;
+	width: 380px;
+	max-height: 520px;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.nah-drawer-pane.has-sidebar {
+	flex-flow: row nowrap;
+	padding: 0;
+}
+
+.nah-rail-pane {
+	display: flex;
+	flex-shrink: 0;
+	flex-direction: column;
+	gap: var(--nah-space-1);
+	width: 96px;
+	min-width: 96px;
+	padding: 5px;
+}
+
+.nah-rail-tab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--nah-space-4) var(--nah-space-3);
+	overflow: hidden;
+	text-align: center;
+	font-size: 0.85em;
+	white-space: nowrap;
+	word-break: normal;
+	line-height: 1.1;
+	cursor: pointer;
+	transition: background var(--nah-dur-base), color var(--nah-dur-base), border-color var(--nah-dur-base);
+}
+
+.nah-rail-tab span {
+	overflow: hidden;
+	max-width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.nah-primary-pane {
+	position: relative;
+	display: flex;
+	flex: 1 1 0;
+	flex-flow: column nowrap;
+	min-width: 0;
+}
+
+.nah-scroller {
+	flex: 1;
+	overflow: hidden auto;
+}
+
+.nah-drawer-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-shrink: 0;
+	padding: 10px var(--nah-space-6);
+	box-sizing: border-box;
+}
+
+.nah-drawer-tools {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--nah-space-2);
+	flex-shrink: 0;
+}
+
+.nah-drawer-toggle i {
+	opacity: 0.6;
+}
+
+.nah-drawer-toggle.active i {
+	color: var(--ph-accent-2, var(--nah-accent-secondary));
+	opacity: 1;
+}
+
+.nah-menu-header-group {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: nowrap;
+	min-width: 0;
+}
+
+/* ==========================================================================
+   Search Bar & Favorites Filter Controls
+   ========================================================================== */
+.nah-finder-wrap {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-4);
+	flex-shrink: 0;
+	padding: 5px 10px;
+	border-bottom: 1px solid var(--nah-veil-line);
+	background: var(--nah-shade-1);
+}
+
+.nah-finder-wrap i {
+	color: #888;
+	font-size: 0.9em;
+}
+
+.nah-finder-field {
+	flex: 1;
+	min-width: 0;
+	padding-inline: var(--nah-space-2);
+	border: none;
+	outline: none;
+	background: transparent;
+	color: var(--nah-text-primary, #ffffff);
+	font-family: var(--nah-font-body, "Oswald", sans-serif);
+	font-size: 1em;
+}
+
+.nah-finder-field::placeholder {
+	color: #666;
+	font-style: italic;
+}
+
+.nah-search-clear {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	margin: 0;
+	border: none;
+	border-radius: var(--nah-radius-sm);
+	background: transparent;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.nah-finder-wrap .nah-search-clear i {
+	color: inherit;
+	opacity: 0.7;
+}
+
+.nah-search-clear:hover i,
+.nah-search-clear:focus-visible i {
+	opacity: 1;
+}
+
+/* ==========================================================================
+   Tabs & Badges
+   ========================================================================== */
+.nah-spell-pages {
+	display: flex;
+	flex-flow: row nowrap;
+	overflow: auto hidden;
+	scrollbar-width: thin;
+	scrollbar-color: var(--nah-veil-3) transparent;
+}
+
+.nah-spell-pages::-webkit-scrollbar {
+	height: 4px;
+}
+
+.nah-spell-pages::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.nah-spell-pages::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 2px;
+}
+
+.nah-spell-pages::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
+   Action Items, Rolls & Lists
+   ========================================================================== */
+.nah-group-heading {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-3);
+	padding: 5px 10px;
+	margin: var(--nah-space-3) 0 3px 0;
+	border-left: 3px solid var(--nah-accent-secondary);
+	border-radius: 0 var(--nah-radius-sm) var(--nah-radius-sm) 0;
+	background: var(--nah-veil-2);
+	color: var(--nah-accent-secondary);
+	font-size: 0.88em;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.75px;
+	pointer-events: none;
+	user-select: none;
+}
+
+.nah-group-heading:first-child {
+	margin-top: var(--nah-space-1);
+}
+
+.nah-row-entry {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	gap: 10px;
+	inline-size: 100%;
+	box-sizing: border-box !important;
+	cursor: pointer;
+}
+
+.nah-item-icon-box {
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	min-width: 32px;
+	min-height: 32px;
+	max-width: 32px;
+	max-height: 32px;
+	overflow: hidden;
+}
+
+.nah-row-thumb,
+.nah-item-icon-img {
+	display: block;
+	flex-shrink: 0 !important;
+	width: 32px !important;
+	height: 32px !important;
+	min-width: 32px !important;
+	min-height: 32px !important;
+	max-width: 32px !important;
+	max-height: 32px !important;
+	border-radius: var(--nah-radius-sm);
+	object-fit: cover !important;
+}
+
+.nah-row-body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-flow: column nowrap;
+	justify-content: center;
+	gap: var(--nah-space-1);
+	min-inline-size: 0;
+}
+
+.nah-item-name {
+	overflow: hidden;
+	font-family: var(--nah-font-body, inherit);
+	font-weight: 600;
+	font-size: 1.05em;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.nah-item-name-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+	width: 100%;
+	overflow: hidden;
+}
+
+.nah-item-sub-line {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--nah-space-4);
+	width: 100%;
+	min-width: 0;
+	margin-top: 1px;
+}
+
+.nah-item-cost-container {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* Sub-line built from row segments (features/drawer/segments.js) */
+.nah-uses-badge.is-muted { color: #aaa; }
+.nah-uses-badge.is-accent { color: #4cc9f0; }
+.nah-uses-badge.is-ready { color: #45c8c0; }
+.nah-uses-badge.is-recharge { color: #ff6b6b; }
+
+.nah-meta-line.is-muted {
+	color: #888;
+}
+
+.nah-seg-line {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.nah-item-right-meta {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-3);
+	flex-shrink: 0 !important;
+	margin-left: auto;
+}
+
+/* Favorite toggle: overlays the row's right edge on hover; the right-hand info slides left to make room.
+   Pinned rows carry an accent line instead of a permanent star. */
+.nah-action-card {
+	--nah-fav-room: 40px;
+}
+
+.nah-pin-toggle {
+	position: absolute;
+	top: 50%;
+	right: var(--nah-space-5);
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--nah-space-2);
+	border-radius: 50%;
+	opacity: 0;
+	color: #8a8a8a;
+	cursor: pointer;
+	pointer-events: none;
+	transform: translateY(-50%);
+	transition: opacity var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease, background var(--nah-dur-fast) ease;
+}
+
+.nah-action-card:is(:hover, :focus-within) .nah-pin-toggle {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+:is(.nah-item-right-meta, .nah-one-line-meta) {
+	transition: margin-right var(--nah-dur-base) var(--nah-ease);
+}
+
+.nah-action-card:is(:hover, :focus-within) :is(.nah-item-right-meta, .nah-one-line-meta) {
+	margin-right: var(--nah-fav-room);
+}
+
+@media (hover: none) {
+	.nah-pin-toggle {
+		opacity: 0.7;
+		pointer-events: auto;
+	}
+
+	.nah-action-card :is(.nah-item-right-meta, .nah-one-line-meta) {
+		margin-right: var(--nah-fav-room);
+	}
+}
+
+.nah-pin-toggle:hover {
+	color: var(--nah-accent, var(--nah-gold));
+	background: var(--nah-veil-2);
+}
+
+.nah-pin-toggle.active {
+	color: var(--nah-accent, var(--nah-gold));
+}
+
+.nah-action-card {
+	position: relative;
+}
+
+.nah-action-card.is-favorite::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 6px;
+	bottom: 6px;
+	width: 3px;
+	border-radius: 0 2px 2px 0;
+	background: var(--nah-accent, var(--nah-gold));
+	pointer-events: none;
+}
+
+/* One-line rolls (Abilities, Saves, Skills) */
+.nah-row-entry.nah-one-line-item {
+	padding: var(--nah-space-3) var(--nah-space-5);
+}
+
+.nah-row-entry.nah-one-line-item .nah-row-body {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	inline-size: 100%;
+}
+
+.nah-one-line-meta {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-4);
+	flex-shrink: 0;
+	white-space: nowrap;
+}
+
+/* Action-economy badge (A, BA, R, S, LA, SR, LR …): a solid pill in a fixed colour per type, so it
+   reads as its own marker rather than part of the components or info text that follow it. Fixed
+   colours (not theme accents) keep the types recognisable in every theme; white text stays at
+   ≥ 5:1 contrast on each fill, in light and dark mode alike. */
+.nah-act-badge {
+	--nah-act-fill: #52525b;
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	min-width: 22px;
+	height: 17px;
+	padding: 0 6px;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	border-radius: 999px;
+	background: var(--nah-act-fill);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+	color: #fff;
+	font-family: var(--nah-font-body, inherit);
+	font-size: 0.66em;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+.nah-act-badge.nah-act-action { --nah-act-fill: #2f7d3e; }
+.nah-act-badge.nah-act-bonus { --nah-act-fill: #b45309; }
+.nah-act-badge.nah-act-reaction { --nah-act-fill: #7c3aed; }
+.nah-act-badge.nah-act-special { --nah-act-fill: #475569; }
+.nah-act-badge.nah-act-legendary { --nah-act-fill: #8a6a0a; }
+.nah-act-badge.nah-act-lair { --nah-act-fill: #7c4a2a; }
+.nah-act-badge.nah-act-rest { --nah-act-fill: #1d6fa5; }
+.nah-act-badge.nah-act-mythic { --nah-act-fill: #b91c1c; }
+.nah-act-badge.nah-act-vehicle { --nah-act-fill: #0f766e; }
+.nah-act-badge.nah-act-combat { --nah-act-fill: #4d7c0f; }
+.nah-act-badge.nah-act-time { --nah-act-fill: #57534e; }
+
+/* The only light HUD surface is the Carolingian theme in Carolingian UI's light mode (the other
+   palettes stay dark whatever Foundry's light/dark settings are). There the white hairline would
+   vanish, so the pill gets a darker edge instead. */
+body.crlngn-ui.theme-light .theme-carolingian .nah-act-badge {
+	border-color: rgba(0, 0, 0, 0.2);
+	box-shadow: none;
+}
+
+.nah-meta-line {
+	display: inline-flex;
+	align-items: center;
+	margin-left: var(--nah-space-2);
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+	font-size: 0.78em;
+	letter-spacing: 0.5px;
+	white-space: nowrap;
+	vertical-align: middle;
+	text-overflow: ellipsis;
+}
+
+.nah-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 1px var(--nah-space-2);
+	margin-right: var(--nah-space-1);
+	border-radius: var(--nah-radius-sm);
+	font-size: 0.72em;
+	font-weight: 700;
+	line-height: 1.1;
+	vertical-align: middle;
+}
+
+.nah-chip.conc {
+	border: 1px solid rgba(245, 158, 11, 0.4);
+	background: rgba(245, 158, 11, 0.2);
+	color: var(--nah-amber);
+}
+
+.nah-chip.ritual {
+	border: 1px solid rgba(59, 130, 246, 0.4);
+	background: rgba(59, 130, 246, 0.2);
+	color: #60a5fa;
+}
+
+/* Listed only because the Spells drawer's "show unprepared spells" toggle is on. */
+.nah-chip.unprepared {
+	border: 1px dashed currentColor;
+	background: transparent;
+	color: inherit;
+	opacity: 0.75;
+}
+
+.nah-row-entry.is-unprepared {
+	opacity: 0.6;
+}
+
+.nah-row-entry.is-unprepared:hover {
+	opacity: 1;
+}
+
+.nah-roll-prof {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  font-size: 0.85em;
+}
+
+.nah-roll-prof.proficient i { color: var(--nah-accent-secondary); }
+.nah-roll-prof.expertise i { color: var(--nah-gold); }
+.nah-roll-prof.half-prof i { color: #94a3b8; }
+.nah-roll-prof.none i {
+	opacity: 0.45;
+	color: #475569;
+	font-size: 0.7em;
+ }
+
+/* Advantage / disadvantage badge */
+.nah-roll-mode {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 16px;
+	height: 16px;
+	font-size: 0.7em;
+	font-weight: 800;
+	line-height: 1;
+	color: #fff;
+	border-radius: var(--nah-radius-sm);
+}
+
+.nah-roll-mode.advantage { background: #2f8f4e; }
+.nah-roll-mode.disadvantage { background: #b83a3a; }
+
+.nah-roll-mod {
+  display: inline-block;
+  flex-shrink: 0;
+  min-width: 28px;
+  font-weight: 700;
+  font-size: 0.95em;
+  text-align: right;
+  color: inherit;
+}
+
+/* Unprepared Rituals */
+

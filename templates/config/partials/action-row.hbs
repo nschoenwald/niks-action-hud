@@ -1,0 +1,11 @@
+<div class="hud-cfg-row">
+    <div class="hud-cfg-info">
+        <span class="hud-cfg-label">{{label}}</span>
+        {{#if hint}}<span class="hud-cfg-hint narrow">{{hint}}</span>{{/if}}
+    </div>
+    <div class="hud-cfg-control hud-cfg-actions">
+        {{#each buttons}}
+        <button type="button" class="hud-cfg-btn {{#if danger}}hud-cfg-btn-danger-fill{{/if}}" data-action="{{action}}">{{#if icon}}<i class="{{icon}}" aria-hidden="true"></i>{{/if}}{{label}}</button>
+        {{/each}}
+    </div>
+</div>

@@ -1,0 +1,117 @@
+/**
+ * Button Shape Overrides for Nik's Action HUD
+ * Lets any theme's button geometry be used with any visual theme. Each shape sets
+ *   --sh-clip  outline of the button (also used for its fill, see themes/engine.css)
+ *   --sh-bar   strip that follows the shape's left edge and carries the accent color
+ *   --sh-r     corner radius for shapes without a clip
+ * `!important` is needed because these rules tie with the theme engine's selector.
+ */
+
+/* 1. Arcanum: Slanted Parallelogram */
+[data-button-shape="arcanum"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="arcanum"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%) !important;
+	--sh-r: 0px !important;
+	--sh-bar: polygon(10px 0, calc(10px + var(--bar-now)) 0, var(--bar-now) 100%, 0 100%) !important;
+}
+
+/* 2. Carolingian: Smooth Rounded */
+[data-button-shape="carolingian"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="carolingian"] {
+	padding: 0 18px !important;
+	--sh-clip: none !important;
+	--sh-r: var(--ph-r, var(--nah-radius-md)) !important;
+}
+
+/* 3. Clockwork: Chamfered Octagonal */
+[data-button-shape="clockwork"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="clockwork"] {
+	padding: 0 20px !important;
+	--sh-clip: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px)) !important;
+	--sh-r: 0px !important;
+}
+
+/* 4. Eldritch: Asymmetric Bottom-Right Notch */
+[data-button-shape="eldritch"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="eldritch"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%) !important;
+	--sh-r: 0px !important;
+}
+
+/* 5. Frostborn: Pointed Hexagon */
+[data-button-shape="frostborn"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="frostborn"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%) !important;
+	--sh-r: 0px !important;
+	--sh-bar: polygon(10px 0, calc(10px + var(--bar-now)) 0, var(--bar-now) 50%, calc(10px + var(--bar-now)) 100%, 10px 100%, 0 50%) !important;
+}
+
+/* 6. Grimoire: Subtle Rounded Rectangle */
+[data-button-shape="grimoire"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="grimoire"] {
+	padding: 0 22px !important;
+	--sh-clip: none !important;
+	--sh-r: var(--nah-radius-sm) !important;
+}
+
+/* 7. Infernal: Asymmetric Angular Slant */
+[data-button-shape="infernal"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="infernal"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(14px 0, 100% 0, calc(100% - 6px) 100%, 0 100%) !important;
+	--sh-r: 0px !important;
+	--sh-bar: polygon(14px 0, calc(14px + var(--bar-now)) 0, var(--bar-now) 100%, 0 100%) !important;
+}
+
+/* 8. Obsidian: Clean Rounded Rectangle */
+[data-button-shape="obsidian"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="obsidian"] {
+	padding: 0 20px !important;
+	--sh-clip: none !important;
+	--sh-r: var(--nah-radius-md) !important;
+}
+
+/* 9. Ossuary: Angled Tombstone Top */
+[data-button-shape="ossuary"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="ossuary"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(8px 0, calc(100% - 8px) 0, 100% 12px, 100% 100%, 0 100%, 0 12px) !important;
+	--sh-r: 0px !important;
+}
+
+/* 10. Radiant: Symmetrical Pointed Hexagon */
+[data-button-shape="radiant"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="radiant"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%) !important;
+	--sh-r: 0px !important;
+	--sh-bar: polygon(14px 0, calc(14px + var(--bar-now)) 0, var(--bar-now) 50%, calc(14px + var(--bar-now)) 100%, 14px 100%, 0 50%) !important;
+}
+
+/* 11. Sylvan: Balanced Trapezoid Slant */
+[data-button-shape="sylvan"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="sylvan"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%) !important;
+	--sh-r: 0px !important;
+	--sh-bar: polygon(12px 0, calc(12px + var(--bar-now)) 0, var(--bar-now) 100%, 0 100%) !important;
+}
+
+/* 12. Valiant: Right Chevron / Banner Point */
+[data-button-shape="valiant"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="valiant"] {
+	padding: 0 22px 0 18px !important;
+	--sh-clip: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%) !important;
+	--sh-r: 0px !important;
+}
+
+/* 13. Shadowdark: Chiselled Dungeon Chamfer */
+[data-button-shape="shadowdark"] .nah-hud-btn,
+.nah-hud-btn[data-button-shape="shadowdark"] {
+	padding: 0 22px !important;
+	--sh-clip: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px) !important;
+	--sh-r: 0px !important;
+}

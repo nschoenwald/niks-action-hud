@@ -1,0 +1,539 @@
+{
+  "NAH": {
+    "Categories": {
+      "Attacks": "Ataques",
+      "Spells": "Conjuros",
+      "Features": "Rasgos",
+      "Legendary": "Legendarias",
+      "Abilities": "Características",
+      "Items": "Objetos",
+      "Inventory": "Inventario"
+    },
+    "Tabs": {
+      "Actions": "Acciones",
+      "Items": "Objetos",
+      "Passive": "Pasivas"
+    },
+    "UI": {
+      "ClearSearch": "Borrar búsqueda",
+      "All": "Todo",
+      "AllSpells": "Todos",
+      "AllFeatures": "Todos",
+      "AllAbilities": "Todas",
+      "YourTurnEnd": "Tu turno: haz clic para terminar",
+      "PortraitTooltip": "Clic: abrir hoja de personaje\nDoble clic: centrar en el token\nClic derecho: opciones del retrato",
+      "NoSelectionTitle": "Ningún token seleccionado",
+      "ScaleHandle": "Arrastra para cambiar el tamaño del HUD",
+      "AllGear": "Todos",
+      "CloseDrawer": "Cerrar",
+      "EmptyDrawer": "Vacío",
+      "PassTurn": "Terminar turno",
+      "PermissionDenied": "No tienes permiso para realizar esta acción.",
+      "SearchNoMatch": "No se encontraron acciones coincidentes.",
+      "SearchActions": "Buscar acciones, conjuros, objetos..."
+    },
+    "Tooltips": {
+      "AddFavorite": "Añadir a favoritos",
+      "RemoveFavorite": "Eliminar de favoritos",
+      "FavoriteOptions": "Opciones de favoritos",
+      "Initiative": "Determinar el orden de turnos en combate.",
+      "Card": {
+        "RollFooter": "Clic izquierdo para tirar",
+        "UseFooter": "Clic izquierdo para usar",
+        "Macro": "Macro",
+        "Initiative": "Iniciativa",
+        "InitiativeSubtitle": "Orden de turnos del combate",
+        "InitiativeBonus": "Bonificador de iniciativa",
+        "InitiativeText": "Tira iniciativa al comienzo de un combate para determinar el orden de los turnos.",
+        "AbilityCheck": "Prueba de característica",
+        "SavingThrow": "Tirada de salvación",
+        "CheckTitle": "Prueba de {ability}",
+        "SavingThrowTitle": "Salvación de {ability}",
+        "SkillCheck": "Prueba de habilidad",
+        "SkillSubtitle": "Prueba de habilidad de {ability}",
+        "ToolCheck": "Prueba de herramienta",
+        "ToolSubtitle": "Prueba de herramienta de {ability}",
+        "Modifier": "Modificador",
+        "GovernedBy": "Regida por",
+        "Proficiency": "Competencia",
+        "Proficient": "Competente",
+        "NotProficient": "No competente",
+        "HalfProficient": "Media competencia",
+        "Expertise": "Pericia"
+      }
+    },
+    "Config": {
+      "Saved": "Configuración de Nik's Action HUD guardada.",
+      "ResetSuccess": "Configuración restablecida a los valores predeterminados.",
+      "ResetConfirmTitle": "Restablecer configuración",
+      "ResetConfirmAll": "¿Restablecer todos los ajustes a los valores predeterminados? Esta acción no se puede deshacer.",
+      "ResetExportFirst": "Exportar y restablecer",
+      "ResetOnly": "Restablecer sin exportar",
+      "ImportDone": "Configuración importada. Guarda para aplicarla.",
+      "FontDecorative": "decorativa",
+      "ShapeDefault": "Predeterminado del tema",
+      "SavedClientOnly": "Tus ajustes personales se han guardado. Los ajustes del mundo solo puede cambiarlos un usuario con permiso.",
+      "FontInherit": "Fuente predeterminada",
+      "WindowTitle": "Configuración de Nik's Action HUD"
+    },
+    "Dnd5e": {
+      "Tools": "Herramientas",
+      "SelectAmmo": "Seleccionar munición",
+      "NoAmmoAvailable": "No hay munición en el inventario",
+      "NoAmmo": "⚠ Sin munición",
+      "IncreaseAmmo": "Aumentar munición",
+      "DecreaseAmmo": "Reducir munición",
+      "Text": {
+        "Weapons": "Armas",
+        "Armor": "Armadura",
+        "Gear": "Equipo",
+        "Consumables": "Consumibles",
+        "Tools": "Herramientas",
+        "Other": "Otros",
+        "RollSkill": "Prueba de {skill}",
+        "RollTool": "Prueba de herramienta: {tool}",
+        "Cantrips": "Trucos",
+        "LvlTab": "NV {level}{slots}",
+        "LevelHeader": "Nivel {level}{slots}",
+        "PactTab": "Pacto{slots}",
+        "PactHeader": "Magia de pacto{slots}",
+        "Innate": "Innata",
+        "InnateHeader": "Conjuros innatos",
+        "Concentration": "Concentración",
+        "Ritual": "Ritual",
+        "ActionFallback": "Acción",
+        "CantripSchool": "Truco ({school})",
+        "Cantrip": "Truco",
+        "SpellLevel": "Conjuro de nivel {ordinal} ({school})",
+        "Range": "Alcance",
+        "Activation": "Activación",
+        "Duration": "Duración",
+        "ToHit": "Para impactar",
+        "Damage": "Daño",
+        "Save": "Salvación",
+        "Perm": "Perm.",
+        "Disp": "Disip.",
+        "DispTrig": "Disip./Act.",
+        "Special": "Especial"
+      },
+      "EquipItem": "Equipar",
+      "UnequipItem": "Desequipar",
+      "AbilityTabs": {
+        "Checks": "Pruebas",
+        "Saves": "Salvaciones",
+        "Skills": "Habilidades",
+        "Resting": "Descanso"
+      },
+      "UsesReady": "Listo",
+      "RechargeOn": "Recarga {val}+",
+      "Resting": {
+        "Footer": "Clic izquierdo para descansar",
+        "DurationLabel": "Duración",
+        "Short": {
+          "Name": "Descanso corto",
+          "Desc": "Recobrar recursos de descanso corto y tirar Dados de Golpe",
+          "Subtitle": "Descanso (1 hora)",
+          "Duration": "1 hora",
+          "Tooltip": "Un periodo de descanso de al menos 1 hora durante el cual el personaje no hace nada más extenuante que comer, beber, leer y atender sus heridas."
+        },
+        "Long": {
+          "Name": "Descanso largo",
+          "Desc": "Restaurar puntos de golpe, espacios de conjuro y recursos de descanso largo",
+          "Subtitle": "Descanso (8 horas)",
+          "Duration": "8 horas",
+          "Tooltip": "Un periodo de descanso prolongado de al menos 8 horas durante el cual el personaje duerme al menos 6 horas y realiza actividades ligeras durante no más de 2 horas."
+        }
+      }
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Solo ritual (No preparado)",
+      "RitualTag": "Ritual",
+      "UnpreparedTag": "No preparado",
+      "UnpreparedTitle": "No preparado",
+      "ShowUnprepared": "Mostrar conjuros no preparados",
+      "HideUnprepared": "Ocultar conjuros no preparados"
+    },
+    "Favorites": {
+      "OpenSheet": "Abrir hoja del objeto",
+      "DeleteFavorite": "Eliminar de favoritos",
+      "DialogSubtitle": "Acción favorita",
+      "AddTitle": "Añadir favorito",
+      "PickerSearch": "Buscar acciones…",
+      "PickerEmpty": "No queda nada por añadir",
+      "MoreTitle": "{count} favoritos más"
+    },
+    "Damage": {
+      "Any": "cualquiera"
+    },
+    "Notifications": {
+      "ActorUpdateError": "No se pudieron actualizar los datos del personaje.",
+      "SettingsReset": "Nik's Action HUD: la configuración de una versión anterior se ha restablecido a los valores predeterminados."
+    },
+    "Settings": {
+      "DisableHud": {
+        "Name": "Desactivar Action HUD",
+        "Hint": "Desactiva y oculta completamente el Action HUD para tu cuenta de usuario."
+      },
+      "ConfigMenu": {
+        "Name": "Configuración del Action HUD",
+        "Label": "Configurar Action HUD",
+        "Hint": "Abre el panel de configuración visual para temas, disposición, reglas y categorías del Action HUD."
+      },
+      "SubmenuSide": {
+        "Name": "Dirección de apertura de submenús",
+        "Hint": "Dirección en la que se abren los submenús respecto al dock. Automático detecta dinámicamente los bordes de la pantalla.",
+        "Auto": "Automático",
+        "Left": "Izquierda",
+        "Right": "Derecha"
+      },
+      "FavoritesLayout": {
+        "Name": "Diseño de la barra de favoritos",
+        "Hint": "Barra vertical junto al HUD o barra horizontal encima del HUD.",
+        "Rail": "Barra lateral",
+        "Top": "Barra superior"
+      },
+      "InterfaceFading": {
+        "Name": "Atenuar al estar inactivo (Atenuación de interfaz)",
+        "Hint": "Atenúa el Action HUD cuando está inactivo, respetando los ajustes de opacidad y velocidad de desvanecimiento de Foundry. Restaura la opacidad total al pasar el cursor, enfocar o cuando hay un submenú abierto."
+      },
+      "CombatTurnAlert": {
+        "Name": "Alerta de turno en combate",
+        "Hint": "Muestra un destello visual en el HUD cuando comienza tu turno."
+      },
+      "CombatTurnSound": {
+        "Name": "Sonido de alerta de turno",
+        "Hint": "Reproduce un sonido sutil cuando comienza tu turno."
+      },
+      "CombatTurnNpc": {
+        "Name": "Alerta en turnos de PNJ",
+        "Hint": "Muestra la alerta visual también en turnos de PNJ controlados (solo DJ)."
+      },
+      "CloseDrawerOnUse": {
+        "Name": "Cerrar menú tras usar una acción",
+        "Hint": "Cierra el cajón abierto justo después de usar un ataque, conjuro u objeto."
+      },
+      "HideEmptyDrawers": {
+        "Name": "Ocultar submenús vacíos",
+        "Hint": "Oculta los botones de acción y submenús que no tienen entradas para el personaje activo (por ejemplo, ocultar el botón de Conjuros para personajes que no lanzan conjuros)."
+      },
+      "ToolChecks": {
+        "Name": "Mostrar pruebas de herramientas",
+        "Hint": "Muestra las pruebas de herramientas debajo de las pruebas de habilidad en el menú de Habilidades, coincidiendo con la hoja de personaje."
+      },
+      "AbilityOrder": {
+        "Name": "Orden del menú de características",
+        "Hint": "Orden de los grupos de salvaciones, habilidades y pruebas en el menú de características.",
+        "SavesSkillsChecks": "Salvaciones → Habilidades → Pruebas",
+        "ChecksSavesSkills": "Pruebas → Salvaciones → Habilidades",
+        "SkillsSavesChecks": "Habilidades → Salvaciones → Pruebas"
+      },
+      "WizardRituals": {
+        "Name": "Mostrar rituales de mago no preparados",
+        "Hint": "Muestra en el libro de conjuros los conjuros no preparados que tienen la etiqueta de ritual para magos, permitiéndoles lanzarlos directamente desde su libro de conjuros."
+      },
+      "DamageTypeDisplay": {
+        "Name": "Visualización del tipo de daño",
+        "Hint": "Elige cómo se muestran los tipos de daño en los botones de acción: iconos compactos sutilmente coloreados, iconos con texto o solo texto escrito.",
+        "Icons": "Solo iconos",
+        "Both": "Iconos y texto",
+        "Text": "Solo texto"
+      },
+      "AutoFavoriteNpc": {
+        "Name": "Favoritos automáticos para PNJ",
+        "Hint": "Cuando se coloca en la escena un token de PNJ sin favoritos, añade automáticamente a favoritos sus ataques y otras acciones de combate (D&D 5e: objetos con ataque, daño o salvación; Shadowdark: ataques, ataques especiales y conjuros)."
+      },
+      "AutoFavoriteNpcMax": {
+        "Name": "Máximo de acciones automáticas para PNJ",
+        "Hint": "Solo añade favoritos automáticos si un PNJ tiene como máximo este número de acciones aptas (por defecto 6)."
+      },
+      "AutoFavoriteNpcAttacks": {
+        "Name": "Favoritos de ataques siempre",
+        "Hint": "Aunque un PNJ tenga más acciones aptas que el máximo, sus ataques se añaden igualmente a favoritos."
+      },
+      "GroupByActivation": {
+        "Name": "Agrupar acciones por tipo de activación",
+        "Hint": "Ordena y separa las acciones bajo los encabezados Acción, Acción adicional, Reacción y Acción legendaria."
+      },
+      "FontFamily": {
+        "Name": "Fuente de la Action HUD",
+        "Hint": "Tipografía usada en las etiquetas de los botones, los encabezados de objetos y los submenús."
+      },
+      "ButtonShape": {
+        "Name": "Forma de los botones de categoría",
+        "Hint": "Sustituye la forma de los botones de categoría por la de cualquier tema."
+      },
+      "HudOpacity": {
+        "Name": "Opacidad del HUD",
+        "Hint": "Qué tan opacos son los paneles, botones y descripciones del HUD. Bájala para ver el lienzo a través del HUD; el texto y los iconos siguen siendo totalmente visibles."
+      },
+      "TooltipScale": {
+        "Name": "Tamaño de texto de información",
+        "Hint": "Ajusta la escala de las tarjetas flotantes de acción y descripciones emergentes."
+      },
+      "PortraitSource": {
+        "Name": "Origen de la imagen del retrato",
+        "Hint": "Qué imagen muestra el retrato del HUD: el retrato de la hoja de personaje o la imagen del token. Los jugadores pueden cambiarlo por personaje desde el menú contextual del retrato.",
+        "Portrait": "Retrato del actor",
+        "Token": "Imagen del token"
+      }
+    },
+    "Themes": {
+      "Carolingian": "Carolingian UI",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "Sylvan": "Sylvan",
+      "Infernal": "Infernal",
+      "Frostborn": "Frostborn",
+      "Clockwork": "Clockwork",
+      "Radiant": "Radiant",
+      "Ossuary": "Ossuary",
+      "Shadowdark": "Shadowdark"
+    },
+    "Shadowdark": {
+      "Checks": "Pruebas",
+      "SpendLuck": "Gastar Suerte",
+      "LuckTooltip": "Gasta Suerte para repetir cualquier tirada recién realizada. Debes aceptar el nuevo resultado.",
+      "SpendLuckConfirm": "¿Quieres gastar un punto de Suerte para repetir tu última tirada o prueba?",
+      "NoLuckLeft": "No queda Suerte.",
+      "Text": {
+        "Equipped": "Equipado",
+        "Equip": "Equipar",
+        "UnequipWeapon": "Desequipar arma",
+        "EquipWeapon": "Equipar arma",
+        "UnequipItem": "Desequipar objeto",
+        "EquipItem": "Equipar objeto",
+        "Lost": "PERDIDO",
+        "Restore": "Restaurar",
+        "RegainSpell": "Recuperar conjuro perdido",
+        "Tier": "Nivel {tier}",
+        "Spell": "Conjuro",
+        "Dc": "CD {dc}",
+        "ClassAbility": "Habilidad de clase",
+        "Off": "APAGADA",
+        "Extinguish": "Apagar",
+        "Ignite": "Encender",
+        "ExtinguishLight": "Apagar la luz",
+        "IgniteLight": "Encender la fuente de luz",
+        "Burning": "Encendida ({time})",
+        "Extinguished": "Apagada",
+        "Drink": "Beber",
+        "DrinkPotion": "Beber poción",
+        "Carried": "Transportado",
+        "Coins": "Monedas ({gp} po, {sp} pp, {cp} pc)",
+        "PurseCurrency": "Bolsa de monedas",
+        "Gem": "Gema",
+        "Treasure": "Tesoro",
+        "Gemstone": "Piedra preciosa",
+        "Valuable": "Objeto de valor",
+        "LightSources": "Fuentes de luz",
+        "Potions": "Pociones",
+        "Trait": "Rasgo",
+        "NpcFeature": "Rasgo de PNJ",
+        "Boon": "Don",
+        "Talent": "Talento",
+        "Broken": "Rota",
+        "Wand": "Varita",
+        "Empty": "Vacía",
+        "Cast": "Lanzar",
+        "SpellLostBroken": "Conjuro perdido / rota",
+        "TierWandSpell": "Nivel {tier} • Conjuro de varita",
+        "WandSpell": "Conjuro de varita",
+        "Scroll": "Pergamino",
+        "TierScroll": "Nivel {tier} • Pergamino de un solo uso",
+        "ScrollGeneric": "Pergamino de conjuro de un solo uso",
+        "AllSpells": "Todos los conjuros",
+        "Wands": "Varitas",
+        "Scrolls": "Pergaminos",
+        "Score": "Valor {score} ({mod})",
+        "ScoreModifierOnly": "Modificador {mod}",
+        "Luck": "Suerte",
+        "Ready": "Listo",
+        "Spent": "Gastado",
+        "PulpLeft": "Suerte Pulp: quedan {n}",
+        "LuckAvailable": "Ficha de suerte disponible",
+        "LuckSpent": "Suerte gastada",
+        "RollTurnOrder": "Tirar el orden de turno",
+        "RollHp": "Tirar puntos de golpe",
+        "RollHpDesc": "Tirar PG máximos y actuales del PNJ",
+        "InitiativeDesc": "Tirar iniciativa (DES {mod})",
+        "PulpRemaining": "Suerte Pulp: quedan {n}",
+        "LuckTip": "Gasta Suerte para repetir una tirada que acabas de hacer. Debes aceptar el nuevo resultado.",
+        "RollHpTip": "Tira los puntos de golpe máximos y actuales de este PNJ según su nivel y el modificador de CON.",
+        "WandTip": "Lanza el conjuro contenido en la varita.",
+        "RestoredWandSpell": "Conjuro de la varita restaurado: {name}",
+        "RegainedSpell": "Conjuro recuperado: {name}",
+        "RestoredWand": "Varita restaurada: {name}",
+        "RestoredUses": "Usos restaurados: {name}",
+        "KbdHelp": "<kbd>Shift</kbd>: Ventaja · <kbd>Alt</kbd>: Normal · <kbd>Ctrl</kbd>: Desventaja",
+        "AbilityScore": "Valor de característica",
+        "AbilityCheckSubtitle": "Prueba de característica · Shadowdark RPG",
+        "DexBonus": "Bonificador de DES",
+        "RollFormula": "Fórmula de tirada",
+        "InitiativeTip": "Tira iniciativa para determinar el orden de turnos en combate. En Shadowdark, la iniciativa se tira cada ronda de combate con d20 + modificador de DES.",
+        "LuckSubtitle": "Recurso heroico · Shadowdark RPG",
+        "Available": "Disponible",
+        "Tokens": "Fichas",
+        "Effect": "Efecto",
+        "RerollAny": "Repetir cualquier tirada",
+        "SpendLuckFooter": "Clic izquierdo para gastar una ficha de suerte",
+        "LuckIsSpent": "La suerte está gastada",
+        "LostBadge": "Perdido",
+        "LostBadgeTitle": "Conjuro fallido y perdido hasta el descanso largo",
+        "Focus": "Concentración",
+        "FocusTitle": "Requiere concentración (se rompe si recibes daño o lanzas otro conjuro de concentración)",
+        "TierLabel": "Nivel",
+        "CastingDc": "CD de lanzamiento",
+        "DcValue": "CD {dc} ({ability})",
+        "Range": "Alcance",
+        "Self": "Personal",
+        "Duration": "Duración",
+        "Instant": "Instantáneo",
+        "SpellSubtitle": "Conjuro · {tier} · Shadowdark RPG",
+        "RestoreFooter": "Pulsa «Restaurar» o toma un descanso largo para recuperarlo",
+        "WeaponSubtitle": "{type} · Shadowdark RPG",
+        "LightSubtitle": "Fuente de luz · Shadowdark RPG",
+        "LightOnTip": "Ilumina un radio de 9 m (30 ft). El seguimiento en tiempo real de los turnos de mazmorra está activo.",
+        "LightOffTip": "Fuente de luz apagada. Enciéndela al entrar en la oscuridad.",
+        "LightFooter": "Clic izquierdo para encender / apagar",
+        "ArmorSubtitle": "Armadura · Shadowdark RPG",
+        "ArmorFooter": "Clic izquierdo para equipar / desequipar",
+        "UseRollFooter": "Clic izquierdo para usar / tirar",
+        "FavFooter": "Arrastra para reordenar · Clic derecho para quitar",
+        "Attack": "Ataque",
+        "Quantity": "Cantidad",
+        "GearSlots": "Espacios de equipo",
+        "Cost": "Coste",
+        "Magic": "Mágico",
+        "ItemSubtitle": "{type} · Shadowdark RPG"
+      }
+    },
+    "Keybindings": {
+      "ToggleVisibility": {
+        "Name": "Alternar visibilidad del menú",
+        "Hint": "Alternar menú de acciones."
+      }
+    },
+    "IconPicker": {
+      "Title": "Selector de iconos",
+      "SearchPlaceholder": "Buscar iconos por nombre",
+      "ClearSearch": "Borrar búsqueda",
+      "ValuePlaceholder": "Clases de Font Awesome, un emoji o una ruta de imagen",
+      "ValueLabel": "Valor del icono",
+      "Tab": {
+        "FontAwesome": "Font Awesome",
+        "RpgAwesome": "RPG Awesome",
+        "Emoji": "Emoji",
+        "Image": "Imagen"
+      },
+      "Family": {
+        "Solid": "Sólido",
+        "Regular": "Regular",
+        "Brands": "Marcas",
+        "Color": "Color",
+        "File": "Archivo"
+      },
+      "Count": "{family} · {count} iconos",
+      "CountRpgAwesome": "RPG Awesome · {count} iconos",
+      "CountEmoji": "Emoji · {count}",
+      "CountImage": "Imagen",
+      "Empty": "Ningún icono coincide con «{query}».",
+      "EmptyAll": "No hay iconos disponibles.",
+      "Refine": "Mostrando los primeros resultados. Acota la búsqueda para ver el resto.",
+      "ImageHint": "Cualquier imagen de este mundo funciona como icono. Se muestra al tamaño del texto circundante.",
+      "Browse": "Elegir una imagen",
+      "Clear": "Borrar",
+      "Use": "Usar",
+      "Field": {
+        "Label": "Icono",
+        "Open": "Abrir selector de iconos",
+        "None": "Sin icono"
+      }
+    },
+    "Portrait": {
+      "OpenSheet": "Abrir hoja de personaje",
+      "CenterOnToken": "Centrar en el token",
+      "UseTokenArt": "Usar imagen del token",
+      "UseActorArt": "Usar imagen del actor",
+      "HideHud": "Ocultar HUD"
+    },
+    "Rolls": {
+      "CheckName": "Prueba de {ability}",
+      "SaveName": "Salvación de {ability}"
+    },
+    "Panel": {
+      "Sections": {
+        "Interaction": "Interacción",
+        "Combat": "Combate",
+        "AutoFavorites": "Favoritos automáticos de PNJ",
+        "Dnd5e": "Ajustes del sistema D&D 5e",
+        "Display": "Visualización",
+        "Styling": "Estilo, tipografía y avatares"
+      },
+      "Scope": {
+        "ClientTitle": "Se aplica solo a este navegador",
+        "WorldTitle": "Se aplica a todos los jugadores de la mesa",
+        "Client": "CLIENTE",
+        "World": "MUNDO"
+      },
+      "Nav": {
+        "Title": "CONFIGURACIÓN",
+        "All": "Todos los ajustes",
+        "Behavior": "Comportamiento",
+        "Appearance": "Apariencia",
+        "CustomizeHud": "Personalizar HUD",
+        "Backup": "Copia y restablecimiento"
+      },
+      "Footer": {
+        "NoChanges": "Sin cambios sin guardar · la vista previa es en vivo",
+        "ChangesOne": "{count} cambio sin guardar · la vista previa es en vivo",
+        "ChangesMany": "{count} cambios sin guardar · la vista previa es en vivo",
+        "Save": "GUARDAR"
+      },
+      "Appearance": {
+        "Theme": "Tema",
+        "Preview": "Vista previa"
+      },
+      "Excluded": {
+        "Title": "Tipos de actor excluidos",
+        "Hint": "El HUD permanece oculto mientras controles un tipo de actor marcado."
+      },
+      "Menu": {
+        "Categories": "Categorías",
+        "Desc": "Personaliza el orden, las etiquetas y los iconos de los botones de categoría de tu Action HUD.",
+        "DragReorder": "Arrastra para cambiar el orden",
+        "Unnamed": "Categoría sin nombre",
+        "ExpandCollapse": "Expandir o contraer",
+        "CategoryLabel": "Nombre de la categoría",
+        "Nav": "Posición de las pestañas",
+        "NavTop": "Arriba",
+        "NavSide": "Lateral",
+        "NavDefault": "predeterminado",
+        "NavTopHint": "Mostrar las pestañas de este cajón en una fila sobre la lista",
+        "NavSideHint": "Mostrar las pestañas de este cajón en una columna junto a la lista"
+      },
+      "Backup": {
+        "ExportTitle": "Exportar e importar",
+        "ExportDesc": "Guarda toda tu configuración (tema, comportamiento, posición y categorías personalizadas) como archivo JSON, o carga una de otro mundo u otro equipo. Un archivo importado se aplica al guardar.",
+        "FileLabel": "Archivo de configuración · JSON",
+        "Export": "EXPORTAR",
+        "Import": "IMPORTAR",
+        "ResetTitle": "Restablecer",
+        "ResetLabel": "Restablecer valores predeterminados",
+        "ResetHint": "Restaura todos los ajustes, la posición del HUD y la disposición de categorías. No se puede deshacer.",
+        "ResetButton": "RESTABLECER VALORES"
+      },
+      "Unit": {
+        "Max": "MÁX."
+      },
+      "GmOnly": "Solo el DJ puede cambiar esto."
+    },
+    "Messages": {
+      "ItemNotFound": "Objeto no encontrado: {id}",
+      "MissingMacro": "Macro no encontrada: {id}",
+      "ActivityNotFound": "Actividad no encontrada: {id}"
+    }
+  }
+}

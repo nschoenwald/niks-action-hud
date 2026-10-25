@@ -1,0 +1,63 @@
+<div class="hud-config-shell">
+
+    <div class="hud-main-body">
+
+        <nav class="hud-sidebar-nav">
+            <div class="hud-nav-section-title">{{localize "NAH.Panel.Nav.Title"}}</div>
+
+            <button type="button" class="hud-nav-item {{#if isAllTab}}active{{/if}}" data-tab="all">
+                <i class="fas fa-list" aria-hidden="true"></i>
+                <span class="hud-nav-label">{{localize "NAH.Panel.Nav.All"}}</span>
+            </button>
+
+            <button type="button" class="hud-nav-item {{#if isBehaviorTab}}active{{/if}}" data-tab="behavior">
+                <i class="fas fa-sliders" aria-hidden="true"></i>
+                <span class="hud-nav-label">{{localize "NAH.Panel.Nav.Behavior"}}</span>
+            </button>
+
+            {{#if hasSystemTab}}
+            <button type="button" class="hud-nav-item {{#if isSystemTab}}active{{/if}}" data-tab="system">
+                <i class="{{#if systemTabIcon}}{{systemTabIcon}}{{else}}fas fa-dragon{{/if}}" aria-hidden="true"></i>
+                <span class="hud-nav-label">{{systemTabLabel}}</span>
+            </button>
+            {{/if}}
+
+            <button type="button" class="hud-nav-item {{#if isAppearanceTab}}active{{/if}}" data-tab="appearance">
+                <i class="fas fa-palette" aria-hidden="true"></i>
+                <span class="hud-nav-label">{{localize "NAH.Panel.Nav.Appearance"}}</span>
+            </button>
+
+            {{#if canConfigure}}
+            <button type="button" class="hud-nav-item {{#if isCustomizeTab}}active{{/if}}" data-tab="customize">
+                <i class="fas fa-wrench" aria-hidden="true"></i>
+                <span class="hud-nav-label">{{localize "NAH.Panel.Nav.CustomizeHud"}}</span>
+            </button>
+
+            <button type="button" class="hud-nav-item {{#if isPresetsTab}}active{{/if}}" data-tab="presets">
+                <i class="fas fa-arrows-rotate" aria-hidden="true"></i>
+                <span class="hud-nav-label">{{localize "NAH.Panel.Nav.Backup"}}</span>
+            </button>
+            {{/if}}
+        </nav>
+
+        <main class="hud-content-pane {{#if isAllTab}}is-all{{/if}}">
+            {{> "modules/niks-action-hud/templates/config/tabs/behavior.hbs"}}
+            {{> "modules/niks-action-hud/templates/config/tabs/system.hbs"}}
+            {{> "modules/niks-action-hud/templates/config/tabs/appearance.hbs"}}
+            {{#if canConfigure}}
+            {{> "modules/niks-action-hud/templates/config/tabs/customize-hud.hbs"}}
+            {{> "modules/niks-action-hud/templates/config/tabs/presets.hbs"}}
+            {{/if}}
+        </main>
+
+    </div>
+
+    <footer class="hud-footer-bar">
+        <span class="hud-footer-summary">{{localize "NAH.Panel.Footer.NoChanges"}}</span>
+        <div class="hud-footer-right">
+            <span class="hud-footer-shortcut">CTRL+S</span>
+            <button type="button" class="hud-footer-btn hud-footer-btn-save" data-action="save">{{localize "NAH.Panel.Footer.Save"}}</button>
+        </div>
+    </footer>
+
+</div>

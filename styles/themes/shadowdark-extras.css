@@ -1,0 +1,70 @@
+/* Shadowdark: inline row controls and the "lost" marker, drawn from the theme palette. */
+
+.theme-shadowdark :is(.nah-sd-equip-btn, .nah-sd-light-btn, .nah-sd-drink-btn, .nah-sd-restore-btn) {
+	padding: 1px 7px;
+	border: 1px solid var(--ph-line);
+	border-radius: 2px;
+	background: var(--ph-bg);
+	color: var(--ph-ink-2);
+	font-family: var(--ph-body);
+	font-size: 0.78em;
+	font-weight: 700;
+	line-height: 1.5;
+	letter-spacing: 0.03em;
+	cursor: pointer;
+	transition: box-shadow var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease;
+}
+
+.theme-shadowdark :is(.nah-sd-equip-btn, .nah-sd-light-btn, .nah-sd-drink-btn, .nah-sd-restore-btn):hover {
+	border-color: var(--ph-accent-2);
+	box-shadow: 0 0 8px color-mix(in srgb, var(--ph-accent-2) 45%, transparent);
+	color: #fff;
+}
+
+.theme-shadowdark .nah-sd-equip-btn.equipped,
+.theme-shadowdark .nah-sd-light-btn.burning {
+	border-color: var(--ph-accent-2);
+	background: color-mix(in srgb, var(--ph-accent-2) 16%, var(--ph-bg));
+	color: var(--ph-accent-2);
+}
+
+.theme-shadowdark .nah-sd-drink-btn {
+	border-color: #9b2c4a;
+	background: #2a1218;
+	color: #fecdd3;
+}
+
+.theme-shadowdark .nah-sd-restore-btn {
+	border-color: var(--ph-accent);
+	background: color-mix(in srgb, var(--ph-accent) 18%, var(--ph-bg));
+	color: #ead4f7;
+}
+
+.theme-shadowdark .nah-sd-lost-badge {
+	padding: 1px 5px;
+	border: 1px solid #8a2a2a;
+	border-radius: 2px;
+	background: #2b1113;
+	color: #f87171;
+	font-family: var(--ph-body);
+	font-size: 0.75em;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+}
+
+.theme-shadowdark ::-webkit-scrollbar {
+	width: 6px;
+}
+
+.theme-shadowdark ::-webkit-scrollbar-track {
+	background: var(--ph-bg);
+}
+
+.theme-shadowdark ::-webkit-scrollbar-thumb {
+	border-radius: 2px;
+	background: var(--ph-line);
+}
+
+.theme-shadowdark ::-webkit-scrollbar-thumb:hover {
+	background: var(--ph-accent);
+}

@@ -1,0 +1,41 @@
+<div class="hud-cfg-row{{#if blockedReason}} is-blocked{{/if}}" {{#if blockedReason}}title="{{blockedReason}}" data-blocked-reason="{{blockedReason}}"{{/if}}>
+    <div class="hud-cfg-info">
+        <div class="hud-cfg-label-line">
+            {{#if lock.active}}
+                {{#if lock.canManage}}
+                    <a class="hud-lock-icon {{lock.type}}" data-setting-key="{{key}}" title="{{lock.tooltip}}">
+                        <i class="fa-solid {{#if lock.isLocked}}fa-lock{{else}}fa-lock-open{{/if}}"></i>
+                    </a>
+                {{else if lock.isLocked}}
+                    <span class="hud-lock-icon {{lock.type}}" title="{{lock.tooltip}}"><i class="fa-solid fa-lock"></i></span>
+                {{/if}}
+            {{/if}}
+            <label class="hud-cfg-label">{{label}}</label>
+            <span class="hud-cfg-scope {{scope.id}}" title="{{scope.title}}">{{scope.label}}</span>
+        </div>
+        <span class="hud-cfg-hint">{{hint}}</span>
+    </div>
+    <div class="hud-cfg-control">
+        {{#if isSwitch}}
+        <label class="hud-cfg-switch">
+            <input type="checkbox" role="switch" class="hud-switch-input" name="{{key}}" {{#if checked}}checked{{/if}} {{#if disabled}}disabled{{/if}}>
+            <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+            <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
+        </label>
+        {{else if isSelect}}
+        <select class="hud-cfg-select" name="{{key}}" {{#if disabled}}disabled{{/if}}>
+            {{#each choices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+        </select>
+        {{else if isNumber}}
+        <div class="hud-cfg-number">
+            <input type="number" name="{{key}}" value="{{value}}" min="{{min}}" max="{{max}}" step="{{step}}" {{#if disabled}}disabled{{/if}}>
+            <span class="hud-cfg-number-unit">{{unit}}</span>
+        </div>
+        {{else if isRange}}
+        <div class="hud-cfg-range-control">
+            <input type="range" name="{{key}}" value="{{value}}" min="{{min}}" max="{{max}}" step="{{step}}" data-unit="{{unit}}" {{#if disabled}}disabled{{/if}}>
+            <span class="hud-range-value"></span>
+        </div>
+        {{/if}}
+    </div>
+</div>

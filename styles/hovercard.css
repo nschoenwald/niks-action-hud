@@ -1,0 +1,390 @@
+/* ==========================================================================
+   Rich Tooltip
+   ========================================================================== */
+#nah-tooltip {
+	--tt-surface-bg: rgba(0, 0, 0, 0.25);
+	--tt-surface-border: rgba(255, 255, 255, 0.08);
+	--tt-badge-bg: rgba(255, 255, 255, 0.08);
+	--tt-badge-border: rgba(255, 255, 255, 0.15);
+	--tt-tac-bg: rgba(255, 255, 255, 0.04);
+	/* Laid out but invisible until `.active`; the script sets left/top after measuring. */
+	position: fixed;
+	inset: 0 auto auto 0;
+	z-index: 10000;
+	visibility: hidden;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--nah-dur-fast) ease-out, visibility var(--nah-dur-fast);
+
+	box-sizing: border-box;
+	width: 380px;
+	max-width: min(380px, calc(100vw - 30px));
+	max-height: min(540px, calc(100vh - 30px));
+	padding: var(--nah-space-5) 14px;
+	overflow: hidden auto;
+
+	border: 1px solid var(--nah-card-border, #444);
+	border-radius: var(--nah-radius-sm);
+	background: var(--nah-card-bg, rgba(18, 16, 24, 0.95));
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+	color: var(--nah-card-text, #ccc);
+	font-size: calc(0.9em * (var(--nah-tooltip-scale, 100) / 100));
+	line-height: 1.4;
+}
+
+#nah-tooltip.theme-light,
+#nah-tooltip[data-theme="light"],
+body.crlngn-ui.theme-light #nah-tooltip.theme-carolingian {
+	--tt-surface-bg: rgba(0, 0, 0, 0.05);
+	--tt-surface-border: rgba(0, 0, 0, 0.12);
+	--tt-badge-bg: rgba(0, 0, 0, 0.06);
+	--tt-badge-border: rgba(0, 0, 0, 0.12);
+	--tt-tac-bg: rgba(0, 0, 0, 0.04);
+}
+
+#nah-tooltip.active {
+	visibility: visible;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+#nah-tooltip .nah-card-heading {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: var(--nah-space-4);
+	padding-bottom: var(--nah-space-3);
+	border-bottom: 2px solid var(--nah-accent, var(--nah-accent-secondary));
+}
+
+#nah-tooltip .nah-card-heading img,
+#nah-tooltip .nah-tt-icon {
+	flex-shrink: 0 !important;
+	width: 34px !important;
+	height: 34px !important;
+	min-width: 34px !important;
+	max-width: 34px !important;
+	max-height: 34px !important;
+	border-radius: var(--nah-radius-sm) !important;
+	border: 1px solid var(--nah-veil-line) !important;
+	object-fit: cover !important;
+}
+
+/* Two icons side by side: the governing ability first, then the skill or tool. */
+#nah-tooltip .nah-tt-icon-stack {
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	gap: 6px;
+}
+
+#nah-tooltip .nah-tt-spec-img {
+	flex-shrink: 0;
+	width: 16px;
+	height: 16px;
+	margin-top: 0;
+	border-radius: 3px;
+	object-fit: cover;
+}
+
+#nah-tooltip .nah-tt-titles {
+	min-width: 0;
+	flex: 1;
+}
+
+#nah-tooltip .nah-card-title {
+	overflow: hidden;
+	font-family: "Teko", sans-serif;
+	font-size: 1.35em;
+	font-weight: bold;
+	color: var(--nah-card-header, #fff);
+	line-height: 1.1;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#nah-tooltip .nah-tt-subtitle {
+	margin-top: 1px;
+	opacity: 0.75;
+	font-size: 0.75em;
+	font-weight: 600;
+	color: var(--nah-card-text, #ccc);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Badges strip in header */
+#nah-tooltip .nah-tt-badges {
+	display: flex;
+	flex-wrap: wrap;
+	flex-shrink: 0;
+	gap: var(--nah-space-2);
+	align-items: center;
+	margin-left: auto;
+}
+
+#nah-tooltip .nah-tt-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--nah-space-2);
+	padding: var(--nah-space-1) var(--nah-space-3);
+	border-radius: var(--nah-radius-sm);
+	border: 1px solid var(--tt-badge-border, rgba(255, 255, 255, 0.15));
+	background: var(--tt-badge-bg, rgba(255, 255, 255, 0.08));
+	font-size: 0.68em;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	color: var(--nah-card-text, #ccc);
+	white-space: nowrap;
+}
+
+#nah-tooltip .nah-tt-badge.ritual {
+	border-color: rgba(56, 189, 248, 0.5);
+	background: rgba(56, 189, 248, 0.2);
+	color: var(--nah-sky);
+}
+
+#nah-tooltip .nah-tt-badge.prepared {
+	border-color: rgba(34, 197, 94, 0.45);
+	background: rgba(34, 197, 94, 0.18);
+	color: #4ade80;
+}
+
+#nah-tooltip .nah-tt-badge.unprepared {
+	border-color: var(--nah-veil-line);
+	background: var(--nah-veil-1);
+	color: #9ca3af;
+}
+
+#nah-tooltip .nah-tt-badge.always,
+#nah-tooltip .nah-tt-badge.innate,
+#nah-tooltip .nah-tt-badge.atwill,
+#nah-tooltip .nah-tt-badge.pact {
+	border-color: rgba(147, 51, 234, 0.45);
+	background: rgba(147, 51, 234, 0.2);
+	color: #c084fc;
+}
+
+#nah-tooltip .nah-tt-badge.attuned {
+	border-color: rgba(168, 85, 247, 0.45);
+	background: rgba(168, 85, 247, 0.2);
+	color: #d8b4fe;
+}
+
+#nah-tooltip .nah-tt-badge.attunement {
+	border-color: rgba(239, 68, 68, 0.35);
+	background: rgba(239, 68, 68, 0.15);
+	color: var(--nah-danger-soft);
+}
+
+/* Quick Specs Grid */
+#nah-tooltip .nah-tt-specs {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--nah-space-3) 10px;
+	margin-bottom: var(--nah-space-4);
+	padding: var(--nah-space-3) var(--nah-space-4);
+	border: 1px solid var(--tt-surface-border);
+	border-radius: var(--nah-radius-sm);
+	background: var(--tt-surface-bg);
+}
+
+#nah-tooltip .nah-tt-spec {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--nah-space-3);
+	min-width: 0;
+}
+
+#nah-tooltip .nah-tt-spec.nah-tt-spec-no-label,
+#nah-tooltip .nah-tt-spec:not(:has(.nah-tt-spec-label)) {
+	align-items: center;
+}
+
+#nah-tooltip .nah-tt-spec-icon {
+	flex-shrink: 0;
+	margin-top: var(--nah-space-1);
+	width: 13px;
+	color: var(--nah-accent, var(--nah-accent-secondary));
+	font-size: 0.85em;
+	text-align: center;
+}
+
+#nah-tooltip .nah-tt-spec.nah-tt-spec-no-label .nah-tt-spec-icon,
+#nah-tooltip .nah-tt-spec:not(:has(.nah-tt-spec-label)) .nah-tt-spec-icon {
+	margin-top: 0;
+}
+
+#nah-tooltip .nah-tt-spec-content {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	line-height: 1.25;
+}
+
+#nah-tooltip .nah-tt-spec-label {
+	opacity: 0.7;
+	font-size: 0.68em;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+#nah-tooltip .nah-tt-spec-value {
+	font-size: 0.82em;
+	font-weight: 600;
+	color: var(--nah-card-header, #fff);
+	word-break: break-word;
+}
+
+#nah-tooltip .nah-tt-spec-detail {
+	display: block;
+	margin-top: 1px;
+	opacity: 0.75;
+	font-size: 0.88em;
+	font-weight: normal;
+	font-style: italic;
+}
+
+/* Tactical Banner (Attack, Save, Damage, Heal) */
+#nah-tooltip .nah-tt-tactical {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--nah-space-3) var(--nah-space-5);
+	align-items: center;
+	margin-bottom: var(--nah-space-4);
+	padding: 5px var(--nah-space-4);
+	border-left: 3px solid var(--nah-accent, var(--nah-accent-secondary));
+	border-radius: 2px;
+	background: var(--tt-tac-bg, rgba(255, 255, 255, 0.04));
+}
+
+#nah-tooltip .nah-tt-tac-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 0.82em;
+	font-weight: bold;
+}
+
+#nah-tooltip .nah-tt-tac-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	opacity: 0.75;
+	font-size: 0.72em;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+#nah-tooltip .nah-tt-tac-label i {
+	font-size: 0.9em;
+}
+
+#nah-tooltip .nah-tt-tac-val {
+	color: var(--nah-card-header, #fff);
+}
+
+#nah-tooltip .nah-tt-tac-detail {
+	margin-left: var(--nah-space-1);
+	opacity: 0.8;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 0.85em;
+}
+
+/* Property pills (Weapons, Items, Mastery) */
+#nah-tooltip .nah-tt-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--nah-space-2);
+	margin-bottom: var(--nah-space-4);
+}
+
+#nah-tooltip .nah-tt-pill {
+	padding: var(--nah-space-1) var(--nah-space-3);
+	border-radius: var(--nah-radius-sm);
+	border: 1px solid var(--tt-badge-border, rgba(255, 255, 255, 0.15));
+	background: var(--tt-badge-bg, rgba(255, 255, 255, 0.08));
+	font-size: 0.72em;
+	color: var(--nah-card-text, #ccc);
+	white-space: nowrap;
+}
+
+#nah-tooltip .nah-tt-pill.mastery {
+	border-color: rgba(245, 158, 11, 0.45);
+	background: rgba(245, 158, 11, 0.15);
+	color: #fbbf24;
+	font-weight: bold;
+}
+
+#nah-tooltip .nah-tooltip-footer {
+	display: flex;
+	align-items: center;
+	gap: var(--nah-space-3);
+	margin-top: var(--nah-space-4);
+	padding-top: var(--nah-space-3);
+	border-top: 1px solid var(--nah-veil-line);
+	opacity: 0.75;
+	font-size: 0.78em;
+	color: var(--nah-card-text, #999);
+}
+
+/* Key hints in the footer ("Shift: Fast-forward"): small keycaps in the card's own colors, so every theme fits. */
+#nah-tooltip .nah-tooltip-footer kbd {
+	display: inline-block;
+	min-width: 1.6em;
+	padding: 0 0.4em;
+	border: 1px solid var(--nah-veil-line);
+	border-bottom-width: 2px;
+	border-radius: 3px;
+	background: transparent;
+	box-shadow: none;
+	color: var(--nah-card-header, #fff);
+	font: inherit;
+	font-weight: 600;
+	line-height: 1.5;
+	text-align: center;
+}
+
+#nah-tooltip .editor-content {
+	font-size: 0.88em;
+	line-height: 1.45;
+}
+
+#nah-tooltip .editor-content p {
+	margin: 0 0 0.5em 0;
+}
+
+#nah-tooltip .editor-content p:last-child {
+	margin-bottom: 0;
+}
+
+#nah-tooltip .editor-content strong {
+	color: var(--nah-card-header, #fff);
+}
+
+#nah-tooltip enriched-content,
+#nah-tooltip .editor-content enriched-content {
+	display: inline !important;
+}
+
+#nah-tooltip .attack-extended,
+#nah-tooltip .damage-extended,
+#nah-tooltip .roll-link-group,
+#nah-tooltip .roll-link,
+#nah-tooltip .reference-link,
+#nah-tooltip .content-link {
+	display: inline;
+}
+
+#nah-tooltip .formula-group {
+	white-space: nowrap;
+}
+
+#nah-tooltip .roll-link > i.fa-dice-d20,
+#nah-tooltip a.inline-roll > i.fa-dice-d20 {
+	display: inline-block;
+	vertical-align: middle;
+}

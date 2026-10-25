@@ -1,0 +1,374 @@
+/*
+ * Nik's Action HUD — theme engine.
+ *
+ * Every theme is a short palette of --ph-* tokens (see palettes.css); this file turns those tokens
+ * into the look of the ribbon, drawer, tabs, rows, search field and favorites. A theme changes
+ * colors, type, corner treatment and edge weight, never selectors.
+ *
+ *   --ph-bg / --ph-surface / --ph-raised / --ph-hover   surfaces, deepest to brightest
+ *   --ph-ink / --ph-ink-2 / --ph-ink-3                    text, strong to faint
+ *   --ph-line / --ph-accent / --ph-accent-2 / --ph-glow   edges, highlights, halo color
+ *   --ph-head / --ph-body                                 font stacks
+ *   --ph-r      corner radius         --ph-cut   chamfer size (0 = square)
+ *   --ph-bw     edge weight           --ph-bar   width of the accent bar on the left edge
+ *   --ph-case   text-transform        --ph-track letter spacing for labels
+ */
+
+:is(#nah-dock, #nah-drawer-slot, #nah-tooltip, #nah-dock-root, .hud-preview-sandbox) {
+	--ph-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+	--ph-chamfer: polygon(
+		var(--ph-cut) 0, 100% 0, 100% calc(100% - var(--ph-cut)),
+		calc(100% - var(--ph-cut)) 100%, 0 100%, 0 var(--ph-cut)
+	);
+	--ph-edge: var(--ph-bw) solid var(--ph-line);
+	--ph-tint: color-mix(in srgb, var(--ph-accent) 14%, transparent);
+	--ph-tint-strong: color-mix(in srgb, var(--ph-accent) 26%, transparent);
+
+	/* Surfaces at the player's "HUD opacity" (--nah-surface-alpha, set on :root by the dock). */
+	--ph-bg-a: color-mix(in srgb, var(--ph-bg) var(--nah-surface-alpha, 100%), transparent);
+	--ph-surface-a: color-mix(in srgb, var(--ph-surface) var(--nah-surface-alpha, 100%), transparent);
+	--ph-raised-a: color-mix(in srgb, var(--ph-raised) var(--nah-surface-alpha, 100%), transparent);
+	--ph-hover-a: color-mix(in srgb, var(--ph-hover) var(--nah-surface-alpha, 100%), transparent);
+
+	/* Values other stylesheets (hover card, settings preview) read. */
+	--nah-font-body: var(--ph-body);
+	--nah-card-bg: var(--ph-surface-a);
+	--nah-card-border: var(--ph-accent);
+	--nah-card-text: var(--ph-ink);
+	--nah-card-header: var(--ph-accent-2);
+	--nah-accent: var(--ph-accent);
+}
+
+/* ── Ribbon ────────────────────────────────────────────── */
+
+/*
+ * A ribbon button is three stacked layers so slanted and pointed shapes (themes/hud-shapes.css) keep a
+ * clean edge and accent bar:
+ *   the button     paints the edge color and is clipped to the shape  (--sh-clip)
+ *   ::after        the fill, inset by the edge weight, clipped to the same shape
+ *   ::before       the accent bar on the left edge, clipped to --sh-bar (a strip that follows the edge)
+ */
+[class*="theme-"] .nah-hud-btn {
+	--sh-clip: var(--ph-chamfer);
+	--sh-bar: polygon(0 0, var(--bar-now) 0, var(--bar-now) 100%, 0 100%);
+	--sh-r: var(--ph-r);
+	--bar-now: var(--ph-bar);
+	position: relative;
+	width: 232px;
+	height: 46px;
+	margin-bottom: 5px;
+	padding: 0 18px 0 calc(14px + var(--ph-bar));
+	overflow: hidden;
+	background: var(--ph-line);
+	border: 0;
+	border-radius: var(--sh-r);
+	clip-path: var(--sh-clip);
+	color: var(--ph-ink);
+	font-family: var(--ph-head);
+	font-size: 1.12em;
+	font-weight: 600;
+	letter-spacing: var(--ph-track);
+	text-transform: var(--ph-case);
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.45);
+	transition: transform var(--nah-dur-base) var(--ph-ease), background var(--nah-dur-base) var(--ph-ease),
+		box-shadow var(--nah-dur-base) var(--ph-ease);
+}
+
+[class*="theme-"] .nah-hud-btn::before,
+[class*="theme-"] .nah-hud-btn::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+}
+
+[class*="theme-"] .nah-hud-btn::after {
+	inset: var(--ph-bw);
+	z-index: 0;
+	background:
+		linear-gradient(90deg, var(--ph-tint) 0, transparent 46%),
+		linear-gradient(180deg, var(--ph-raised-a), var(--ph-surface-a));
+	border-radius: max(0px, calc(var(--sh-r) - var(--ph-bw)));
+	clip-path: var(--sh-clip);
+	transition: background var(--nah-dur-base) var(--ph-ease);
+}
+
+[class*="theme-"] .nah-hud-btn::before {
+	inset: 0;
+	z-index: 1;
+	background: var(--ph-accent);
+	clip-path: var(--sh-bar);
+	transition: background var(--nah-dur-base) var(--ph-ease);
+}
+
+[class*="theme-"] .nah-hud-btn .nah-btn-inner {
+	position: relative;
+	z-index: 2;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+[class*="theme-"] .nah-hud-btn i,
+[class*="theme-"] .nah-hud-btn .glyph {
+	color: var(--ph-accent);
+	font-size: 0.85em;
+	transition: transform var(--nah-dur-base) var(--ph-ease), color var(--nah-dur-base) var(--ph-ease);
+}
+
+[class*="theme-"] .nah-hud-btn:hover {
+	--bar-now: calc(var(--ph-bar) + 2px);
+	background: var(--ph-accent);
+	box-shadow: 0 5px 16px var(--ph-glow);
+	transform: translateX(4px);
+}
+
+[class*="theme-"] .nah-hud-btn:hover::after {
+	background:
+		linear-gradient(90deg, var(--ph-tint-strong) 0, transparent 62%),
+		linear-gradient(180deg, var(--ph-hover-a), var(--ph-raised-a));
+}
+
+[class*="theme-"] .nah-hud-btn:hover::before {
+	background: var(--ph-accent-2);
+}
+
+[class*="theme-"] .nah-hud-btn:hover i,
+[class*="theme-"] .nah-hud-btn:hover .glyph {
+	color: var(--ph-accent-2);
+	transform: scale(1.14);
+}
+
+/* ── Drawer shell ──────────────────────────────────────── */
+
+[class*="theme-"] .nah-drawer-pane {
+	width: 426px;
+	background: linear-gradient(180deg, var(--ph-surface-a), var(--ph-bg-a));
+	border: var(--ph-edge);
+	border-radius: var(--ph-r);
+	clip-path: var(--ph-chamfer);
+	box-shadow: 0 18px 40px rgb(0 0 0 / 0.55), inset 0 0 0 1px var(--ph-tint);
+}
+
+[class*="theme-"] .nah-rail-pane {
+	width: 96px;
+	min-width: 96px;
+	padding: 12px 6px;
+	gap: 6px;
+	background: var(--ph-bg-a);
+	border-right: var(--ph-edge);
+}
+
+[class*="theme-"] .nah-rail-tab {
+	padding: 10px 5px;
+	background: transparent;
+	border-left: 2px solid transparent;
+	border-radius: min(var(--ph-r), 6px);
+	color: var(--ph-ink-2);
+	font-family: var(--ph-head);
+	font-size: 0.74em;
+	letter-spacing: var(--ph-track);
+	text-transform: uppercase;
+	white-space: nowrap;
+	word-break: normal;
+	transition: background var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease;
+}
+
+[class*="theme-"] .nah-rail-tab i,
+[class*="theme-"] .nah-rail-tab .glyph {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 1.25em;
+	color: var(--ph-ink-3);
+	transition: color var(--nah-dur-fast) ease;
+}
+
+[class*="theme-"] .nah-rail-tab:hover {
+	background: var(--ph-tint);
+	color: var(--ph-ink);
+}
+
+[class*="theme-"] .nah-rail-tab.active {
+	background: var(--ph-tint-strong);
+	border-left-color: var(--ph-accent);
+	color: var(--ph-ink);
+}
+
+[class*="theme-"] .nah-rail-tab.active i,
+[class*="theme-"] .nah-rail-tab.active .glyph {
+	color: var(--ph-accent-2);
+}
+
+[class*="theme-"] .nah-primary-pane {
+	max-height: 480px;
+	background: transparent;
+}
+
+[class*="theme-"] .nah-drawer-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px 10px;
+	background: linear-gradient(180deg, var(--ph-raised-a), transparent);
+	border-bottom: var(--ph-edge);
+	color: var(--ph-accent-2);
+	font-family: var(--ph-head);
+	font-size: 1.16em;
+	font-weight: 700;
+	letter-spacing: var(--ph-track);
+}
+
+[class*="theme-"] .nah-drawer-heading .nah-font-display {
+	color: var(--ph-ink);
+	font-family: var(--ph-head);
+	font-weight: 700;
+}
+
+/* ── Tabs inside the drawer ────────────────────────────── */
+
+[class*="theme-"] .nah-spell-pages {
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--ph-bg-a);
+	border-bottom: var(--ph-edge);
+}
+
+[class*="theme-"] .nah-page-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	background: transparent;
+	border: 1px solid var(--ph-line);
+	border-radius: min(var(--ph-r), 999px);
+	color: var(--ph-ink-2);
+	font-family: var(--ph-body);
+	font-size: 0.8em;
+	transition: background var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease;
+}
+
+[class*="theme-"] .nah-page-btn:hover {
+	border-color: var(--ph-accent);
+	background: var(--ph-tint);
+	color: var(--ph-ink);
+}
+
+[class*="theme-"] .nah-page-btn.active {
+	border-color: var(--ph-accent);
+	background: var(--ph-tint-strong);
+	color: var(--ph-ink);
+	box-shadow: 0 0 10px var(--ph-glow);
+}
+
+/* ── Rows ──────────────────────────────────────────────── */
+
+[class*="theme-"] .nah-group-heading {
+	border-left-color: var(--ph-accent);
+	background: linear-gradient(90deg, var(--ph-tint), transparent);
+	color: var(--ph-accent-2);
+	font-family: var(--ph-head);
+	letter-spacing: var(--ph-track);
+}
+
+[class*="theme-"] .nah-row-entry {
+	padding: 8px 12px;
+	border-left: 2px solid transparent;
+	background: transparent;
+	font-size: 0.95em;
+	transition: background var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease, transform var(--nah-dur-fast) ease;
+}
+
+[class*="theme-"] .nah-row-entry:hover {
+	border-left-color: var(--ph-accent);
+	background: linear-gradient(90deg, var(--ph-tint), transparent 85%);
+	transform: translateX(3px);
+}
+
+[class*="theme-"] .nah-row-entry .nah-font-display {
+	color: var(--ph-ink);
+	font-family: var(--ph-head);
+	font-size: 1.02em;
+	font-weight: 600;
+	letter-spacing: calc(var(--ph-track) / 2);
+}
+
+[class*="theme-"] .nah-row-entry .nah-item-uses {
+	color: var(--ph-ink-2);
+	font-size: 0.82em;
+}
+
+[class*="theme-"] .nah-row-entry .nah-roll-mod {
+	color: var(--ph-accent-2);
+	font-family: var(--ph-body);
+	font-size: 1.05em;
+	font-weight: 700;
+}
+
+[class*="theme-"] .nah-row-entry .nah-roll-prof.proficient i {
+	color: var(--ph-accent);
+}
+
+[class*="theme-"] .nah-row-thumb {
+	width: 32px;
+	height: 32px;
+	border: 1px solid var(--ph-line);
+	border-radius: min(var(--ph-r), 6px);
+	box-shadow: 0 0 8px rgb(0 0 0 / 0.5);
+}
+
+/* ── Search ────────────────────────────────────────────── */
+
+[class*="theme-"] .nah-finder-wrap {
+	background: var(--ph-bg-a);
+	border-bottom: var(--ph-edge);
+}
+
+[class*="theme-"] .nah-finder-field {
+	padding: 4px 8px;
+	border: 1px solid var(--ph-line);
+	border-radius: min(var(--ph-r), 6px);
+	background: var(--ph-surface-a);
+	color: var(--ph-ink);
+	font-family: var(--ph-body);
+	font-size: 0.85em;
+}
+
+[class*="theme-"] .nah-finder-field:focus {
+	border-color: var(--ph-accent);
+	outline: none;
+	box-shadow: 0 0 0 2px var(--ph-tint-strong);
+}
+
+[class*="theme-"] .nah-finder-field::placeholder {
+	color: var(--ph-ink-3);
+}
+
+/* ── Favorites ─────────────────────────────────────────── */
+
+[class*="theme-"] .nah-favorite {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	border: var(--ph-edge);
+	border-radius: var(--ph-r);
+	background: linear-gradient(180deg, var(--ph-raised-a), var(--ph-surface-a));
+	clip-path: var(--ph-chamfer);
+	box-shadow: 0 3px 8px rgb(0 0 0 / 0.45);
+	transition: transform var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease, box-shadow var(--nah-dur-fast) ease;
+}
+
+[class*="theme-"] .nah-favorite:hover {
+	border-color: var(--ph-accent);
+	transform: translateY(-2px) scale(1.05);
+	box-shadow: 0 6px 14px var(--ph-glow);
+}
+
+[class*="theme-"] .nah-favorite.active {
+	border-color: var(--ph-accent-2);
+	box-shadow: 0 0 12px var(--ph-glow);
+}
+
+/* ── Scroll areas ──────────────────────────────────────── */
+
+[class*="theme-"] .nah-scroller {
+	scrollbar-width: thin;
+	scrollbar-color: var(--ph-line) transparent;
+}

@@ -1,0 +1,30 @@
+<div class="nah-actor-banner{{#if isActiveTurn}} is-my-turn{{/if}}">
+	<div class="nah-hud-btn nah-identity-row" title="{{displayName}}">
+		<div class="nah-btn-inner">
+			<span class="nah-actor-name">{{displayName}}</span>
+			<div class="nah-identity-controls">
+				{{#if isActiveTurn}}
+					<div class="nah-turn-pass"
+						 role="button"
+						 tabindex="0"
+						 data-action="end-turn"
+						 data-actor-id="{{actorId}}"
+						 data-token-id="{{tokenId}}"
+						 title="{{localize 'NAH.UI.YourTurnEnd'}}"
+						 aria-label="{{localize 'NAH.UI.YourTurnEnd'}}">
+						<i class="fas fa-forward-step"></i>
+						<span class="nah-end-turn-label">{{localize 'NAH.UI.PassTurn'}}</span>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+	<div class="nah-portrait-frame{{#if isActiveTurn}} is-my-turn{{/if}}{{#if hasSubject}} has-subject{{/if}}" data-action="open-sheet" title="{{displayName}}&#10;{{localize 'NAH.UI.PortraitTooltip'}}" style="{{portraitStyle}}">
+		<div class="nah-portrait-art">
+			<img src="{{img}}" alt="{{displayName}}"
+				 {{#if imgStyle}}style="{{imgStyle}}"{{/if}}
+				 data-fallback-step="0"
+				 onerror="window.NikHUD?.handleImageError?.(this, '{{actorImg}}', '{{defaultIcon}}')">
+		</div>
+	</div>
+</div>

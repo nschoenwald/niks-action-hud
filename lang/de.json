@@ -1,0 +1,539 @@
+{
+  "NAH": {
+    "Categories": {
+      "Attacks": "Angriffe",
+      "Spells": "Zauber",
+      "Features": "Merkmale",
+      "Legendary": "Legendär",
+      "Abilities": "Attribute",
+      "Items": "Gegenstände",
+      "Inventory": "Inventar"
+    },
+    "Tabs": {
+      "Actions": "Aktionen",
+      "Items": "Gegenstände",
+      "Passive": "Passiv"
+    },
+    "UI": {
+      "ClearSearch": "Suche leeren",
+      "All": "Alle",
+      "AllSpells": "Alle",
+      "AllFeatures": "Alle",
+      "AllAbilities": "Alle",
+      "YourTurnEnd": "Du bist dran – Zug beenden",
+      "PortraitTooltip": "Klick: Charakterbogen öffnen\nDoppelklick: auf Token zentrieren\nRechtsklick: Porträt-Optionen",
+      "NoSelectionTitle": "Kein Token ausgewählt",
+      "ScaleHandle": "Ziehen, um die HUD-Größe zu ändern",
+      "AllGear": "Alle",
+      "CloseDrawer": "Schließen",
+      "EmptyDrawer": "Leer",
+      "PassTurn": "Zug beenden",
+      "PermissionDenied": "Du hast keine Berechtigung, diese Aktion auszuführen.",
+      "SearchNoMatch": "Keine passenden Aktionen gefunden.",
+      "SearchActions": "Aktionen, Zauber, Gegenstände suchen..."
+    },
+    "Tooltips": {
+      "AddFavorite": "Zu Favoriten hinzufügen",
+      "RemoveFavorite": "Aus Favoriten entfernen",
+      "FavoriteOptions": "Favoriten-Optionen",
+      "Initiative": "Reihenfolge der Züge im Kampf bestimmen.",
+      "Card": {
+        "RollFooter": "Linksklick zum Würfeln",
+        "UseFooter": "Linksklick zum Benutzen",
+        "Macro": "Makro",
+        "Initiative": "Initiative",
+        "InitiativeSubtitle": "Kampfreihenfolge",
+        "InitiativeBonus": "Initiativebonus",
+        "InitiativeText": "Würfle zu Beginn eines Kampfes Initiative, um die Zugreihenfolge zu bestimmen.",
+        "AbilityCheck": "Attributswurf",
+        "SavingThrow": "Rettungswurf",
+        "CheckTitle": "{ability}-Wurf",
+        "SavingThrowTitle": "{ability}-Rettungswurf",
+        "SkillCheck": "Fertigkeitswurf",
+        "SkillSubtitle": "{ability}-Fertigkeitswurf",
+        "ToolCheck": "Werkzeugwurf",
+        "ToolSubtitle": "{ability}-Werkzeugwurf",
+        "Modifier": "Modifikator",
+        "GovernedBy": "Bestimmt durch",
+        "Proficiency": "Übung",
+        "Proficient": "Geübt",
+        "NotProficient": "Nicht geübt",
+        "HalfProficient": "Halb geübt",
+        "Expertise": "Expertise"
+      }
+    },
+    "Config": {
+      "Saved": "Nik's Action HUD Konfiguration gespeichert.",
+      "ResetSuccess": "Konfiguration auf Standardwerte zurückgesetzt.",
+      "ResetConfirmTitle": "Konfiguration zurücksetzen",
+      "ResetConfirmAll": "Alle Einstellungen auf die Standardwerte zurücksetzen? Das kann nicht rückgängig gemacht werden.",
+      "ResetExportFirst": "Exportieren, dann zurücksetzen",
+      "ResetOnly": "Ohne Export zurücksetzen",
+      "ImportDone": "Konfiguration importiert. Speichere, um sie anzuwenden.",
+      "FontDecorative": "dekorativ",
+      "ShapeDefault": "Design-Standard",
+      "SavedClientOnly": "Deine persönlichen Einstellungen wurden gespeichert. Weltweite Einstellungen kann nur ein Benutzer mit entsprechender Berechtigung ändern.",
+      "FontInherit": "Standard-Schriftart",
+      "WindowTitle": "Nik's Action HUD Konfiguration"
+    },
+    "Dnd5e": {
+      "Tools": "Werkzeuge",
+      "SelectAmmo": "Munition auswählen",
+      "NoAmmoAvailable": "Keine Munition im Inventar",
+      "NoAmmo": "⚠ Keine Munition",
+      "IncreaseAmmo": "Munition erhöhen",
+      "DecreaseAmmo": "Munition verringern",
+      "Text": {
+        "Weapons": "Waffen",
+        "Armor": "Rüstung",
+        "Gear": "Ausrüstung",
+        "Consumables": "Verbrauchsgüter",
+        "Tools": "Werkzeuge",
+        "Other": "Sonstiges",
+        "RollSkill": "{skill}-Fertigkeitswurf",
+        "RollTool": "{tool}-Werkzeugwurf",
+        "Cantrips": "Zaubertricks",
+        "LvlTab": "GRD {level}{slots}",
+        "LevelHeader": "Grad {level}{slots}",
+        "PactTab": "Pakt{slots}",
+        "PactHeader": "Paktmagie{slots}",
+        "Innate": "Angeboren",
+        "InnateHeader": "Angeborene Zauber",
+        "Concentration": "Konzentration",
+        "Ritual": "Ritual",
+        "ActionFallback": "Aktion",
+        "CantripSchool": "Zaubertrick ({school})",
+        "Cantrip": "Zaubertrick",
+        "SpellLevel": "Zauber {ordinal}. Grades ({school})",
+        "Range": "Reichweite",
+        "Activation": "Aktivierung",
+        "Duration": "Dauer",
+        "ToHit": "Treffer",
+        "Damage": "Schaden",
+        "Save": "Rettungswurf",
+        "Perm": "Dauerhaft",
+        "Disp": "Bannen",
+        "DispTrig": "Bannen/Ausl.",
+        "Special": "Besonders"
+      },
+      "EquipItem": "Anlegen",
+      "UnequipItem": "Ablegen",
+      "AbilityTabs": {
+        "Checks": "Attributswürfe",
+        "Saves": "Rettungswürfe",
+        "Skills": "Fertigkeiten",
+        "Resting": "Rast"
+      },
+      "UsesReady": "Bereit",
+      "RechargeOn": "Wiederaufladung {val}+",
+      "Resting": {
+        "Footer": "Linksklick zum Rasten",
+        "DurationLabel": "Dauer",
+        "Short": {
+          "Name": "Kurze Rast",
+          "Desc": "Kurzrast-Ressourcen erneuern und Trefferwürfel würfeln",
+          "Subtitle": "Rast (1 Stunde)",
+          "Duration": "1 Stunde",
+          "Tooltip": "Eine Ruhepause von mindestens 1 Stunde, in der ein Charakter nichts Anstrengenderes tut als essen, trinken, lesen und Wunden versorgen."
+        },
+        "Long": {
+          "Name": "Lange Rast",
+          "Desc": "Trefferpunkte, Zauberplätze und Langrast-Ressourcen wiederherstellen",
+          "Subtitle": "Rast (8 Stunden)",
+          "Duration": "8 Stunden",
+          "Tooltip": "Eine ausgedehnte Ruhepause von mindestens 8 Stunden, in der ein Charakter mindestens 6 Stunden schläft und höchstens 2 Stunden leichten Tätigkeiten nachgeht."
+        }
+      }
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Nur Ritual (Nicht vorbereitet)",
+      "RitualTag": "Ritual",
+      "UnpreparedTag": "Nicht vorbereitet",
+      "UnpreparedTitle": "Nicht vorbereitet",
+      "ShowUnprepared": "Nicht vorbereitete Zauber anzeigen",
+      "HideUnprepared": "Nicht vorbereitete Zauber ausblenden"
+    },
+    "Favorites": {
+      "OpenSheet": "Gegenstandsbogen öffnen",
+      "DeleteFavorite": "Aus Favoriten entfernen",
+      "DialogSubtitle": "Favorisierte Aktion",
+      "AddTitle": "Favorit hinzufügen",
+      "PickerSearch": "Aktionen suchen…",
+      "PickerEmpty": "Nichts mehr hinzuzufügen",
+      "MoreTitle": "{count} weitere Favoriten"
+    },
+    "Damage": {
+      "Any": "beliebig"
+    },
+    "Notifications": {
+      "ActorUpdateError": "Akteursdaten konnten nicht aktualisiert werden.",
+      "SettingsReset": "Nik's Action HUD: Einstellungen aus einer früheren Version wurden auf die Standardwerte zurückgesetzt."
+    },
+    "Settings": {
+      "DisableHud": {
+        "Name": "Action HUD deaktivieren",
+        "Hint": "Deaktiviert und blendet die Action HUD für dein Benutzerkonto vollständig aus."
+      },
+      "ConfigMenu": {
+        "Name": "Action HUD Konfiguration",
+        "Label": "Action HUD konfigurieren",
+        "Hint": "Öffnet das visuelle Konfigurationsmenü für Action HUD Designs, Layout, Regeln und Kategorien."
+      },
+      "SubmenuSide": {
+        "Name": "Untermenü-Ausrichtung",
+        "Hint": "Richtung, in die sich Untermenüs relativ zum Dock öffnen. Automatisch erkennt die Bildschirmränder dynamisch.",
+        "Auto": "Automatisch",
+        "Left": "Links",
+        "Right": "Rechts"
+      },
+      "FavoritesLayout": {
+        "Name": "Favoriten-Layout",
+        "Hint": "Vertikale Leiste seitlich vom HUD oder horizontale Leiste über dem HUD.",
+        "Rail": "Seitliche Leiste",
+        "Top": "Obere Leiste"
+      },
+      "InterfaceFading": {
+        "Name": "Bei Inaktivität ausblenden (Interface Fading)",
+        "Hint": "Blendet die Action HUD bei Inaktivität ab und beachtet dabei Foundrys Einstellungen für Inaktivitäts-Deckkraft und Ausblendgeschwindigkeit. Volle Deckkraft wird bei Hover, Fokus oder geöffnetem Untermenü wiederhergestellt."
+      },
+      "CombatTurnAlert": {
+        "Name": "Kampfzug-Benachrichtigung",
+        "Hint": "Spielt einen aufmerksamkeitsstarken visuellen Lichtimpuls über das HUD ab, wenn Ihr Zug beginnt."
+      },
+      "CombatTurnSound": {
+        "Name": "Zug-Benachrichtigungston",
+        "Hint": "Spielt einen dezenten Ton ab, wenn Ihr Zug beginnt."
+      },
+      "CombatTurnNpc": {
+        "Name": "Benachrichtigung bei NSC-Zügen",
+        "Hint": "Visuelle Benachrichtigung auch bei Zügen gesteuerter NSCs anzeigen (nur SL)."
+      },
+      "CloseDrawerOnUse": {
+        "Name": "Menü nach Aktion schließen",
+        "Hint": "Schließt die geöffnete Schublade direkt nach dem Einsatz eines Angriffs, Zaubers oder Gegenstands."
+      },
+      "HideEmptyDrawers": {
+        "Name": "Leere Untermenüs ausblenden",
+        "Hint": "Blendet Aktionsschaltflächen und Untermenüs aus, die für den aktiven Akteur keine Einträge besitzen (z. B. Ausblenden der Zauberschaltfläche bei Nicht-Zauberwirkern)."
+      },
+      "ToolChecks": {
+        "Name": "Werkzeugwürfe anzeigen",
+        "Hint": "Zeigt Werkzeugwürfe unter den Fertigkeitswürfen im Fähigkeiten-Menü an, passend zum Layout des Charakterbogens."
+      },
+      "AbilityOrder": {
+        "Name": "Reihenfolge im Attribute-Menü",
+        "Hint": "Reihenfolge der Gruppen Rettungswürfe, Fertigkeiten und Attributswürfe im Attribute-Menü.",
+        "SavesSkillsChecks": "Rettungswürfe → Fertigkeiten → Attributswürfe",
+        "ChecksSavesSkills": "Attributswürfe → Rettungswürfe → Fertigkeiten",
+        "SkillsSavesChecks": "Fertigkeiten → Rettungswürfe → Attributswürfe"
+      },
+      "WizardRituals": {
+        "Name": "Unvorbereitete Magier-Rituale anzeigen",
+        "Hint": "Zeigt unvorbereitete Zauber mit dem Ritual-Tag im Zauberbuch von Magiern an, sodass diese Ritualzauber direkt gewirkt werden können."
+      },
+      "DamageTypeDisplay": {
+        "Name": "Schadensarten-Anzeige",
+        "Hint": "Wähle, wie Schadensarten auf Aktionsschaltflächen dargestellt werden: kompakte dezent gefärbte Symbole, Symbole mit Text oder nur geschriebener Text.",
+        "Icons": "Nur Symbole",
+        "Both": "Symbole & Text",
+        "Text": "Nur Text"
+      },
+      "AutoFavoriteNpc": {
+        "Name": "NSC-Aktionen automatisch favorisieren",
+        "Hint": "Wird ein NSC-Token ohne Favoriten auf der Szene platziert, werden seine Angriffe und anderen Kampfaktionen automatisch favorisiert (D&D 5e: Gegenstände mit Angriff, Schaden oder Rettungswurf; Shadowdark: Angriffe, Spezialangriffe und Zauber)."
+      },
+      "AutoFavoriteNpcMax": {
+        "Name": "Maximale Aktionen für automatische Favoriten",
+        "Hint": "Nur automatisch favorisieren, wenn ein NSC höchstens so viele qualifizierende Aktionen hat (Standard 6)."
+      },
+      "AutoFavoriteNpcAttacks": {
+        "Name": "Angriffe immer favorisieren",
+        "Hint": "Favorisiert die Angriffe eines NSC automatisch, auch wenn er mehr qualifizierende Aktionen als das Maximum hat."
+      },
+      "GroupByActivation": {
+        "Name": "Aktionen nach Aktivierungsart gruppieren",
+        "Hint": "Sortiert und gliedert Aktionen unter den Überschriften Aktion, Bonusaktion, Reaktion und Legendäre Aktion."
+      },
+      "FontFamily": {
+        "Name": "Schriftart der Action HUD",
+        "Hint": "Schrift für Schaltflächenbeschriftungen, Listenüberschriften und Untermenüs."
+      },
+      "ButtonShape": {
+        "Name": "Form der Kategorieschaltflächen",
+        "Hint": "Überschreibt die Form der Kategorieschaltflächen mit der Schaltflächenform eines beliebigen Designs."
+      },
+      "HudOpacity": {
+        "Name": "HUD-Deckkraft",
+        "Hint": "Wie deckend Panels, Schaltflächen und Tooltips des HUDs sind. Niedrigere Werte lassen die Spielfläche durchscheinen; Text und Symbole bleiben voll sichtbar."
+      },
+      "TooltipScale": {
+        "Name": "Tooltip-Textgröße",
+        "Hint": "Skalierung für Tooltips und Schnellübersichten anpassen."
+      },
+      "PortraitSource": {
+        "Name": "Quelle des Porträtbilds",
+        "Hint": "Welches Bild das HUD-Porträt zeigt: das Porträt des Charakterbogens oder das Token-Bild. Spieler können dies pro Charakter über das Rechtsklick-Menü des Porträts überschreiben.",
+        "Portrait": "Akteur-Porträt",
+        "Token": "Token-Bild"
+      }
+    },
+    "Themes": {
+      "Carolingian": "Carolingian UI",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "Sylvan": "Sylvan",
+      "Infernal": "Infernal",
+      "Frostborn": "Frostborn",
+      "Clockwork": "Clockwork",
+      "Radiant": "Radiant",
+      "Ossuary": "Ossuary",
+      "Shadowdark": "Shadowdark"
+    },
+    "Shadowdark": {
+      "Checks": "Attributswürfe",
+      "SpendLuck": "Glück einsetzen",
+      "LuckTooltip": "Setze Glück ein, um einen gerade getätigten Wurf zu wiederholen. Du musst das neue Ergebnis akzeptieren.",
+      "SpendLuckConfirm": "Möchtest du einen Glückspunkt einsetzen, um deinen letzten Wurf zu wiederholen?",
+      "NoLuckLeft": "Kein Glück mehr übrig.",
+      "Text": {
+        "Equipped": "Ausgerüstet",
+        "Equip": "Ausrüsten",
+        "UnequipWeapon": "Waffe ablegen",
+        "EquipWeapon": "Waffe ausrüsten",
+        "UnequipItem": "Gegenstand ablegen",
+        "EquipItem": "Gegenstand ausrüsten",
+        "Lost": "VERLOREN",
+        "Restore": "Wiederherstellen",
+        "RegainSpell": "Verlorenen Zauber zurückgewinnen",
+        "Tier": "Stufe {tier}",
+        "Spell": "Zauber",
+        "Dc": "SG {dc}",
+        "ClassAbility": "Klassenfähigkeit",
+        "Off": "AUS",
+        "Extinguish": "Löschen",
+        "Ignite": "Anzünden",
+        "ExtinguishLight": "Licht löschen",
+        "IgniteLight": "Lichtquelle anzünden",
+        "Burning": "Brennt ({time})",
+        "Extinguished": "Erloschen",
+        "Drink": "Trinken",
+        "DrinkPotion": "Trank trinken",
+        "Carried": "Getragen",
+        "Coins": "Münzen ({gp} GM, {sp} SM, {cp} KM)",
+        "PurseCurrency": "Geldbeutel",
+        "Gem": "Edelstein",
+        "Treasure": "Schatz",
+        "Gemstone": "Edelstein",
+        "Valuable": "Wertgegenstand",
+        "LightSources": "Lichtquellen",
+        "Potions": "Tränke",
+        "Trait": "Merkmal",
+        "NpcFeature": "NSC-Merkmal",
+        "Boon": "Gabe",
+        "Talent": "Talent",
+        "Broken": "Zerbrochen",
+        "Wand": "Zauberstab",
+        "Empty": "Leer",
+        "Cast": "Wirken",
+        "SpellLostBroken": "Zauber verloren / zerbrochen",
+        "TierWandSpell": "Stufe {tier} • Zauberstab-Zauber",
+        "WandSpell": "Zauberstab-Zauber",
+        "Scroll": "Schriftrolle",
+        "TierScroll": "Stufe {tier} • Einmal-Schriftrolle",
+        "ScrollGeneric": "Einmal-Zauberschriftrolle",
+        "AllSpells": "Alle Zauber",
+        "Wands": "Zauberstäbe",
+        "Scrolls": "Schriftrollen",
+        "Score": "Wert {score} ({mod})",
+        "ScoreModifierOnly": "Modifikator {mod}",
+        "Luck": "Glück",
+        "Ready": "Bereit",
+        "Spent": "Verbraucht",
+        "PulpLeft": "Pulp-Glück: {n} übrig",
+        "LuckAvailable": "Glücksmarke verfügbar",
+        "LuckSpent": "Glück verbraucht",
+        "RollTurnOrder": "Zugreihenfolge würfeln",
+        "RollHp": "Trefferpunkte würfeln",
+        "RollHpDesc": "Maximale und aktuelle TP des NSC würfeln",
+        "InitiativeDesc": "Initiative würfeln (GES {mod})",
+        "PulpRemaining": "Pulp-Glück: {n} übrig",
+        "LuckTip": "Setze Glück ein, um einen gerade gemachten Wurf zu wiederholen. Du musst das neue Ergebnis nehmen.",
+        "RollHpTip": "Würfelt maximale und aktuelle Trefferpunkte dieses NSC anhand von Stufe und KON-Modifikator.",
+        "WandTip": "Wirkt den im Zauberstab enthaltenen Zauber.",
+        "RestoredWandSpell": "Zauber des Zauberstabs wiederhergestellt: {name}",
+        "RegainedSpell": "Zauber zurückgewonnen: {name}",
+        "RestoredWand": "Zauberstab wiederhergestellt: {name}",
+        "RestoredUses": "Nutzungen wiederhergestellt: {name}",
+        "KbdHelp": "<kbd>Shift</kbd>: Vorteil · <kbd>Alt</kbd>: Normal · <kbd>Strg</kbd>: Nachteil",
+        "AbilityScore": "Attributswert",
+        "AbilityCheckSubtitle": "Attributswurf · Shadowdark RPG",
+        "DexBonus": "GES-Bonus",
+        "RollFormula": "Wurfformel",
+        "InitiativeTip": "Würfle Initiative, um die Zugreihenfolge im Kampf zu bestimmen. In Shadowdark wird die Initiative jede Kampfrunde mit W20 + GES-Modifikator gewürfelt.",
+        "LuckSubtitle": "Heldenressource · Shadowdark RPG",
+        "Available": "Verfügbar",
+        "Tokens": "Marken",
+        "Effect": "Effekt",
+        "RerollAny": "Beliebigen Wurf wiederholen",
+        "SpendLuckFooter": "Linksklick, um eine Glücksmarke auszugeben",
+        "LuckIsSpent": "Glück ist derzeit verbraucht",
+        "LostBadge": "Verloren",
+        "LostBadgeTitle": "Zauber fehlgeschlagen und bis zur langen Rast verloren",
+        "Focus": "Fokus",
+        "FocusTitle": "Erfordert Fokus (endet bei Schaden oder dem Wirken eines weiteren Fokus-Zaubers)",
+        "TierLabel": "Stufe",
+        "CastingDc": "Zauber-SG",
+        "DcValue": "SG {dc} ({ability})",
+        "Range": "Reichweite",
+        "Self": "Selbst",
+        "Duration": "Dauer",
+        "Instant": "Sofort",
+        "SpellSubtitle": "{tier} · Zauber · Shadowdark RPG",
+        "RestoreFooter": "Klicke „Wiederherstellen“ oder nimm eine lange Rast, um ihn zurückzugewinnen",
+        "WeaponSubtitle": "{type} · Shadowdark RPG",
+        "LightSubtitle": "Lichtquelle · Shadowdark RPG",
+        "LightOnTip": "Beleuchtet einen Radius von 9 m (30 ft). Die Verfolgung der Dungeon-Zeit in Echtzeit ist aktiv.",
+        "LightOffTip": "Erloschene Lichtquelle. Zünde sie an, wenn du die Dunkelheit betrittst.",
+        "LightFooter": "Linksklick zum Anzünden / Löschen",
+        "ArmorSubtitle": "Rüstung · Shadowdark RPG",
+        "ArmorFooter": "Linksklick zum Ausrüsten / Ablegen",
+        "UseRollFooter": "Linksklick zum Benutzen / Würfeln",
+        "FavFooter": "Ziehen zum Umsortieren · Rechtsklick zum Entfernen",
+        "Attack": "Angriff",
+        "Quantity": "Anzahl",
+        "GearSlots": "Ausrüstungsplätze",
+        "Cost": "Kosten",
+        "Magic": "Magisch",
+        "ItemSubtitle": "{type} · Shadowdark RPG"
+      }
+    },
+    "Keybindings": {
+      "ToggleVisibility": {
+        "Name": "Menüsichtbarkeit umschalten",
+        "Hint": "Aktionsmenü ein-/ausblenden."
+      }
+    },
+    "IconPicker": {
+      "Title": "Symbolauswahl",
+      "SearchPlaceholder": "Symbole nach Namen durchsuchen",
+      "ClearSearch": "Suche leeren",
+      "ValuePlaceholder": "Font-Awesome-Klassen, ein Emoji oder ein Bildpfad",
+      "ValueLabel": "Symbolwert",
+      "Tab": {
+        "FontAwesome": "Font Awesome",
+        "RpgAwesome": "RPG Awesome",
+        "Emoji": "Emoji",
+        "Image": "Bild"
+      },
+      "Family": {
+        "Solid": "Ausgefüllt",
+        "Regular": "Standard",
+        "Brands": "Marken",
+        "Color": "Farbig",
+        "File": "Datei"
+      },
+      "Count": "{family} · {count} Symbole",
+      "CountRpgAwesome": "RPG Awesome · {count} Symbole",
+      "CountEmoji": "Emoji · {count}",
+      "CountImage": "Bild",
+      "Empty": "Keine Symbole stimmen mit „{query}“ überein.",
+      "EmptyAll": "Keine Symbole verfügbar.",
+      "Refine": "Erste Ergebnisse werden angezeigt. Grenzt die Suche ein, um den Rest zu sehen.",
+      "ImageHint": "Jedes Bild aus dieser Welt kann als Symbol verwendet werden. Es wird in der Textgröße dargestellt.",
+      "Browse": "Bild auswählen",
+      "Clear": "Leeren",
+      "Use": "Übernehmen",
+      "Field": {
+        "Label": "Symbol",
+        "Open": "Symbolauswahl öffnen",
+        "None": "Kein Symbol"
+      }
+    },
+    "Portrait": {
+      "OpenSheet": "Charakterbogen öffnen",
+      "CenterOnToken": "Auf Token zentrieren",
+      "UseTokenArt": "Token-Bild verwenden",
+      "UseActorArt": "Charakterbild verwenden",
+      "HideHud": "HUD ausblenden"
+    },
+    "Rolls": {
+      "CheckName": "{ability}-Probe",
+      "SaveName": "{ability}-Rettungswurf"
+    },
+    "Panel": {
+      "Sections": {
+        "Interaction": "Interaktion",
+        "Combat": "Kampf",
+        "AutoFavorites": "Automatische NSC-Favoriten",
+        "Dnd5e": "D&D-5e-Systemeinstellungen",
+        "Display": "Anzeige",
+        "Styling": "Gestaltung, Schrift und Avatare"
+      },
+      "Scope": {
+        "ClientTitle": "Gilt nur für diesen Browser",
+        "WorldTitle": "Gilt für alle Spieler am Tisch",
+        "Client": "CLIENT",
+        "World": "WELT"
+      },
+      "Nav": {
+        "Title": "KONFIGURATION",
+        "All": "Alle Einstellungen",
+        "Behavior": "Verhalten",
+        "Appearance": "Darstellung",
+        "CustomizeHud": "HUD anpassen",
+        "Backup": "Sicherung und Zurücksetzen"
+      },
+      "Footer": {
+        "NoChanges": "Keine ungespeicherten Änderungen · Vorschau ist live",
+        "ChangesOne": "{count} ungespeicherte Änderung · Vorschau ist live",
+        "ChangesMany": "{count} ungespeicherte Änderungen · Vorschau ist live",
+        "Save": "SPEICHERN"
+      },
+      "Appearance": {
+        "Theme": "Design",
+        "Preview": "Vorschau"
+      },
+      "Excluded": {
+        "Title": "Ausgeschlossene Akteurstypen",
+        "Hint": "Das HUD bleibt ausgeblendet, solange du einen angehakten Akteurstyp steuerst."
+      },
+      "Menu": {
+        "Categories": "Kategorien",
+        "Desc": "Reihenfolge, Beschriftungen und Symbole der Kategorie-Schaltflächen deines Action HUD anpassen.",
+        "DragReorder": "Ziehen, um die Reihenfolge zu ändern",
+        "Unnamed": "Unbenannte Kategorie",
+        "ExpandCollapse": "Auf- oder zuklappen",
+        "CategoryLabel": "Kategoriename",
+        "Nav": "Position der Reiter",
+        "NavTop": "Oben",
+        "NavSide": "Seite",
+        "NavDefault": "Standard",
+        "NavTopHint": "Reiter dieser Schublade in einer Zeile über der Liste anzeigen",
+        "NavSideHint": "Reiter dieser Schublade in einer Spalte neben der Liste anzeigen"
+      },
+      "Backup": {
+        "ExportTitle": "Export und Import",
+        "ExportDesc": "Sichere die gesamte Konfiguration (Design, Verhalten, Position und eigene Kategorien) als JSON-Datei oder lade eine aus einer anderen Welt oder von einem anderen Rechner. Eine importierte Datei wird beim Speichern angewendet.",
+        "FileLabel": "Konfigurationsdatei · JSON",
+        "Export": "EXPORTIEREN",
+        "Import": "IMPORTIEREN",
+        "ResetTitle": "Zurücksetzen",
+        "ResetLabel": "Auf Standard zurücksetzen",
+        "ResetHint": "Stellt alle Einstellungen, die HUD-Position und das Kategorie-Layout wieder her. Das kann nicht rückgängig gemacht werden.",
+        "ResetButton": "AUF STANDARD ZURÜCKSETZEN"
+      },
+      "Unit": {
+        "Max": "MAX"
+      },
+      "GmOnly": "Nur die Spielleitung kann dies ändern."
+    },
+    "Messages": {
+      "ItemNotFound": "Gegenstand nicht gefunden: {id}",
+      "MissingMacro": "Makro nicht gefunden: {id}",
+      "ActivityNotFound": "Aktivität nicht gefunden: {id}"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+<div class="nah-ip">
+    <div class="nah-ip-body">
+        <div class="nah-ip-toolbar">
+            <label class="nah-ip-search">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="text" class="nah-ip-search-input" value="{{query}}" placeholder="{{localize "NAH.IconPicker.SearchPlaceholder"}}" aria-label="{{localize "NAH.IconPicker.SearchPlaceholder"}}" autocomplete="off">
+                {{#if query}}<button type="button" class="nah-ip-search-clear" aria-label="{{localize "NAH.IconPicker.ClearSearch"}}">✕</button>{{/if}}
+            </label>
+            <div class="nah-ip-segments" role="tablist">
+                {{#each tabs}}
+                <button type="button" role="tab" class="nah-ip-segment nah-ip-tab {{#if this.selected}}is-active{{/if}}" data-tab="{{this.value}}" aria-selected="{{#if this.selected}}true{{else}}false{{/if}}">{{this.label}}</button>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="nah-ip-subbar">
+            <div class="nah-ip-segments">
+                {{#each families}}
+                <button type="button" class="nah-ip-segment nah-ip-segment-sm {{#if this.interactive}}nah-ip-family{{/if}} {{#if this.selected}}is-active{{/if}}" data-family="{{this.value}}" aria-pressed="{{#if this.selected}}true{{else}}false{{/if}}">{{this.label}}</button>
+                {{/each}}
+            </div>
+            <span class="nah-ip-count">{{countLabel}}</span>
+        </div>
+
+        <div class="nah-ip-results">
+            {{#if isImage}}
+            <div class="nah-ip-image">
+                <span class="nah-ip-image-drop {{#if previewIsImage}}has-image{{/if}}">
+                    {{#if previewIsImage}}<img src="{{previewSrc}}" alt="">{{else}}<i class="fa-regular fa-image" aria-hidden="true"></i>{{/if}}
+                </span>
+                <p>{{localize "NAH.IconPicker.ImageHint"}}</p>
+                <button type="button" class="nah-ip-btn nah-ip-browse">{{localize "NAH.IconPicker.Browse"}}</button>
+            </div>
+            {{/if}}
+            {{#if isEmpty}}
+            <p class="nah-ip-empty">{{emptyLabel}}</p>
+            {{/if}}
+            {{#if showGrid}}
+            <div class="nah-ip-grid">
+                {{#each options}}
+                <button type="button" class="nah-ip-option {{#if this.selected}}is-selected{{/if}}" data-value="{{this.value}}" title="{{this.label}}" aria-pressed="{{#if this.selected}}true{{else}}false{{/if}}">
+                    {{#if this.isGlyph}}<span aria-hidden="true">{{this.glyph}}</span>{{else}}<i class="{{this.className}}" aria-hidden="true"></i>{{/if}}
+                </button>
+                {{/each}}
+            </div>
+            {{#if truncated}}
+            <p class="nah-ip-refine">{{localize "NAH.IconPicker.Refine"}}</p>
+            {{/if}}
+            {{/if}}
+        </div>
+    </div>
+
+    <footer class="nah-ip-footer">
+        <span class="nah-ip-preview {{#if previewIsEmpty}}is-empty{{/if}}">
+            {{#if previewIsIcon}}<i class="{{previewClass}}" aria-hidden="true"></i>{{/if}}
+            {{#if previewIsGlyph}}<span aria-hidden="true">{{previewGlyph}}</span>{{/if}}
+            {{#if previewIsImage}}<img src="{{previewSrc}}" alt="">{{/if}}
+            {{#if previewIsEmpty}}<i class="fa-regular fa-square" aria-hidden="true"></i>{{/if}}
+        </span>
+        <label class="nah-ip-value">
+            <input type="text" class="nah-ip-value-input" value="{{value}}" placeholder="{{localize "NAH.IconPicker.ValuePlaceholder"}}" aria-label="{{localize "NAH.IconPicker.ValueLabel"}}" autocomplete="off">
+        </label>
+        <button type="button" class="nah-ip-btn nah-ip-clear">{{localize "NAH.IconPicker.Clear"}}</button>
+        <button type="button" class="nah-ip-btn nah-ip-btn-primary nah-ip-apply">{{localize "NAH.IconPicker.Use"}}</button>
+    </footer>
+</div>

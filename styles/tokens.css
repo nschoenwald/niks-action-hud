@@ -1,0 +1,51 @@
+/* Nik's Action HUD — shared design tokens (settings panel palette and accent colors). */
+:root {
+	--nah-accent-secondary: #45c8c0;
+	--nah-amber: #f59e0b;
+	--nah-cfg-accent: #00e5ff;
+	--nah-cfg-danger: #fb7185;
+	--nah-cfg-danger-strong: #f43f5e;
+	--nah-cfg-ink: #f0f6fc;
+	--nah-cfg-ink-dim: #8b949e;
+	--nah-cfg-ink-faint: #6e7681;
+	--nah-cfg-ink-soft: #c9d1d9;
+	--nah-cfg-line: #2a323b;
+	--nah-cfg-line-faint: #1a2028;
+	--nah-cfg-line-soft: #1e252d;
+	--nah-cfg-line-strong: #3a434d;
+	--nah-cfg-surface: #0d1117;
+	--nah-cfg-surface-raised: #121820;
+	--nah-cfg-well: #0a0e13;
+	--nah-danger-soft: #f87171;
+	--nah-gold: #f0c419;
+	--nah-sky: #38bdf8;
+
+	/* Spacing scale */
+	--nah-space-1: 2px;
+	--nah-space-2: 4px;
+	--nah-space-3: 6px;
+	--nah-space-4: 8px;
+	--nah-space-5: 12px;
+	--nah-space-6: 16px;
+	--nah-space-7: 24px;
+
+	/* Radius scale */
+	--nah-radius-sm: 3px;
+	--nah-radius-md: 6px;
+	--nah-radius-lg: 10px;
+
+	/* Motion */
+	--nah-dur-fast: 120ms;
+	--nah-dur-base: 200ms;
+	--nah-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+	/* Light and dark washes laid over any surface */
+	--nah-veil-1: rgb(255 255 255 / 0.05);
+	--nah-veil-2: rgb(255 255 255 / 0.09);
+	--nah-veil-3: rgb(255 255 255 / 0.15);
+	--nah-veil-line: rgb(255 255 255 / 0.13);
+	--nah-veil-line-strong: rgb(255 255 255 / 0.32);
+	--nah-shade-1: rgb(0 0 0 / 0.22);
+	--nah-shade-2: rgb(0 0 0 / 0.4);
+	--nah-shade-3: rgb(0 0 0 / 0.6);
+}
