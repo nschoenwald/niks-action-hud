@@ -1,5 +1,6 @@
 /**
- * Attacks section: one row per equipped weapon (including natural weapons on NPCs).
+ * Attacks section: one row per equipped weapon (including natural weapons on NPCs). Weapons used as
+ * legendary, mythic or lair actions are listed in the Legendary menu only.
  */
 
 import { singlePane } from "../../shared/drawer-model.js";
@@ -8,9 +9,10 @@ import { _describeActivation } from "../lib/activation.js";
 import { _getPrimaryAttackActivity } from "../lib/activities.js";
 import { _readAmmoState } from "../lib/ammo.js";
 import { _getItemDamage } from "../lib/damage.js";
+import { _isLegendaryItem } from "../lib/legendary.js";
 import { _describeReach, _shouldShowReach } from "../lib/range.js";
 
-const isEquippedWeapon = (item) => item.type === "weapon" && item.system.equipped;
+const isEquippedWeapon = (item) => item.type === "weapon" && item.system.equipped && !_isLegendaryItem(item);
 
 /** Sub-line pieces for a weapon: activation badge, damage parts, reach (when not plain melee), ammo. */
 function weaponSegments(weapon, attackActivity, actor) {

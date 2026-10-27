@@ -18,7 +18,7 @@ const rowIdsOf = (drawer) => new Set(actionRows(drawer).filter((row) => row.id).
 
 /**
  * Builds shared within one synchronous pass. The ribbon checks every section in one loop and the
- * inventory check below needs Attacks, Features and Spells again; within a pass the actor cannot
+ * inventory check below needs Attacks, Features, Spells and Legendary again; within a pass the actor cannot
  * change, so each section is built once. The cache is dropped at the next microtask.
  */
 let passCache = null;
@@ -39,9 +39,10 @@ function inPass(name, build) {
 const attacksInPass = inPass("attacks", buildAttacks);
 const spellsInPass = inPass("spells", buildSpells);
 const featuresInPass = inPass("features", buildFeatures);
+const legendaryInPass = inPass("legendary", buildLegendary);
 
 /**
- * Inventory drawer, unless every item in it is already offered by Attacks, Spells or Features
+ * Inventory drawer, unless every item in it is already offered by Attacks, Spells, Features or Legendary
  * (monsters whose "inventory" is just their natural weapons): then it is reported as empty so
  * the category can be hidden.
  */
@@ -54,6 +55,7 @@ function buildGearUnlessRedundant(actor) {
 		...rowIdsOf(attacksInPass(actor)),
 		...rowIdsOf(featuresInPass(actor)),
 		...rowIdsOf(spellsInPass(actor)),
+		...rowIdsOf(legendaryInPass(actor)),
 	]);
 	const redundant = [...gearIds].every((id) => elsewhere.has(id));
 	return redundant ? { ...gear, panes: [] } : gear;
@@ -79,7 +81,7 @@ export const dnd5eSections = createSectionRegistry(
 		features: featuresInPass,
 		gear: buildGearUnlessRedundant,
 		abilities: buildAbilities,
-		legendary: buildLegendary,
+		legendary: legendaryInPass,
 	},
 	{
 		decorate: (result, { menuData }) => ({ ...result, title: menuData?.label || result?.title || "" }),

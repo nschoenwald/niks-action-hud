@@ -31,7 +31,7 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
   - With [Nik's DnD5e Tweaks](https://github.com/nschoenwald/niks-dnd5e-tweaks) legendary action placeholders, creatures with legendary actions get a **Pass Legendary** button during a placeholder turn.
 - **Show or hide**: Press <kbd>Shift</kbd>+<kbd>H</kbd> (you can change this in Configure Controls).
 - **Make it yours**:
-  - 12 themes and different button shapes.
+  - 13 themes (12 dark and the light, Greek-inspired Thairesia) and different button shapes.
   - Rename, reorder and re-icon the menu buttons.
   - Hide menus a character doesn't use.
   - If you use [Carolingian UI](https://foundryvtt.com/packages/crlngn-ui), a matching theme is available.
@@ -42,7 +42,7 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
 
 - **D&D 5e (6.0.6 and later 6.0.x)**:
   - Features are sorted by when you use them (Action, Bonus Action, Reaction…).
-  - Monsters get a Legendary menu with their legendary, mythic and lair actions, followed by their legendary resistances. These are not repeated in the Features menu. Actions that cast a spell are listed once, under the action's name, with the spell's damage and range.
+  - Monsters get a Legendary menu with their legendary, mythic and lair actions, followed by their legendary resistances. These are not repeated in the Features or Attacks menus. Actions that cast a spell are listed once, under the action's name, with the spell's damage and range.
   - Spells are grouped by level. An eye button in the Spells menu also shows spells you haven't prepared (off by default, remembered per player). Spells a monster casts through its Spellcasting feature are listed by level like regular spells.
   - Items are split into Weapons, Armor, Gear, Tools, Consumables and Other.
   - Ammunition shows a warning when it runs low.

@@ -1,6 +1,8 @@
 /*
  * Nik's Action HUD — theme palettes. Each block feeds themes/engine.css; see the header there
  * for what the tokens mean. Carolingian reads the Carolingian UI module's own variables.
+ * Thairesia is the one light palette: its accent-2 is darker than its accent, not brighter, and
+ * themes/thairesia-extras.css adapts the shared styles that assume a dark HUD.
  */
 
 .theme-arcanum {
@@ -265,6 +267,28 @@
 	--ph-bar: 3px;
 	--ph-case: none;
 	--ph-track: 0.02em;
+}
+
+.theme-thairesia {
+	--ph-bg: #e6ecf3;
+	--ph-surface: #f3f6fa;
+	--ph-raised: #ffffff;
+	--ph-hover: #e3ecf8;
+	--ph-ink: #0f2547;
+	--ph-ink-2: #3c5478;
+	--ph-ink-3: #6f84a3;
+	--ph-line: #b7c6db;
+	--ph-accent: #1d5fb8;
+	--ph-accent-2: #0c3d82;
+	--ph-glow: rgb(29 95 184 / 0.28);
+	--ph-head: "Cinzel", serif;
+	--ph-body: "Alegreya", serif;
+	--ph-r: 1px;
+	--ph-cut: 0px;
+	--ph-bw: 1px;
+	--ph-bar: 4px;
+	--ph-case: uppercase;
+	--ph-track: 0.08em;
 }
 
 /* Carolingian UI: follow the host module's palette, type and corner radius. */

@@ -1,0 +1,158 @@
+/*
+ * Thairesia: white marble and Aegean blue, the one light palette. The shared styles assume a dark
+ * HUD, so this file swaps their light washes for navy ones and darkens the fixed accent colors that
+ * would wash out on white. Palettes ignore Foundry's light/dark settings, so none of this depends on
+ * the Core Interface, Core Apps or DnD5e Chat setting.
+ */
+
+/* ── Shared tokens, re-pointed for a light surface ─────── */
+
+.theme-thairesia {
+	/* Unstyled text (damage formulas, quantities, spell components) inherits from here instead of
+	   Foundry's interface color, which is a light beige in dark mode. */
+	color: var(--ph-ink);
+	--nah-text-primary: var(--ph-ink);
+	--nah-text-secondary: var(--ph-ink-2);
+	--nah-surface-border: var(--ph-line);
+	/* Foundry's button focus ring is warm orange; use the theme's blue. */
+	--button-focus-outline-color: var(--ph-accent);
+
+	/* Light washes become navy washes; shadows become softer and navy-tinted. */
+	--nah-veil-1: rgb(15 37 71 / 0.04);
+	--nah-veil-2: rgb(15 37 71 / 0.07);
+	--nah-veil-3: rgb(15 37 71 / 0.18);
+	--nah-veil-line: rgb(15 37 71 / 0.14);
+	--nah-veil-line-strong: rgb(15 37 71 / 0.3);
+	--nah-shade-1: rgb(15 37 71 / 0.05);
+	--nah-shade-2: rgb(15 37 71 / 0.22);
+	--nah-shade-3: rgb(15 37 71 / 0.35);
+
+	/* Fixed accents darkened to stay readable on marble. */
+	--nah-accent-secondary: #0f766e;
+	--nah-amber: #b45309;
+	--nah-gold: #a16207;
+	--nah-sky: #0369a1;
+	--nah-danger-soft: #b91c1c;
+}
+
+#nah-tooltip.theme-thairesia {
+	--tt-surface-bg: rgb(15 37 71 / 0.04);
+	--tt-surface-border: rgb(15 37 71 / 0.12);
+	--tt-badge-bg: rgb(15 37 71 / 0.05);
+	--tt-badge-border: rgb(15 37 71 / 0.14);
+	--tt-tac-bg: rgb(15 37 71 / 0.03);
+	box-shadow: 0 8px 24px rgb(15 37 71 / 0.35);
+}
+
+/* ── Default button shape: Stepped Stele ───────────────── */
+
+/* A chosen button shape (hud-shapes.css, !important) still wins over this default. */
+.theme-thairesia .nah-hud-btn {
+	--sh-clip: polygon(0 6px, 6px 6px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
+		100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
+		6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px));
+	--sh-bar: polygon(0 6px, var(--bar-now) 6px, var(--bar-now) calc(100% - 6px), 0 calc(100% - 6px));
+	--sh-r: 0px;
+	padding: 0 20px 0 calc(16px + var(--ph-bar));
+	box-shadow: 0 3px 10px rgb(15 37 71 / 0.3);
+}
+
+/* ── Meander band under the drawer heading ─────────────── */
+
+.theme-thairesia .nah-drawer-heading {
+	position: relative;
+	padding-bottom: 18px;
+	border-bottom: 0;
+}
+
+.theme-thairesia .nah-drawer-heading::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 10px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M0 9.5H20M0 .5H20M3 9V3H9V7H6V5M13 1V7H19V3H16V5' fill='none' stroke='%231d5fb8' stroke-width='1.2'/%3E%3C/svg%3E") left center / 20px 10px repeat-x;
+	pointer-events: none;
+}
+
+/* ── Softer, navy-tinted depth ─────────────────────────── */
+
+.theme-thairesia .nah-drawer-pane {
+	box-shadow: 0 18px 40px rgb(15 37 71 / 0.35), inset 0 0 0 1px var(--ph-tint);
+}
+
+.theme-thairesia .nah-favorite {
+	box-shadow: 0 3px 8px rgb(15 37 71 / 0.25);
+}
+
+.theme-thairesia .nah-row-thumb {
+	box-shadow: 0 0 6px rgb(15 37 71 / 0.2);
+}
+
+/* ── Fixed colors that assume a dark row ───────────────── */
+
+.theme-thairesia .nah-item-cost-container {
+	color: var(--ph-ink-2);
+}
+
+/* The close button is otherwise Foundry's own button (grey fill, beige glyph in dark mode). */
+.theme-thairesia .nah-drawer-close {
+	border: 1px solid transparent;
+	background: transparent;
+	box-shadow: none;
+	color: var(--ph-ink-3);
+}
+
+.theme-thairesia .nah-drawer-close:hover {
+	border-color: var(--ph-line);
+	background: var(--ph-tint);
+	color: var(--ph-accent-2);
+}
+
+.theme-thairesia .nah-finder-wrap i,
+.theme-thairesia .nah-meta-line.is-muted,
+.theme-thairesia .nah-uses-badge.is-muted {
+	color: var(--ph-ink-3);
+}
+
+.theme-thairesia .nah-pin-toggle {
+	color: var(--ph-ink-3);
+}
+
+.theme-thairesia .nah-uses-badge.is-accent { color: var(--ph-accent); }
+.theme-thairesia .nah-uses-badge.is-ready { color: #0f766e; }
+.theme-thairesia .nah-uses-badge.is-recharge { color: #b91c1c; }
+
+.theme-thairesia .nah-chip.ritual { color: var(--ph-accent-2); }
+
+.theme-thairesia .nah-act-badge {
+	border-color: rgb(0 0 0 / 0.2);
+	box-shadow: none;
+}
+
+/* Pale damage colors (radiant, lightning, thunder…) get a navy hairline so they read on white. */
+.theme-thairesia .nah-dmg-icon {
+	filter: drop-shadow(0 0 0.6px rgb(15 37 71 / 0.9));
+}
+
+.theme-thairesia .nah-spell-pages::-webkit-scrollbar-thumb {
+	background: var(--ph-line);
+}
+
+.theme-thairesia .nah-spell-pages::-webkit-scrollbar-thumb:hover,
+.theme-thairesia .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: var(--ph-accent);
+}
+
+/* ── Hover card badges ─────────────────────────────────── */
+
+#nah-tooltip.theme-thairesia .nah-tt-badge.prepared { color: #15803d; }
+#nah-tooltip.theme-thairesia .nah-tt-badge.unprepared { color: var(--ph-ink-3); }
+
+#nah-tooltip.theme-thairesia :is(.nah-tt-badge.always, .nah-tt-badge.innate, .nah-tt-badge.atwill, .nah-tt-badge.pact) {
+	color: #7e22ce;
+}
+
+#nah-tooltip.theme-thairesia .nah-tt-badge.attuned { color: #6d28d9; }
+#nah-tooltip.theme-thairesia .nah-tt-pill.mastery { color: #b45309; }

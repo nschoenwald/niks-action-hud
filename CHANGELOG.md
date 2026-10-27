@@ -2,6 +2,17 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.4] - 2026-10-27
+### Added
+- **New Theme: Thairesia**:
+  - A white marble and Aegean blue theme inspired by Greek temples, and the HUD's first light theme. It has a Greek-key band under each menu heading.
+  - Comes with a new **Thairesia (Stepped Stele)** button shape, which you can also use with any other theme.
+  - Thairesia looks the same whatever Foundry's light/dark settings are. All text, including damage, quantities and spell components, stays dark and readable on white.
+
+### Fixed
+- **Attacks Menu: Legendary Actions**:
+  - Fixed weapons used as legendary, mythic or lair actions also showing up in the **Attacks** menu. They are now listed only in the **Legendary** menu.
+
 ## [14.19.3] - 2026-10-25
 ### Added
 - **Nik's DnD5e Tweaks: Pass Legendary Action**:

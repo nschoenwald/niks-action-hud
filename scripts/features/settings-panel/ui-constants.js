@@ -174,6 +174,20 @@ export const THEMES = Object.freeze({
 		},
 		icon: "fas fa-skull",
 	},
+	thairesia: {
+		id: "thairesia",
+		label: "NAH.Themes.Thairesia",
+		defaultLabel: "Thairesia",
+		description: "White marble and the Aegean",
+		colors: {
+			bg: "#e6ecf3",
+			surface: "#f3f6fa",
+			border: "#1d5fb8",
+			accent: "#0c3d82",
+			text: "#0f2547",
+		},
+		icon: "fas fa-building-columns",
+	},
 	shadowdark: {
 		id: "shadowdark",
 		label: "NAH.Themes.Shadowdark",
@@ -274,5 +288,9 @@ export const BUTTON_SHAPES = Object.freeze({
 	shadowdark: {
 		id: "shadowdark",
 		label: "Shadowdark (Chiselled Chamfer)",
+	},
+	thairesia: {
+		id: "thairesia",
+		label: "Thairesia (Stepped Stele)",
 	},
 });
