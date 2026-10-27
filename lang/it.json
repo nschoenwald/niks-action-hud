@@ -24,6 +24,8 @@
       "PortraitTooltip": "Clic: apri la scheda del personaggio\nDoppio clic: centra sul token\nClic destro: opzioni del ritratto",
       "NoSelectionTitle": "Nessun token selezionato",
       "ScaleHandle": "Trascina per ridimensionare l'HUD",
+      "MinimizeHud": "Riduci HUD",
+      "ExpandHud": "Espandi HUD",
       "AllGear": "Tutti",
       "CloseDrawer": "Chiudi",
       "EmptyDrawer": "Vuoto",
@@ -193,6 +195,10 @@
         "Hint": "Barra verticale a lato dell'HUD oppure barra orizzontale sopra l'HUD.",
         "Rail": "Barra laterale",
         "Top": "Barra superiore"
+      },
+      "MinimizeButton": {
+        "Name": "Pulsante di riduzione",
+        "Hint": "Mostra un pulsante nella riga del nome che riduce l'HUD al solo nome e ritratto. Fai di nuovo clic per riavere l'HUD completo."
       },
       "InterfaceFading": {
         "Name": "Attenua quando inattivo (dissolvenza dell'interfaccia)",

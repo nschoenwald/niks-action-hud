@@ -2,6 +2,14 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.5] - 2026-10-27
+### Added
+- **Minimize Button**:
+  - New option in the HUD settings (**Display** section), off by default. It adds a small arrow button to the HUD's name row.
+  - Click it to shrink the HUD down to the token's name and portrait. Click it again to bring the full HUD back.
+  - While minimized, the portrait, dragging the HUD and the **End Turn** / **Pass Legendary** buttons still work.
+  - The HUD stays minimized when you select other tokens, until you expand it again. This is remembered for each player.
+
 ## [14.19.4] - 2026-10-27
 ### Added
 - **New Theme: Thairesia**:

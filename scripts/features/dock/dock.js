@@ -6,7 +6,8 @@
 
 import { bindFavoriteReorder } from "../pins/reorder.js";
 import { readProfile } from "../../core/profile.js";
-import { DOM_IDS } from "../../core/ids.js";
+import { updateClientStore } from "../../core/client-store.js";
+import { DOM_IDS, MODULE_ID } from "../../core/ids.js";
 import { hudStore } from "../../core/store.js";
 import { pressClosesDrawer } from "./outside-click.js";
 import { setThemeClass } from "../../core/theme-class.js";
@@ -78,6 +79,7 @@ async function paintDock() {
 	setThemeClass(root, theme);
 	root.classList.toggle("faded-ui", layout.fadeWhenIdle);
 	root.classList.toggle("has-open-drawer", Boolean(state.drawer));
+	root.classList.toggle("is-minimized", layout.minimized);
 	if (buttonShape) root.dataset.buttonShape = buttonShape;
 	else delete root.dataset.buttonShape;
 
@@ -103,6 +105,7 @@ async function paintDock() {
 	}
 	bar.style.display = "";
 	handle.style.display = "";
+	Object.assign(header, minimizeButtonModel(layout));
 	triggerTurnAlertIfPending(root, header);
 
 	const favLayout = favoritesLayoutFor(profile);
@@ -173,6 +176,39 @@ export function pushPreview(data) {
 	if (data.font) root.style.setProperty("--nah-font-family", `'${data.font}'`);
 }
 
+// ── Minimize ────────────────────────────────────────────
+
+/** Header fields of the minimize button: shown only when the client setting is on. */
+function minimizeButtonModel({ minimizeButton, minimized }) {
+	return {
+		showMinimize: minimizeButton,
+		minimized,
+		minimizeTitle: minimized ? loc("UI.ExpandHud", "Expand HUD") : loc("UI.MinimizeHud", "Minimize HUD"),
+	};
+}
+
+/** Fold the dock down to its name row, or unfold it, and remember the choice for this client. */
+async function toggleMinimized(root, button) {
+	const minimized = !root.classList.contains("is-minimized");
+	if (minimized) {
+		hud.closeDrawer();
+		hud.dismissHoverCard(true);
+	}
+	// Applied here right away; the saved value must not trigger a repaint of its own.
+	root.classList.toggle("is-minimized", minimized);
+	const { minimizeTitle } = minimizeButtonModel({ minimizeButton: true, minimized });
+	button.title = minimizeTitle;
+	button.setAttribute("aria-label", minimizeTitle);
+	button.setAttribute("aria-pressed", String(minimized));
+	try {
+		await updateClientStore("hudPlacement", (placement) => { placement.minimized = minimized; }, { skipRefresh: true });
+	} catch (err) {
+		console.warn(`[${MODULE_ID}] Could not save the minimized state:`, err);
+	}
+	// Labels and the favorites rail could not be measured while hidden: fit them again now they show.
+	if (!minimized) await repaintDock();
+}
+
 // ── Delegated input ─────────────────────────────────────
 
 const CLICK_ACTIONS = {
@@ -193,6 +229,7 @@ const CLICK_ACTIONS = {
 	"open-sheet": (_el, event) => schedulePortraitClick(event),
 	"end-turn": (el) => window.NikHUD?.endTurn?.(el.dataset.actorId, el.dataset.tokenId),
 	"pass-legendary": (el) => window.NikHUD?.passLegendaryTurn?.(el.dataset.actorId, el.dataset.tokenId),
+	"toggle-minimize": (el) => toggleMinimized(el.closest(`#${DOM_IDS.DOCK}`), el),
 };
 
 /** Press on the dock: Alt/Shift/header drag after travel, anywhere else after a hold. */

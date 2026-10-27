@@ -68,6 +68,7 @@ const ROW_TEXT = {
 		section: "display", control: "select", label: "Favorites bar layout", hint: "Vertical rail at the side of the HUD, or a horizontal bar above it.",
 		choices: { rail: "Vertical rail", top: "Horizontal bar" },
 	},
+	minimizeButton: { section: "display", control: "switch", label: "Minimize button", hint: "Show a button on the HUD's name row that shrinks the HUD down to the name and portrait. Click it again to bring the full HUD back." },
 };
 
 const SCOPE_TEXT = {

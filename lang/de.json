@@ -24,6 +24,8 @@
       "PortraitTooltip": "Klick: Charakterbogen öffnen\nDoppelklick: auf Token zentrieren\nRechtsklick: Porträt-Optionen",
       "NoSelectionTitle": "Kein Token ausgewählt",
       "ScaleHandle": "Ziehen, um die HUD-Größe zu ändern",
+      "MinimizeHud": "HUD minimieren",
+      "ExpandHud": "HUD ausklappen",
       "AllGear": "Alle",
       "CloseDrawer": "Schließen",
       "EmptyDrawer": "Leer",
@@ -193,6 +195,10 @@
         "Hint": "Vertikale Leiste seitlich vom HUD oder horizontale Leiste über dem HUD.",
         "Rail": "Seitliche Leiste",
         "Top": "Obere Leiste"
+      },
+      "MinimizeButton": {
+        "Name": "Minimieren-Schaltfläche",
+        "Hint": "Zeigt in der Namenszeile des HUD eine Schaltfläche, die das HUD auf Namen und Porträt verkleinert. Ein erneuter Klick bringt das ganze HUD zurück."
       },
       "InterfaceFading": {
         "Name": "Bei Inaktivität ausblenden (Interface Fading)",

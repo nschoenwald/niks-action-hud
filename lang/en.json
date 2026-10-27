@@ -24,6 +24,8 @@
       "PortraitTooltip": "Click: open character sheet\nDouble-click: center on token\nRight-click: portrait options",
       "NoSelectionTitle": "No Token Selected",
       "ScaleHandle": "Drag to resize HUD",
+      "MinimizeHud": "Minimize HUD",
+      "ExpandHud": "Expand HUD",
       "AllGear": "All",
       "CloseDrawer": "Close",
       "EmptyDrawer": "Empty",
@@ -193,6 +195,10 @@
         "Hint": "Vertical rail at the side of the HUD, or a horizontal bar above it.",
         "Rail": "Side rail",
         "Top": "Top bar"
+      },
+      "MinimizeButton": {
+        "Name": "Minimize Button",
+        "Hint": "Show a button on the HUD's name row that shrinks the HUD down to the name and portrait. Click it again to bring the full HUD back."
       },
       "InterfaceFading": {
         "Name": "Fade when Idle (Interface Fading)",

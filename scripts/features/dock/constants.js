@@ -19,4 +19,4 @@ export const PORTRAIT_OVERHANG_PX = 28;
 export const RAIL_COLUMNS = 2;
 export const DRAWER_WIDTH = 360;
 export const DRAWER_EDGE_CLEARANCE = 20;
-export const NO_DRAG_SELECTOR = `#${DOM_IDS.DRAWER_SLOT}, .nah-drawer-pane, .nah-resize-handle, .nah-turn-pass, .nah-favorites-rail, input, textarea, select`;
+export const NO_DRAG_SELECTOR = `#${DOM_IDS.DRAWER_SLOT}, .nah-drawer-pane, .nah-resize-handle, .nah-turn-pass, .nah-minimize-btn, .nah-favorites-rail, input, textarea, select`;

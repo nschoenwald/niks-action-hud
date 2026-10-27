@@ -28,6 +28,17 @@
 						<span class="nah-end-turn-label">{{localize 'NAH.UI.PassLegendary'}}</span>
 					</div>
 				{{/if}}
+				{{#if showMinimize}}
+					<div class="nah-minimize-btn"
+						 role="button"
+						 tabindex="0"
+						 data-action="toggle-minimize"
+						 title="{{minimizeTitle}}"
+						 aria-label="{{minimizeTitle}}"
+						 aria-pressed="{{#if minimized}}true{{else}}false{{/if}}">
+						<i class="fas fa-chevron-down"></i>
+					</div>
+				{{/if}}
 			</div>
 		</div>
 	</div>

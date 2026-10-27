@@ -30,6 +30,7 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
 - **End your turn**: On your turn in combat, an **End Turn** button appears on the HUD.
   - With [Nik's DnD5e Tweaks](https://github.com/nschoenwald/niks-dnd5e-tweaks) legendary action placeholders, creatures with legendary actions get a **Pass Legendary** button during a placeholder turn.
 - **Show or hide**: Press <kbd>Shift</kbd>+<kbd>H</kbd> (you can change this in Configure Controls).
+- **Minimize**: Turn on **Minimize Button** in the HUD settings (Display) to get a button on the name row that shrinks the HUD down to the name and portrait. The End Turn button stays usable while minimized.
 - **Make it yours**:
   - 13 themes (12 dark and the light, Greek-inspired Thairesia) and different button shapes.
   - Rename, reorder and re-icon the menu buttons.

@@ -35,12 +35,16 @@ export function computeLayout(profile) {
 
 	const themeId = isThemeAvailable(profile.theme) ? profile.theme : getDefaultTheme();
 	const fadeSetting = game.settings.settings?.has(`${MODULE_ID}.fadeWhenIdle`) ? readSetting("fadeWhenIdle") : profile.fadeWhenIdle;
+	const minimizeButton = Boolean(game.settings.settings?.has(`${MODULE_ID}.minimizeButton`) ? readSetting("minimizeButton") : profile.minimizeButton);
 
 	return {
 		position: stored ? readDockPosition(stored, fallback) : fallback,
 		zoom: dockZoom(placement.hudScale || 1),
 		theme: themeId,
 		fadeWhenIdle: fadeSetting ?? true,
+		minimizeButton,
+		// Without the button there is no way back, so the saved state only applies while it is shown.
+		minimized: minimizeButton && Boolean(placement.minimized),
 		font: profile.fontFamily || "",
 		buttonShape: profile.buttonShape || "",
 		hudOpacity: readHudOpacity(profile),

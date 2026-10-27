@@ -270,6 +270,57 @@
 	border-radius: var(--nah-radius-sm);
 }
 
+/* Row control: minimize button. Colours come from the theme (the name row's text and accent), so it
+   follows the HUD theme rather than Foundry's light/dark settings. */
+.nah-minimize-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	color: inherit;
+	border-radius: var(--nah-radius-sm);
+	cursor: pointer;
+	opacity: 0.7;
+	transition: opacity var(--nah-dur-fast) ease, background-color var(--nah-dur-fast) ease;
+}
+
+.nah-minimize-btn:hover {
+	opacity: 1;
+	background-color: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.nah-minimize-btn:active {
+	scale: 0.9;
+}
+
+.nah-minimize-btn:focus-visible {
+	opacity: 1;
+	outline: 2px solid currentColor;
+	outline-offset: 1px;
+}
+
+/* The chevron points the way the HUD will move: a bottom-corner dock keeps its bottom edge, so it folds
+   down and unfolds up; a top-corner dock keeps its top edge, so it folds up and unfolds down.
+   `rotate` leaves the themes' own `transform` on button icons untouched. */
+#nah-dock .nah-minimize-btn i {
+	font-size: 12px;
+	line-height: 1;
+	rotate: 0deg;
+	transition: rotate var(--nah-dur-base) ease;
+}
+
+#nah-dock:is([data-corner="top-left"], [data-corner="top-right"]):not(.is-minimized) .nah-minimize-btn i,
+#nah-dock:is([data-corner="bottom-left"], [data-corner="bottom-right"]).is-minimized .nah-minimize-btn i {
+	rotate: 180deg;
+}
+
+/* Minimized: only the name row and its portrait stay. */
+#nah-dock.is-minimized :is(#nah-drawer-slot, .nah-banner-stack, .nah-resize-handle),
+#nah-dock.is-minimized #nah-dock-root > :not(.nah-actor-banner) {
+	display: none !important;
+}
+
 /* ── Favorites rail: a column beside the ribbon ───────────────────────── */
 
 .nah-favorites-rail {

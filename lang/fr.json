@@ -24,6 +24,8 @@
       "PortraitTooltip": "Clic : ouvrir la fiche de personnage\nDouble-clic : centrer sur le jeton\nClic droit : options du portrait",
       "NoSelectionTitle": "Aucun jeton sélectionné",
       "ScaleHandle": "Faites glisser pour redimensionner le HUD",
+      "MinimizeHud": "Réduire le HUD",
+      "ExpandHud": "Déployer le HUD",
       "AllGear": "Tous",
       "CloseDrawer": "Fermer",
       "EmptyDrawer": "Vide",
@@ -193,6 +195,10 @@
         "Hint": "Barre verticale sur le côté du HUD ou barre horizontale au-dessus.",
         "Rail": "Barre latérale",
         "Top": "Barre supérieure"
+      },
+      "MinimizeButton": {
+        "Name": "Bouton de réduction",
+        "Hint": "Affiche sur la ligne du nom un bouton qui réduit le HUD au nom et au portrait. Cliquez à nouveau pour réafficher le HUD complet."
       },
       "InterfaceFading": {
         "Name": "Atténuer en cas d'inactivité (Interface Fading)",

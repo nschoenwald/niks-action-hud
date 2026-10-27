@@ -43,6 +43,7 @@ export const SETTING_SCHEMA = Object.freeze([
 	option("fadeWhenIdle", "boolean", true, "behavior", client({ label: "InterfaceFading", lock: true })),
 	option("drawerSide", "string", "auto", "behavior", client({ label: "SubmenuSide", lock: true, choices: { auto: "Auto", left: "Left", right: "Right" } })),
 	option("favoritesLayout", "string", "rail", "behavior", client({ label: "FavoritesLayout", lock: true, choices: { rail: "Rail", top: "Top" } })),
+	option("minimizeButton", "boolean", false, "behavior", client({ label: "MinimizeButton", lock: true })),
 	option("combatTurnAlert", "boolean", true, "behavior", client({ label: "CombatTurnAlert", lock: true, refresh: false })),
 	option("combatTurnSound", "boolean", false, "behavior", client({ label: "CombatTurnSound", lock: true, refresh: false })),
 	option("combatTurnNpc", "boolean", false, "behavior", client({ label: "CombatTurnNpc", lock: true, refresh: false, gmOnly: true })),
