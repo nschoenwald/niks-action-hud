@@ -14,6 +14,8 @@
 	--nah-text-primary: var(--ph-ink);
 	--nah-text-secondary: var(--ph-ink-2);
 	--nah-surface-border: var(--ph-line);
+	/* Edge for controls that must read as controls (search field, tabs): 3:1 on marble. */
+	--th-edge-strong: #7890b0;
 	/* Foundry's button focus ring is warm orange; use the theme's blue. */
 	--button-focus-outline-color: var(--ph-accent);
 
@@ -29,7 +31,7 @@
 
 	/* Fixed accents darkened to stay readable on marble. */
 	--nah-accent-secondary: #0f766e;
-	--nah-amber: #b45309;
+	--nah-amber: #92400e;
 	--nah-gold: #a16207;
 	--nah-sky: #0369a1;
 	--nah-danger-soft: #b91c1c;
@@ -155,6 +157,53 @@
 
 .theme-thairesia .nah-chip.ritual { color: var(--ph-accent-2); }
 
+.theme-thairesia .nah-roll-prof.half-prof i { color: #64748b; }
+
+/* ── Control edges ─────────────────────────────────────── */
+
+.theme-thairesia :is(.nah-finder-field, .nah-page-btn) {
+	border-color: var(--th-edge-strong);
+}
+
+/* Full-strength ink instead of the shared 60% mix, which fades to under 3:1 on white. */
+.theme-thairesia .nah-inventory-equip-toggle {
+	border-color: var(--nah-equip-ink);
+}
+
+/* ── End Turn / Pass Legendary ─────────────────────────── */
+
+.theme-thairesia .nah-turn-pass {
+	color: #fff;
+}
+
+/* ── Favorites rail ────────────────────────────────────── */
+
+/* The rail floats over the canvas with no panel behind it, so "+N" and "+" get their own marble tile
+   instead of the shared navy wash (which would put navy text on the dark map). */
+.theme-thairesia :is(.nah-fav-more, .nah-fav-add) {
+	border-color: var(--ph-line);
+	background: var(--ph-surface-a);
+	box-shadow: 0 3px 8px rgb(15 37 71 / 0.25);
+	color: var(--ph-ink);
+}
+
+.theme-thairesia .nah-fav-add {
+	opacity: 0.75;
+}
+
+.theme-thairesia :is(.nah-fav-more, .nah-fav-add):is(:hover, :focus-visible) {
+	border-color: var(--ph-accent);
+	background: var(--ph-raised-a);
+	color: var(--ph-accent-2);
+}
+
+/* The overflow popover otherwise follows Foundry's interface background (dark in dark mode). */
+.theme-thairesia .nah-fav-popover {
+	border-color: var(--ph-line);
+	background: var(--ph-surface-a);
+	box-shadow: 0 8px 24px rgb(15 37 71 / 0.35);
+}
+
 .theme-thairesia .nah-act-badge {
 	border-color: rgb(0 0 0 / 0.2);
 	box-shadow: none;
@@ -176,7 +225,7 @@
 
 /* ── Hover card badges ─────────────────────────────────── */
 
-#nah-tooltip.theme-thairesia .nah-tt-badge.prepared { color: #15803d; }
+#nah-tooltip.theme-thairesia .nah-tt-badge.prepared { color: #166534; }
 #nah-tooltip.theme-thairesia .nah-tt-badge.unprepared { color: var(--ph-ink-3); }
 
 #nah-tooltip.theme-thairesia :is(.nah-tt-badge.always, .nah-tt-badge.innate, .nah-tt-badge.atwill, .nah-tt-badge.pact) {
@@ -184,4 +233,4 @@
 }
 
 #nah-tooltip.theme-thairesia .nah-tt-badge.attuned { color: #6d28d9; }
-#nah-tooltip.theme-thairesia .nah-tt-pill.mastery { color: #b45309; }
+#nah-tooltip.theme-thairesia .nah-tt-pill.mastery { color: #92400e; }

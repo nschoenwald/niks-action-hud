@@ -2,6 +2,15 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.7] - 2026-10-27
+### Fixed
+- **Thairesia Theme: Contrast**:
+  - The favorites bar's **+N** and **+** buttons were nearly invisible over the map. They now have their own white tile with dark text, and the **+N** popover matches the theme instead of following Foundry's dark mode.
+  - The **End Turn** and **Pass Legendary** buttons now use white text on the blue, instead of black.
+  - Softer grey text (search hint, greyed-out uses, menu tab icons, the close button) is darker and easier to read.
+  - The half-proficiency icon, the concentration chip, the "Prepared" badge and the weapon mastery pill are darker.
+  - The search field, the drawer's tab buttons and the **Equip** / **Unequip** buttons have clearer edges.
+
 ## [14.19.6] - 2026-10-27
 ### Improved
 - **Thairesia Theme: Favorite Star**:
