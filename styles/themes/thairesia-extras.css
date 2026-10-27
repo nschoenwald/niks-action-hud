@@ -116,8 +116,37 @@
 	color: var(--ph-ink-3);
 }
 
+/* Favorite star: a marble disc with a lapis star instead of Foundry's grey button. Hover fills it
+   with the accent; a pinned row's star is solid lapis on a pale blue disc. */
 .theme-thairesia .nah-pin-toggle {
-	color: var(--ph-ink-3);
+	width: 26px;
+	height: 26px;
+	min-height: 0;
+	padding: 0;
+	border: 1px solid var(--ph-line);
+	background: var(--ph-raised);
+	box-shadow: 0 1px 4px rgb(15 37 71 / 0.18);
+	color: var(--ph-accent-2);
+	font-size: 0.82em;
+	line-height: 1;
+}
+
+.theme-thairesia .nah-pin-toggle:hover {
+	border-color: var(--ph-accent);
+	background: var(--ph-accent);
+	box-shadow: 0 2px 8px var(--ph-glow);
+	color: #fff;
+}
+
+.theme-thairesia .nah-pin-toggle.active {
+	border-color: var(--ph-accent);
+	background: color-mix(in srgb, var(--ph-accent) 14%, var(--ph-raised));
+	color: var(--ph-accent-2);
+}
+
+.theme-thairesia .nah-pin-toggle.active:hover {
+	background: var(--ph-accent);
+	color: #fff;
 }
 
 .theme-thairesia .nah-uses-badge.is-accent { color: var(--ph-accent); }

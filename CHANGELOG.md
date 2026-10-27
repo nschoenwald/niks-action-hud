@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.6] - 2026-10-27
+### Improved
+- **Thairesia Theme: Favorite Star**:
+  - The favorite star is now a white disc with a blue star that fills blue on hover, so it stands out on the light rows.
+
 ## [14.19.5] - 2026-10-27
 ### Added
 - **Minimize Button**:
