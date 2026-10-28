@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.8] - 2026-10-28
+### Improved
+- **Damage with several types**:
+  - Damage parts of different types are now joined with a plus (e.g. `2d8+8 slashing + 3d6 poison`) instead of a comma, in the menus and the hover card.
+
 ## [14.19.7] - 2026-10-27
 ### Fixed
 - **Thairesia Theme: Contrast**:

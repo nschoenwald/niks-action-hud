@@ -260,8 +260,8 @@ export function _getItemDamage(item, actor = item?.actor) {
 					}
 
 					if (partTexts.length > 0) {
-						damageText = partTexts.join(", ");
-						damageHtml = partHtmls.join(", ");
+						damageText = partTexts.join(" + ");
+						damageHtml = partHtmls.join(" + ");
 						damageFormula = damageText;
 						damageType = Array.from(new Set(collectedTypes)).join(", ");
 					}
@@ -303,8 +303,8 @@ export function _getItemDamage(item, actor = item?.actor) {
 				}
 			}
 			if (partTexts.length > 0) {
-				damageText = partTexts.join(", ");
-				damageHtml = partHtmls.join(", ");
+				damageText = partTexts.join(" + ");
+				damageHtml = partHtmls.join(" + ");
 				damageFormula = damageText;
 			}
 		}

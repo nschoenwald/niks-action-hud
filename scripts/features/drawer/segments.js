@@ -119,7 +119,7 @@ const infoPieceMarkup = (seg) => {
 	return escapeHtml(seg.text);
 };
 
-/** Info run: damage parts joined by ", ", other pieces joined by " · " (the tooltip carries the plain-text form). */
+/** Info run: damage parts joined by " + ", other pieces joined by " · " (the tooltip carries the plain-text form). */
 function infoMarkup(segments, muted) {
 	const pieces = [];
 	for (const seg of segments) {
@@ -127,8 +127,8 @@ function infoMarkup(segments, muted) {
 		const text = segmentsText([seg]);
 		const prev = pieces.at(-1);
 		if (prev && prev.kind === SEGMENT_KINDS.DAMAGE && seg.kind === SEGMENT_KINDS.DAMAGE) {
-			prev.html += `, ${html}`;
-			prev.text += `, ${text}`;
+			prev.html += ` + ${html}`;
+			prev.text += ` + ${text}`;
 		} else {
 			pieces.push({ kind: seg.kind, html, text });
 		}
