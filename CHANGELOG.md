@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.9] - 2026-10-29
+### Changed
+- **Spells Menu Order**:
+  - Pact Magic now comes right after Cantrips, before the level 1–9 tabs. The order is now Cantrips, Pact, levels 1–9, Innate, Items.
+
 ## [14.19.8] - 2026-10-28
 ### Improved
 - **Damage with several types**:

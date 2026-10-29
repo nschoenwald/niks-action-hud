@@ -1,5 +1,5 @@
 /**
- * Spells section: spellbook groups (cantrips to 9, pact, innate) plus spells granted by items.
+ * Spells section: spellbook groups (cantrips, pact, 1 to 9, innate) plus spells granted by items.
  */
 
 import { dd } from "../lib/text.js";
@@ -27,16 +27,16 @@ const slotSummary = (slots) => {
 
 /**
  * The spell groups of an actor in display order, each `{ id, label, heading, rows: [] }`:
- * cantrips, levels 1–9 (label with remaining/max slots), pact (only with pact slots), innate, item-granted.
+ * cantrips, pact (only with pact slots), levels 1–9 (label with remaining/max slots), innate, item-granted.
  */
 function spellGroups(actor) {
 	const groups = [{ id: "0", label: dd("Cantrips", "Cantrips"), rows: [] }];
+	const pact = slotSummary(actor.system.spells?.pact);
+	if (pact.max > 0) groups.push({ id: "pact", label: dd("PactTab", "Pact{slots}", { slots: pact.text }), heading: dd("PactHeader", "Pact Magic{slots}", { slots: pact.text }), rows: [] });
 	for (let level = 1; level <= 9; level++) {
 		const { text } = slotSummary(actor.system.spells?.[`spell${level}`]);
 		groups.push({ id: String(level), label: dd("LvlTab", "LVL {level}{slots}", { level, slots: text }), heading: dd("LevelHeader", "Level {level}{slots}", { level, slots: text }), rows: [] });
 	}
-	const pact = slotSummary(actor.system.spells?.pact);
-	if (pact.max > 0) groups.push({ id: "pact", label: dd("PactTab", "Pact{slots}", { slots: pact.text }), heading: dd("PactHeader", "Pact Magic{slots}", { slots: pact.text }), rows: [] });
 	groups.push({ id: "innate", label: dd("Innate", "Innate"), heading: dd("InnateHeader", "Innate Spells"), rows: [] });
 	groups.push({ id: "item", label: t("NAH.Tabs.Items", "Items"), rows: [] });
 	return groups;
