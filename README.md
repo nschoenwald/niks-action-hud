@@ -44,7 +44,7 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
 - **D&D 5e (6.0.6 and later 6.0.x)**:
   - Features are sorted by when you use them (Action, Bonus Action, Reaction…).
   - Monsters get a Legendary menu with their legendary, mythic and lair actions, followed by their legendary resistances. These are not repeated in the Features or Attacks menus. Actions that cast a spell are listed once, under the action's name, with the spell's damage and range.
-  - Spells are grouped by level: cantrips first, then Pact Magic, then levels 1 to 9, with spells from items last. An eye button in the Spells menu also shows spells you haven't prepared (off by default, remembered per player). Spells a monster casts through its Spellcasting feature are listed by level like regular spells.
+  - Spells are grouped by level: cantrips first (including Pact Magic cantrips), then Pact Magic, then levels 1 to 9, with spells from items last. An eye button in the Spells menu also shows spells you haven't prepared (off by default, remembered per player). Spells a monster casts through its Spellcasting feature are listed by level like regular spells.
   - Items are split into Weapons, Armor, Gear, Tools, Consumables and Other.
   - Ammunition shows a warning when it runs low.
 - **Shadowdark (4.0.6 and later 4.0.x)**:

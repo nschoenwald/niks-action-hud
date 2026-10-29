@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.10] - 2026-10-29
+### Fixed
+- **Spells Menu: Pact Cantrips**:
+  - Cantrips from Pact Magic (e.g. a warlock's Eldritch Blast) are now listed under **Cantrips** instead of **Pact**.
+
 ## [14.19.9] - 2026-10-29
 ### Changed
 - **Spells Menu Order**:

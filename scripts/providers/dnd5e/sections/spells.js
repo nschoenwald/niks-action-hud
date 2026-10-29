@@ -46,7 +46,8 @@ function spellGroups(actor) {
 function groupIdFor(spell, level, { linkedActivity, cachedFor, sourceItem }, hasPact) {
 	if (cachedFor || linkedActivity) return isSpellcastingFeature(sourceItem) ? String(level) : "item";
 	const method = spell.system.method || "spell";
-	if (method === "pact" && hasPact) return "pact";
+	// Pact cantrips stay with the other cantrips; the Pact tab is for spells that use pact slots.
+	if (method === "pact" && hasPact && Number(level) > 0) return "pact";
 	if (method === "innate" || method === "atwill") return "innate";
 	return String(level);
 }
