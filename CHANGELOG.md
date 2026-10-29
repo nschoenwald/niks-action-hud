@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.12] - 2026-10-29
+### Added
+- **HUD Hides While Targeting**:
+  - The HUD, its menus and hover cards now disappear while you place a template (e.g. Fireball) or pick a teleport destination with Automated Animations (also with the teleport UI of Nik's DnD5e Tweaks). They come back as soon as you place it or cancel.
+
 ## [14.19.11] - 2026-10-29
 ### Added
 - **Scale with Window Size**:

@@ -70,6 +70,14 @@ body.theme-light,
 	transition: opacity var(--ui-fade-duration, 500ms) ease 0ms;
 }
 
+/* ── Canvas workflows ──────────────────────────────────────────────────── */
+/* Out of the way while a template or teleport destination is being placed (interaction/canvas-workflows.js). */
+
+body.nah-canvas-workflow :is(#nah-dock, #nah-tooltip, .nah-fav-picker, .nah-ammo-popover) {
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
 /* ── Dragging ──────────────────────────────────────────────────────────── */
 
 #nah-dock.is-moving {

@@ -9,6 +9,7 @@ import { socket } from "./core/socket.js";
 import { combatantMatches, userOwnsCombatant } from "./core/combat-ownership.js";
 import { isLegendaryPlaceholderTurn, legendaryCombatantOf } from "./core/legendary-placeholders.js";
 import { onCombatTurnUpdate, clearTurnAlert } from "./features/dock/turn-alert.js";
+import { registerCanvasWorkflowHiding } from "./features/interaction/canvas-workflows.js";
 
 class NikHUD {
 	static shell = hud;
@@ -182,6 +183,7 @@ Hooks.once("init", () => {
 		return;
 	}
 	NikHUD.initialize();
+	registerCanvasWorkflowHiding(hud);
 });
 
 Hooks.once("ready", async function onReady() {
