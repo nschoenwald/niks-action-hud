@@ -26,6 +26,7 @@ const FIELD_PATHS = Object.freeze([
 	["drawerSide", "behavior.drawerSide"],
 	["favoritesLayout", "behavior.favoritesLayout"],
 	["minimizeButton", "behavior.minimizeButton"],
+	["scaleWithWindow", "behavior.scaleWithWindow"],
 	["combatTurnAlert", "behavior.combatTurnAlert"],
 	["combatTurnSound", "behavior.combatTurnSound"],
 	["combatTurnNpc", "behavior.combatTurnNpc"],

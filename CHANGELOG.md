@@ -2,6 +2,22 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.19.11] - 2026-10-29
+### Added
+- **Scale with Window Size**:
+  - New option in the HUD settings (**Display** section), on by default. With it on, the HUD grows on large windows and shrinks on small ones, as before. Turn it off to keep the HUD the same size in any window.
+
+### Changed
+- **HUD Size**:
+  - The HUD now follows Foundry's own **Interface Scale** setting (Configure Settings → User Interface).
+  - Hover cards now grow and shrink with the HUD. **Tooltip text size** still adjusts their text on top of that.
+  - At 100%, the HUD is now about 5% smaller than before. Drag the corner to make it bigger again if you liked the old size.
+
+### Fixed
+- **HUD Off Screen**:
+  - The HUD no longer ends up partly off screen after the window gets smaller (for example moving from a big monitor to a laptop) or after you make it bigger. It goes back to its saved spot once there is room again.
+  - When the HUD is taller than the window, it shrinks just enough to fit, instead of running off the screen.
+
 ## [14.19.10] - 2026-10-29
 ### Fixed
 - **Spells Menu: Pact Cantrips**:

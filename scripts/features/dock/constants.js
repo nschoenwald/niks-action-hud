@@ -10,8 +10,10 @@ export const RESIZE_SENSITIVITY_PX = 600;
 /** Window area (in CSS pixels²) at which the dock is drawn at its base size, and how far the window may shrink or grow it. */
 export const REFERENCE_AREA = 1920 * 1080;
 export const WINDOW_FACTOR_RANGE = Object.freeze([0.75, 1.25]);
-/** Size the HUD has at 100%: the old 105% became the default. Saved scales stay relative to this. */
-export const BASE_SCALE = 1.05;
+/** Gap kept between the dock and the window edges when it is held on screen or shrunk to fit. */
+export const VIEWPORT_MARGIN_PX = 8;
+/** Smallest zoom the dock is shrunk to when it is taller than the window. */
+export const MIN_FIT_ZOOM = 0.4;
 export const HOLD_DRAG_MS = 300;
 export const DRAG_THRESHOLD_PX = 6;
 export const TOP_RAIL_MIN_COLUMNS = 6;

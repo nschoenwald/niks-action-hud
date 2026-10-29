@@ -17,9 +17,10 @@
 	transition: opacity var(--nah-dur-fast) ease-out, visibility var(--nah-dur-fast);
 
 	box-sizing: border-box;
-	width: 380px;
-	max-width: min(380px, calc(100vw - 30px));
-	max-height: min(540px, calc(100vh - 30px));
+	/* Sized with the HUD: --nah-hud-zoom is the dock's current zoom (dock/layout.js). */
+	width: calc(380px * var(--nah-hud-zoom, 1));
+	max-width: min(calc(380px * var(--nah-hud-zoom, 1)), calc(100vw - 30px));
+	max-height: min(calc(540px * var(--nah-hud-zoom, 1)), calc(100vh - 30px));
 	padding: var(--nah-space-5) 14px;
 	overflow: hidden auto;
 
@@ -28,7 +29,7 @@
 	background: var(--nah-card-bg, rgba(18, 16, 24, 0.95));
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
 	color: var(--nah-card-text, #ccc);
-	font-size: calc(1.08em * (var(--nah-tooltip-scale, 100) / 100));
+	font-size: calc(1.08em * var(--nah-hud-zoom, 1) * (var(--nah-tooltip-scale, 100) / 100));
 	line-height: 1.4;
 }
 

@@ -5,7 +5,7 @@ import { followPointer } from "../interaction/pointer-session.js";
 import { MODULE_ID } from "../../core/ids.js";
 import { RESIZE_SENSITIVITY_PX, SCALE_LIMITS } from "./constants.js";
 import { hud } from "./context.js";
-import { currentZoom, dockZoom, placeRoot, syncRailSide } from "./layout.js";
+import { currentZoom, dockZoom, fitToViewport, placeRoot, syncRailSide } from "./layout.js";
 import { cornerEdges, defaultDockPosition, dockPositionFromRect, readDockPosition } from "./geometry.js";
 
 let placementTimer = null;
@@ -83,14 +83,8 @@ function showScaleIndicator(root, scale, isReset = false) {
 }
 
 function applyLiveScale(root, playerScale, position = null) {
-	const zoom = dockZoom(playerScale);
-	root.style.zoom = String(zoom);
-	root.style.setProperty("--nah-scale", String(zoom));
 	root.style.setProperty("--nah-base-scale", playerScale);
-	const pos = position || root._dockPosition;
-	if (pos) {
-		placeRoot(root, pos, zoom);
-	}
+	fitToViewport(root, dockZoom(playerScale), position || root._dockPosition);
 }
 
 function setScale(root, requested, isReset = false, position = null) {

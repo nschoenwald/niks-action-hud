@@ -69,6 +69,7 @@ const ROW_TEXT = {
 		choices: { rail: "Vertical rail", top: "Horizontal bar" },
 	},
 	minimizeButton: { section: "display", control: "switch", label: "Minimize button", hint: "Show a button on the HUD's name row that shrinks the HUD down to the name and portrait. Click it again to bring the full HUD back." },
+	scaleWithWindow: { section: "display", control: "switch", label: "Scale with window size", hint: "Grow the HUD on large windows and shrink it on small ones (between 75% and 125%), on top of your own HUD size. Turn it off to keep the HUD the same size whatever the window." },
 };
 
 const SCOPE_TEXT = {

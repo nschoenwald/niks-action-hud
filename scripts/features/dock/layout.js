@@ -4,7 +4,7 @@ import { readProfile } from "../../core/profile.js";
 import { MODULE_ID } from "../../core/ids.js";
 import { defaultDockPosition, chooseDrawerSide, cornerEdges, readDockPosition } from "./geometry.js";
 import { isThemeAvailable, getDefaultTheme } from "../settings-panel/ui-constants.js";
-import { REFERENCE_AREA, WINDOW_FACTOR_RANGE, BASE_SCALE, DRAWER_EDGE_CLEARANCE, DRAWER_WIDTH } from "./constants.js";
+import { REFERENCE_AREA, WINDOW_FACTOR_RANGE, DRAWER_EDGE_CLEARANCE, DRAWER_WIDTH, VIEWPORT_MARGIN_PX, MIN_FIT_ZOOM } from "./constants.js";
 import { readSetting } from "../../core/setting-read.js";
 
 // ── Layout (position, scale, theme) ─────────────────────
@@ -52,27 +52,81 @@ export function computeLayout(profile) {
 	};
 }
 
+/** Whether the dock grows and shrinks with the window (client setting, on by default). */
+function scalesWithWindow() {
+	if (!game.settings.settings?.has(`${MODULE_ID}.scaleWithWindow`)) return readProfile().scaleWithWindow ?? true;
+	return readSetting("scaleWithWindow") !== false;
+}
+
 /**
  * How much the window size grows or shrinks the dock: the square root of the window's area against a
- * 1080p window (so it tracks both width and height), kept within `WINDOW_FACTOR_RANGE`.
+ * 1080p window (so it tracks both width and height), kept within `WINDOW_FACTOR_RANGE`. 1 when the
+ * player turned "Scale with window size" off.
  */
 function windowFactor() {
+	if (!scalesWithWindow()) return 1;
 	const [low, high] = WINDOW_FACTOR_RANGE;
 	const factor = Math.sqrt((window.innerWidth * window.innerHeight) / REFERENCE_AREA);
 	return Math.min(high, Math.max(low, factor));
 }
 
-/** CSS zoom for the dock: the player's own scale on top of the base size and the window factor. */
-export const dockZoom = (playerScale) => Number((playerScale * BASE_SCALE * windowFactor()).toFixed(3));
+/**
+ * Foundry's Interface Scale (core UI settings). Read from the `--ui-scale` property Foundry sets on <body>,
+ * so an unsaved preview in Foundry's settings counts too, with the stored setting as fallback.
+ */
+function interfaceScale() {
+	let value = parseFloat(getComputedStyle(document.body).getPropertyValue("--ui-scale"));
+	if (!Number.isFinite(value)) {
+		try {
+			value = Number(game.settings.get("core", "uiConfig")?.uiScale);
+		} catch (_err) {
+			value = 1;
+		}
+	}
+	return Number.isFinite(value) && value > 0 ? Math.min(1.5, Math.max(0.5, value)) : 1;
+}
 
-/** Pin the dock to its corner. Distances are screen pixels, so they are divided by the dock's own zoom. */
+/** CSS zoom for the dock: the player's own scale times Foundry's Interface Scale and the window factor. */
+export const dockZoom = (playerScale) => Number((playerScale * interfaceScale() * windowFactor()).toFixed(3));
+
+/** Set the dock's zoom. Hover cards follow it, so they stay in proportion to the HUD. */
+function applyZoom(root, zoom) {
+	root.style.zoom = String(zoom);
+	root.style.setProperty("--nah-scale", String(zoom));
+	document.documentElement.style.setProperty("--nah-hud-zoom", String(zoom));
+}
+
+/**
+ * Pin the dock to its corner. Distances are screen pixels, so they are divided by the dock's own zoom.
+ * The dock is held inside the window: a distance that would push it past the far edge (a smaller window,
+ * a larger scale) is shortened for display only, and the saved position is kept for when there is room again.
+ */
 export function placeRoot(root, position, zoom) {
 	root._dockPosition = position;
 	const { vertical, horizontal } = cornerEdges(position.corner);
 	Object.assign(root.style, { left: "auto", right: "auto", top: "auto", bottom: "auto" });
-	root.style[horizontal] = `${position.x / zoom}px`;
-	root.style[vertical] = `${position.y / zoom}px`;
+	const { width, height } = root.getBoundingClientRect();
+	const x = Math.max(0, Math.min(position.x, window.innerWidth - width - VIEWPORT_MARGIN_PX));
+	const y = Math.max(0, Math.min(position.y, window.innerHeight - height - VIEWPORT_MARGIN_PX));
+	root.style[horizontal] = `${x / zoom}px`;
+	root.style[vertical] = `${y / zoom}px`;
 	root.dataset.corner = position.corner;
+}
+
+/**
+ * Apply `zoom` and place the dock at `position`, shrinking the zoom when the dock would be taller than the
+ * window (the player's saved scale is unchanged, so it grows back once there is room).
+ * @returns {number} The zoom actually applied.
+ */
+export function fitToViewport(root, zoom, position = root._dockPosition) {
+	const cssHeight = root.getBoundingClientRect().height / currentZoom(root);
+	const room = window.innerHeight - VIEWPORT_MARGIN_PX * 2;
+	const fitted = cssHeight > 0 && cssHeight * zoom > room
+		? Number(Math.min(zoom, Math.max(MIN_FIT_ZOOM, room / cssHeight)).toFixed(3))
+		: zoom;
+	applyZoom(root, fitted || 1);
+	if (position) placeRoot(root, position, fitted || 1);
+	return fitted;
 }
 
 export function currentZoom(root) {

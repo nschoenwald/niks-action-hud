@@ -200,6 +200,10 @@
         "Name": "Bouton de réduction",
         "Hint": "Affiche sur la ligne du nom un bouton qui réduit le HUD au nom et au portrait. Cliquez à nouveau pour réafficher le HUD complet."
       },
+      "ScaleWithWindow": {
+        "Name": "Adapter à la taille de la fenêtre",
+        "Hint": "Agrandit le HUD dans les grandes fenêtres et le réduit dans les petites (entre 75 % et 125 %), en plus de votre propre taille de HUD. Désactivez pour garder le HUD à la même taille quelle que soit la fenêtre."
+      },
       "InterfaceFading": {
         "Name": "Atténuer en cas d'inactivité (Interface Fading)",
         "Hint": "Atténue l'Action HUD en cas d'inactivité, en respectant les paramètres natifs d'opacité et de vitesse d'atténuation de Foundry. Rétablit l'opacité maximale au survol, au focus ou lorsqu'un sous-menu est ouvert."

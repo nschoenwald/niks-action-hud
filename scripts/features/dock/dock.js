@@ -16,7 +16,7 @@ import { openFavoritePicker } from "../pins/picker.js";
 const { renderTemplate } = foundry.applications.handlebars;
 import { DRAG_THRESHOLD_PX, HOLD_DRAG_MS, NO_DRAG_SELECTOR, TEMPLATE_DIR, loc } from "./constants.js";
 import { bindRuntime, hud } from "./context.js";
-import { computeLayout, placeRoot, railSideFor } from "./layout.js";
+import { computeLayout, fitToViewport, railSideFor } from "./layout.js";
 import { buildCategoryModels, buildFavoriteModels, buildHeaderModel, favoritesLayoutFor, fitFavoritesRail, fitIdentityName, fitRibbonLabels, placeholderMarkup } from "./models.js";
 import { beginMove, bindResizeHandle } from "./movement.js";
 import { cancelPendingPortraitClick, centerOnToken, createPortraitMenu, schedulePortraitClick } from "./portrait-menu.js";
@@ -83,10 +83,10 @@ async function paintDock() {
 	if (buttonShape) root.dataset.buttonShape = buttonShape;
 	else delete root.dataset.buttonShape;
 
-	root.style.setProperty("--nah-scale", String(zoom));
-	root.style.zoom = String(zoom);
 	if (layout.font) root.style.setProperty("--nah-font-family", `'${layout.font}'`);
-	placeRoot(root, position, zoom || 1);
+	// Fitted against the markup already in the dock (usually the same size), and again below once the
+	// markup changed, so a HUD that has to shrink does not flash at full size on every repaint.
+	fitToViewport(root, zoom, position);
 
 	const topStack = root.querySelector(".nah-banner-stack");
 	const bar = root.querySelector(`#${DOM_IDS.MENU}`);
@@ -101,6 +101,7 @@ async function paintDock() {
 		bar.innerHTML = placeholderMarkup();
 		root._paintGeneration = (root._paintGeneration ?? 0) + 1;
 		handle.style.display = "none";
+		fitToViewport(root, zoom, position);
 		return;
 	}
 	bar.style.display = "";
@@ -128,7 +129,10 @@ async function paintDock() {
 	// Rewriting it anyway would re-measure every label, restart the turn animation and drop hover
 	// state, so the DOM is only touched when the markup or anything the fitting depends on changed.
 	const paintKey = [theme, buttonShape, layout.font, zoom, favLayout, railSide, bannerMarkup, railHtml, ribbonHtml].join("\u0000");
-	if (root._paintedKey === paintKey) return;
+	if (root._paintedKey === paintKey) {
+		fitToViewport(root, zoom, position);
+		return;
+	}
 	root._paintedKey = paintKey;
 
 	topStack.innerHTML = favLayout === "top" ? railHtml : "";
@@ -144,6 +148,7 @@ async function paintDock() {
 	fitRibbonLabels(root);
 	fitIdentityName(root);
 	fitFavoritesRail(root);
+	fitToViewport(root, zoom, position);
 }
 
 /**

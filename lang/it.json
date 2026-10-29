@@ -200,6 +200,10 @@
         "Name": "Pulsante di riduzione",
         "Hint": "Mostra un pulsante nella riga del nome che riduce l'HUD al solo nome e ritratto. Fai di nuovo clic per riavere l'HUD completo."
       },
+      "ScaleWithWindow": {
+        "Name": "Scala con la dimensione della finestra",
+        "Hint": "Ingrandisce l'HUD nelle finestre grandi e lo rimpicciolisce in quelle piccole (tra 75% e 125%), oltre alla tua dimensione dell'HUD. Disattiva per mantenere l'HUD della stessa dimensione qualunque sia la finestra."
+      },
       "InterfaceFading": {
         "Name": "Attenua quando inattivo (dissolvenza dell'interfaccia)",
         "Hint": "Attenua l'HUD Azioni quando è inattivo, rispettando le impostazioni di Foundry relative all'opacità dell'interfaccia inattiva e alla velocità di dissolvenza. Ripristina l'opacità completa al passaggio del puntatore, quando l'HUD riceve il focus o quando è aperto un sottomenu."

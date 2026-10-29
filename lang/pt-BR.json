@@ -200,6 +200,10 @@
         "Name": "Botão de minimizar",
         "Hint": "Mostra um botão na linha do nome que reduz o HUD ao nome e ao retrato. Clique novamente para trazer o HUD completo de volta."
       },
+      "ScaleWithWindow": {
+        "Name": "Escalar com o tamanho da janela",
+        "Hint": "Aumenta o HUD em janelas grandes e o reduz em janelas pequenas (entre 75% e 125%), além do seu próprio tamanho de HUD. Desative para manter o HUD do mesmo tamanho independentemente da janela."
+      },
       "InterfaceFading": {
         "Name": "Esmaecer quando Inativo (Esmaecimento da Interface)",
         "Hint": "Escurece o Action HUD quando inativo, respeitando as configurações de Opacidade Inativa e Velocidade de Esmaecimento do Foundry. Restaura a opacidade total ao passar o mouse, focar ou quando um submenu está aberto."

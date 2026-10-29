@@ -200,6 +200,10 @@
         "Name": "Minimieren-Schaltfläche",
         "Hint": "Zeigt in der Namenszeile des HUD eine Schaltfläche, die das HUD auf Namen und Porträt verkleinert. Ein erneuter Klick bringt das ganze HUD zurück."
       },
+      "ScaleWithWindow": {
+        "Name": "Mit Fenstergröße skalieren",
+        "Hint": "Das HUD in großen Fenstern vergrößern und in kleinen verkleinern (zwischen 75 % und 125 %), zusätzlich zu deiner eigenen HUD-Größe. Ausschalten, damit das HUD unabhängig vom Fenster gleich groß bleibt."
+      },
       "InterfaceFading": {
         "Name": "Bei Inaktivität ausblenden (Interface Fading)",
         "Hint": "Blendet die Action HUD bei Inaktivität ab und beachtet dabei Foundrys Einstellungen für Inaktivitäts-Deckkraft und Ausblendgeschwindigkeit. Volle Deckkraft wird bei Hover, Fokus oder geöffnetem Untermenü wiederhergestellt."

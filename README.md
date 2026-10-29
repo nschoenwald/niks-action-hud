@@ -22,7 +22,8 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
 - **Follows your selection**: Shows the selected token's actions. With nothing selected, it shows your own character.
 - **Search**: Type in any menu to search all of a character's actions at once.
 - **Favorites**: Click the star on any entry to pin it next to the HUD for one-click use. NPCs can get their attacks and spells pinned automatically.
-- **Move and resize**: Drag the HUD anywhere and resize it from the corner. Each player's layout is remembered.
+- **Move and resize**: Drag the HUD anywhere and resize it from the corner (double-click the corner to reset). Each player's layout is remembered per browser.
+- **Fits any screen**: The HUD follows Foundry's **Interface Scale** and, with **Scale with Window Size** (HUD settings, Display, on by default), grows on large windows and shrinks on small ones. It always stays inside the window and shrinks to fit when it would be taller than the screen. Hover cards are sized along with the HUD.
 - **Quick shortcuts**:
   - Right-click an entry to open its sheet.
   - <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + right-click to use it right away.

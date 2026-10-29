@@ -229,6 +229,10 @@ Hooks.once("ready", async function onReady() {
 		if (NikHUD.isVisible) NikHUD.refresh();
 	}, 150);
 	window.addEventListener("resize", debouncedViewportRefresh, { passive: true });
+	// Foundry's Interface Scale is part of the dock's zoom (see dock/layout.js).
+	Hooks.on("clientSettingChanged", (key) => {
+		if (key === "core.uiConfig") debouncedViewportRefresh();
+	});
 
 	// Combat and scene changes: one coalesced repaint per frame (a turn change also updates combatants).
 	const refreshUnlessDisabled = () => {
