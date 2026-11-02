@@ -84,7 +84,7 @@ Requires **Foundry VTT v14** with **D&D 5e 6.0.6** or a later 6.0.x release, or 
 
 ---
 
-## Other Modules by Nik
+## Modules by Nik
 
 ### 🎲 D&D 5e Specific
 * **[Nik's DnD5e Tweaks](https://github.com/nschoenwald/niks-dnd5e-tweaks)** – Consolidated collection of quality-of-life enhancements and combat automation tweaks for DnD5e.
