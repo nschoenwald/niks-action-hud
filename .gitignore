@@ -1,20 +1,15 @@
-# Operating System
+# macOS
 .DS_Store
-Thumbs.db
 
-# Internal Changelog
-CHANGELOG_internal.md
-changelog_v1.md
-CHANGELOG_v1.md
-Claude.md
+# Release archives
+*.zip
 
-# Internal rewrite plan
-PLAN_REWRITE.md
-AUDIT_REPORT.md
-
-# Markdown is internal by default; only the published docs and license texts are kept
+# Markdown: ignore all, except the docs published with the repo
 *.md
 !README.md
 !CHANGELOG.md
 !LICENSE.md
 !licenses/*.md
+
+# Windows
+Thumbs.db
