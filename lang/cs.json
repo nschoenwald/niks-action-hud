@@ -1,0 +1,552 @@
+{
+  "NAH": {
+    "Categories": {
+      "Attacks": "Útoky",
+      "Spells": "Kouzla",
+      "Features": "Schopnosti",
+      "Legendary": "Legendární",
+      "Abilities": "Vlastnosti",
+      "Items": "Předměty",
+      "Inventory": "Předměty"
+    },
+    "Tabs": {
+      "Actions": "Akce",
+      "Items": "Předměty",
+      "Passive": "Pasivní"
+    },
+    "UI": {
+      "ClearSearch": "Vymazat hledání",
+      "All": "Vše",
+      "AllSpells": "Vše",
+      "AllFeatures": "Vše",
+      "AllAbilities": "Vše",
+      "YourTurnEnd": "Jsi na tahu — kliknutím tah ukončíš",
+      "PortraitTooltip": "Kliknutí: otevřít deník postavy\nDvojklik: vystředit na žeton\nPravé tlačítko: možnosti portrétu",
+      "NoSelectionTitle": "Není vybrán žádný žeton",
+      "ScaleHandle": "Tažením změníte velikost HUD",
+      "MinimizeHud": "Minimalizovat HUD",
+      "ExpandHud": "Rozbalit HUD",
+      "AllGear": "Vše",
+      "CloseDrawer": "Zavřít",
+      "EmptyDrawer": "Prázdné",
+      "PassTurn": "Ukončit tah",
+      "PassLegendary": "Přeskočit legendární",
+      "PassLegendaryHint": "Tah legendární akce — kliknutím přeskočíte a budete pokračovat",
+      "PermissionDenied": "K této akci nemáte oprávnění.",
+      "SearchNoMatch": "Nenalezeny žádné odpovídající akce.",
+      "SearchActions": "Hledat akce, kouzla, předměty..."
+    },
+    "Tooltips": {
+      "AddFavorite": "Přidat do oblíbených",
+      "RemoveFavorite": "Odebrat z oblíbených",
+      "FavoriteOptions": "Možnosti oblíbených",
+      "Initiative": "Určuje pořadí tahů v souboji.",
+      "Card": {
+        "RollFooter": "Levé tlačítko: hodit",
+        "UseFooter": "Levé tlačítko: použít",
+        "Macro": "Makro",
+        "Initiative": "Iniciativa",
+        "InitiativeSubtitle": "Pořadí tahů v souboji",
+        "InitiativeBonus": "Bonus iniciativy",
+        "InitiativeText": "Na začátku střetnutí si hoďte na iniciativu a určete pořadí tahů.",
+        "AbilityCheck": "Ověření vlastnosti",
+        "SavingThrow": "Záchranný hod",
+        "CheckTitle": "Ověření: {ability}",
+        "SavingThrowTitle": "Záchranný hod: {ability}",
+        "SkillCheck": "Ověření dovednosti",
+        "SkillSubtitle": "Ověření dovednosti ({ability})",
+        "ToolCheck": "Ověření nástroje",
+        "ToolSubtitle": "Ověření nástroje ({ability})",
+        "Modifier": "Opravy",
+        "GovernedBy": "Vlastnost",
+        "Proficiency": "Zdatnost",
+        "Proficient": "Zdatný",
+        "NotProficient": "Bez zdatnosti",
+        "HalfProficient": "Poloviční zdatnost",
+        "Expertise": "Odbornost"
+      }
+    },
+    "Config": {
+      "Saved": "Nastavení Nik's Action HUD uloženo.",
+      "ResetSuccess": "Nastavení obnoveno na výchozí.",
+      "ResetConfirmTitle": "Obnovit nastavení",
+      "ResetConfirmAll": "Obnovit všechna nastavení na výchozí? Tuto akci nelze vrátit.",
+      "ResetExportFirst": "Exportovat a pak obnovit",
+      "ResetOnly": "Obnovit bez exportu",
+      "ImportDone": "Nastavení importováno. Uložením ho použijete.",
+      "FontDecorative": "dekorativní",
+      "ShapeDefault": "Výchozí podle motivu",
+      "SavedClientOnly": "Vaše osobní nastavení byla uložena. Nastavení světa může změnit jen uživatel s oprávněním.",
+      "FontInherit": "Výchozí písmo",
+      "WindowTitle": "Nastavení Nik's Action HUD"
+    },
+    "Dnd5e": {
+      "Tools": "Nástroje",
+      "SelectAmmo": "Vybrat střelivo",
+      "NoAmmoAvailable": "V inventáři není žádné střelivo",
+      "NoAmmo": "⚠ Bez střeliva",
+      "IncreaseAmmo": "Přidat jeden",
+      "DecreaseAmmo": "Odebrat jeden",
+      "Text": {
+        "Weapons": "Zbraně",
+        "Armor": "Zbroj",
+        "Gear": "Vybavení",
+        "Consumables": "Spotřební",
+        "Tools": "Nástroje",
+        "Other": "Ostatní",
+        "RollSkill": "Hodit ověření dovednosti: {skill}",
+        "RollTool": "Hodit ověření nástroje: {tool}",
+        "Cantrips": "Triky",
+        "LvlTab": "ÚR {level}{slots}",
+        "LevelHeader": "Úroveň {level}{slots}",
+        "PactTab": "Pakt{slots}",
+        "PactHeader": "Magie paktu{slots}",
+        "Innate": "Vrozená",
+        "InnateHeader": "Vrozená kouzla",
+        "Concentration": "Soustředění",
+        "Ritual": "Rituál",
+        "ActionFallback": "Akce",
+        "CantripSchool": "Trik ({school})",
+        "Cantrip": "Trik",
+        "SpellLevel": "{school}, {ordinal}. úroveň",
+        "Range": "Dosah",
+        "Activation": "Aktivace",
+        "Duration": "Trvání",
+        "ToHit": "Na zásah",
+        "Damage": "Zranění",
+        "Save": "Záchrana",
+        "Perm": "Trvalé",
+        "Disp": "Rozptýlení",
+        "DispTrig": "Rozpt./spušt.",
+        "Special": "Zvláštní"
+      },
+      "EquipItem": "Nasadit",
+      "UnequipItem": "Sundat",
+      "AbilityTabs": {
+        "Checks": "Ověření",
+        "Saves": "Záchrany",
+        "Skills": "Dovednosti",
+        "Resting": "Odpočinek"
+      },
+      "UsesReady": "Připraveno",
+      "RechargeOn": "Dobití {val}+",
+      "Resting": {
+        "Footer": "Levé tlačítko: odpočinout",
+        "DurationLabel": "Trvání",
+        "Short": {
+          "Name": "Krátký odpočinek",
+          "Desc": "Obnovit zdroje krátkého odpočinku a hodit kostkami životů",
+          "Subtitle": "Odpočinek (1 hodina)",
+          "Duration": "1 hodina",
+          "Tooltip": "Doba oddechu trvající alespoň 1 hodinu, během níž postava nedělá nic náročnějšího než jídlo, pití, čtení a ošetřování zranění."
+        },
+        "Long": {
+          "Name": "Dlouhý odpočinek",
+          "Desc": "Obnovit životy, pozice kouzel a zdroje dlouhého odpočinku",
+          "Subtitle": "Odpočinek (8 hodin)",
+          "Duration": "8 hodin",
+          "Tooltip": "Delší doba oddechu trvající alespoň 8 hodin, během níž postava alespoň 6 hodin spí a lehké činnosti se věnuje nejvýše 2 hodiny."
+        }
+      }
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Jen rituál (nepřipraveno)",
+      "RitualTag": "Rituál",
+      "UnpreparedTag": "Nepřipraveno",
+      "UnpreparedTitle": "Nepřipraveno",
+      "ShowUnprepared": "Zobrazit nepřipravená kouzla",
+      "HideUnprepared": "Skrýt nepřipravená kouzla"
+    },
+    "Favorites": {
+      "OpenSheet": "Otevřít list předmětu",
+      "DeleteFavorite": "Smazat oblíbené",
+      "DialogSubtitle": "Oblíbená akce",
+      "AddTitle": "Přidat oblíbené",
+      "PickerSearch": "Hledat akce…",
+      "PickerEmpty": "Už není co přidat",
+      "MoreTitle": "Další oblíbené: {count}"
+    },
+    "Damage": {
+      "Any": "libovolné"
+    },
+    "Notifications": {
+      "ActorUpdateError": "Data aktéra nelze aktualizovat.",
+      "SettingsReset": "Nik's Action HUD: nastavení z dřívější verze byla obnovena na výchozí."
+    },
+    "Settings": {
+      "DisableHud": {
+        "Name": "Vypnout Action HUD",
+        "Hint": "Úplně vypne a skryje Action HUD pro váš uživatelský účet."
+      },
+      "ConfigMenu": {
+        "Name": "Nastavení Action HUD",
+        "Label": "Nastavit Action HUD",
+        "Hint": "Otevře vizuální panel pro nastavení motivů, rozvržení, pravidel a kategorií Action HUD."
+      },
+      "SubmenuSide": {
+        "Name": "Směr otevírání podnabídek",
+        "Hint": "Směr, kterým se podnabídky otevírají vůči doku. „Automaticky“ dynamicky zjišťuje okraje obrazovky.",
+        "Auto": "Automaticky",
+        "Left": "Vlevo",
+        "Right": "Vpravo"
+      },
+      "FavoritesLayout": {
+        "Name": "Rozvržení lišty oblíbených",
+        "Hint": "Svislá lišta po straně HUD, nebo vodorovná lišta nad ním.",
+        "Rail": "Boční lišta",
+        "Top": "Horní lišta"
+      },
+      "MinimizeButton": {
+        "Name": "Tlačítko minimalizace",
+        "Hint": "Zobrazí v řádku se jménem tlačítko, které HUD zmenší na jméno a portrét. Dalším kliknutím vrátíte celý HUD."
+      },
+      "ScaleWithWindow": {
+        "Name": "Měnit velikost podle okna",
+        "Hint": "Zvětší HUD ve velkých oknech a zmenší v malých (mezi 75 % a 125 %), navíc k vaší vlastní velikosti HUD. Vypněte, aby měl HUD stále stejnou velikost."
+      },
+      "InterfaceFading": {
+        "Name": "Ztlumit při nečinnosti",
+        "Hint": "Ztlumí Action HUD, když se nepoužívá, podle nastavení neaktivní neprůhlednosti a rychlosti blednutí ve Foundry. Plná neprůhlednost se vrátí při najetí, zaměření nebo otevřené podnabídce."
+      },
+      "CombatTurnAlert": {
+        "Name": "Upozornění na tah v souboji",
+        "Hint": "Když začne váš tah, přejede přes HUD výrazný světelný efekt a pulz."
+      },
+      "CombatTurnSound": {
+        "Name": "Zvuk upozornění na tah",
+        "Hint": "Když začne váš tah, zazní jemná zvonkohra."
+      },
+      "CombatTurnNpc": {
+        "Name": "Upozornit i na tahy CP",
+        "Hint": "Zahrne tahy ovládaných CP do vizuálního upozornění (jen PJ)."
+      },
+      "CloseDrawerOnUse": {
+        "Name": "Zavřít nabídku po použití akce",
+        "Hint": "Zavře otevřený panel hned po použití útoku, kouzla nebo předmětu."
+      },
+      "HideEmptyDrawers": {
+        "Name": "Skrýt prázdné podnabídky",
+        "Hint": "Skryje tlačítka akcí a podnabídky, které pro aktivního aktéra nemají žádné položky (např. tlačítko Kouzla u postav bez kouzel)."
+      },
+      "ToolChecks": {
+        "Name": "Zobrazit ověření nástrojů",
+        "Hint": "Zobrazí ověření nástrojů pod ověřeními dovedností v nabídce Vlastnosti, stejně jako v deníku postavy."
+      },
+      "AbilityOrder": {
+        "Name": "Pořadí nabídky Vlastnosti",
+        "Hint": "Pořadí skupin záchranných hodů, dovedností a ověření vlastností v nabídce Vlastnosti.",
+        "SavesSkillsChecks": "Záchrany → Dovednosti → Ověření",
+        "ChecksSavesSkills": "Ověření → Záchrany → Dovednosti",
+        "SkillsSavesChecks": "Dovednosti → Záchrany → Ověření"
+      },
+      "WizardRituals": {
+        "Name": "Zobrazit nepřipravené rituály kouzelníka",
+        "Hint": "Zobrazí v knize kouzel kouzelníků nepřipravená kouzla se štítkem rituálu, aby je mohli sesílat jako rituály přímo z knihy."
+      },
+      "DamageTypeDisplay": {
+        "Name": "Zobrazení typu zranění",
+        "Hint": "Vyberte, jak se typy zranění zobrazují na tlačítkách akcí: kompaktní jemně zbarvené ikony, ikony s textem, nebo jen text.",
+        "Icons": "Jen ikony",
+        "Both": "Ikony a text",
+        "Text": "Jen text"
+      },
+      "AutoFavoriteNpc": {
+        "Name": "Automaticky oblíbené akce CP",
+        "Hint": "Když se na scénu umístí žeton CP bez oblíbených, automaticky přidá do oblíbených jeho útoky a další bojové akce (D&D 5e: předměty s útokem, zraněním nebo záchranou; Shadowdark: útoky, zvláštní útoky a kouzla)."
+      },
+      "AutoFavoriteNpcMax": {
+        "Name": "Max. akcí pro automatické oblíbené",
+        "Hint": "Automaticky přidávat jen tehdy, když má CP nejvýše tolik vyhovujících akcí (výchozí 6)."
+      },
+      "AutoFavoriteNpcAttacks": {
+        "Name": "Útoky vždy do oblíbených",
+        "Hint": "I když má CP víc vyhovujících akcí, než je maximum, jeho útoky se přesto přidají do oblíbených."
+      },
+      "GroupByActivation": {
+        "Name": "Seskupit akce podle typu aktivace",
+        "Hint": "Seřadí akce do oddílů Akce, Bonusová akce, Reakce a Legendární akce."
+      },
+      "FontFamily": {
+        "Name": "Písmo Action HUD",
+        "Hint": "Písmo pro popisky tlačítek, záhlaví předmětů a podnabídky."
+      },
+      "ButtonShape": {
+        "Name": "Tvar tlačítek kategorií",
+        "Hint": "Nahradí tvar tlačítek kategorií tvarem tlačítka z libovolného motivu."
+      },
+      "HudOpacity": {
+        "Name": "Neprůhlednost HUD",
+        "Hint": "Jak neprůhledné jsou panely, tlačítka a nápovědy HUD. Snižte ji, chcete-li vidět plátno skrz HUD; text a ikony zůstávají plně viditelné."
+      },
+      "TooltipScale": {
+        "Name": "Velikost textu nápověd",
+        "Hint": "Upraví měřítko karet akcí a nápověd předmětů."
+      },
+      "PortraitSource": {
+        "Name": "Zdroj obrázku portrétu",
+        "Hint": "Který obrázek portrét HUD ukazuje: portrét z deníku postavy, nebo obrázek žetonu. Hráči to mohou pro každou postavu změnit v nabídce portrétu na pravém tlačítku.",
+        "Portrait": "Portrét aktéra",
+        "Token": "Obrázek žetonu"
+      }
+    },
+    "Themes": {
+      "Carolingian": "Carolingian UI",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "Sylvan": "Sylvan",
+      "Infernal": "Infernal",
+      "Frostborn": "Frostborn",
+      "Clockwork": "Clockwork",
+      "Radiant": "Radiant",
+      "Ossuary": "Ossuary",
+      "Thairesia": "Thairesia",
+      "Shadowdark": "Shadowdark"
+    },
+    "Shadowdark": {
+      "Checks": "Ověření",
+      "SpendLuck": "Použít štěstí",
+      "LuckTooltip": "Použitím štěstí přehodíte právě provedený hod. Musíte přijmout nový výsledek.",
+      "SpendLuckConfirm": "Chcete použít bod štěstí a přehodit poslední ověření?",
+      "NoLuckLeft": "Nezbývá žádné štěstí.",
+      "Text": {
+        "Equipped": "Nasazeno",
+        "Equip": "Nasadit",
+        "UnequipWeapon": "Odložit zbraň",
+        "EquipWeapon": "Vzít zbraň",
+        "UnequipItem": "Sundat předmět",
+        "EquipItem": "Nasadit předmět",
+        "Lost": "ZTRACENO",
+        "Restore": "Obnovit",
+        "RegainSpell": "Získat zpět ztracené kouzlo",
+        "Tier": "Stupeň {tier}",
+        "Spell": "Kouzlo",
+        "Dc": "SO {dc}",
+        "ClassAbility": "Schopnost povolání",
+        "Off": "VYP",
+        "Extinguish": "Zhasnout",
+        "Ignite": "Zapálit",
+        "ExtinguishLight": "Zhasnout světlo",
+        "IgniteLight": "Zapálit zdroj světla",
+        "Burning": "Hoří ({time})",
+        "Extinguished": "Zhasnuto",
+        "Drink": "Vypít",
+        "DrinkPotion": "Vypít lektvar",
+        "Carried": "Neseno",
+        "Coins": "Mince ({gp} zl, {sp} st, {cp} md)",
+        "PurseCurrency": "Peníze v měšci",
+        "Gem": "Drahokam",
+        "Treasure": "Poklad",
+        "Gemstone": "Drahý kámen",
+        "Valuable": "Cennost",
+        "LightSources": "Zdroje světla",
+        "Potions": "Lektvary",
+        "Trait": "Rys",
+        "NpcFeature": "Schopnost CP",
+        "Boon": "Dar",
+        "Talent": "Talent",
+        "Broken": "Rozbitá",
+        "Wand": "Hůlka",
+        "Empty": "Prázdná",
+        "Cast": "Seslat",
+        "SpellLostBroken": "Kouzlo ztraceno / rozbito",
+        "TierWandSpell": "Stupeň {tier} • Kouzlo hůlky",
+        "WandSpell": "Kouzlo hůlky",
+        "Scroll": "Svitek",
+        "TierScroll": "Stupeň {tier} • Jednorázový svitek",
+        "ScrollGeneric": "Jednorázový svitek kouzla",
+        "AllSpells": "Všechna kouzla",
+        "Wands": "Hůlky",
+        "Scrolls": "Svitky",
+        "Score": "Hodnota {score} ({mod})",
+        "ScoreModifierOnly": "Oprava {mod}",
+        "Luck": "Štěstí",
+        "Ready": "Připraveno",
+        "Spent": "Použito",
+        "PulpLeft": "Pulpové štěstí: zbývá {n}",
+        "LuckAvailable": "Žeton štěstí k dispozici",
+        "LuckSpent": "Štěstí použito",
+        "RollTurnOrder": "Hodit na pořadí tahů",
+        "RollHp": "Hodit na životy",
+        "RollHpDesc": "Hodit max. a aktuální ŽB CP",
+        "InitiativeDesc": "Hodit na iniciativu (OBR {mod})",
+        "PulpRemaining": "Pulpové štěstí: zbývá {n}",
+        "LuckTip": "Použitím štěstí přehodíte právě provedený hod. Musíte přijmout nový výsledek.",
+        "RollHpTip": "Hodí na maximální a aktuální životy tohoto CP podle úrovně a opravy ODL.",
+        "WandTip": "Sešle kouzlo uložené v hůlce.",
+        "RestoredWandSpell": "Obnoveno kouzlo hůlky: {name}",
+        "RegainedSpell": "Kouzlo získáno zpět: {name}",
+        "RestoredWand": "Obnovena hůlka: {name}",
+        "RestoredUses": "Obnovena použití: {name}",
+        "KbdHelp": "<kbd>Shift</kbd>: výhoda · <kbd>Alt</kbd>: normálně · <kbd>Ctrl</kbd>: nevýhoda",
+        "AbilityScore": "Hodnota vlastnosti",
+        "AbilityCheckSubtitle": "Ověření vlastnosti · Shadowdark RPG",
+        "DexBonus": "Bonus OBR",
+        "RollFormula": "Vzorec hodu",
+        "InitiativeTip": "Hoďte na iniciativu a určete pořadí tahů v souboji. V Shadowdark se na iniciativu hází každé kolo: k20 + oprava OBR.",
+        "LuckSubtitle": "Hrdinský zdroj · Shadowdark RPG",
+        "Available": "K dispozici",
+        "Tokens": "Žetony",
+        "Effect": "Efekt",
+        "RerollAny": "Přehodit libovolné ověření",
+        "SpendLuckFooter": "Levé tlačítko: použít žeton štěstí",
+        "LuckIsSpent": "Štěstí je použito",
+        "LostBadge": "Ztraceno",
+        "LostBadgeTitle": "Kouzlo selhalo a je ztraceno do dlouhého odpočinku",
+        "Focus": "Soustředění",
+        "FocusTitle": "Vyžaduje soustředění (přeruší se zraněním nebo sesláním jiného kouzla se soustředěním)",
+        "TierLabel": "Stupeň",
+        "CastingDc": "SO sesílání",
+        "DcValue": "SO {dc} ({ability})",
+        "Range": "Dosah",
+        "Self": "Sesilatel",
+        "Duration": "Trvání",
+        "Instant": "Okamžité",
+        "SpellSubtitle": "Kouzlo ({tier}) · Shadowdark RPG",
+        "RestoreFooter": "Klikněte na „Obnovit“ nebo si dejte dlouhý odpočinek",
+        "WeaponSubtitle": "{type} · Shadowdark RPG",
+        "LightSubtitle": "Zdroj světla · Shadowdark RPG",
+        "LightOnTip": "Osvětluje okruh 30 stop. Sledování tahů v podzemí v reálném čase je aktivní.",
+        "LightOffTip": "Zhasnutý zdroj světla. Zapalte ho, když vstoupíte do tmy.",
+        "LightFooter": "Levé tlačítko: zapálit / zhasnout",
+        "ArmorSubtitle": "Zbroj · Shadowdark RPG",
+        "ArmorFooter": "Levé tlačítko: nasadit / sundat",
+        "UseRollFooter": "Levé tlačítko: použít / hodit",
+        "FavFooter": "Tažením změníte pořadí · Pravé tlačítko: odebrat",
+        "Attack": "Útok",
+        "Quantity": "Množství",
+        "GearSlots": "Místa na výbavu",
+        "Cost": "Cena",
+        "Magic": "Magický",
+        "ItemSubtitle": "{type} · Shadowdark RPG"
+      }
+    },
+    "Keybindings": {
+      "ToggleVisibility": {
+        "Name": "Zobrazit/skrýt Action HUD",
+        "Hint": "Zobrazí nebo skryje Action HUD."
+      }
+    },
+    "IconPicker": {
+      "Title": "Výběr ikony",
+      "SearchPlaceholder": "Hledat ikony podle názvu",
+      "ClearSearch": "Vymazat hledání",
+      "ValuePlaceholder": "Třídy Font Awesome, emoji nebo cesta k obrázku",
+      "ValueLabel": "Hodnota ikony",
+      "Tab": {
+        "FontAwesome": "Font Awesome",
+        "RpgAwesome": "RPG Awesome",
+        "Emoji": "Emoji",
+        "Image": "Obrázek"
+      },
+      "Family": {
+        "Solid": "Solid",
+        "Regular": "Regular",
+        "Brands": "Brands",
+        "Color": "Barva",
+        "File": "Soubor"
+      },
+      "Count": "{family} · ikon: {count}",
+      "CountRpgAwesome": "RPG Awesome · ikon: {count}",
+      "CountEmoji": "Emoji · {count}",
+      "CountImage": "Obrázek",
+      "Empty": "Hledání „{query}“ neodpovídají žádné ikony.",
+      "EmptyAll": "Nejsou k dispozici žádné ikony.",
+      "Refine": "Zobrazeny první výsledky. Zbytek uvidíte po zúžení hledání.",
+      "ImageHint": "Jako ikonu lze použít libovolný obrázek z tohoto světa. Vykreslí se ve velikosti okolního textu.",
+      "Browse": "Vybrat obrázek",
+      "Clear": "Vymazat",
+      "Use": "Použít",
+      "Field": {
+        "Label": "Ikona",
+        "Open": "Otevřít výběr ikony",
+        "None": "Bez ikony"
+      }
+    },
+    "Portrait": {
+      "OpenSheet": "Otevřít deník postavy",
+      "CenterOnToken": "Vystředit na žeton",
+      "UseTokenArt": "Použít obrázek žetonu",
+      "UseActorArt": "Použít obrázek aktéra",
+      "HideHud": "Skrýt HUD"
+    },
+    "Rolls": {
+      "CheckName": "Ověření: {ability}",
+      "SaveName": "Záchrana: {ability}"
+    },
+    "Panel": {
+      "Sections": {
+        "Interaction": "Interakce",
+        "Combat": "Souboj",
+        "AutoFavorites": "Automaticky oblíbené CP",
+        "Dnd5e": "Nastavení systému D&D 5e",
+        "Display": "Zobrazení",
+        "Styling": "Styl, písmo a avatary"
+      },
+      "Scope": {
+        "ClientTitle": "Platí jen pro tento prohlížeč",
+        "WorldTitle": "Platí pro všechny hráče u stolu",
+        "Client": "KLIENT",
+        "World": "SVĚT"
+      },
+      "Nav": {
+        "Title": "NASTAVENÍ",
+        "All": "Všechna nastavení",
+        "Behavior": "Chování",
+        "Appearance": "Vzhled",
+        "CustomizeHud": "Přizpůsobit HUD",
+        "Backup": "Záloha a obnovení"
+      },
+      "Footer": {
+        "NoChanges": "Žádné neuložené změny · náhled je živý",
+        "ChangesOne": "Neuložené změny: {count} · náhled je živý",
+        "ChangesMany": "Neuložené změny: {count} · náhled je živý",
+        "Save": "ULOŽIT"
+      },
+      "Appearance": {
+        "Theme": "Motiv",
+        "Preview": "Náhled"
+      },
+      "Excluded": {
+        "Title": "Vyloučené typy aktérů",
+        "Hint": "HUD zůstane skrytý, když ovládáte zaškrtnutý typ aktéra."
+      },
+      "Menu": {
+        "Categories": "Kategorie",
+        "Desc": "Přizpůsobte pořadí, popisky a ikony tlačítek kategorií v Action HUD.",
+        "DragReorder": "Tažením změníte pořadí",
+        "Unnamed": "Nepojmenovaná kategorie",
+        "ExpandCollapse": "Rozbalit nebo sbalit",
+        "CategoryLabel": "Popisek kategorie",
+        "Nav": "Umístění karet",
+        "NavTop": "Nahoře",
+        "NavSide": "Po straně",
+        "NavDefault": "výchozí",
+        "NavTopHint": "Zobrazit karty tohoto panelu v řádku nad seznamem",
+        "NavSideHint": "Zobrazit karty tohoto panelu ve sloupci vedle seznamu"
+      },
+      "Backup": {
+        "ExportTitle": "Export a import",
+        "ExportDesc": "Zálohujte celé nastavení (motiv, chování, pozici a vlastní kategorie) jako soubor JSON, nebo načtěte soubor z jiného světa či počítače. Importovaný soubor se použije po uložení.",
+        "FileLabel": "Soubor nastavení · JSON",
+        "Export": "EXPORTOVAT",
+        "Import": "IMPORTOVAT",
+        "ResetTitle": "Obnovení",
+        "ResetLabel": "Obnovit výchozí",
+        "ResetHint": "Obnoví všechna nastavení, pozici HUD a rozvržení kategorií. Tuto akci nelze vrátit.",
+        "ResetButton": "OBNOVIT VÝCHOZÍ"
+      },
+      "Unit": {
+        "Max": "MAX"
+      },
+      "GmOnly": "Toto může změnit jen PJ."
+    },
+    "Messages": {
+      "ItemNotFound": "Předmět nenalezen: {id}",
+      "MissingMacro": "Makro nenalezeno: {id}",
+      "ActivityNotFound": "Aktivita nenalezena: {id}"
+    }
+  }
+}

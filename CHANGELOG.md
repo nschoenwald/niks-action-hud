@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.20.0] - 2026-11-02
+### Added
+- New translations: Japanese, Polish and Czech. The module is now available in nine languages.
+
 ## [14.19.12] - 2026-10-29
 ### Added
 - **HUD Hides While Targeting**:

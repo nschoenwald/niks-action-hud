@@ -2,7 +2,7 @@
   "id": "niks-action-hud",
   "title": "Nik's Action HUD",
   "description": "A sleek Action HUD for Foundry VTT. Quick access to attacks, spells, features, inventory, and utility rolls.",
-  "version": "14.19.12",
+  "version": "14.20.0",
   "socket": true,
   "url": "https://github.com/nschoenwald/niks-action-hud",
   "license": "https://github.com/nschoenwald/niks-action-hud/blob/main/LICENSE.md",
@@ -56,11 +56,6 @@
       "path": "lang/en.json"
     },
     {
-      "lang": "it",
-      "name": "Italiano",
-      "path": "lang/it.json"
-    },
-    {
       "lang": "de",
       "name": "Deutsch",
       "path": "lang/de.json"
@@ -76,9 +71,29 @@
       "path": "lang/es.json"
     },
     {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "lang/it.json"
+    },
+    {
       "lang": "pt-BR",
       "name": "Português (Brasil)",
       "path": "lang/pt-BR.json"
+    },
+    {
+      "lang": "ja",
+      "name": "日本語",
+      "path": "lang/ja.json"
+    },
+    {
+      "lang": "pl",
+      "name": "Polski",
+      "path": "lang/pl.json"
+    },
+    {
+      "lang": "cs",
+      "name": "Čeština",
+      "path": "lang/cs.json"
     }
   ]
 }
