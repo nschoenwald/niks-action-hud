@@ -178,7 +178,8 @@ class HUDTooltipManager {
 		tooltipNode.className = `theme-${theme} active`;
 
 		this._populateMarkup(tooltipNode, tooltipPayload, enrichedHtml);
-		this._placeHoverCard(tooltipNode, anchor);
+		const side = this._placeHoverCard(tooltipNode, anchor);
+		this._directSystemTooltips(tooltipNode, side);
 		this.pendingAnchor = null;
 		this.shownAnchor = anchor;
 	}
@@ -292,6 +293,22 @@ class HUDTooltipManager {
 		return dock ? inwardSideFor(dock) : null;
 	}
 
+	/**
+	 * Point Foundry's (and the system's) tooltips inside the card the same way the card opened, so a reference
+	 * link's tooltip continues the HUD's direction instead of falling back over the dock. Overrides the
+	 * direction the system set on its own links (dnd5e uses LEFT for item links).
+	 */
+	_directSystemTooltips(tooltipNode, side) {
+		if (side !== "left" && side !== "right") return;
+		installCardTooltipAnchor();
+		const direction = side.toUpperCase();
+		tooltipNode.dataset.tooltipDirection = direction;
+		for (const el of tooltipNode.querySelectorAll("[data-tooltip], [data-tooltip-html], [data-tooltip-text]")) {
+			el.dataset.tooltipDirection = direction;
+		}
+	}
+
+	/** Place the card beside its container; returns the side it ended up on ("left" / "right"), or null above/below. */
 	_placeHoverCard(tooltipNode, anchorNode) {
 		// Favorites sit in a rail beside the dock (or in its overflow popover). The card must clear the rail,
 		// the popover and the dock itself, and prefers the side away from the dock.
@@ -406,6 +423,7 @@ class HUDTooltipManager {
 			}
 		}
 
+		const besideSide = Number.isNaN(left) ? null : side;
 		if (Number.isNaN(left)) {
 			tooltipNode.style.maxWidth = "";
 			const h = tooltipNode.getBoundingClientRect().height || 200;
@@ -417,7 +435,46 @@ class HUDTooltipManager {
 		clampTop();
 		tooltipNode.style.left = `${Math.round(Math.max(left, margin))}px`;
 		tooltipNode.style.top = `${Math.round(top)}px`;
+		return besideSide ?? preferredSide;
 	}
+}
+
+const CARD_ANCHOR_WRAPPED = Symbol("nah.cardTooltipAnchor");
+
+/**
+ * Foundry anchors a LEFT / RIGHT tooltip at the hovered link, which puts it on top of the card the link sits in.
+ * For links inside the hover card, anchor at the card's outer edge instead, flipping to the other side only when
+ * the tooltip does not fit. dnd5e re-anchors once its rich tooltip has loaded, so the check runs on the real size.
+ * Wraps the method on the `game.tooltip` instance only; every other tooltip goes through Foundry's own code.
+ */
+function installCardTooltipAnchor() {
+	const manager = game.tooltip;
+	if (!manager || manager[CARD_ANCHOR_WRAPPED] || typeof manager._setAnchor !== "function") return;
+	const original = manager._setAnchor;
+	manager[CARD_ANCHOR_WRAPPED] = true;
+	manager._setAnchor = function (direction) {
+		const dirs = this.constructor.TOOLTIP_DIRECTIONS;
+		const card = this.element?.closest?.(`#${DOM_IDS.TOOLTIP}`);
+		if (!card || (direction !== dirs.LEFT && direction !== dirs.RIGHT)) return original.call(this, direction);
+
+		const pad = this.constructor.TOOLTIP_MARGIN_PX;
+		const cardRect = card.getBoundingClientRect();
+		const pos = this.element.getBoundingClientRect();
+		const { innerWidth } = this.tooltip.ownerDocument.defaultView;
+		const width = this.tooltip.offsetWidth;
+		const fits = {
+			[dirs.RIGHT]: cardRect.right + pad + width <= innerWidth - pad,
+			[dirs.LEFT]: cardRect.left - pad - width >= pad,
+		};
+		const other = direction === dirs.RIGHT ? dirs.LEFT : dirs.RIGHT;
+		const chosen = fits[direction] ? direction : (fits[other] ? other : null);
+		if (!chosen) return original.call(this, direction);
+
+		const top = pos.top + (pos.height / 2) - (this.tooltip.offsetHeight / 2);
+		return chosen === dirs.RIGHT
+			? this._setStyle({ textAlign: "right", left: cardRect.right + pad, top })
+			: this._setStyle({ textAlign: "left", right: innerWidth - cardRect.left + pad, top });
+	};
 }
 
 const tooltipInstance = new HUDTooltipManager();

@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.20.1] - 2026-11-02
+### Changed
+- **Hover Card Tooltips**:
+  - Tooltips of links inside a hover card (D&D 5e rules, items, spells…) now open in the same direction as the HUD: with the HUD on the left of the screen, they appear to the right of the hover card instead of on top of it or back over the HUD. They switch sides only when there is no room.
+
 ## [14.20.0] - 2026-11-02
 ### Added
 - New translations: Japanese, Polish and Czech. The module is now available in nine languages.
