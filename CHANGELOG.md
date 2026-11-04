@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.20.2] - 2026-11-04
+### Removed
+- Removed the French, Spanish, Japanese, Polish and Czech translations. They were machine-translated and never checked by a native speaker. Players who use Foundry in one of these languages now see this module in English. Translations by native speakers are welcome as an issue or pull request.
+
 ## [14.20.1] - 2026-11-02
 ### Changed
 - **Hover Card Tooltips**:

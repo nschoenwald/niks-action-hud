@@ -13,3 +13,6 @@
 
 # Windows
 Thumbs.db
+
+# AI translations without human review: kept locally, never shipped
+/lang-unreviewed/
