@@ -4,13 +4,16 @@
  * - placing a template: dnd5e's TemplatePlacement (and anything else) goes through Foundry's
  *   `RegionLayer#placeRegions`, which resolves when the placement ends;
  * - choosing a teleport destination with Automated Animations' teleport preset (a Sequencer effect named
- *   "teleportation" marks the range until the token moves), including the teleport UI of niks-dnd5e-tweaks,
- *   which marks its session with a class on <body>.
+ *   "teleportation" marks the range until the token moves), including the teleport UI of niks-foundry-tweaks
+ *   (niks-dnd5e-tweaks before 14.70.0), which marks its session with a class on <body>.
  */
 
 const HIDDEN_CLASS = "nah-canvas-workflow";
-/** Body class niks-dnd5e-tweaks sets for the length of its teleport targeting session. */
-const TWEAKS_TELEPORT_CLASS = "nd5t-teleport-active";
+/**
+ * Body classes the teleport UI sets for the length of its targeting session: niks-foundry-tweaks, and
+ * niks-dnd5e-tweaks before 14.70.0 (the feature moved there).
+ */
+const TWEAKS_TELEPORT_CLASSES = ["nft-teleport-active", "nd5t-teleport-active"];
 /** Name Automated Animations gives the range effect of its teleport preset. */
 const AA_TELEPORT_EFFECT = "teleportation";
 
@@ -77,10 +80,11 @@ function watchAutomatedAnimationsTeleport(hud) {
 	Hooks.on("canvasTearDown", endTeleport);
 }
 
-/** niks-dnd5e-tweaks' teleport UI: follow its body class. */
+/** The teleport UI of Nik's Foundry Tweaks (or an older Nik's DnD5e Tweaks): follow its body class. */
 function watchTweaksTeleport(hud) {
 	const sync = () => {
-		if (document.body.classList.contains(TWEAKS_TELEPORT_CLASS)) begin("tweaks-teleport", hud);
+		const classes = document.body.classList;
+		if (TWEAKS_TELEPORT_CLASSES.some(cls => classes.contains(cls))) begin("tweaks-teleport", hud);
 		else end("tweaks-teleport");
 	};
 	new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ["class"] });
