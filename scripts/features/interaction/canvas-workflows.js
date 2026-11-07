@@ -8,6 +8,8 @@
  *   (niks-dnd5e-tweaks before 14.70.0), which marks its session with a class on <body>.
  */
 
+import { MODULE_ID } from "../../core/ids.js";
+
 const HIDDEN_CLASS = "nah-canvas-workflow";
 /**
  * Body classes the teleport UI sets for the length of its targeting session: niks-foundry-tweaks, and
@@ -40,14 +42,23 @@ function wrapRegionPlacement(hud) {
 	const RegionLayer = foundry.canvas.layers.RegionLayer;
 	const original = RegionLayer?.prototype.placeRegions;
 	if (typeof original !== "function") return;
-	RegionLayer.prototype.placeRegions = async function (...args) {
+	const wrapper = async function (wrapped, ...args) {
 		const reason = Symbol("placeRegions");
 		begin(reason, hud);
 		try {
-			return await original.apply(this, args);
+			return await wrapped(...args);
 		} finally {
 			end(reason);
 		}
+	};
+	// Through libWrapper when it is active, so other modules wrapping placeRegions with it keep working and
+	// libWrapper doesn't report this module as wrapping the method outside of it.
+	if (game.modules.get("lib-wrapper")?.active && globalThis.libWrapper) {
+		globalThis.libWrapper.register(MODULE_ID, "foundry.canvas.layers.RegionLayer.prototype.placeRegions", wrapper, "WRAPPER");
+		return;
+	}
+	RegionLayer.prototype.placeRegions = function (...args) {
+		return wrapper.call(this, original.bind(this), ...args);
 	};
 }
 

@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.20.4] - 2026-11-07
+### Fixed
+- **Out of the way while targeting**: Hiding the HUD during template placement now goes through libWrapper when it is installed, so it works alongside other modules that change template placement, and libWrapper no longer flags this module.
+
 ## [14.20.3] - 2026-11-06
 ### Changed
 - **Out of the way while targeting**: The HUD also hides while you pick a teleport destination with the teleport UI of Nik's Foundry Tweaks, where that feature moved from Nik's DnD5e Tweaks 14.70.0 on. Older versions of Nik's DnD5e Tweaks keep working too.
