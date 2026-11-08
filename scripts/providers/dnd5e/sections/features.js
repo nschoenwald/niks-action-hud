@@ -147,12 +147,15 @@ function legendaryRank(item) {
 	return ({ mythic: 1, lair: 2 })[_monsterActivationType(item)] ?? 0;
 }
 
-/** Drawer payload for the legendary section: legendary, mythic and lair actions, then legendary resistances. */
+/**
+ * Drawer payload for the legendary section: legendary, mythic and lair actions, then legendary resistances,
+ * each group sorted by name.
+ */
 export function buildLegendary(actor) {
 	const items = actor?.items ? actor.items.filter((item) => _isLegendaryItem(item) && !isCastByLegendaryFeature(item)) : [];
 	const rows = items
-		.map((item, index) => ({ item, index, rank: legendaryRank(item) }))
-		.sort((a, b) => a.rank - b.rank || a.index - b.index)
+		.map((item) => ({ item, rank: legendaryRank(item) }))
+		.sort((a, b) => a.rank - b.rank || byName(a.item, b.item))
 		.map(({ item }) => featureEntry(item, actor).row);
 	return singlePane("LEGENDARY", rows);
 }

@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.20.5] - 2026-11-08
+### Changed
+- **Legendary menu**: Within each group (legendary actions, mythic actions, lair actions, legendary resistances), entries are now sorted alphabetically.
+
 ## [14.20.4] - 2026-11-07
 ### Fixed
 - **Out of the way while targeting**: Hiding the HUD during template placement now goes through libWrapper when it is installed, so it works alongside other modules that change template placement, and libWrapper no longer flags this module.
