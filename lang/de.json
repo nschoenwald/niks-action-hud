@@ -185,7 +185,7 @@
       },
       "SubmenuSide": {
         "Name": "Untermenü-Ausrichtung",
-        "Hint": "Richtung, in die sich Untermenüs relativ zum Dock öffnen. Automatisch erkennt die Bildschirmränder dynamisch.",
+        "Hint": "Richtung, in die sich Untermenüs relativ zum Dock öffnen. Automatisch wählt die Seite, auf der genug Platz auf dem Bildschirm ist.",
         "Auto": "Automatisch",
         "Left": "Links",
         "Right": "Rechts"

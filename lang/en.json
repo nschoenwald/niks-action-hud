@@ -185,7 +185,7 @@
       },
       "SubmenuSide": {
         "Name": "Submenu Open Direction",
-        "Hint": "Direction submenus open relative to the dock. Automatic dynamically detects screen edges.",
+        "Hint": "Direction submenus open relative to the dock. Automatic picks the side with room on screen.",
         "Auto": "Automatic",
         "Left": "Left",
         "Right": "Right"

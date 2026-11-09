@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.21.1] - 2026-11-09
+### Changed
+- **Submenu Open Direction**: The setting's description now explains the Automatic option more clearly.
+
 ## [14.21.0] - 2026-11-09
 ### Added
 - **French translation**: The module is now available in French, reviewed by Kameleau. Thank you!
