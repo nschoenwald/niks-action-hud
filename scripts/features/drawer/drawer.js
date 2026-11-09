@@ -40,8 +40,33 @@ function shownPane(drawer, rememberedId) {
 
 /** Navigation entries for the template; none when there is only one pane. */
 const paneLinks = (drawer, current) => (drawer.panes?.length > 1
-	? drawer.panes.map((candidate) => ({ id: candidate.id, label: candidate.label, isActive: candidate === current }))
+	? drawer.panes.map((candidate) => ({
+		id: candidate.id,
+		label: candidate.label,
+		title: candidate.slots?.title ? `${candidate.label} · ${candidate.slots.title}` : candidate.label,
+		slotsHtml: slotPipsMarkup(candidate.slots),
+		isActive: candidate === current,
+	}))
 	: []);
+
+// ── Slot pips ───────────────────────────────────────────
+
+/** Above this many slots the pips give way to a "value/max" count. */
+const MAX_PIPS = 8;
+
+/** Filled / empty pips for a slot pool `{ value, max, title }` (spell slots); empty without one. */
+function slotPipsMarkup(slots) {
+	const max = Math.max(0, Math.trunc(Number(slots?.max) || 0));
+	if (!max) return "";
+	const value = Math.max(0, Math.trunc(Number(slots.value) || 0));
+	const title = escapeHtml(slots.title || `${value}/${max}`);
+	// Slots above the maximum (temporary ones) get pips of their own.
+	const total = Math.max(value, max);
+	const inner = total > MAX_PIPS
+		? `<span class="nah-slot-count">${value}/${max}</span>`
+		: Array.from({ length: total }, (_, i) => `<span class="nah-slot-pip${i < value ? " is-filled" : ""}"></span>`).join("");
+	return `<span class="nah-slot-pips" role="img" title="${title}" aria-label="${title}">${inner}</span>`;
+}
 
 // ── Row rendering ───────────────────────────────────────
 
@@ -55,7 +80,7 @@ function headingMarkup(item) {
 		iconStyle: "margin-right: 6px; font-size: 0.9em; opacity: 0.85;",
 		imageStyle: "width: 16px; height: 16px; margin-right: 6px; object-fit: contain; vertical-align: middle;",
 	});
-	return `<div class="nah-group-heading">${icon}<span>${escapeHtml(item.heading)}</span></div>`;
+	return `<div class="nah-group-heading">${icon}<span>${escapeHtml(item.heading)}</span>${slotPipsMarkup(item.slots)}</div>`;
 }
 
 /** Attributes that identify a row. */

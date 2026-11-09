@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.23.0] - 2026-11-09
+### Changed
+- **Spell slots at a glance**: The Spells menu now shows your remaining spell slots as filled and empty circles instead of numbers like "(2/3)". They appear below each spell level tab and next to each level heading in the "All" view, for regular spell slots and Pact Magic alike. Hover over them to see the exact count.
+
 ## [14.22.0] - 2026-11-09
 ### Changed
 - **Empty menus and searches**: The "Empty" and "No matching actions found." notes now follow the HUD theme's text colors, so they stay readable in light and dark themes.

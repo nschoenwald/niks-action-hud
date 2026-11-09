@@ -19,23 +19,27 @@ const t = (key, fallback) => game.i18n?.localize?.(key) || fallback;
 
 // ── Tiers ───────────────────────────────────────────────
 
-const slotSummary = (slots) => {
+/** `{ value, max, title }` of a slot pool for the pip indicator, or null without slots. */
+const slotPips = (slots) => {
 	const max = Number(slots?.max) || 0;
-	const value = Number(slots?.value) || 0;
-	return { max, value, text: max > 0 ? ` (${value}/${max})` : "" };
+	if (max <= 0) return null;
+	const value = Math.max(0, Number(slots?.value) || 0);
+	// The system's own "Spell Slots" label, so no module key needs translating.
+	return { value, max, title: `${t("DND5E.CONSUMPTION.Type.SpellSlots.Label", "Spell Slots")}: ${value}/${max}` };
 };
 
 /**
- * The spell groups of an actor in display order, each `{ id, label, heading, rows: [] }`:
- * cantrips, pact (only with pact slots), levels 1–9 (label with remaining/max slots), innate, item-granted.
+ * The spell groups of an actor in display order, each `{ id, label, heading, slots, rows: [] }`:
+ * cantrips, pact (only with pact slots), levels 1–9 (with remaining/max slots), innate, item-granted.
+ * `{slots}` in the labels stays empty: the slots are drawn as pips instead of a "(value/max)" text.
  */
 function spellGroups(actor) {
 	const groups = [{ id: "0", label: dd("Cantrips", "Cantrips"), rows: [] }];
-	const pact = slotSummary(actor.system.spells?.pact);
-	if (pact.max > 0) groups.push({ id: "pact", label: dd("PactTab", "Pact{slots}", { slots: pact.text }), heading: dd("PactHeader", "Pact Magic{slots}", { slots: pact.text }), rows: [] });
+	const pact = slotPips(actor.system.spells?.pact);
+	if (pact) groups.push({ id: "pact", label: dd("PactTab", "Pact{slots}", { slots: "" }), heading: dd("PactHeader", "Pact Magic{slots}", { slots: "" }), slots: pact, rows: [] });
 	for (let level = 1; level <= 9; level++) {
-		const { text } = slotSummary(actor.system.spells?.[`spell${level}`]);
-		groups.push({ id: String(level), label: dd("LvlTab", "LVL {level}{slots}", { level, slots: text }), heading: dd("LevelHeader", "Level {level}{slots}", { level, slots: text }), rows: [] });
+		const slots = slotPips(actor.system.spells?.[`spell${level}`]);
+		groups.push({ id: String(level), label: dd("LvlTab", "LVL {level}{slots}", { level, slots: "" }), heading: dd("LevelHeader", "Level {level}{slots}", { level, slots: "" }), slots, rows: [] });
 	}
 	groups.push({ id: "innate", label: dd("Innate", "Innate"), heading: dd("InnateHeader", "Innate Spells"), rows: [] });
 	groups.push({ id: "item", label: t("NAH.Tabs.Items", "Items"), rows: [] });

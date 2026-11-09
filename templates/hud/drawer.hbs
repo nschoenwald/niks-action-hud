@@ -8,8 +8,8 @@
 					 data-action="show-pane"
 					 data-pane-id="{{id}}"
 					 data-category="{{../categoryId}}"
-					 title="{{label}}">
-					<span>{{label}}</span>
+					 title="{{title}}">
+					<span>{{label}}</span>{{{slotsHtml}}}
 				</div>
 			{{/each}}
 		</aside>
@@ -54,8 +54,9 @@
 								class="nah-page-btn{{#if isActive}} active{{/if}}"
 								data-action="show-pane"
 								data-pane-id="{{id}}"
-								data-category="{{../categoryId}}">
-							<span>{{label}}</span>
+								data-category="{{../categoryId}}"
+								title="{{title}}">
+							<span>{{label}}</span>{{{slotsHtml}}}
 						</button>
 					{{/each}}
 				</div>

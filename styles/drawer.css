@@ -40,6 +40,11 @@
 	transition: background var(--nah-dur-base), color var(--nah-dur-base), border-color var(--nah-dur-base);
 }
 
+.nah-rail-tab:has(.nah-slot-pips) {
+	flex-direction: column;
+	gap: var(--nah-space-2);
+}
+
 .nah-rail-tab span {
 	overflow: hidden;
 	max-width: 100%;
@@ -201,6 +206,10 @@
 	letter-spacing: 0.75px;
 	pointer-events: none;
 	user-select: none;
+}
+
+.nah-group-heading .nah-slot-pips {
+	margin-inline-start: auto;
 }
 
 .nah-group-heading:first-child {
@@ -565,3 +574,41 @@ body.crlngn-ui.theme-light .theme-carolingian .nah-act-badge {
 
 /* Unprepared Rituals */
 
+
+/* ==========================================================================
+   Slot Pips (spell slots on tabs and group headings)
+   ========================================================================== */
+.nah-slot-pips {
+	--nah-pip-size: 7px;
+	display: inline-flex;
+	flex-flow: row wrap;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	gap: 3px;
+	max-width: 100%;
+	line-height: 1;
+	pointer-events: auto;
+}
+
+.nah-slot-pip {
+	box-sizing: border-box;
+	width: var(--nah-pip-size);
+	height: var(--nah-pip-size);
+	border: 1px solid var(--nah-pip-ring, currentColor);
+	border-radius: 50%;
+	background: transparent;
+	opacity: 0.55;
+}
+
+.nah-slot-pip.is-filled {
+	border-color: var(--nah-pip-fill, currentColor);
+	background: var(--nah-pip-fill, currentColor);
+	opacity: 1;
+}
+
+.nah-slot-count {
+	font-size: 0.85em;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0;
+}

@@ -245,6 +245,23 @@
 	transition: background var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease;
 }
 
+[class*="theme-"] .nah-page-btn:has(.nah-slot-pips) {
+	flex-direction: column;
+	justify-content: center;
+	flex-shrink: 0;
+	gap: 3px;
+	padding-block: 4px;
+	white-space: nowrap;
+}
+
+[class*="theme-"] .nah-page-btn .nah-slot-pips {
+	flex-wrap: nowrap;
+}
+
+[class*="theme-"] .nah-slot-pips {
+	--nah-pip-fill: var(--ph-accent-2);
+}
+
 [class*="theme-"] .nah-page-btn:hover {
 	border-color: var(--ph-accent);
 	background: var(--ph-tint);
