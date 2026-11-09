@@ -54,17 +54,21 @@ const paneLinks = (drawer, current) => (drawer.panes?.length > 1
 /** Above this many slots the pips give way to a "value/max" count. */
 const MAX_PIPS = 8;
 
-/** Filled / empty pips for a slot pool `{ value, max, title }` (spell slots); empty without one. */
+/**
+ * Pips for a slot pool `{ value, max, title }` (spell slots); empty without one. Expended slots are
+ * filled, unused ones empty, like ticking off boxes on a paper sheet.
+ */
 function slotPipsMarkup(slots) {
 	const max = Math.max(0, Math.trunc(Number(slots?.max) || 0));
 	if (!max) return "";
 	const value = Math.max(0, Math.trunc(Number(slots.value) || 0));
 	const title = escapeHtml(slots.title || `${value}/${max}`);
-	// Slots above the maximum (temporary ones) get pips of their own.
+	// Slots above the maximum (temporary ones) get empty pips of their own.
 	const total = Math.max(value, max);
+	const expended = Math.max(0, max - value);
 	const inner = total > MAX_PIPS
 		? `<span class="nah-slot-count">${value}/${max}</span>`
-		: Array.from({ length: total }, (_, i) => `<span class="nah-slot-pip${i < value ? " is-filled" : ""}"></span>`).join("");
+		: Array.from({ length: total }, (_, i) => `<span class="nah-slot-pip${i < expended ? " is-filled" : ""}"></span>`).join("");
 	return `<span class="nah-slot-pips" role="img" title="${title}" aria-label="${title}">${inner}</span>`;
 }
 
