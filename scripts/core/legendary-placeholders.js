@@ -9,7 +9,7 @@ import { combatantMatches } from "./combat-ownership.js";
 const TWEAKS_ID = "niks-dnd5e-tweaks";
 
 /** Whether a combatant is a legendary action placeholder. */
-export function isLegendaryPlaceholder(combatant) {
+function isLegendaryPlaceholder(combatant) {
 	return Boolean(combatant?.flags?.[TWEAKS_ID]?.isLegendaryPlaceholder);
 }
 

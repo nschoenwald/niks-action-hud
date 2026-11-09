@@ -1,5 +1,5 @@
 import { escapeHtml } from "../../core/escape.js";
-import { renderRows } from "./drawer.js";
+import { emptyNoteMarkup, renderRows } from "./drawer.js";
 import { hudStore } from "../../core/store.js";
 import { loadDrawer, listCategories } from "../registry/registry.js";
 import { shouldShowCategory } from "../registry/gating.js";
@@ -164,7 +164,7 @@ export async function applyDrawerFilter(hud, query) {
 	const hits = search(entries, term);
 	if (!hits.length) {
 		const emptyText = game.i18n?.has?.("NAH.UI.SearchNoMatch") ? game.i18n.localize("NAH.UI.SearchNoMatch") : "No matching actions found.";
-		scrollArea.innerHTML = `<div class="nah-row-entry"><div class="nah-row-body" style="justify-content:center; color:#888; font-style:italic;">${escapeHtml(emptyText)}</div></div>`;
+		scrollArea.innerHTML = emptyNoteMarkup(emptyText);
 	} else {
 		scrollArea.innerHTML = renderRows(groupHits(hits, categories));
 	}

@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.22.0] - 2026-11-09
+### Changed
+- **Empty menus and searches**: The "Empty" and "No matching actions found." notes now follow the HUD theme's text colors, so they stay readable in light and dark themes.
+- **Under the hood**: General code cleanup and small performance improvements, mainly in the settings window, the icon picker and the HUD menus. Nothing changes in how the HUD works.
+
 ## [14.21.1] - 2026-11-09
 ### Changed
 - **Submenu Open Direction**: The setting's description now explains the Automatic option more clearly.

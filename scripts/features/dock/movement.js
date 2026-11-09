@@ -106,27 +106,36 @@ function setScale(root, requested, isReset = false, position = null) {
 	}, 200);
 }
 
+/** Where the dock sits now: the live position, else the stored one, else the default corner. */
+function currentDockPosition(root, placement) {
+	if (root._dockPosition) return root._dockPosition;
+	const fallback = defaultDockPosition();
+	return placement.dockPosition ? readDockPosition(placement.dockPosition, fallback) : fallback;
+}
+
 export function bindResizeHandle(root) {
 	const handle = root.querySelector(".nah-resize-handle");
-	const resolvePosition = () => {
-		if (root._dockPosition) return root._dockPosition;
-		const placement = game.settings.get(MODULE_ID, "hudPlacement") || {};
-		const fallback = defaultDockPosition();
-		return placement.dockPosition ? readDockPosition(placement.dockPosition, fallback) : fallback;
+	const storedPlacement = () => game.settings.get(MODULE_ID, "hudPlacement") || {};
+
+	/** Resize state on the handle, the dock and the page cursor, switched together. */
+	const setResizing = (cursor) => {
+		handle.classList.toggle("is-resizing", Boolean(cursor));
+		root.classList.toggle("is-resizing", Boolean(cursor));
+		document.body.style.cursor = cursor || "";
 	};
 
 	handle.addEventListener("dblclick", (event) => {
 		event.preventDefault();
 		event.stopPropagation();
-		setScale(root, 1.0, true, resolvePosition());
+		setScale(root, 1.0, true, currentDockPosition(root, storedPlacement()));
 	});
 	handle.addEventListener("pointerdown", (event) => {
 		if (event.button) return;
 		event.preventDefault();
 		event.stopPropagation();
 
-		const placement = game.settings.get(MODULE_ID, "hudPlacement") || {};
-		const position = resolvePosition();
+		const placement = storedPlacement();
+		const position = currentDockPosition(root, placement);
 		const startScale = parseFloat(root.style.getPropertyValue("--nah-base-scale"))
 			|| placement.hudScale
 			|| 1.0;
@@ -134,11 +143,9 @@ export function bindResizeHandle(root) {
 		const startY = event.clientY;
 		let scale = startScale;
 
-		handle.classList.add("is-resizing");
-		root.classList.add("is-resizing");
 		const { vertical, horizontal } = cornerEdges(root.dataset.corner);
 		const isNesw = (vertical === "bottom" && horizontal === "left") || (vertical === "top" && horizontal === "right");
-		document.body.style.cursor = isNesw ? "nesw-resize" : "nwse-resize";
+		setResizing(isNesw ? "nesw-resize" : "nwse-resize");
 
 		const dirX = horizontal === "left" ? 1 : -1;
 		const dirY = vertical === "bottom" ? -1 : 1;
@@ -157,12 +164,9 @@ export function bindResizeHandle(root) {
 				showScaleIndicator(root, scale);
 			},
 			onEnd: () => {
-				handle.classList.remove("is-resizing");
-				root.classList.remove("is-resizing");
-				document.body.style.cursor = "";
+				setResizing(null);
 				setScale(root, Math.round(scale * 20) / 20, false, position);
 			},
 		});
 	});
 }
-

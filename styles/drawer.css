@@ -254,6 +254,11 @@
 	min-inline-size: 0;
 }
 
+.nah-row-empty .nah-row-body {
+	color: var(--nah-text-secondary);
+	font-style: italic;
+}
+
 .nah-item-name {
 	overflow: hidden;
 	font-family: var(--nah-font-body, inherit);

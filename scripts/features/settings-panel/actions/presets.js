@@ -7,6 +7,8 @@ import { hud } from "../../../core/runtime.js";
 import { writeMirroredSettings } from "../settings-sync.js";
 import { pullForm, requireSettingsPermission } from "./shared.js";
 
+const localize = (key, fallback) => game.i18n.localize(key) || fallback;
+
 /** Download the configuration as shown in the panel (including edits that are not saved yet). */
 function downloadConfig(app) {
 	pullForm(app);
@@ -15,32 +17,36 @@ function downloadConfig(app) {
 
 export const onExportConfig = (app) => downloadConfig(app);
 
+/** Let the user choose one local file; resolves to the file, or nothing when the choice is cancelled. */
+function pickFile(accept) {
+	const picker = Object.assign(document.createElement("input"), { type: "file", accept });
+	return new Promise((resolve) => {
+		picker.addEventListener("change", () => resolve(picker.files?.[0]), { once: true });
+		picker.addEventListener("cancel", () => resolve(undefined), { once: true });
+		picker.click();
+	});
+}
+
 /** Load a JSON file into the draft; nothing is applied until the panel is saved. */
-export function onImportConfig(app) {
+export async function onImportConfig(app) {
 	if (!requireSettingsPermission()) return;
 
-	const input = document.createElement("input");
-	input.type = "file";
-	input.accept = ".json";
-	input.onchange = async (event) => {
-		const file = event.target.files?.[0];
-		if (!file) return;
-		try {
-			app.draft.load(JSON.parse(await file.text()));
-			ui.notifications.info(game.i18n.localize("NAH.Config.ImportDone") || "Configuration imported. Save to apply it.");
-			await app.render();
-		} catch (err) {
-			console.error("Nik's Action HUD | Import error:", err);
-			ui.notifications.error("Failed to parse imported configuration file.");
-		}
-	};
-	input.click();
+	const file = await pickFile(".json");
+	if (!file) return;
+	try {
+		app.draft.load(JSON.parse(await file.text()));
+	} catch (err) {
+		console.error("Nik's Action HUD | Import error:", err);
+		ui.notifications.error("Failed to parse imported configuration file.");
+		return;
+	}
+	ui.notifications.info(localize("NAH.Config.ImportDone", "Configuration imported. Save to apply it."));
+	await app.render();
 }
 
 export async function onReset(app) {
 	if (!requireSettingsPermission()) return;
 
-	const localize = (key, fallback) => game.i18n.localize(key) || fallback;
 	const choice = await foundry.applications.api.DialogV2.wait({
 		window: { title: localize("NAH.Config.ResetConfirmTitle", "Reset Configuration") },
 		content: `<p>${localize("NAH.Config.ResetConfirmAll", "Reset every setting to its default? This cannot be undone.")}</p>`,
@@ -62,7 +68,7 @@ export async function onReset(app) {
 	await saveProfile(profile);
 	await writeMirroredSettings(profile);
 
-	ui.notifications.info(game.i18n.localize("NAH.Config.ResetSuccess") || "Configuration reset to defaults.");
+	ui.notifications.info(localize("NAH.Config.ResetSuccess", "Configuration restored to defaults."));
 	if (hud.refresh) hud.refresh();
 	app.draft.clearBaseline();
 	await app.render();

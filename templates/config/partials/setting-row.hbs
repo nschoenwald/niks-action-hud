@@ -16,22 +16,22 @@
         <span class="hud-cfg-hint">{{hint}}</span>
     </div>
     <div class="hud-cfg-control">
-        {{#if isSwitch}}
+        {{#if (eq control "switch")}}
         <label class="hud-cfg-switch">
             <input type="checkbox" role="switch" class="hud-switch-input" name="{{key}}" {{#if checked}}checked{{/if}} {{#if disabled}}disabled{{/if}}>
             <span class="hud-cfg-switch-track" aria-hidden="true"></span>
             <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
         </label>
-        {{else if isSelect}}
+        {{else if (eq control "select")}}
         <select class="hud-cfg-select" name="{{key}}" {{#if disabled}}disabled{{/if}}>
             {{#each choices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
         </select>
-        {{else if isNumber}}
+        {{else if (eq control "number")}}
         <div class="hud-cfg-number">
             <input type="number" name="{{key}}" value="{{value}}" min="{{min}}" max="{{max}}" step="{{step}}" {{#if disabled}}disabled{{/if}}>
             <span class="hud-cfg-number-unit">{{unit}}</span>
         </div>
-        {{else if isRange}}
+        {{else if (eq control "range")}}
         <div class="hud-cfg-range-control">
             <input type="range" name="{{key}}" value="{{value}}" min="{{min}}" max="{{max}}" step="{{step}}" data-unit="{{unit}}" {{#if disabled}}disabled{{/if}}>
             <span class="hud-range-value"></span>

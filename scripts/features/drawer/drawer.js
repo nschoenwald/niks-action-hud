@@ -45,8 +45,9 @@ const paneLinks = (drawer, current) => (drawer.panes?.length > 1
 
 // ── Row rendering ───────────────────────────────────────
 
-const MUTED_NOTE = (text) =>
-	`<div class="nah-row-entry"><div class="nah-row-body" style="justify-content:center; color:#888; font-style:italic;">${escapeHtml(text)}</div></div>`;
+/** A muted placeholder row ("Empty", "No matching actions found."), shared with the search. */
+export const emptyNoteMarkup = (text) =>
+	`<div class="nah-row-entry nah-row-empty"><div class="nah-row-body">${escapeHtml(text)}</div></div>`;
 
 
 function headingMarkup(item) {
@@ -153,7 +154,7 @@ function rowMarkup(item, pinnedIds) {
  */
 export function renderRows(items) {
 	const pinnedIds = new Set(hud?.listFavorites?.() || []);
-	if (!items.length) return MUTED_NOTE(loc("UI.EmptyDrawer", "Empty"));
+	if (!items.length) return emptyNoteMarkup(loc("UI.EmptyDrawer", "Empty"));
 	return items.map((item) => (isHeading(item) ? headingMarkup(item) : rowMarkup(item, pinnedIds))).join("");
 }
 
@@ -398,19 +399,18 @@ function bindDrawerInput(container) {
 		void applyDrawerFilter(hud, "");
 	});
 
-	container.addEventListener("contextmenu", (event) => {
-		const card = event.target.closest(".nah-action-card");
-		if (card) openRowMenu(card, event);
-	});
-
-	container.addEventListener("pointerover", (event) => {
-		const card = event.target.closest(".nah-action-card");
-		if (card?.dataset.itemId) hud.revealHoverCard(card.dataset.itemId, card);
-	});
-	container.addEventListener("pointerout", (event) => {
-		const card = event.target.closest(".nah-action-card");
-		if (card && !card.contains(event.relatedTarget)) hud.dismissHoverCard();
-	});
+	// Row card events: right-click opens the item (Ctrl/Cmd uses it), hover shows the hover card.
+	const CARD_EVENTS = {
+		contextmenu: (card, event) => openRowMenu(card, event),
+		pointerover: (card) => card.dataset.itemId && hud.revealHoverCard(card.dataset.itemId, card),
+		pointerout: (card, event) => !card.contains(event.relatedTarget) && hud.dismissHoverCard(),
+	};
+	for (const [type, handler] of Object.entries(CARD_EVENTS)) {
+		container.addEventListener(type, (event) => {
+			const card = event.target.closest(".nah-action-card");
+			if (card) handler(card, event);
+		});
+	}
 	container.addEventListener("scroll", () => {
 		hud.dismissHoverCard(true);
 	}, { capture: true, passive: true });

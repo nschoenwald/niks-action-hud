@@ -18,6 +18,36 @@ export class IconPicker extends HandlebarsApplicationMixin(ApplicationV2) {
 			width: 620,
 			height: 620,
 		},
+		// Clicks on `data-action` buttons in icon-picker.hbs; Foundry binds `this` to the picker.
+		actions: {
+			clearSearch() {
+				this.query = "";
+				this.queryCaret = 0;
+				this.render();
+			},
+			pickTab(_event, button) {
+				this.tab = button.dataset.tab || "fontAwesome";
+				this.render();
+			},
+			pickFamily(_event, button) {
+				this.family = button.dataset.family || "fa-solid";
+				this.render();
+			},
+			pickIcon(_event, button) {
+				this.value = button.dataset.value ?? "";
+				this.render();
+			},
+			browse() {
+				this.browse();
+			},
+			clearValue() {
+				this.value = "";
+				this.render();
+			},
+			apply() {
+				this.choose(this.value);
+			},
+		},
 	};
 
 	static PARTS = {
@@ -83,33 +113,6 @@ export class IconPicker extends HandlebarsApplicationMixin(ApplicationV2) {
 			search.setSelectionRange(caret, caret);
 		}
 
-		root.querySelector(".nah-ip-search-clear")?.addEventListener("click", () => {
-			this.query = "";
-			this.queryCaret = 0;
-			this.render();
-		});
-
-		root.querySelectorAll(".nah-ip-tab").forEach((button) => {
-			button.addEventListener("click", () => {
-				this.tab = button.dataset.tab || "fontAwesome";
-				this.render();
-			});
-		});
-
-		root.querySelectorAll(".nah-ip-family").forEach((button) => {
-			button.addEventListener("click", () => {
-				this.family = button.dataset.family || "fa-solid";
-				this.render();
-			});
-		});
-
-		root.querySelectorAll(".nah-ip-option").forEach((button) => {
-			button.addEventListener("click", () => {
-				this.value = button.dataset.value ?? "";
-				this.render();
-			});
-		});
-
 		const manual = root.querySelector(".nah-ip-value-input");
 		manual?.addEventListener("change", () => {
 			this.value = manual.value.trim();
@@ -120,13 +123,6 @@ export class IconPicker extends HandlebarsApplicationMixin(ApplicationV2) {
 			event.preventDefault();
 			this.choose(manual.value.trim());
 		});
-
-		root.querySelector(".nah-ip-browse")?.addEventListener("click", () => this.browse());
-		root.querySelector(".nah-ip-clear")?.addEventListener("click", () => {
-			this.value = "";
-			this.render();
-		});
-		root.querySelector(".nah-ip-apply")?.addEventListener("click", () => this.choose(this.value));
 	}
 
 	async close(options) {

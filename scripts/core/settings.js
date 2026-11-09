@@ -26,17 +26,18 @@ const CLIENT_STORES = [
 	["drawerToggles", "Client Drawer Toggles"],
 ];
 
+/** Name and hint keys of a setting or keybinding under `NAH.<group>.<label>`. */
+const i18nPair = (label, group = "Settings") => ({ name: `NAH.${group}.${label}.Name`, hint: `NAH.${group}.${label}.Hint` });
+
 const SETTING_TYPES = { boolean: Boolean, number: Number, string: String };
 
 function registerMirrored(spec) {
-	const i18n = `NAH.Settings.${spec.label}`;
 	const choices = spec.choices
-		? Object.fromEntries(Object.keys(spec.choices).map((k) => [k, `${i18n}.${spec.choices[k]}`]))
+		? Object.fromEntries(Object.keys(spec.choices).map((k) => [k, `NAH.Settings.${spec.label}.${spec.choices[k]}`]))
 		: undefined;
 
 	game.settings.register(MODULE_ID, spec.key, {
-		name: `${i18n}.Name`,
-		hint: `${i18n}.Hint`,
+		...i18nPair(spec.label),
 		scope: spec.scope,
 		config: false,
 		type: SETTING_TYPES[spec.type],
@@ -57,18 +58,15 @@ function registerMirrored(spec) {
 	});
 }
 
+/** A hidden Object setting used as storage. */
+const registerStore = (key, name, scope, defaultValue, onChange) =>
+	game.settings.register(MODULE_ID, key, { name, scope, config: false, type: Object, default: defaultValue, onChange });
+
 function registerStorage() {
 	registerResetMarker();
-	game.settings.register(MODULE_ID, "hudProfile", {
-		name: "Global Action HUD Config",
-		scope: "world",
-		config: false,
-		type: Object,
-		default: profileDefaults(),
-		onChange: () => {
-			invalidateProfileCache();
-			hud.requestRefresh();
-		},
+	registerStore("hudProfile", "Global Action HUD Config", "world", profileDefaults(), () => {
+		invalidateProfileCache();
+		hud.requestRefresh();
 	});
 
 	// Writes that already applied themselves on screen (dock moved by hand) pass `skipRefresh`.
@@ -77,7 +75,7 @@ function registerStorage() {
 		hud.requestRefresh();
 	};
 	for (const [key, name] of CLIENT_STORES) {
-		game.settings.register(MODULE_ID, key, { name, scope: "client", config: false, type: Object, default: {}, onChange: repaintUnlessDragging });
+		registerStore(key, name, "client", {}, repaintUnlessDragging);
 	}
 }
 
@@ -86,8 +84,7 @@ const DEFAULT_PRECEDENCE = () => CONST.KEYBINDING_PRECEDENCE.NORMAL;
 
 function registerUserFacing() {
 	game.settings.register(MODULE_ID, "disableHUD", {
-		name: "NAH.Settings.DisableHud.Name",
-		hint: "NAH.Settings.DisableHud.Hint",
+		...i18nPair("DisableHud"),
 		scope: "user",
 		config: true,
 		type: Boolean,
@@ -96,9 +93,8 @@ function registerUserFacing() {
 	});
 
 	game.settings.registerMenu(MODULE_ID, CONFIG_MENU_KEY, {
-		name: "NAH.Settings.ConfigMenu.Name",
+		...i18nPair("ConfigMenu"),
 		label: "NAH.Settings.ConfigMenu.Label",
-		hint: "NAH.Settings.ConfigMenu.Hint",
 		icon: "fas fa-cogs",
 		type: NikHudConfigApp,
 		restricted: false,
@@ -111,8 +107,7 @@ function registerUserFacing() {
 
 function registerKeybindings() {
 	game.keybindings.register(MODULE_ID, "toggleHudVisibility", {
-		name: "NAH.Keybindings.ToggleVisibility.Name",
-		hint: "NAH.Keybindings.ToggleVisibility.Hint",
+		...i18nPair("ToggleVisibility", "Keybindings"),
 		editable: [{ key: "KeyH", modifiers: ["Shift"] }],
 		onDown: () => toggleHudVisibility(hud, game.settings.get(MODULE_ID, "disableHUD")),
 		restricted: false,
@@ -137,6 +132,9 @@ function requestedCombat(data) {
 	return stale ? { error: stale[1] } : { combat, active };
 }
 
+/** The user who sent a socket request; `callerUserId` is the server-verified sender. */
+const requestingUser = (callerUserId) => (callerUserId ? game.users.get(callerUserId) : null);
+
 /** Validate a player's request to end the active turn, then advance the combat as GM. */
 async function endTurnForPlayer(data, callerUserId) {
 	if (!game.user.isGM) return { success: false, error: "Only a GM can end a turn for a player" };
@@ -144,8 +142,7 @@ async function endTurnForPlayer(data, callerUserId) {
 	const { combat, active, error } = requestedCombat(data);
 	if (error) return { success: false, error };
 
-	// callerUserId is the server-verified socket sender
-	const requester = callerUserId ? game.users.get(callerUserId) : null;
+	const requester = requestingUser(callerUserId);
 	if (!requester) return { success: false, error: "Unknown requesting user" };
 	if (!userOwnsCombatant(requester, active)) return { success: false, error: "User does not own the active combatant" };
 	if (!combatantMatches(active, data?.actorId, data?.tokenId)) {
@@ -167,7 +164,7 @@ async function passLegendaryTurnForPlayer(data, callerUserId) {
 	if (error) return { success: false, error };
 	if (!isLegendaryPlaceholderTurn(combat)) return { success: false, error: "Not a legendary action placeholder turn" };
 
-	const requester = callerUserId ? game.users.get(callerUserId) : null;
+	const requester = requestingUser(callerUserId);
 	if (!requester) return { success: false, error: "Unknown requesting user" };
 	const legendary = legendaryCombatantOf(combat, data?.actorId, data?.tokenId);
 	if (!legendary || !userOwnsCombatant(requester, legendary)) {

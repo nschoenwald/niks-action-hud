@@ -40,7 +40,12 @@ async function collectCandidates(hud) {
 	return groups;
 }
 
+/** Removes the open picker's document listeners when it closes, however it closes. */
+let pickerListeners = null;
+
 function closePicker() {
+	pickerListeners?.abort();
+	pickerListeners = null;
 	document.querySelector(".nah-fav-picker")?.remove();
 }
 
@@ -121,16 +126,16 @@ export async function openFavoritePicker(hud, anchor) {
 	panel.style.top = `${y / zoom}px`;
 	input.focus();
 
+	const listeners = new AbortController();
+	pickerListeners = listeners;
 	const dismiss = (event) => {
 		const outside = event.type === "pointerdown" && !panel.contains(event.target) && !anchor.contains(event.target);
-		if (outside || (event.type === "keydown" && event.key === "Escape")) {
-			closePicker();
-			document.removeEventListener("pointerdown", dismiss, true);
-			document.removeEventListener("keydown", dismiss, true);
-		}
+		if (outside || (event.type === "keydown" && event.key === "Escape")) closePicker();
 	};
+	// Added on the next tick so the click that opened the picker doesn't close it again.
 	setTimeout(() => {
-		document.addEventListener("pointerdown", dismiss, true);
-		document.addEventListener("keydown", dismiss, true);
+		if (listeners.signal.aborted) return;
+		document.addEventListener("pointerdown", dismiss, { capture: true, signal: listeners.signal });
+		document.addEventListener("keydown", dismiss, { capture: true, signal: listeners.signal });
 	}, 0);
 }

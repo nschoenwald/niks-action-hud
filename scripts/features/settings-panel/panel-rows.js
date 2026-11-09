@@ -110,10 +110,7 @@ export function buildSettingSections(values, locks, lists = {}) {
 						disabled: Boolean(lock?.disabled),
 						// Shown (tooltip, click notice) where the control does not react.
 						blockedReason: lock?.isHard ? lock.tooltip : "",
-						isSwitch: text.control === "switch",
-						isSelect: text.control === "select",
-						isNumber: text.control === "number",
-						isRange: text.control === "range",
+						control: text.control,
 						unit: text.unit && text.control === "number" ? localized("NAH.Panel.Unit.Max", text.unit) : text.unit,
 						checked: Boolean(value),
 						value,
