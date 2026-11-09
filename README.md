@@ -66,7 +66,7 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
 
 ## 🌐 Languages
 
-🇬🇧 English · 🇩🇪 Deutsch · 🇮🇹 Italiano (thanks [@GregoryWarn](https://github.com/GregoryWarn)) · 🇧🇷 Português (Brasil) (thanks [@RichardFontoura](https://github.com/RichardFontoura))
+🇬🇧 English · 🇩🇪 Deutsch · 🇫🇷 Français (thanks Kameleau) · 🇮🇹 Italiano (thanks [@GregoryWarn](https://github.com/GregoryWarn)) · 🇧🇷 Português (Brasil) (thanks [@RichardFontoura](https://github.com/RichardFontoura))
 
 Translations into other languages by native speakers are welcome as an issue or pull request.
 

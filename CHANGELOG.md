@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.21.0] - 2026-11-09
+### Added
+- **French translation**: The module is now available in French, reviewed by Kameleau. Thank you!
+
 ## [14.20.5] - 2026-11-08
 ### Changed
 - **Legendary menu**: Within each group (legendary actions, mythic actions, lair actions, legendary resistances), entries are now sorted alphabetically.
