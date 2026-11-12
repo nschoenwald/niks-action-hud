@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.23.2] - 2026-11-12
+### Changed
+- **D&D 5e 6.1**: The HUD now officially supports D&D 5e 6.1, so Foundry no longer marks it as unverified on that version. D&D 5e 6.0.6 and later 6.0 releases still work.
+
 ## [14.23.1] - 2026-11-09
 ### Changed
 - **Spell slot circles**: Used spell slots are now the filled circles and unused ones the empty circles, like ticking off boxes on a paper character sheet.
