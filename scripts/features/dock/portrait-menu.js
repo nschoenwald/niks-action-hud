@@ -41,11 +41,11 @@ async function togglePortraitSource() {
 export function createPortraitMenu(root) {
 	const usingToken = () => portraitFromTokenFor(hud.currentActor, readProfile());
 	const entries = [
-		{ name: loc("Portrait.OpenSheet", "Open character sheet"), icon: "fa-solid fa-file-lines", callback: () => hud.openSheet() },
-		{ name: loc("Portrait.CenterOnToken", "Center on token"), icon: "fa-solid fa-crosshairs", callback: centerOnToken },
-		{ name: loc("Portrait.UseActorArt", "Use actor art"), icon: "fa-solid fa-user", condition: usingToken, callback: togglePortraitSource },
-		{ name: loc("Portrait.UseTokenArt", "Use token art"), icon: "fa-solid fa-chess-pawn", condition: () => !usingToken(), callback: togglePortraitSource },
-		{ name: loc("Portrait.HideHud", "Hide HUD"), icon: "fa-solid fa-eye-slash", callback: () => hud.hideHud() },
+		{ label: loc("Portrait.OpenSheet", "Open character sheet"), icon: "fa-solid fa-file-lines", callback: () => hud.openSheet() },
+		{ label: loc("Portrait.CenterOnToken", "Center on token"), icon: "fa-solid fa-crosshairs", callback: centerOnToken },
+		{ label: loc("Portrait.UseActorArt", "Use actor art"), icon: "fa-solid fa-user", visible: usingToken, callback: togglePortraitSource },
+		{ label: loc("Portrait.UseTokenArt", "Use token art"), icon: "fa-solid fa-chess-pawn", visible: () => !usingToken(), callback: togglePortraitSource },
+		{ label: loc("Portrait.HideHud", "Hide HUD"), icon: "fa-solid fa-eye-slash", callback: () => hud.hideHud() },
 	];
 	return new foundry.applications.ux.ContextMenu(root, ".nah-portrait-frame[data-action]", entries, { jQuery: false, fixed: true });
 }

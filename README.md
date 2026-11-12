@@ -2,7 +2,7 @@
 
 [![Foundry VTT](https://img.shields.io/badge/Foundry%20VTT-V14-orange.svg)](https://foundryvtt.com)
 [![DnD5e System](https://img.shields.io/badge/DnD5e-6.0.6%E2%80%936.1.x-blue.svg)](https://github.com/foundryvtt/dnd5e)
-[![Shadowdark System](https://img.shields.io/badge/Shadowdark-4.0.6%E2%80%934.0.x-purple.svg)](https://github.com/Muttley/foundryvtt-shadowdark)
+[![Shadowdark System](https://img.shields.io/badge/Shadowdark-4.0.6%E2%80%934.1.x-purple.svg)](https://github.com/Muttley/foundryvtt-shadowdark)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/nschoenwald/niks-action-hud?color=purple)](https://github.com/nschoenwald/niks-action-hud/releases/latest)
 
@@ -50,7 +50,7 @@ An on-screen action bar for **D&D 5e** and **Shadowdark** in **Foundry VTT v14**
   - Spells are grouped by level: cantrips first (including Pact Magic cantrips), then Pact Magic, then levels 1 to 9, with spells from items last. Each level shows its spell slots as circles below its tab and next to its heading: filled for used slots, empty for unused ones (hover for the exact count). An eye button in the Spells menu also shows spells you haven't prepared (off by default, remembered per player). Spells a monster casts through its Spellcasting feature are listed by level like regular spells.
   - Items are split into Weapons, Armor, Gear, Tools, Consumables and Other.
   - Ammunition shows a warning when it runs low.
-- **Shadowdark (4.0.6 and later 4.0.x)**:
+- **Shadowdark (4.0.6 – 4.1.x)**:
   - Attacks, spells, wands, scrolls, light sources and luck are all supported.
   - Hold a key while clicking a roll to skip the roll prompt: **Shift** for advantage, **Alt/Option** for normal, **Ctrl/Cmd** for disadvantage.
 - **Other systems**: Not supported. The module does nothing there.
@@ -81,7 +81,7 @@ Or paste this manifest URL:
 https://github.com/nschoenwald/niks-action-hud/releases/latest/download/module.json
 ```
 
-Requires **Foundry VTT v14** with **D&D 5e 6.0.6** or later, up to 6.1.x, or **Shadowdark 4.0.6** or a later 4.0.x release.
+Requires **Foundry VTT v14** with **D&D 5e 6.0.6** or later, up to 6.1.x, or **Shadowdark 4.0.6** or later, up to 4.1.x.
 
 ---
 
