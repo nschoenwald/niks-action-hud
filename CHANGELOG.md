@@ -7,6 +7,7 @@ All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented i
 - **Shadowdark 4.1**: The HUD now officially supports Shadowdark 4.1, so Foundry no longer marks it as incompatible on that version. Shadowdark 4.0.6 and later 4.0 releases still work. Attacks, spells, scrolls, wands, potions, abilities, luck and light sources work as before. Shadowdark now blocks casting a spell meant for a different alignment, and that applies when casting from the HUD too.
 
 ### Fixed
+- **Spells**: Spells left behind by an item that has since been removed from the actor no longer show up in the spell list, so they don't appear twice. For example, a monster whose Protective Magic feature was replaced listed Shield and Counterspell both under "Items" and under Protective Magic. The D&D 5e character sheet hides these leftovers too.
 - **Portrait menu**: Right-clicking the HUD portrait no longer writes a compatibility warning to the browser console on Foundry V14. The menu itself works exactly as before.
 
 ## [14.23.2] - 2026-11-12

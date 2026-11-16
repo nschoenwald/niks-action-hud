@@ -200,7 +200,8 @@ function spellRow(spell, actor, hasPact, listing) {
 		? Math.max(spell.system.level, Number(linkedActivity.spell.level) || 0)
 		: spell.system.level;
 	if (cachedFor || linkedActivity) {
-		if (linkedActivity && linkedActivity.displayInSpellbook === false) return null;
+		// A cached copy whose granting item or activity is gone is a leftover; the dnd5e sheet hides it too.
+		if (!linkedActivity || linkedActivity.displayInSpellbook === false) return null;
 	}
 
 	const { hidden, unpreparedRitual, unprepared } = preparationStatus(spell, actor, level, Boolean(cachedFor || linkedActivity), listing);
