@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.23.6] - 2026-11-17
+### Changed
+- **Menus stay open when you click tokens**: Clicking a token on the canvas no longer closes the open menu, so you can target with a smart-target module and then roll without reopening it. Clicking empty canvas still closes the menu as before.
+
 ## [14.23.5] - 2026-11-17
 ### Fixed
 - **Spells**: The spell level tabs on the left of the Spells menu no longer get cut off when a caster has many spell levels. They keep their full size, and the tab column scrolls if it still doesn't fit (for example with a large UI scale).

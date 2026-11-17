@@ -9,8 +9,12 @@ const OWN_POPUPS = ".nah-ammo-popover, #context-menu, .context-menu, .nah-fav-pi
  */
 const APP_WINDOWS = ".application, .window-app, dialog";
 
-/** Should a press on `target` close the open drawer? */
-export function pressClosesDrawer(target, { dock, drawer }) {
+/**
+ * Should a press on `target` close the open drawer? `onToken` is true when the press landed on a canvas token:
+ * players click tokens to target them (smart-target modules), so that keeps the drawer open.
+ */
+export function pressClosesDrawer(target, { dock, drawer, onToken = false }) {
+	if (onToken) return false;
 	if (target?.closest?.(`${OWN_POPUPS}, ${APP_WINDOWS}`)) return false;
 	return !dock?.contains(target) && !drawer?.contains(target);
 }

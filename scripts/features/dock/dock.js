@@ -272,7 +272,9 @@ function bindWindowListeners() {
 		if (!hudStore.get().drawer) return;
 		const root = document.getElementById(DOM_IDS.DOCK);
 		const drawer = document.getElementById(DOM_IDS.DRAWER_SLOT);
-		if (pressClosesDrawer(event.target, { dock: root, drawer })) hud.closeDrawer();
+		// The token layer tracks the token under the pointer, so a press on the board with a hovered token is a token click.
+		const onToken = Boolean(globalThis.canvas?.ready && event.target === canvas.app?.view && canvas.tokens?.hover);
+		if (pressClosesDrawer(event.target, { dock: root, drawer, onToken })) hud.closeDrawer();
 	}, true);
 }
 
