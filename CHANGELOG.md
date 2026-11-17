@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.23.5] - 2026-11-17
+### Fixed
+- **Spells**: The spell level tabs on the left of the Spells menu no longer get cut off when a caster has many spell levels. They keep their full size, and the tab column scrolls if it still doesn't fit (for example with a large UI scale).
+
 ## [14.23.4] - 2026-11-16
 ### Fixed
 - **Spells**: Spells left behind by an item that has since been removed from the actor no longer show up in the spell list, so they don't appear twice. For example, a monster whose Protective Magic feature was replaced listed Shield and Counterspell both under "Items" and under Protective Magic. The D&D 5e character sheet hides these leftovers too.

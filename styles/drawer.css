@@ -23,12 +23,18 @@
 	width: 96px;
 	min-width: 96px;
 	padding: 5px;
+	/* Many tabs (nine spell levels): scroll instead of squashing the tabs. */
+	overflow: hidden auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	scrollbar-color: var(--nah-veil-3) transparent;
 }
 
 .nah-rail-tab {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-shrink: 0;
 	padding: var(--nah-space-4) var(--nah-space-3);
 	overflow: hidden;
 	text-align: center;

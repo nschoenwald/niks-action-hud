@@ -172,6 +172,11 @@
 	transition: background var(--nah-dur-fast) ease, color var(--nah-dur-fast) ease, border-color var(--nah-dur-fast) ease;
 }
 
+/* Tabs with slot pips are taller: trim their padding so nine spell levels fit without scrolling. */
+[class*="theme-"] .nah-rail-tab:has(.nah-slot-pips) {
+	padding-block: 6px;
+}
+
 [class*="theme-"] .nah-rail-tab i,
 [class*="theme-"] .nah-rail-tab .glyph {
 	display: block;
