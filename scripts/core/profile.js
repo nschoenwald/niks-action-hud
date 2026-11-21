@@ -92,6 +92,9 @@ function flatten(persisted) {
 
 let cached = null;
 
+/** Cache key of a profile that has never been saved in this world. */
+const NEVER_SAVED = Symbol("never saved");
+
 /** Drop the cached flat profile (called when the stored profile changes). */
 export function invalidateProfileCache() {
 	cached = null;
@@ -102,9 +105,17 @@ export function invalidateProfileCache() {
  * changes, so it must not be modified; use getProfile() when you need to edit.
  */
 export function readProfile() {
-	const stored = game.settings.get(MODULE_ID, "hudProfile");
-	if (cached?.source === stored) return cached.flat;
-	cached = { source: stored, flat: flatten(stored && typeof stored === "object" ? stored : {}) };
+	// A profile that was never saved has no Setting document: core then builds a new default object on every
+	// read, which could never match the cache. The stored document tells the two cases apart.
+	const world = game.settings.storage?.get?.("world");
+	let source;
+	if (world) {
+		const doc = world.getSetting(`${MODULE_ID}.hudProfile`);
+		source = doc ? doc.value : NEVER_SAVED;
+	} else source = game.settings.get(MODULE_ID, "hudProfile");
+	if (cached?.source === source) return cached.flat;
+	const stored = source === NEVER_SAVED ? game.settings.get(MODULE_ID, "hudProfile") : source;
+	cached = { source, flat: flatten(stored && typeof stored === "object" ? stored : {}) };
 	return cached.flat;
 }
 

@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.23.7] - 2026-11-21
+### Changed
+- **Performance**: The HUD's configuration is now reliably cached in worlds where its settings were never changed, so repaints do less work.
+
 ## [14.23.6] - 2026-11-17
 ### Changed
 - **Menus stay open when you click tokens**: Clicking a token on the canvas no longer closes the open menu, so you can target with a smart-target module and then roll without reopening it. Clicking empty canvas still closes the menu as before.
