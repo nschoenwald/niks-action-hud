@@ -2,6 +2,10 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** are documented in this file.
 
+## [14.23.8] - 2026-11-22
+### Changed
+- **French translation**: Submenu Open Direction: the French description now matches the English one (thanks Kameleau).
+
 ## [14.23.7] - 2026-11-21
 ### Changed
 - **Performance**: The HUD's configuration is now reliably cached in worlds where its settings were never changed, so repaints do less work.

@@ -185,7 +185,7 @@
       },
       "SubmenuSide": {
         "Name": "Direction d'ouverture des sous-menus",
-        "Hint": "Direction dans laquelle les sous-menus s'ouvrent par rapport au dock. Détecte dynamiquement les bords de l'écran.",
+        "Hint": "Direction dans laquelle les sous-menus s'ouvrent par rapport au dock. L’option « Automatique » choisit le côté disposant d’espace à l’écran.",
         "Auto": "Automatique",
         "Left": "Gauche",
         "Right": "Droite"
